@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Serialize.Linq</RootNamespace>
+    <AssemblyName>Serialize.Linq</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Extensions\MemberInfoExtensions.cs" />
+    <Compile Include="Factories\ComplexExpressionNodeFactory.cs" />
+    <Compile Include="Factories\TypeResolverExpressionNodeFactory.cs" />
+    <Compile Include="Internals\ComplexPropertyMemberTypeEnumerator.cs" />
+    <Compile Include="Internals\ComplexPropertyMemberTypeFinder.cs" />
+    <Compile Include="Internals\MemberTypeEnumerator.cs" />
+    <Compile Include="Internals\PropertyMemberTypeEnumerator.cs" />
+    <Compile Include="Nodes\MemberInfoNodeList.cs" />
+    <Compile Include="Nodes\MemberInitExpressionNode.cs" />
+    <Compile Include="Nodes\MethodCallExpressionNode.cs" />
+    <Compile Include="Nodes\NewArrayExpressionNode.cs" />
+    <Compile Include="Nodes\NewExpressionNode.cs" />
+    <Compile Include="Exceptions\InvalidTypeException.cs" />
+    <Compile Include="Extensions\ExpressionExtensions.cs" />
+    <Compile Include="Nodes\BinaryExpressionNode.cs" />
+    <Compile Include="Nodes\ConditionalExpressionNode.cs" />
+    <Compile Include="Nodes\ConstantExpressionNode.cs" />
+    <Compile Include="Nodes\ElementInitNode.cs" />
+    <Compile Include="Nodes\ElementInitNodeList.cs" />
+    <Compile Include="Nodes\ExpressionNode.cs" />
+    <Compile Include="Factories\ExpressionNodeFactory.cs" />
+    <Compile Include="Internals\SerializationHelper.cs" />
+    <Compile Include="Factories\IExpressionNodeFactory.cs" />
+    <Compile Include="Nodes\ExpressionNodeList.cs" />
+    <Compile Include="Nodes\InvocationExpressionNode.cs" />
+    <Compile Include="Nodes\LambdaExpressionNode.cs" />
+    <Compile Include="Nodes\ListInitExpressionNode.cs" />
+    <Compile Include="Nodes\MemberAssignmentNode.cs" />
+    <Compile Include="Nodes\MemberBindingNode.cs" />
+    <Compile Include="Nodes\MemberBindingNodeList.cs" />
+    <Compile Include="Nodes\MemberExpressionNode.cs" />
+    <Compile Include="Nodes\MemberListBindingNode.cs" />
+    <Compile Include="Nodes\MemberMemberBindingNode.cs" />
+    <Compile Include="Nodes\Node.cs" />
+    <Compile Include="Nodes\ParameterExpressionNode.cs" />
+    <Compile Include="Nodes\TypeBinaryExpressionNode.cs" />
+    <Compile Include="Nodes\UnaryExpressionNode.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
