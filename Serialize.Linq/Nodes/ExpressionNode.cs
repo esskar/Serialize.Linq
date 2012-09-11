@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Factories;
+using Serialize.Linq.Interfaces;
 using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes

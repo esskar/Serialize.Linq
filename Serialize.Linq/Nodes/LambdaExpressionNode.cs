@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Extensions;
 using Serialize.Linq.Factories;
+using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {

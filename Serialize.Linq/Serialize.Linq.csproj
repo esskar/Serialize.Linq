@@ -35,11 +35,15 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
     <Compile Include="Factories\ComplexExpressionNodeFactory.cs" />
     <Compile Include="Factories\TypeResolverExpressionNodeFactory.cs" />
+    <Compile Include="Interfaces\IFormatSerializer.cs" />
+    <Compile Include="Interfaces\IJsonSerializer.cs" />
+    <Compile Include="Interfaces\IXElementSerializer.cs" />
     <Compile Include="Internals\ComplexPropertyMemberTypeEnumerator.cs" />
     <Compile Include="Internals\ComplexPropertyMemberTypeFinder.cs" />
     <Compile Include="Internals\MemberTypeEnumerator.cs" />
@@ -59,7 +63,7 @@
     <Compile Include="Nodes\ExpressionNode.cs" />
     <Compile Include="Factories\ExpressionNodeFactory.cs" />
     <Compile Include="Internals\SerializationHelper.cs" />
-    <Compile Include="Factories\IExpressionNodeFactory.cs" />
+    <Compile Include="Interfaces\IExpressionNodeFactory.cs" />
     <Compile Include="Nodes\ExpressionNodeList.cs" />
     <Compile Include="Nodes\InvocationExpressionNode.cs" />
     <Compile Include="Nodes\LambdaExpressionNode.cs" />
@@ -75,6 +79,7 @@
     <Compile Include="Nodes\TypeBinaryExpressionNode.cs" />
     <Compile Include="Nodes\UnaryExpressionNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializers\JsonSerializer.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -1,12 +1,42 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Xml.Linq;
+using Serialize.Linq.Interfaces;
+using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Extensions
 {
-    internal static class ExpressionExtensions
+    public static class ExpressionExtensions
     {
-        public static IEnumerable<Expression> GetLinkNodes(this Expression expression)
+        public static string ToJson(this Expression expression, IExpressionNodeFactory factory)
+        {
+            return expression.ToJson(factory, new JsonSerializer());
+        }
+
+        public static string ToJson(this Expression expression, IExpressionNodeFactory factory, IJsonSerializer serializer)
+        {
+            return expression.ToFormat(factory, serializer);
+        }
+
+        public static XElement ToXElement(this Expression expression, IExpressionNodeFactory factory, IXElementSerializer serializer)
+        {
+            return expression.ToFormat(factory, serializer);
+        }
+
+        public static TFormatType ToFormat<TFormatType>(this Expression expression, IExpressionNodeFactory factory, IFormatSerializer<TFormatType> serializer)
+        {
+            if(factory == null)
+                throw new ArgumentNullException("factory");
+            if(serializer == null)
+                throw new ArgumentNullException("serializer");
+
+            var expressionNode = factory.Create(expression);
+            return serializer.Serialize(expressionNode);
+        }
+
+        internal static IEnumerable<Expression> GetLinkNodes(this Expression expression)
         {
             if (expression is LambdaExpression)
             {
@@ -78,7 +108,7 @@ namespace Serialize.Linq.Extensions
             }
         }
 
-        public static IEnumerable<Expression> GetNodes(this Expression expression)
+        internal static IEnumerable<Expression> GetNodes(this Expression expression)
         {
             foreach (var node in expression.GetLinkNodes())
             {
@@ -88,7 +118,7 @@ namespace Serialize.Linq.Extensions
             yield return expression;
         }
 
-        public static IEnumerable<TExpression> GetNodes<TExpression>(this Expression expression) where TExpression : Expression
+        internal static IEnumerable<TExpression> GetNodes<TExpression>(this Expression expression) where TExpression : Expression
         {
             return expression.GetNodes().OfType<TExpression>();
         }

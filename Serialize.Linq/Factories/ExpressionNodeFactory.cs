@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
+using Serialize.Linq.Interfaces;
 using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Factories

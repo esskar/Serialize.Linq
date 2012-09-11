@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Factories;
+using Serialize.Linq.Interfaces;
 using Serialize.Linq.Tests.Internals;
 
 namespace Serialize.Linq.Tests

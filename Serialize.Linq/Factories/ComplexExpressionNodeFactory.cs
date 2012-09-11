@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using Serialize.Linq.Interfaces;
 using Serialize.Linq.Internals;
 using Serialize.Linq.Nodes;
 
