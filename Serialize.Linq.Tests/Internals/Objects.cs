@@ -12,6 +12,8 @@
 
     public class Bar
     {
+        public bool IsFoo;
+
         public string Name { get; set; }
 
         public string GetName()

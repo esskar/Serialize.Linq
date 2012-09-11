@@ -52,6 +52,7 @@
     <Compile Include="Internals\ExpressionComparer.cs" />
     <Compile Include="Internals\Objects.cs" />
     <Compile Include="Internals\PublicInstancePropertiesAssert.cs" />
+    <Compile Include="MemberInfoExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SerializationHelperTests.cs" />
   </ItemGroup>
