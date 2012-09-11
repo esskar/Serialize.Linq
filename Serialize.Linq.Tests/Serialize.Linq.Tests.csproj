@@ -53,6 +53,7 @@
     <Compile Include="Internals\Objects.cs" />
     <Compile Include="Internals\PublicInstancePropertiesAssert.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SerializationHelperTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Serialize.Linq\Serialize.Linq.csproj">
