@@ -1,64 +1,99 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Internals;
+using Serialize.Linq.Tests.Internals;
 
 namespace Serialize.Linq.Tests
 {
     [TestClass]
     public class SerializationHelperTests
     {
-        private static readonly string __serializationHelperTypeText = "Serialize.Linq.Internals.SerializationHelper, Serialize.Linq, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null";
-        private static readonly string __serializationHelperSerializeMethodText = __serializationHelperTypeText + Environment.NewLine + "System.String SerializeMethod(System.Reflection.MethodInfo)";
+        private static readonly string __barTypeText = typeof(Bar).AssemblyQualifiedName;
+        private static readonly string __barGetNameText = __barTypeText + Environment.NewLine + "System.String GetName()";
+        private static readonly string __barNameText = __barTypeText + Environment.NewLine + "System.String Name";
+        private static readonly string __barConstructorText = __barTypeText + Environment.NewLine + "Void .ctor()";
 
         [TestMethod]
         public void SerializeTypeTest()
         {
-            var actual = SerializationHelper.SerializeType(typeof(SerializationHelper));
-            Assert.AreEqual(__serializationHelperTypeText, actual);
+            var actual = SerializationHelper.SerializeType(typeof(Bar));
+            Assert.AreEqual(__barTypeText, actual);
         }
 
         [TestMethod]
         public void SerializeNullTypeTest()
         {
             var actual = SerializationHelper.SerializeType(null);
-            Assert.AreSame(null, actual);
+            Assert.AreEqual(null, actual);
         }
 
         [TestMethod]
         public void DeserializeTypeTest()
         {
-            var actual = SerializationHelper.DeserializeType(__serializationHelperTypeText);
-            Assert.AreSame(typeof(SerializationHelper), actual);
+            var actual = SerializationHelper.DeserializeType(__barTypeText);
+            Assert.AreEqual(typeof(Bar), actual);
         }
 
         [TestMethod]
         public void DeserializeNullTypeTest()
         {
             var actual = SerializationHelper.DeserializeType(null);
-            Assert.AreSame(null, actual);
+            Assert.AreEqual(null, actual);
         }
 
         [TestMethod]
         public void SerializeDeserializeAllSystemTypesTest()
         {
-            foreach (var type in typeof(string).Assembly.GetTypes())            
-                Assert.AreSame(type, SerializationHelper.DeserializeType(SerializationHelper.SerializeType(type)));            
+            foreach (var expected in typeof(string).Assembly.GetTypes())            
+                Assert.AreEqual(expected, SerializationHelper.DeserializeType(SerializationHelper.SerializeType(expected)));            
         }
 
         [TestMethod]
         public void SerializeMethodTest()
         {
-            var method = typeof(SerializationHelper).GetMethod("SerializeMethod");
+            var method = typeof(Bar).GetMethod("GetName");
             var actual = SerializationHelper.SerializeMethod(method);
-            Assert.AreEqual(__serializationHelperSerializeMethodText, actual);
+            Assert.AreEqual(__barGetNameText, actual);
         }
 
         [TestMethod]
         public void DeserializeMethodTest()
         {
-            var method = typeof(SerializationHelper).GetMethod("SerializeMethod");
-            var actual = SerializationHelper.DeserializeMethod(__serializationHelperSerializeMethodText);
-            Assert.AreEqual(method, actual);
+            var expected = typeof(Bar).GetMethod("GetName");
+            var actual = SerializationHelper.DeserializeMethod(__barGetNameText);
+            Assert.AreEqual(expected, actual);
+        }        
+
+        [TestMethod]
+        public void SerializeMemberTest()
+        {
+            var member = typeof(Bar).GetProperty("Name");
+            var actual = SerializationHelper.SerializeMember(member);
+            Assert.AreEqual(__barNameText, actual);
         }
+
+        [TestMethod]
+        public void DeserializeMemberTest()
+        {
+            var expected = typeof(Bar).GetProperty("Name");
+            var actual = SerializationHelper.DeserializeMember(__barNameText);
+            Assert.AreEqual(expected, actual);
+        }        
+
+        [TestMethod]
+        public void SerializeConstructorTest()
+        {
+            var constructor = typeof(Bar).GetConstructor(Type.EmptyTypes);
+            var actual = SerializationHelper.SerializeConstructor(constructor);
+            Assert.AreEqual(__barConstructorText, actual);
+        }
+
+        [TestMethod]
+        public void DeserializeConstructorTest()
+        {
+            var expected = typeof(Bar).GetConstructor(Type.EmptyTypes);
+            var actual = SerializationHelper.DeserializeConstructor(__barConstructorText);
+            Assert.AreEqual(expected, actual);
+        }        
     }
 }
