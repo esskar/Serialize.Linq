@@ -20,7 +20,7 @@ namespace Serialize.Linq.Extensions
             return expression.ToFormat(factory, serializer);
         }
 
-        public static XElement ToXElement(this Expression expression, IExpressionNodeFactory factory, IXElementSerializer serializer)
+        public static string ToXml(this Expression expression, IExpressionNodeFactory factory, IXmlSerializer serializer)
         {
             return expression.ToFormat(factory, serializer);
         }

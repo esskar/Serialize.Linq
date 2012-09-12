@@ -43,7 +43,7 @@
     <Compile Include="Factories\TypeResolverExpressionNodeFactory.cs" />
     <Compile Include="Interfaces\IFormatSerializer.cs" />
     <Compile Include="Interfaces\IJsonSerializer.cs" />
-    <Compile Include="Interfaces\IXElementSerializer.cs" />
+    <Compile Include="Interfaces\IXmlSerializer.cs" />
     <Compile Include="Internals\ComplexPropertyMemberTypeEnumerator.cs" />
     <Compile Include="Internals\ComplexPropertyMemberTypeFinder.cs" />
     <Compile Include="Internals\MemberTypeEnumerator.cs" />

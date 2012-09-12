@@ -1,15 +1,14 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
 using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
 {
-    public class JsonSerializer : TextSerializer, IJsonSerializer
+    public class XmlSerializer : TextSerializer, IXmlSerializer
     {
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
-            return new DataContractJsonSerializer(type);
+            return new DataContractSerializer(type);
         }
     }
 }
