@@ -3,7 +3,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -17,22 +16,15 @@ namespace Serialize.Linq.Nodes
             : base(factory) 
         {
             this.BindingType = bindingType;
-            this.Member = memberInfo;
+            this.Member = new MemberInfoNode(this.Factory, memberInfo);
         }
 
         [DataMember]
         public MemberBindingType BindingType { get; set; }
 
-        [IgnoreDataMember]
-        public MemberInfo Member { get; set; }
-
         [DataMember]
-        public string MemberName
-        {
-            get { return SerializationHelper.SerializeMember(this.Member, this.Factory.UseAssemblyQualifiedName); }
-            set { this.Member = SerializationHelper.DeserializeMember(value); }
-        }
-
+        public MemberInfoNode Member { get; set; }
+        
         public abstract MemberBinding ToMemberBinding();
 
         internal static MemberBindingNode Create(IExpressionNodeFactory factory, MemberBinding memberBinding)

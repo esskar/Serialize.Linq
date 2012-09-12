@@ -18,25 +18,18 @@ namespace Serialize.Linq.Nodes
         [DataMember]
         public ExpressionNode Expression { get; set; }
 
-        [IgnoreDataMember]
-        public MemberInfo Member { get; set; }
-
         [DataMember]
-        public string MemberName
-        {
-            get { return SerializationHelper.SerializeMember(this.Member, this.Factory.UseAssemblyQualifiedName); }
-            set { this.Member = SerializationHelper.DeserializeMember(value); }
-        }
+        public MemberInfoNode Member { get; set; }        
 
         protected override void Initialize(MemberExpression expression)
         {
             this.Expression = this.Factory.Create(expression.Expression);
-            this.Member = expression.Member;
+            this.Member = new MemberInfoNode(this.Factory, expression.Member);
         }
 
         public override Expression ToExpression()
         {            
-            return System.Linq.Expressions.Expression.MakeMemberAccess(this.Expression.ToExpression(), this.Member);
+            return System.Linq.Expressions.Expression.MakeMemberAccess(this.Expression.ToExpression(), this.Member.ToMemberInfo());
         }
     }
 }

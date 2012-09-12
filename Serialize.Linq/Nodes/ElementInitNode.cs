@@ -26,26 +26,19 @@ namespace Serialize.Linq.Nodes
             if(elementInit == null)
                 throw new ArgumentNullException("elementInit");
 
-            this.AddMethod = elementInit.AddMethod;
+            this.AddMethod = new MethodInfoNode(this.Factory, elementInit.AddMethod);
             this.Arguments = new ExpressionNodeList(this.Factory, elementInit.Arguments);
         }
 
         [DataMember]
         public ExpressionNodeList Arguments { get; set; }
 
-        [IgnoreDataMember]
-        public MethodInfo AddMethod { get; set; }
-
         [DataMember]
-        public string AddMethodName
-        {
-            get { return SerializationHelper.SerializeMethod(this.AddMethod, this.Factory.UseAssemblyQualifiedName); }
-            set { this.AddMethod = SerializationHelper.DeserializeMethod(value); }
-        }
-
+        public MethodInfoNode AddMethod { get; set; }
+        
         public ElementInit ToElementInit()
         {
-            return Expression.ElementInit(this.AddMethod, this.Arguments.GetExpressions());
+            return Expression.ElementInit(this.AddMethod.ToMemberInfo(), this.Arguments.GetExpressions());
         }
     }
 }

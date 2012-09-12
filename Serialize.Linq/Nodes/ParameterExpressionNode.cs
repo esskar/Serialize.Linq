@@ -54,7 +54,7 @@ namespace Serialize.Linq.Nodes
         
         public override Expression ToExpression()
         {
-            return _parameterExpression ?? (_parameterExpression = Expression.Parameter(this.Type, this.Name));
+            return _parameterExpression ?? (_parameterExpression = Expression.Parameter(this.Type.ToType(), this.Name));
         }        
     }
 }

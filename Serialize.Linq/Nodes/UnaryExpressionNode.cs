@@ -25,7 +25,7 @@ namespace Serialize.Linq.Nodes
         {
             return this.NodeType == ExpressionType.UnaryPlus
                 ? Expression.UnaryPlus(this.Operand.ToExpression())
-                : Expression.MakeUnary(this.NodeType, this.Operand.ToExpression(), this.Type);
+                : Expression.MakeUnary(this.NodeType, this.Operand.ToExpression(), this.Type.ToType());
         }
     }
 }

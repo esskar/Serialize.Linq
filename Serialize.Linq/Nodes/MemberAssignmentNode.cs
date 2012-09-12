@@ -17,7 +17,7 @@ namespace Serialize.Linq.Nodes
 
         public override MemberBinding ToMemberBinding()
         {
-            return System.Linq.Expressions.Expression.Bind(this.Member, this.Expression.ToExpression());
+            return System.Linq.Expressions.Expression.Bind(this.Member.ToMemberInfo(), this.Expression.ToExpression());
         }
     }
 }

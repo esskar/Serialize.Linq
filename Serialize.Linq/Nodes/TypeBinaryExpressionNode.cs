@@ -23,7 +23,7 @@ namespace Serialize.Linq.Nodes
 
         public override Expression ToExpression()
         {
-            return System.Linq.Expressions.Expression.TypeIs(this.Expression.ToExpression(), this.Type);
+            return System.Linq.Expressions.Expression.TypeIs(this.Expression.ToExpression(), this.Type.ToType());
         }
     }
 }

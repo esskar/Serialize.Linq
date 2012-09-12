@@ -27,10 +27,10 @@ namespace Serialize.Linq.Nodes
             switch(this.NodeType)
             {
                 case ExpressionType.NewArrayBounds:
-                    return Expression.NewArrayBounds(this.Type.GetElementType(), this.Expressions.GetExpressions());
+                    return Expression.NewArrayBounds(this.Type.ToType().GetElementType(), this.Expressions.GetExpressions());
 
                 case ExpressionType.NewArrayInit:
-                    return Expression.NewArrayInit(this.Type.GetElementType(), this.Expressions.GetExpressions());
+                    return Expression.NewArrayInit(this.Type.ToType().GetElementType(), this.Expressions.GetExpressions());
 
                 default:
                     throw new InvalidOperationException("Unhandeled nody type: " + this.NodeType);

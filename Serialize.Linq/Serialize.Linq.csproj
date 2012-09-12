@@ -49,6 +49,12 @@
     <Compile Include="Internals\ComplexPropertyMemberTypeFinder.cs" />
     <Compile Include="Internals\MemberTypeEnumerator.cs" />
     <Compile Include="Internals\PropertyMemberTypeEnumerator.cs" />
+    <Compile Include="Nodes\ConstructorInfoNode.cs" />
+    <Compile Include="Nodes\MemberInfoNode.cs" />
+    <Compile Include="Nodes\MethodInfoNode.cs" />
+    <Compile Include="Nodes\FieldInfoNode.cs" />
+    <Compile Include="Nodes\PropertyInfoNode.cs" />
+    <Compile Include="Nodes\MemberNode.cs" />
     <Compile Include="Nodes\MemberInfoNodeList.cs" />
     <Compile Include="Nodes\MemberInitExpressionNode.cs" />
     <Compile Include="Nodes\MethodCallExpressionNode.cs" />
@@ -63,7 +69,6 @@
     <Compile Include="Nodes\ElementInitNodeList.cs" />
     <Compile Include="Nodes\ExpressionNode.cs" />
     <Compile Include="Factories\ExpressionNodeFactory.cs" />
-    <Compile Include="Internals\SerializationHelper.cs" />
     <Compile Include="Interfaces\IExpressionNodeFactory.cs" />
     <Compile Include="Nodes\ExpressionNodeList.cs" />
     <Compile Include="Nodes\InvocationExpressionNode.cs" />
@@ -78,6 +83,7 @@
     <Compile Include="Nodes\Node.cs" />
     <Compile Include="Nodes\ParameterExpressionNode.cs" />
     <Compile Include="Nodes\TypeBinaryExpressionNode.cs" />
+    <Compile Include="Nodes\TypeNode.cs" />
     <Compile Include="Nodes\UnaryExpressionNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializers\ExpressionSerializer.cs" />

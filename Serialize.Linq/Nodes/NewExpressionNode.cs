@@ -18,31 +18,24 @@ namespace Serialize.Linq.Nodes
         [DataMember]
         public ExpressionNodeList Arguments { get; set; }
 
-        [IgnoreDataMember]
-        public ConstructorInfo Constructor { get; set; }
-
         [DataMember]
-        public string ConstructorName
-        {
-            get { return SerializationHelper.SerializeConstructor(this.Constructor, this.Factory.UseAssemblyQualifiedName); }
-            set { this.Constructor = SerializationHelper.DeserializeConstructor(value); }
-        }
-
+        public ConstructorInfoNode Constructor { get; set; }
+        
         [DataMember]
         public MemberInfoNodeList Members { get; set; }        
 
         protected override void  Initialize(NewExpression expression)
         {
  	        this.Arguments = new ExpressionNodeList(this.Factory, expression.Arguments);
-            this.Constructor = expression.Constructor;
+            this.Constructor = new ConstructorInfoNode(this.Factory, expression.Constructor);
             this.Members = new MemberInfoNodeList(this.Factory, expression.Members);        
         }
 
         public override Expression ToExpression()
         {
             return this.Constructor != null
-                ? Expression.New(this.Constructor, this.Arguments.GetExpressions(), this.Members.GetMembers())
-                : Expression.New(this.Type);
+                ? Expression.New(this.Constructor.ToMemberInfo(), this.Arguments.GetExpressions(), this.Members.GetMembers())
+                : Expression.New(this.Type.ToType());
         }
     }
 }

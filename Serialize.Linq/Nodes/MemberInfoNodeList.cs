@@ -4,12 +4,11 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
     [CollectionDataContract]
-    public class MemberInfoNodeList : List<string>
+    public class MemberInfoNodeList : List<MemberInfoNode>
     {
         public MemberInfoNodeList() { }
 
@@ -19,12 +18,12 @@ namespace Serialize.Linq.Nodes
                 throw new ArgumentNullException("factory");
             if(items == null)
                 throw new ArgumentNullException("items");
-            this.AddRange(items.Select(m => SerializationHelper.SerializeMember(m, factory.UseAssemblyQualifiedName)));
+            this.AddRange(items.Select(m => new MemberInfoNode(factory, m)));
         }
 
         public IEnumerable<MemberInfo> GetMembers()
-        {            
-            return this.Select(SerializationHelper.DeserializeMember);
+        {
+            return this.Select(m => m.ToMemberInfo());
         }   
     }
 }

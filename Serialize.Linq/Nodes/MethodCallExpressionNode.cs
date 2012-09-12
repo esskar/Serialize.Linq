@@ -1,9 +1,7 @@
 ﻿using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -19,23 +17,16 @@ namespace Serialize.Linq.Nodes
         [DataMember]
         public ExpressionNodeList Arguments { get; set; }
         
-        [IgnoreDataMember]
-        public MethodInfo Method { get; set; }
-
         [DataMember]
-        public string MethodName
-        {
-            get { return  SerializationHelper.SerializeMethod(this.Method, this.Factory.UseAssemblyQualifiedName); }
-            set { this.Method = SerializationHelper.DeserializeMethod(value); }
-        }
-
+        public MethodInfoNode Method { get; set; }
+        
         [DataMember]
         public ExpressionNode Object { get; set; }
 
         protected override void Initialize(MethodCallExpression expression)
         {
             this.Arguments = new ExpressionNodeList(this.Factory, expression.Arguments);
-            this.Method = expression.Method;
+            this.Method = new MethodInfoNode(this.Factory, expression.Method);
             this.Object = this.Factory.Create(expression.Object);
         }
 
@@ -45,7 +36,7 @@ namespace Serialize.Linq.Nodes
             if (this.Object != null)
                 objectExpression = this.Object.ToExpression();
 
-            return Expression.Call(objectExpression, this.Method, this.Arguments.GetExpressions().ToArray());
+            return Expression.Call(objectExpression, this.Method.ToMemberInfo(), this.Arguments.GetExpressions().ToArray());
         }
     }
 }

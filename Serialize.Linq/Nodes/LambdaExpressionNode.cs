@@ -32,7 +32,7 @@ namespace Serialize.Linq.Nodes
             Expression body;
             ParameterExpression[] parameters;
             this.BuildExpression(out body, out parameters);
-            return Expression.Lambda(this.Type, body, parameters);
+            return Expression.Lambda(this.Type.ToType(), body, parameters);
         }
 
         public Expression<TDelegate> ToExpression<TDelegate>()

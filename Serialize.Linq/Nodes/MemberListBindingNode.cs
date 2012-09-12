@@ -18,7 +18,7 @@ namespace Serialize.Linq.Nodes
 
         public override MemberBinding ToMemberBinding()
         {
-            return Expression.ListBind(this.Member, this.Initializers.GetElementInits());
+            return Expression.ListBind(this.Member.ToMemberInfo(), this.Initializers.GetElementInits());
         }    
     }
 }

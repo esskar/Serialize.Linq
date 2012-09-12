@@ -23,8 +23,7 @@ namespace Serialize.Linq.Nodes
         public ConstantExpressionNode(IExpressionNodeFactory factory, ConstantExpression expression) 
             : base(factory, expression) { }
         
-        [DataMember]
-        public override Type Type
+        public override TypeNode Type
         {
             get { return base.Type; }
             set
@@ -32,9 +31,9 @@ namespace Serialize.Linq.Nodes
                 if(this.Value != null)
                 {
                     if (value == null)
-                        value = this.Value.GetType();
-                    else if(!value.IsInstanceOfType(this.Value))
-                        throw new InvalidTypeException(string.Format("Type '{0}' is not an instance of the current value type '{1}'.", value, this.Value.GetType()));
+                        value = new TypeNode(this.Factory, this.Value.GetType());
+                    else if (!value.ToType().IsInstanceOfType(this.Value))
+                        throw new InvalidTypeException(string.Format("Type '{0}' is not an instance of the current value type '{1}'.", value.ToType(), this.Value.GetType()));
                 }
                 base.Type = value;                
             }
@@ -49,8 +48,12 @@ namespace Serialize.Linq.Nodes
                 if(value is Expression)
                     throw new ArgumentException("Expression not allowed.", "value");            
                 _value = value;
-                if (_value != null && !base.Type.IsInstanceOfType(_value))
-                    base.Type = _value.GetType();
+                if (_value != null)
+                {
+                    var type = base.Type != null ? base.Type.ToType() : null;
+                    if (type == null || !type.IsInstanceOfType(_value))
+                        base.Type = new TypeNode(this.Factory, _value.GetType());
+                }
             }
         }
 
@@ -61,7 +64,7 @@ namespace Serialize.Linq.Nodes
         
         public override Expression ToExpression()
         {
-            return this.Type != null ? Expression.Constant(this.Value, this.Type) : Expression.Constant(this.Value);
+            return this.Type != null ? Expression.Constant(this.Value, this.Type.ToType()) : Expression.Constant(this.Value);
         }        
     }
 }

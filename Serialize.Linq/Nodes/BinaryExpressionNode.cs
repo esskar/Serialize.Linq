@@ -24,16 +24,9 @@ namespace Serialize.Linq.Nodes
         [DataMember]
         public ExpressionNode Left { get; set; }
 
-        [IgnoreDataMember]
-        public MethodInfo Method { get; set; }
-
         [DataMember]
-        public string MethodName
-        {
-            get { return SerializationHelper.SerializeMethod(this.Method, this.Factory.UseAssemblyQualifiedName); }
-            set { this.Method = SerializationHelper.DeserializeMethod(value); }
-        }
-
+        public MethodInfoNode Method { get; set; }
+        
         [DataMember]
         public ExpressionNode Right { get; set; }
 
@@ -42,7 +35,7 @@ namespace Serialize.Linq.Nodes
             this.Left = this.Factory.Create(expression.Left);
             this.Right = this.Factory.Create(expression.Right);
             this.Conversion = this.Factory.Create(expression.Conversion);
-            this.Method = expression.Method;
+            this.Method = new MethodInfoNode(this.Factory, expression.Method);
             this.IsLiftedToNull = expression.IsLiftedToNull;
         }
 
@@ -54,14 +47,14 @@ namespace Serialize.Linq.Nodes
                     this.NodeType,
                     this.Left.ToExpression(), this.Right.ToExpression(),
                     this.IsLiftedToNull,
-                    this.Method,
+                    this.Method.ToMemberInfo(),
                     conversion);
             if (this.Method != null)
                 return Expression.MakeBinary(
                     this.NodeType,
                     this.Left.ToExpression(), this.Right.ToExpression(),
                     this.IsLiftedToNull,
-                    this.Method);
+                    this.Method.ToMemberInfo());
             return Expression.MakeBinary(this.NodeType,
                     this.Left.ToExpression(), this.Right.ToExpression());
         }        

@@ -3,7 +3,6 @@ using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -41,22 +40,15 @@ namespace Serialize.Linq.Nodes
             : base(factory)
         {
             this.NodeType = nodeType;
-            this.Type = type;
+            this.Type = new TypeNode(this.Factory, type);
         }
 
         [DataMember]
         public ExpressionType NodeType { get; set; }        
 
-        [IgnoreDataMember]
-        public virtual Type Type { get; set; }
-
         [DataMember]
-        public string TypeName
-        {
-            get { return SerializationHelper.SerializeType(this.Type, this.Factory.UseAssemblyQualifiedName); }
-            set { this.Type = SerializationHelper.DeserializeType(value); }
-        }
-
+        public virtual TypeNode Type { get; set; }
+        
         public abstract Expression ToExpression();
 
         public override string ToString()

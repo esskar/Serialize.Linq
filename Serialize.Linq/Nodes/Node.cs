@@ -6,6 +6,7 @@ using Serialize.Linq.Interfaces;
 namespace Serialize.Linq.Nodes
 {
     [DataContract]
+    #region KnownTypes
     [KnownType(typeof(BinaryExpressionNode))]
     [KnownType(typeof(ConditionalExpressionNode))]
     [KnownType(typeof(ConstantExpressionNode))]
@@ -29,7 +30,9 @@ namespace Serialize.Linq.Nodes
     [KnownType(typeof(NewExpressionNode))]
     [KnownType(typeof(ParameterExpressionNode))]
     [KnownType(typeof(TypeBinaryExpressionNode))]
+    [KnownType(typeof(TypeNode))]
     [KnownType(typeof(UnaryExpressionNode))]
+    #endregion
     public abstract class Node
     {
         protected Node()
