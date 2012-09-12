@@ -7,6 +7,13 @@ namespace Serialize.Linq.Factories
 {
     public class ExpressionNodeFactory : IExpressionNodeFactory
     {
+        public ExpressionNodeFactory()
+        {
+            this.UseAssemblyQualifiedName = true;
+        }
+
+        public virtual bool UseAssemblyQualifiedName { get; set; }
+
         public virtual ExpressionNode Create(Expression expression)
         {
             if (expression == null)

@@ -24,7 +24,7 @@ namespace Serialize.Linq.Nodes
         [DataMember]
         public string MemberName
         {
-            get { return SerializationHelper.SerializeMember(this.Member); }
+            get { return SerializationHelper.SerializeMember(this.Member, this.Factory.UseAssemblyQualifiedName); }
             set { this.Member = SerializationHelper.DeserializeMember(value); }
         }
 

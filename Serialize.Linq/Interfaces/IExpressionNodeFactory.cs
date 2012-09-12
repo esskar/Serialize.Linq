@@ -5,8 +5,8 @@ namespace Serialize.Linq.Interfaces
 {
     public interface IExpressionNodeFactory
     {
-        ExpressionNode Create(Expression expression);
-    }
+        bool UseAssemblyQualifiedName { get; set; }
 
-    public interface IExpressionNodeFactory<T> : IExpressionNodeFactory { }
+        ExpressionNode Create(Expression expression);
+    }    
 }

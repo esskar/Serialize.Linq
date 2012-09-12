@@ -53,7 +53,7 @@ namespace Serialize.Linq.Nodes
         [DataMember]
         public string TypeName
         {
-            get { return SerializationHelper.SerializeType(this.Type); }
+            get { return SerializationHelper.SerializeType(this.Type, this.Factory.UseAssemblyQualifiedName); }
             set { this.Type = SerializationHelper.DeserializeType(value); }
         }
 

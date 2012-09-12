@@ -27,6 +27,12 @@ namespace Serialize.Linq.Factories
             _innerFactory = CreateFactory();
         }
 
+        public bool UseAssemblyQualifiedName
+        {
+            get { return _innerFactory.UseAssemblyQualifiedName; }
+            set { _innerFactory.UseAssemblyQualifiedName = value; }
+        }
+
         public ExpressionNode Create(Expression expression)
         {
             return _innerFactory.Create(expression);

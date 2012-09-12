@@ -24,7 +24,7 @@ namespace Serialize.Linq.Nodes
         [DataMember]
         public string ConstructorName
         {
-            get { return SerializationHelper.SerializeConstructor(this.Constructor); }
+            get { return SerializationHelper.SerializeConstructor(this.Constructor, this.Factory.UseAssemblyQualifiedName); }
             set { this.Constructor = SerializationHelper.DeserializeConstructor(value); }
         }
 
@@ -35,7 +35,7 @@ namespace Serialize.Linq.Nodes
         {
  	        this.Arguments = new ExpressionNodeList(this.Factory, expression.Arguments);
             this.Constructor = expression.Constructor;
-            this.Members = new MemberInfoNodeList(expression.Members);        
+            this.Members = new MemberInfoNodeList(this.Factory, expression.Members);        
         }
 
         public override Expression ToExpression()

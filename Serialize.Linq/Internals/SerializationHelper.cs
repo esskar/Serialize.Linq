@@ -8,9 +8,11 @@ namespace Serialize.Linq.Internals
 {
     internal static class SerializationHelper
     {
-        public static string SerializeType(Type type)
+        public static string SerializeType(Type type, bool useAssemblyQualifiedName)
         {
-            return type != null ? type.AssemblyQualifiedName : null;
+            if(type == null)
+                return null;
+            return useAssemblyQualifiedName ? type.AssemblyQualifiedName : type.FullName;
         }
 
         public static Type DeserializeType(string typeName)
@@ -23,13 +25,13 @@ namespace Serialize.Linq.Internals
             return type;
         }
 
-        public static string SerializeMethod(MethodInfo methodInfo)
+        public static string SerializeMethod(MethodInfo methodInfo, bool useAssemblyQualifiedName)
         {
             if (methodInfo == null)
                 return null;
 
             var sb = new StringBuilder();
-            sb.Append(SerializeType(methodInfo.DeclaringType));
+            sb.Append(SerializeType(methodInfo.DeclaringType, useAssemblyQualifiedName));
             if (sb.Length == 0)
                 throw new SerializationException(string.Format("Failed to serialize declaring type '{0}' of method '{1}", methodInfo.DeclaringType, methodInfo));            
             
@@ -46,7 +48,7 @@ namespace Serialize.Linq.Internals
             {
                 sb.AppendLine();
                 foreach (var type in argumentTypes)
-                    sb.AppendLine(SerializeType(type));
+                    sb.AppendLine(SerializeType(type, useAssemblyQualifiedName));
             }
             return sb.ToString();
         }
@@ -77,13 +79,13 @@ namespace Serialize.Linq.Internals
             return method;            
         }
 
-        public static string SerializeMember(MemberInfo memberInfo)
+        public static string SerializeMember(MemberInfo memberInfo, bool useAssemblyQualifiedName)
         {
             if (memberInfo == null)
                 return null;
 
             var sb = new StringBuilder();
-            sb.Append(SerializeType(memberInfo.DeclaringType));
+            sb.Append(SerializeType(memberInfo.DeclaringType, useAssemblyQualifiedName));
             if (sb.Length == 0)
                 throw new SerializationException(string.Format("Failed to serialize declaring type '{0}' of member '{1}", memberInfo.DeclaringType, memberInfo));
 
@@ -108,13 +110,13 @@ namespace Serialize.Linq.Internals
             return type.GetMembers().First(m => m.ToString() == lines[1]);
         }
 
-        public static string SerializeConstructor(ConstructorInfo constructorInfo)
+        public static string SerializeConstructor(ConstructorInfo constructorInfo, bool useAssemblyQualifiedName)
         {
             if (constructorInfo == null)
                 return null;
 
             var sb = new StringBuilder();
-            sb.Append(SerializeType(constructorInfo.DeclaringType));
+            sb.Append(SerializeType(constructorInfo.DeclaringType, useAssemblyQualifiedName));
             if (sb.Length == 0)
                 throw new SerializationException(string.Format("Failed to serialize declaring type '{0}' of member '{1}", constructorInfo.DeclaringType, constructorInfo));
 

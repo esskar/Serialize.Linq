@@ -16,14 +16,14 @@ namespace Serialize.Linq.Tests
         [TestMethod]
         public void SerializeTypeTest()
         {
-            var actual = SerializationHelper.SerializeType(typeof(Bar));
+            var actual = SerializationHelper.SerializeType(typeof(Bar), true);
             Assert.AreEqual(__barTypeText, actual);
         }
 
         [TestMethod]
         public void SerializeNullTypeTest()
         {
-            var actual = SerializationHelper.SerializeType(null);
+            var actual = SerializationHelper.SerializeType(null, true);
             Assert.AreEqual(null, actual);
         }
 
@@ -45,14 +45,14 @@ namespace Serialize.Linq.Tests
         public void SerializeDeserializeAllSystemTypesTest()
         {
             foreach (var expected in typeof(string).Assembly.GetTypes())            
-                Assert.AreEqual(expected, SerializationHelper.DeserializeType(SerializationHelper.SerializeType(expected)));            
+                Assert.AreEqual(expected, SerializationHelper.DeserializeType(SerializationHelper.SerializeType(expected, true)));            
         }
 
         [TestMethod]
         public void SerializeMethodTest()
         {
             var method = typeof(Bar).GetMethod("GetName");
-            var actual = SerializationHelper.SerializeMethod(method);
+            var actual = SerializationHelper.SerializeMethod(method, true);
             Assert.AreEqual(__barGetNameText, actual);
         }
 
@@ -68,7 +68,7 @@ namespace Serialize.Linq.Tests
         public void SerializeMemberTest()
         {
             var member = typeof(Bar).GetProperty("Name");
-            var actual = SerializationHelper.SerializeMember(member);
+            var actual = SerializationHelper.SerializeMember(member, true);
             Assert.AreEqual(__barNameText, actual);
         }
 
@@ -84,7 +84,7 @@ namespace Serialize.Linq.Tests
         public void SerializeConstructorTest()
         {
             var constructor = typeof(Bar).GetConstructor(Type.EmptyTypes);
-            var actual = SerializationHelper.SerializeConstructor(constructor);
+            var actual = SerializationHelper.SerializeConstructor(constructor, true);
             Assert.AreEqual(__barConstructorText, actual);
         }
 

@@ -39,7 +39,7 @@ namespace Serialize.Linq.Nodes
         [DataMember]
         public string AddMethodName
         {
-            get { return SerializationHelper.SerializeMethod(this.AddMethod); }
+            get { return SerializationHelper.SerializeMethod(this.AddMethod, this.Factory.UseAssemblyQualifiedName); }
             set { this.AddMethod = SerializationHelper.DeserializeMethod(value); }
         }
 
