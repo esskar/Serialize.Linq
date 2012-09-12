@@ -1,8 +1,6 @@
 ﻿using System.Linq.Expressions;
-using System.Reflection;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
