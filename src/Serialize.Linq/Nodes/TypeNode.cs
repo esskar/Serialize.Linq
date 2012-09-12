@@ -5,31 +5,20 @@ using Serialize.Linq.Interfaces;
 namespace Serialize.Linq.Nodes
 {
     [DataContract]
-    public class TypeNode : Node
+    #region KnownTypes
+    [KnownType(typeof(NamedTypeNode))]
+    [KnownType(typeof(RefTypeNode))]
+    #endregion
+    public abstract class TypeNode : Node
     {
-        public TypeNode(INodeFactory factory, Type type)
-            : base(factory)
-        {
-            if (type != null)
-                this.Name = this.Factory.UseAssemblyQualifiedName ? type.AssemblyQualifiedName : type.FullName;
-        }
+        protected TypeNode(INodeFactory factory)
+            : base(factory) { }
 
-        [DataMember]
-        public string Name { get; set; }
-
-        public Type ToType()
-        {
-            if (string.IsNullOrWhiteSpace(this.Name))
-                return null;
-            var type = Type.GetType(this.Name);
-            if (type == null)
-                throw new SerializationException(string.Format("Failed to serialize '{0}' to a type object.", this.Name));
-            return type;
-        }
+        public abstract Type ToType();
 
         public override string ToString()
         {
-            return this.Name;
+            return this.ToType().ToString();
         }
     }    
 }

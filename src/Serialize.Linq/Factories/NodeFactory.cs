@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Linq.Expressions;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Nodes;
@@ -7,12 +8,21 @@ namespace Serialize.Linq.Factories
 {
     public class NodeFactory : INodeFactory
     {
+        private readonly ConcurrentDictionary<Type, int> _typeReferences;
+        private readonly ConcurrentDictionary<int, Type> _referenceTypes;
+
         public NodeFactory()
         {
+            _typeReferences = new ConcurrentDictionary<Type, int>();
+            _referenceTypes = new ConcurrentDictionary<int, Type>();
+
             this.UseAssemblyQualifiedName = true;
+            this.UseReferences = false;
         }
 
-        public virtual bool UseAssemblyQualifiedName { get; set; }
+        public bool UseAssemblyQualifiedName { get; set; }
+
+        public bool UseReferences { get; set; }
 
         public virtual ExpressionNode Create(Expression expression)
         {
@@ -39,7 +49,24 @@ namespace Serialize.Linq.Factories
 
         public TypeNode Create(Type type)
         {
-            return new TypeNode(this, type);
+            if (this.UseReferences)
+            {
+                var refType = _typeReferences.GetOrAdd(type, t => {
+                    var rt = _typeReferences.Count;
+                    _referenceTypes[rt] = t;
+                    return rt;
+                });                
+                return new RefTypeNode(this, refType);
+            }   
+            return new NamedTypeNode(this, type);
+        }
+
+        public Type ResolveTypeRef(int typeRef)
+        {
+            Type type;
+            if (!_referenceTypes.TryGetValue(typeRef, out type))
+                type = null;
+            return type;
         }
     }
 }

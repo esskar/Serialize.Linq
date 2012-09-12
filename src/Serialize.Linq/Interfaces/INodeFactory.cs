@@ -8,8 +8,12 @@ namespace Serialize.Linq.Interfaces
     {
         bool UseAssemblyQualifiedName { get; set; }
 
+        bool UseReferences { get; set; }
+
         ExpressionNode Create(Expression expression);
 
         TypeNode Create(Type type);
+
+        Type ResolveTypeRef(int typeRef);
     }    
 }

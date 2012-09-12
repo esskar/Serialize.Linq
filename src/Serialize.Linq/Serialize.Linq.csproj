@@ -50,6 +50,8 @@
     <Compile Include="Internals\MemberTypeEnumerator.cs" />
     <Compile Include="Internals\PropertyMemberTypeEnumerator.cs" />
     <Compile Include="Nodes\ConstructorInfoNode.cs" />
+    <Compile Include="Nodes\RefTypeNode.cs" />
+    <Compile Include="Nodes\NamedTypeNode.cs" />
     <Compile Include="Nodes\MemberInfoNode.cs" />
     <Compile Include="Nodes\MethodInfoNode.cs" />
     <Compile Include="Nodes\FieldInfoNode.cs" />

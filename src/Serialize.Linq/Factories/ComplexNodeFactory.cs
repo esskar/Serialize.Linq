@@ -33,6 +33,12 @@ namespace Serialize.Linq.Factories
             set { _innerFactory.UseAssemblyQualifiedName = value; }
         }
 
+        public bool UseReferences
+        {
+            get { return _innerFactory.UseReferences; }
+            set { _innerFactory.UseReferences = value; }
+        }
+
         public ExpressionNode Create(Expression expression)
         {
             return _innerFactory.Create(expression);
@@ -41,6 +47,11 @@ namespace Serialize.Linq.Factories
         public TypeNode Create(Type type)
         {
             return _innerFactory.Create(type);
+        }
+
+        public Type ResolveTypeRef(int typeRef)
+        {
+            return _innerFactory.ResolveTypeRef(typeRef);
         }
 
         private INodeFactory CreateFactory()
