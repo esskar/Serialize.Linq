@@ -7,7 +7,7 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class MemberListBindingNode : MemberBindingNode
     {
-        public MemberListBindingNode(IExpressionNodeFactory factory, MemberListBinding memberListBinding)
+        public MemberListBindingNode(INodeFactory factory, MemberListBinding memberListBinding)
             : base(factory, memberListBinding.BindingType, memberListBinding.Member)
         {
             this.Initializers = new ElementInitNodeList(this.Factory, memberListBinding.Initializers);

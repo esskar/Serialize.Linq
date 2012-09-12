@@ -15,12 +15,12 @@ namespace Serialize.Linq.Extensions
             return expression.ToJson(expression.GetDefaultFactory());
         }
 
-        public static string ToJson(this Expression expression, IExpressionNodeFactory factory)
+        public static string ToJson(this Expression expression, INodeFactory factory)
         {
             return expression.ToJson(factory, new JsonSerializer());
         }
 
-        public static string ToJson(this Expression expression, IExpressionNodeFactory factory, IJsonSerializer serializer)
+        public static string ToJson(this Expression expression, INodeFactory factory, IJsonSerializer serializer)
         {
             return expression.ToText(factory, serializer);
         }
@@ -30,17 +30,17 @@ namespace Serialize.Linq.Extensions
             return expression.ToXml(expression.GetDefaultFactory());
         }
 
-        public static string ToXml(this Expression expression, IExpressionNodeFactory factory)
+        public static string ToXml(this Expression expression, INodeFactory factory)
         {
             return expression.ToXml(factory, new XmlSerializer());
         }
 
-        public static string ToXml(this Expression expression, IExpressionNodeFactory factory, IXmlSerializer serializer)
+        public static string ToXml(this Expression expression, INodeFactory factory, IXmlSerializer serializer)
         {
             return expression.ToText(factory, serializer);
         }
 
-        public static string ToText(this Expression expression, IExpressionNodeFactory factory, ITextSerializer serializer)
+        public static string ToText(this Expression expression, INodeFactory factory, ITextSerializer serializer)
         {
             if(factory == null)
                 throw new ArgumentNullException("factory");
@@ -51,12 +51,12 @@ namespace Serialize.Linq.Extensions
             return serializer.Serialize(expressionNode);
         }
 
-        internal static IExpressionNodeFactory GetDefaultFactory(this Expression expression)
+        internal static INodeFactory GetDefaultFactory(this Expression expression)
         {
             var lambda = expression as LambdaExpression;
             if(lambda != null)
-                return  new ComplexExpressionNodeFactory(lambda.Parameters.Select(p => p.Type).ToArray());
-            return new ExpressionNodeFactory();
+                return  new ComplexNodeFactory(lambda.Parameters.Select(p => p.Type).ToArray());
+            return new NodeFactory();
         }
 
         internal static IEnumerable<Expression> GetLinkNodes(this Expression expression)

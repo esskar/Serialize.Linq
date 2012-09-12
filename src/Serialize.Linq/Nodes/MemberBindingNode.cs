@@ -9,10 +9,10 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public abstract class MemberBindingNode : Node
     {
-        protected MemberBindingNode(IExpressionNodeFactory factory) 
+        protected MemberBindingNode(INodeFactory factory) 
             : base(factory) { }
 
-        protected MemberBindingNode(IExpressionNodeFactory factory, MemberBindingType bindingType, MemberInfo memberInfo) 
+        protected MemberBindingNode(INodeFactory factory, MemberBindingType bindingType, MemberInfo memberInfo) 
             : base(factory) 
         {
             this.BindingType = bindingType;
@@ -27,7 +27,7 @@ namespace Serialize.Linq.Nodes
         
         public abstract MemberBinding ToMemberBinding();
 
-        internal static MemberBindingNode Create(IExpressionNodeFactory factory, MemberBinding memberBinding)
+        internal static MemberBindingNode Create(INodeFactory factory, MemberBinding memberBinding)
         {
             MemberBindingNode memberBindingNode = null;
 

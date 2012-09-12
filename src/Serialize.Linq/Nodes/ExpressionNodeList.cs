@@ -12,7 +12,7 @@ namespace Serialize.Linq.Nodes
     {
         public ExpressionNodeList() { }
 
-        public ExpressionNodeList(IExpressionNodeFactory factory, IEnumerable<Expression> items)            
+        public ExpressionNodeList(INodeFactory factory, IEnumerable<Expression> items)            
         {
             if(factory == null)
                 throw new ArgumentNullException("factory");

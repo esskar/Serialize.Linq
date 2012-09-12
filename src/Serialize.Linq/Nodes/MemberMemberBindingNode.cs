@@ -7,7 +7,7 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class MemberMemberBindingNode : MemberBindingNode
     {
-        public MemberMemberBindingNode(IExpressionNodeFactory factory, MemberMemberBinding memberMemberBinding) 
+        public MemberMemberBindingNode(INodeFactory factory, MemberMemberBinding memberMemberBinding) 
             : base(factory, memberMemberBinding.BindingType, memberMemberBinding.Member)
         {
             this.Bindings = new MemberBindingNodeList(factory, memberMemberBinding.Bindings);

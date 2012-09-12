@@ -12,7 +12,7 @@ namespace Serialize.Linq.Nodes
         public LambdaExpressionNode(LambdaExpression expression)
             : base(expression) {}
 
-        public LambdaExpressionNode(IExpressionNodeFactory factory, LambdaExpression expression)
+        public LambdaExpressionNode(INodeFactory factory, LambdaExpression expression)
             : base(factory, expression) { }
 
         [DataMember]

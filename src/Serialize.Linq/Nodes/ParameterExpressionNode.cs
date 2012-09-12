@@ -14,7 +14,7 @@ namespace Serialize.Linq.Nodes
         public ParameterExpressionNode(ParameterExpression expression)
             : base(expression) { }
 
-        public ParameterExpressionNode(IExpressionNodeFactory factory, ParameterExpression expression)
+        public ParameterExpressionNode(INodeFactory factory, ParameterExpression expression)
             : base(factory, expression) { }
 
         [DataMember]

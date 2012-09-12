@@ -5,9 +5,9 @@ using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Factories
 {
-    public class ExpressionNodeFactory : IExpressionNodeFactory
+    public class NodeFactory : INodeFactory
     {
-        public ExpressionNodeFactory()
+        public NodeFactory()
         {
             this.UseAssemblyQualifiedName = true;
         }
@@ -35,6 +35,11 @@ namespace Serialize.Linq.Factories
             if (expression is UnaryExpression)         return new UnaryExpressionNode(this, expression as UnaryExpression);                        
 
             throw new ArgumentException("Unknown expression of type " + expression.GetType());
+        }
+
+        public TypeNode Create(Type type)
+        {
+            return new TypeNode(this, type);
         }
     }
 }

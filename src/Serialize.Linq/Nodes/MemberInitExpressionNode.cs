@@ -11,7 +11,7 @@ namespace Serialize.Linq.Nodes
         public MemberInitExpressionNode(MemberInitExpression expression)
             : base(expression) {}
 
-        public MemberInitExpressionNode(IExpressionNodeFactory factory, MemberInitExpression expression)
+        public MemberInitExpressionNode(INodeFactory factory, MemberInitExpression expression)
             : base(factory, expression) { }
 
         [XmlIgnore]

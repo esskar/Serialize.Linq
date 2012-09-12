@@ -80,11 +80,11 @@ namespace Serialize.Linq.Tests
 
         private void AssertExpression(Expression expression, string message = null)
         {
-            this.AssertExpression<ExpressionNodeFactory>(expression, message);
+            this.AssertExpression<NodeFactory>(expression, message);
         }
 
         private void AssertExpression<TFactory>(Expression expression, string message = null)
-            where TFactory : IExpressionNodeFactory, new()
+            where TFactory : INodeFactory, new()
         {
             var factory = new TFactory();
             var expressionNode = factory.Create(expression);
@@ -95,7 +95,7 @@ namespace Serialize.Linq.Tests
         }
 
         private void AssertExpression<TFactory>(Expression expression, Expression expectedExpression, string message = null)
-            where TFactory : IExpressionNodeFactory, new()
+            where TFactory : INodeFactory, new()
         {
             var factory = new TFactory();
             var expressionNode = factory.Create(expression);
@@ -106,7 +106,7 @@ namespace Serialize.Linq.Tests
         }
 
         private void AssertExpression<TFactory, T, TResult>(Expression<Func<T, TResult>> expression, Expression<Func<T, TResult>> expectedExpression, string message = null)
-            where TFactory : IExpressionNodeFactory, new()
+            where TFactory : INodeFactory, new()
         {
             this.AssertExpression<TFactory>(expression, expectedExpression, message);
         }

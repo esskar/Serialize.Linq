@@ -7,11 +7,11 @@ using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Factories
 {
-    public class TypeResolverExpressionNodeFactory : ExpressionNodeFactory
+    public class TypeResolverNodeFactory : NodeFactory
     {
         private readonly Type[] _expectedTypes;
         
-        public TypeResolverExpressionNodeFactory(IEnumerable<Type> expectedTypes)
+        public TypeResolverNodeFactory(IEnumerable<Type> expectedTypes)
         {
             if(expectedTypes == null)
                 throw new ArgumentNullException("expectedTypes");

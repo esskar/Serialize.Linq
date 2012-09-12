@@ -7,7 +7,7 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class TypeNode : Node
     {
-        public TypeNode(IExpressionNodeFactory factory, Type type)
+        public TypeNode(INodeFactory factory, Type type)
             : base(factory)
         {
             if (type != null)

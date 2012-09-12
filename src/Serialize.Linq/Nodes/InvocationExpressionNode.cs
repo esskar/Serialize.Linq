@@ -10,7 +10,7 @@ namespace Serialize.Linq.Nodes
         public InvocationExpressionNode(InvocationExpression expression) 
             : base(expression) { }
 
-        public InvocationExpressionNode(IExpressionNodeFactory factory, InvocationExpression expression) 
+        public InvocationExpressionNode(INodeFactory factory, InvocationExpression expression) 
             : base(factory, expression) { }
 
         [DataMember]

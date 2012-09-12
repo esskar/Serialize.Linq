@@ -40,9 +40,9 @@ namespace Serialize.Linq.Nodes
     public abstract class Node
     {
         protected Node()
-            : this(new ExpressionNodeFactory()) { }
+            : this(new NodeFactory()) { }
 
-        protected Node(IExpressionNodeFactory factory)
+        protected Node(INodeFactory factory)
         {
             if(factory == null)
                 throw new ArgumentNullException("factory");
@@ -51,7 +51,7 @@ namespace Serialize.Linq.Nodes
         }
 
         [IgnoreDataMember]
-        public IExpressionNodeFactory Factory
+        public INodeFactory Factory
         {
             get; private set;
         }

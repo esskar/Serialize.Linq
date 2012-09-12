@@ -13,7 +13,7 @@ namespace Serialize.Linq.Nodes
             this.Initialize(elementInit);
         }
 
-        public ElementInitNode(IExpressionNodeFactory factory, ElementInit elementInit)            
+        public ElementInitNode(INodeFactory factory, ElementInit elementInit)            
             : base(factory)
         {
             this.Initialize(elementInit);

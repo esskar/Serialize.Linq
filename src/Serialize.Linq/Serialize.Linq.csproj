@@ -39,8 +39,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
-    <Compile Include="Factories\ComplexExpressionNodeFactory.cs" />
-    <Compile Include="Factories\TypeResolverExpressionNodeFactory.cs" />
+    <Compile Include="Factories\ComplexNodeFactory.cs" />
+    <Compile Include="Factories\TypeResolverNodeFactory.cs" />
     <Compile Include="Interfaces\IXmlSerializer.cs" />
     <Compile Include="Interfaces\IJsonSerializer.cs" />
     <Compile Include="Interfaces\ISerializer.cs" />
@@ -68,8 +68,8 @@
     <Compile Include="Nodes\ElementInitNode.cs" />
     <Compile Include="Nodes\ElementInitNodeList.cs" />
     <Compile Include="Nodes\ExpressionNode.cs" />
-    <Compile Include="Factories\ExpressionNodeFactory.cs" />
-    <Compile Include="Interfaces\IExpressionNodeFactory.cs" />
+    <Compile Include="Factories\NodeFactory.cs" />
+    <Compile Include="Interfaces\INodeFactory.cs" />
     <Compile Include="Nodes\ExpressionNodeList.cs" />
     <Compile Include="Nodes\InvocationExpressionNode.cs" />
     <Compile Include="Nodes\LambdaExpressionNode.cs" />

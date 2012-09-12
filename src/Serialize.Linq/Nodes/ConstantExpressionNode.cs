@@ -20,7 +20,7 @@ namespace Serialize.Linq.Nodes
         public ConstantExpressionNode(ConstantExpression expression)
             : base(expression) {}
 
-        public ConstantExpressionNode(IExpressionNodeFactory factory, ConstantExpression expression) 
+        public ConstantExpressionNode(INodeFactory factory, ConstantExpression expression) 
             : base(factory, expression) { }
         
         public override TypeNode Type
@@ -31,7 +31,7 @@ namespace Serialize.Linq.Nodes
                 if(this.Value != null)
                 {
                     if (value == null)
-                        value = new TypeNode(this.Factory, this.Value.GetType());
+                        value = this.Factory.Create(this.Value.GetType());
                     else if (!value.ToType().IsInstanceOfType(this.Value))
                         throw new InvalidTypeException(string.Format("Type '{0}' is not an instance of the current value type '{1}'.", value.ToType(), this.Value.GetType()));
                 }
@@ -52,7 +52,7 @@ namespace Serialize.Linq.Nodes
                 {
                     var type = base.Type != null ? base.Type.ToType() : null;
                     if (type == null || !type.IsInstanceOfType(_value))
-                        base.Type = new TypeNode(this.Factory, _value.GetType());
+                        base.Type = this.Factory.Create(_value.GetType());
                 }
             }
         }

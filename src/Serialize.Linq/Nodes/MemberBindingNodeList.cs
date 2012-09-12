@@ -12,7 +12,7 @@ namespace Serialize.Linq.Nodes
     {
         public MemberBindingNodeList() { }
 
-        public MemberBindingNodeList(IExpressionNodeFactory factory, IEnumerable<MemberBinding> items)            
+        public MemberBindingNodeList(INodeFactory factory, IEnumerable<MemberBinding> items)            
         {
             if(factory == null)
                 throw new ArgumentNullException("factory");

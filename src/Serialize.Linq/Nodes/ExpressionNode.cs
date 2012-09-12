@@ -15,7 +15,7 @@ namespace Serialize.Linq.Nodes
             this.Initialize(expression);
         }
 
-        protected ExpressionNode(IExpressionNodeFactory factory, TExpression expression)
+        protected ExpressionNode(INodeFactory factory, TExpression expression)
             : base(factory, expression.NodeType, expression.Type) 
         { 
             this.Initialize(expression);
@@ -24,7 +24,7 @@ namespace Serialize.Linq.Nodes
         protected ExpressionNode(ExpressionType expressionType, Type type = null)
             : base(expressionType, type) { }
 
-        protected ExpressionNode(IExpressionNodeFactory factory, ExpressionType nodeType, Type type = null)
+        protected ExpressionNode(INodeFactory factory, ExpressionType nodeType, Type type = null)
             : base(factory, nodeType, type) { }
 
         protected abstract void Initialize(TExpression expression);        
@@ -34,13 +34,13 @@ namespace Serialize.Linq.Nodes
     public abstract class ExpressionNode : Node
     {
         protected ExpressionNode(ExpressionType expressionType, Type type = null)
-            : this(new ExpressionNodeFactory(), expressionType, type) { }
+            : this(new NodeFactory(), expressionType, type) { }
         
-        protected ExpressionNode(IExpressionNodeFactory factory, ExpressionType nodeType, Type type = null)
+        protected ExpressionNode(INodeFactory factory, ExpressionType nodeType, Type type = null)
             : base(factory)
         {
             this.NodeType = nodeType;
-            this.Type = new TypeNode(this.Factory, type);
+            this.Type = this.Factory.Create(type);
         }
 
         [DataMember]

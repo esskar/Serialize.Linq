@@ -10,7 +10,7 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public abstract class MemberNode<TMemberInfo> : Node where TMemberInfo: MemberInfo
     {
-        protected MemberNode(IExpressionNodeFactory factory, TMemberInfo memberInfo)
+        protected MemberNode(INodeFactory factory, TMemberInfo memberInfo)
             : base(factory)
         {
             if(memberInfo != null)
@@ -28,7 +28,7 @@ namespace Serialize.Linq.Nodes
 
         protected virtual void Initialize(TMemberInfo memberInfo)
         {                        
-            this.DeclaringType = new TypeNode(this.Factory, memberInfo.DeclaringType);
+            this.DeclaringType = this.Factory.Create(memberInfo.DeclaringType);
             this.MemberType = memberInfo.MemberType;
             this.Signature = memberInfo.ToString();
         }

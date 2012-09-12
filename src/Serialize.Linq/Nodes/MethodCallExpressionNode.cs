@@ -11,7 +11,7 @@ namespace Serialize.Linq.Nodes
         public MethodCallExpressionNode(MethodCallExpression expression)
             : base(expression) {}
 
-        public MethodCallExpressionNode(IExpressionNodeFactory factory, MethodCallExpression expression)
+        public MethodCallExpressionNode(INodeFactory factory, MethodCallExpression expression)
             : base(factory, expression) { }
 
         [DataMember]

@@ -10,7 +10,7 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class MethodInfoNode : MemberNode<MethodInfo>
     {
-        public MethodInfoNode(IExpressionNodeFactory factory, MethodInfo memberInfo) 
+        public MethodInfoNode(INodeFactory factory, MethodInfo memberInfo) 
             : base(factory, memberInfo) { }
 
         protected override IEnumerable<MethodInfo> GetMemberInfosForType(Type type)
@@ -32,7 +32,7 @@ namespace Serialize.Linq.Nodes
             
             this.IsGenericMethod = true;
             this.Signature = memberInfo.GetGenericMethodDefinition().ToString();
-            this.GenericArguments = memberInfo.GetGenericArguments().Select(a => new TypeNode(this.Factory, a)).ToArray();
+            this.GenericArguments = memberInfo.GetGenericArguments().Select(a => this.Factory.Create(a)).ToArray();
         }
 
         public override MethodInfo ToMemberInfo()

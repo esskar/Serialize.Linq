@@ -8,15 +8,15 @@ using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Factories
 {
-    public class ComplexExpressionNodeFactory : IExpressionNodeFactory
+    public class ComplexNodeFactory : INodeFactory
     {
-        private readonly IExpressionNodeFactory _innerFactory;
+        private readonly INodeFactory _innerFactory;
         private readonly Type[] _types;
 
-        public ComplexExpressionNodeFactory(Type type)
+        public ComplexNodeFactory(Type type)
             : this(new [] { type }) { }
         
-        public ComplexExpressionNodeFactory(Type[] types)
+        public ComplexNodeFactory(Type[] types)
         {
             if(types == null)
                 throw new ArgumentNullException("types");
@@ -38,12 +38,17 @@ namespace Serialize.Linq.Factories
             return _innerFactory.Create(expression);
         }
 
-        private IExpressionNodeFactory CreateFactory()
+        public TypeNode Create(Type type)
+        {
+            return _innerFactory.Create(type);
+        }
+
+        private INodeFactory CreateFactory()
         {
             var expectedTypes = new HashSet<Type>();
             foreach (var type in _types)
                 expectedTypes.UnionWith(GetComplexMemberTypes(type));
-            return new TypeResolverExpressionNodeFactory(expectedTypes);
+            return new TypeResolverNodeFactory(expectedTypes);
         }
 
         private static IEnumerable<Type> GetComplexMemberTypes(Type type)        

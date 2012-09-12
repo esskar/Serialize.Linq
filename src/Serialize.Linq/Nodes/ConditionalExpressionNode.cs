@@ -10,7 +10,7 @@ namespace Serialize.Linq.Nodes
         public ConditionalExpressionNode(ConditionalExpression expression) 
             : base(expression) { }
 
-        public ConditionalExpressionNode(IExpressionNodeFactory factory, ConditionalExpression expression) 
+        public ConditionalExpressionNode(INodeFactory factory, ConditionalExpression expression) 
             : base(factory, expression) { }
 
         [DataMember]

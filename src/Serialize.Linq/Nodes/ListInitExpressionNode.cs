@@ -10,7 +10,7 @@ namespace Serialize.Linq.Nodes
         public ListInitExpressionNode(ListInitExpression expression)
             : base(expression) {}
 
-        public ListInitExpressionNode(IExpressionNodeFactory factory, ListInitExpression expression)
+        public ListInitExpressionNode(INodeFactory factory, ListInitExpression expression)
             : base(factory, expression) { }
 
         [DataMember]

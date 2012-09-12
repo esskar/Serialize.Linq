@@ -11,7 +11,7 @@ namespace Serialize.Linq.Nodes
         public NewArrayExpressionNode(NewArrayExpression expression)
             : base(expression) { }
 
-        public NewArrayExpressionNode(IExpressionNodeFactory factory, NewArrayExpression expression)
+        public NewArrayExpressionNode(INodeFactory factory, NewArrayExpression expression)
             : base(factory, expression) { }
         
         [DataMember]

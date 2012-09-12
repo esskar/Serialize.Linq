@@ -9,7 +9,7 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class ConstructorInfoNode : MemberNode<ConstructorInfo>
     {
-        public ConstructorInfoNode(IExpressionNodeFactory factory, ConstructorInfo memberInfo) 
+        public ConstructorInfoNode(INodeFactory factory, ConstructorInfo memberInfo) 
             : base(factory, memberInfo) { }
 
         protected override IEnumerable<ConstructorInfo> GetMemberInfosForType(Type type)

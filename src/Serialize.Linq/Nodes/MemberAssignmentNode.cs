@@ -7,7 +7,7 @@ namespace Serialize.Linq.Nodes
     [DataContract]   
     public class MemberAssignmentNode : MemberBindingNode
     {
-        public MemberAssignmentNode(IExpressionNodeFactory factory, MemberAssignment memberAssignment) 
+        public MemberAssignmentNode(INodeFactory factory, MemberAssignment memberAssignment) 
             : base(factory, memberAssignment.BindingType, memberAssignment.Member)
         {
             this.Expression = this.Factory.Create(memberAssignment.Expression);

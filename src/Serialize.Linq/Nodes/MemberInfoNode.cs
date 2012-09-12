@@ -9,7 +9,7 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class FieldInfoNode : MemberNode<FieldInfo>
     {
-        public FieldInfoNode(IExpressionNodeFactory factory, FieldInfo memberInfo) 
+        public FieldInfoNode(INodeFactory factory, FieldInfo memberInfo) 
             : base(factory, memberInfo) { }
 
         protected override IEnumerable<FieldInfo> GetMemberInfosForType(Type type)

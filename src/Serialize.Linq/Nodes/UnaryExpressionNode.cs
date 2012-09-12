@@ -10,7 +10,7 @@ namespace Serialize.Linq.Nodes
         public UnaryExpressionNode(UnaryExpression expression) 
             : base(expression) { }
 
-        public UnaryExpressionNode(IExpressionNodeFactory factory, UnaryExpression expression) 
+        public UnaryExpressionNode(INodeFactory factory, UnaryExpression expression) 
             : base(factory, expression) { }
 
         [DataMember]
