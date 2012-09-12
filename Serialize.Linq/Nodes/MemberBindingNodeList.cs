@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
-using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
@@ -11,6 +10,8 @@ namespace Serialize.Linq.Nodes
     [CollectionDataContract]    
     public class MemberBindingNodeList : List<MemberBindingNode>
     {
+        public MemberBindingNodeList() { }
+
         public MemberBindingNodeList(IExpressionNodeFactory factory, IEnumerable<MemberBinding> items)            
         {
             if(factory == null)

@@ -17,6 +17,8 @@ namespace Serialize.Linq.Serializers
                 {
                     var serializer = this.CreateXmlObjectSerializer(typeof(T));
                     serializer.WriteObject(ms, obj);
+
+                    ms.Position = 0;
                     using (var reader = new StreamReader(ms, Encoding.UTF8))
                         return reader.ReadToEnd();                    
                 }

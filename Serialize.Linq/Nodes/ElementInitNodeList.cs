@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
-using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
@@ -11,6 +10,8 @@ namespace Serialize.Linq.Nodes
     [CollectionDataContract]
     public class ElementInitNodeList : List<ElementInitNode>
     {
+        public ElementInitNodeList() { }
+
         public ElementInitNodeList(IExpressionNodeFactory factory, IEnumerable<ElementInit> items)            
         {
             if(factory == null)

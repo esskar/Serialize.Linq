@@ -7,6 +7,7 @@ using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
+    [DataContract]    
     public abstract class ExpressionNode<TExpression> : ExpressionNode where TExpression : Expression
     {
         protected ExpressionNode(TExpression expression)

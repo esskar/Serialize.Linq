@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using System.Xml.Linq;
+using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Serializers;
 
@@ -10,6 +10,11 @@ namespace Serialize.Linq.Extensions
 {
     public static class ExpressionExtensions
     {
+        public static string ToJson(this Expression expression)
+        {
+            return expression.ToJson(expression.GetDefaultFactory());
+        }
+
         public static string ToJson(this Expression expression, IExpressionNodeFactory factory)
         {
             return expression.ToJson(factory, new JsonSerializer());
@@ -18,6 +23,16 @@ namespace Serialize.Linq.Extensions
         public static string ToJson(this Expression expression, IExpressionNodeFactory factory, IJsonSerializer serializer)
         {
             return expression.ToFormat(factory, serializer);
+        }
+
+        public static string ToXml(this Expression expression)
+        {
+            return expression.ToXml(expression.GetDefaultFactory());
+        }
+
+        public static string ToXml(this Expression expression, IExpressionNodeFactory factory)
+        {
+            return expression.ToXml(factory, new XmlSerializer());
         }
 
         public static string ToXml(this Expression expression, IExpressionNodeFactory factory, IXmlSerializer serializer)
@@ -34,6 +49,14 @@ namespace Serialize.Linq.Extensions
 
             var expressionNode = factory.Create(expression);
             return serializer.Serialize(expressionNode);
+        }
+
+        internal static IExpressionNodeFactory GetDefaultFactory(this Expression expression)
+        {
+            var lambda = expression as LambdaExpression;
+            if(lambda != null)
+                return  new ComplexExpressionNodeFactory(lambda.Parameters.Select(p => p.Type).ToArray());
+            return new ExpressionNodeFactory();
         }
 
         internal static IEnumerable<Expression> GetLinkNodes(this Expression expression)

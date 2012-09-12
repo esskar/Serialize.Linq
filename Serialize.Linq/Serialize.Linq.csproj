@@ -79,7 +79,9 @@
     <Compile Include="Nodes\TypeBinaryExpressionNode.cs" />
     <Compile Include="Nodes\UnaryExpressionNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializers\XmlSerializer.cs" />
     <Compile Include="Serializers\JsonSerializer.cs" />
+    <Compile Include="Serializers\TextSerializer.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -10,6 +10,8 @@ namespace Serialize.Linq.Nodes
     [CollectionDataContract]
     public class MemberInfoNodeList : List<string>
     {
+        public MemberInfoNodeList() { }
+
         public MemberInfoNodeList(IEnumerable<MemberInfo> items)             
         {
             if(items == null)
