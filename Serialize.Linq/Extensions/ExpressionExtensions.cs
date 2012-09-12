@@ -22,7 +22,7 @@ namespace Serialize.Linq.Extensions
 
         public static string ToJson(this Expression expression, IExpressionNodeFactory factory, IJsonSerializer serializer)
         {
-            return expression.ToFormat(factory, serializer);
+            return expression.ToText(factory, serializer);
         }
 
         public static string ToXml(this Expression expression)
@@ -37,10 +37,10 @@ namespace Serialize.Linq.Extensions
 
         public static string ToXml(this Expression expression, IExpressionNodeFactory factory, IXmlSerializer serializer)
         {
-            return expression.ToFormat(factory, serializer);
+            return expression.ToText(factory, serializer);
         }
 
-        public static TFormatType ToFormat<TFormatType>(this Expression expression, IExpressionNodeFactory factory, IFormatSerializer<TFormatType> serializer)
+        public static string ToText(this Expression expression, IExpressionNodeFactory factory, ITextSerializer serializer)
         {
             if(factory == null)
                 throw new ArgumentNullException("factory");

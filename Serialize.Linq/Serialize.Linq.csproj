@@ -41,9 +41,10 @@
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
     <Compile Include="Factories\ComplexExpressionNodeFactory.cs" />
     <Compile Include="Factories\TypeResolverExpressionNodeFactory.cs" />
-    <Compile Include="Interfaces\IFormatSerializer.cs" />
-    <Compile Include="Interfaces\IJsonSerializer.cs" />
     <Compile Include="Interfaces\IXmlSerializer.cs" />
+    <Compile Include="Interfaces\IJsonSerializer.cs" />
+    <Compile Include="Interfaces\ISerializer.cs" />
+    <Compile Include="Interfaces\ITextSerializer.cs" />
     <Compile Include="Internals\ComplexPropertyMemberTypeEnumerator.cs" />
     <Compile Include="Internals\ComplexPropertyMemberTypeFinder.cs" />
     <Compile Include="Internals\MemberTypeEnumerator.cs" />
@@ -79,9 +80,11 @@
     <Compile Include="Nodes\TypeBinaryExpressionNode.cs" />
     <Compile Include="Nodes\UnaryExpressionNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializers\ExpressionSerializer.cs" />
+    <Compile Include="Serializers\TextSerializer.cs" />
     <Compile Include="Serializers\XmlSerializer.cs" />
     <Compile Include="Serializers\JsonSerializer.cs" />
-    <Compile Include="Serializers\TextSerializer.cs" />
+    <Compile Include="Serializers\DataSerializer.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

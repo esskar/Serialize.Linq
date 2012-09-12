@@ -5,7 +5,7 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
 {
-    public class JsonSerializer : TextSerializer, IJsonSerializer
+    internal class JsonSerializer : TextSerializer, IJsonSerializer
     {
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {

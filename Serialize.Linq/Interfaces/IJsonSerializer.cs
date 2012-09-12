@@ -1,4 +1,4 @@
 ﻿namespace Serialize.Linq.Interfaces
 {
-    public interface IJsonSerializer : IFormatSerializer<string> { }
+    public interface IJsonSerializer : ITextSerializer { }
 }

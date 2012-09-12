@@ -1,6 +1,4 @@
-﻿using System.Xml.Linq;
-
-namespace Serialize.Linq.Interfaces
+﻿namespace Serialize.Linq.Interfaces
 {
-    public interface IXmlSerializer : IFormatSerializer<string> { }
+    public interface IXmlSerializer : ITextSerializer { }
 }
