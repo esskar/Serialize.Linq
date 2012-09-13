@@ -41,7 +41,7 @@ namespace Serialize.Linq.Extensions
         }
 
         public static string ToText(this Expression expression, INodeFactory factory, ITextSerializer serializer)
-        {
+        {            
             if(factory == null)
                 throw new ArgumentNullException("factory");
             if(serializer == null)
@@ -55,8 +55,8 @@ namespace Serialize.Linq.Extensions
         {
             var lambda = expression as LambdaExpression;
             if(lambda != null)
-                return  new ComplexNodeFactory(lambda.Parameters.Select(p => p.Type).ToArray());
-            return new NodeFactory();
+                return  new ComplexNodeFactory(new SerializerSettings(),  lambda.Parameters.Select(p => p.Type));
+            return new NodeFactory(new SerializerSettings());
         }
 
         internal static IEnumerable<Expression> GetLinkNodes(this Expression expression)

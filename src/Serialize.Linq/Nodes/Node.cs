@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
@@ -39,9 +38,6 @@ namespace Serialize.Linq.Nodes
     #endregion
     public abstract class Node
     {
-        protected Node()
-            : this(new NodeFactory()) { }
-
         protected Node(INodeFactory factory)
         {
             if(factory == null)

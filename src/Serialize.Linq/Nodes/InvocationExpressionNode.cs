@@ -7,9 +7,6 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class InvocationExpressionNode : ExpressionNode<InvocationExpression>
     {
-        public InvocationExpressionNode(InvocationExpression expression) 
-            : base(expression) { }
-
         public InvocationExpressionNode(INodeFactory factory, InvocationExpression expression) 
             : base(factory, expression) { }
 

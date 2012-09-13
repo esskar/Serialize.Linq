@@ -8,11 +8,6 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class ElementInitNode : Node
     {
-        public ElementInitNode(ElementInit elementInit)            
-        {
-            this.Initialize(elementInit);
-        }
-
         public ElementInitNode(INodeFactory factory, ElementInit elementInit)            
             : base(factory)
         {

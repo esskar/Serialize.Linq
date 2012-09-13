@@ -11,7 +11,7 @@ namespace Serialize.Linq.Nodes
             : base(factory)
         {
             if (type != null)
-                this.Name = this.Factory.UseAssemblyQualifiedName ? type.AssemblyQualifiedName : type.FullName;
+                this.Name = this.Factory.Settings.UseAssemblyQualifiedName ? type.AssemblyQualifiedName : type.FullName;
         }
 
         [DataMember]        

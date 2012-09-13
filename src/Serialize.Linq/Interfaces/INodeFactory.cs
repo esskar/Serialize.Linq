@@ -6,9 +6,7 @@ namespace Serialize.Linq.Interfaces
 {
     public interface INodeFactory
     {
-        bool UseAssemblyQualifiedName { get; set; }
-
-        bool UseReferences { get; set; }
+        ISerializerSettings Settings { get; }
 
         ExpressionNode Create(Expression expression);
 

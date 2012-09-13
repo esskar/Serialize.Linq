@@ -11,9 +11,6 @@ namespace Serialize.Linq.Nodes
         private string _name;
         private bool _isByRef;
 
-        public ParameterExpressionNode(ParameterExpression expression)
-            : base(expression) { }
-
         public ParameterExpressionNode(INodeFactory factory, ParameterExpression expression)
             : base(factory, expression) { }
 

@@ -7,9 +7,6 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class BinaryExpressionNode : ExpressionNode<BinaryExpression>
     {
-        public BinaryExpressionNode(BinaryExpression expression) 
-            : base(expression) { }
-
         public BinaryExpressionNode(INodeFactory factory, BinaryExpression expression) 
             : base(factory, expression) { }
 

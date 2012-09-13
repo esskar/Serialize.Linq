@@ -9,9 +9,6 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class LambdaExpressionNode : ExpressionNode<LambdaExpression>
     {
-        public LambdaExpressionNode(LambdaExpression expression)
-            : base(expression) {}
-
         public LambdaExpressionNode(INodeFactory factory, LambdaExpression expression)
             : base(factory, expression) { }
 

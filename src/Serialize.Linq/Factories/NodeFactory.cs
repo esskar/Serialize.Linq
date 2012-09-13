@@ -11,18 +11,18 @@ namespace Serialize.Linq.Factories
         private readonly ConcurrentDictionary<Type, int> _typeReferences;
         private readonly ConcurrentDictionary<int, Type> _referenceTypes;
 
-        public NodeFactory()
+        public NodeFactory(ISerializerSettings settings)
         {
+            if(settings == null)
+                throw new ArgumentNullException("settings");
+
             _typeReferences = new ConcurrentDictionary<Type, int>();
             _referenceTypes = new ConcurrentDictionary<int, Type>();
 
-            this.UseAssemblyQualifiedName = true;
-            this.UseReferences = false;
+            this.Settings = settings;
         }
 
-        public bool UseAssemblyQualifiedName { get; set; }
-
-        public bool UseReferences { get; set; }
+        public ISerializerSettings Settings { get; private set; }
 
         public virtual ExpressionNode Create(Expression expression)
         {
@@ -49,7 +49,7 @@ namespace Serialize.Linq.Factories
 
         public TypeNode Create(Type type)
         {
-            if (this.UseReferences)
+            if (this.Settings.UseReferences)
             {
                 var refType = _typeReferences.GetOrAdd(type, t => {
                     var rt = _typeReferences.Count;

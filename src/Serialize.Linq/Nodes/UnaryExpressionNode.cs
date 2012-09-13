@@ -7,9 +7,6 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class UnaryExpressionNode : ExpressionNode<UnaryExpression>
     {
-        public UnaryExpressionNode(UnaryExpression expression) 
-            : base(expression) { }
-
         public UnaryExpressionNode(INodeFactory factory, UnaryExpression expression) 
             : base(factory, expression) { }
 

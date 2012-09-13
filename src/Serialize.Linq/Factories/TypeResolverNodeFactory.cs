@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Serialize.Linq.Interfaces;
 using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Factories
@@ -11,7 +12,8 @@ namespace Serialize.Linq.Factories
     {
         private readonly Type[] _expectedTypes;
         
-        public TypeResolverNodeFactory(IEnumerable<Type> expectedTypes)
+        public TypeResolverNodeFactory(ISerializerSettings settings, IEnumerable<Type> expectedTypes)
+            : base(settings)
         {
             if(expectedTypes == null)
                 throw new ArgumentNullException("expectedTypes");
@@ -75,7 +77,7 @@ namespace Serialize.Linq.Factories
         {
             object constantValue;
             return this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue) 
-                ? new ConstantExpressionNode(constantValue) 
+                ? new ConstantExpressionNode(this, constantValue) 
                 : base.Create(memberExpression);
         }
 
@@ -86,12 +88,12 @@ namespace Serialize.Linq.Factories
             {
                 object constantValue;
                 if(this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue))
-                    return new ConstantExpressionNode(Expression.Lambda(methodCallExpression).Compile().DynamicInvoke());
+                    return new ConstantExpressionNode(this, Expression.Lambda(methodCallExpression).Compile().DynamicInvoke());
             }
             else if (methodCallExpression.Method.Name == "ToString" && methodCallExpression.Method.ReturnType == typeof(string))
 		    {
 			    var constantValue = Expression.Lambda(methodCallExpression).Compile().DynamicInvoke();
-				return new ConstantExpressionNode(constantValue);				
+				return new ConstantExpressionNode(this, constantValue);				
             }
             return base.Create(methodCallExpression);
         }

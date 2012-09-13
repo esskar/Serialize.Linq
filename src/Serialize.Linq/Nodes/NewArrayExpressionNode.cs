@@ -8,9 +8,6 @@ namespace Serialize.Linq.Nodes
     [DataContract]   
     public class NewArrayExpressionNode : ExpressionNode<NewArrayExpression>
     {
-        public NewArrayExpressionNode(NewArrayExpression expression)
-            : base(expression) { }
-
         public NewArrayExpressionNode(INodeFactory factory, NewArrayExpression expression)
             : base(factory, expression) { }
         

@@ -11,14 +11,11 @@ namespace Serialize.Linq.Nodes
     {
         private object _value;
 
-        public ConstantExpressionNode(object value)
-            : base(ExpressionType.Constant)
+        public ConstantExpressionNode(INodeFactory factory, object value)
+            : base(factory, ExpressionType.Constant)
         {
             this.Value = value;
         }
-
-        public ConstantExpressionNode(ConstantExpression expression)
-            : base(expression) {}
 
         public ConstantExpressionNode(INodeFactory factory, ConstantExpression expression) 
             : base(factory, expression) { }

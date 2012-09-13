@@ -7,9 +7,6 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class MemberExpressionNode : ExpressionNode<MemberExpression>
     {   
-        public MemberExpressionNode(MemberExpression expression)
-            : base(expression) {}
-        
         public MemberExpressionNode(INodeFactory factory, MemberExpression expression)
             : base(factory,expression) { }
 

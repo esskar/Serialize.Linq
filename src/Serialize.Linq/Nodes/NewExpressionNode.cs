@@ -7,9 +7,6 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class NewExpressionNode : ExpressionNode<NewExpression>
     {
-        public NewExpressionNode(NewExpression expression)
-            : base(expression) {}
-
         public NewExpressionNode(INodeFactory factory, NewExpression expression)
             : base(factory, expression) { }
 

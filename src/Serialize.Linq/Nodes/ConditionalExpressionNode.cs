@@ -7,9 +7,6 @@ namespace Serialize.Linq.Nodes
     [DataContract]   
     public class ConditionalExpressionNode : ExpressionNode<ConditionalExpression>
     {
-        public ConditionalExpressionNode(ConditionalExpression expression) 
-            : base(expression) { }
-
         public ConditionalExpressionNode(INodeFactory factory, ConditionalExpression expression) 
             : base(factory, expression) { }
 

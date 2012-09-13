@@ -7,9 +7,6 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     public class ListInitExpressionNode : ExpressionNode<ListInitExpression>
     {
-        public ListInitExpressionNode(ListInitExpression expression)
-            : base(expression) {}
-
         public ListInitExpressionNode(INodeFactory factory, ListInitExpression expression)
             : base(factory, expression) { }
 

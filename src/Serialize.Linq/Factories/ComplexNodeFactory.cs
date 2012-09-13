@@ -13,30 +13,26 @@ namespace Serialize.Linq.Factories
         private readonly INodeFactory _innerFactory;
         private readonly Type[] _types;
 
-        public ComplexNodeFactory(Type type)
-            : this(new [] { type }) { }
+        public ComplexNodeFactory(ISerializerSettings settings, Type type)
+            : this(settings, new [] { type }) { }
         
-        public ComplexNodeFactory(Type[] types)
+        public ComplexNodeFactory(ISerializerSettings settings, IEnumerable<Type> types)
         {
+            if(settings == null)
+                throw new ArgumentNullException("settings");
             if(types == null)
                 throw new ArgumentNullException("types");
-            if(types.Length == 0 || types.Any(t => t == null))
+            
+            _types = types.ToArray();
+            if(_types.Length == 0 || _types.Any(t => t == null))
                 throw new ArgumentException("types");
-
-            _types = types;
-            _innerFactory = CreateFactory();
+            
+            _innerFactory = this.CreateFactory(settings);
         }
 
-        public bool UseAssemblyQualifiedName
+        public ISerializerSettings Settings
         {
-            get { return _innerFactory.UseAssemblyQualifiedName; }
-            set { _innerFactory.UseAssemblyQualifiedName = value; }
-        }
-
-        public bool UseReferences
-        {
-            get { return _innerFactory.UseReferences; }
-            set { _innerFactory.UseReferences = value; }
+            get { return _innerFactory.Settings; }
         }
 
         public ExpressionNode Create(Expression expression)
@@ -54,12 +50,12 @@ namespace Serialize.Linq.Factories
             return _innerFactory.ResolveTypeRef(typeRef);
         }
 
-        private INodeFactory CreateFactory()
+        private INodeFactory CreateFactory(ISerializerSettings settings)
         {
             var expectedTypes = new HashSet<Type>();
             foreach (var type in _types)
                 expectedTypes.UnionWith(GetComplexMemberTypes(type));
-            return new TypeResolverNodeFactory(expectedTypes);
+            return new TypeResolverNodeFactory(settings, expectedTypes);
         }
 
         private static IEnumerable<Type> GetComplexMemberTypes(Type type)        

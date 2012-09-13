@@ -42,6 +42,7 @@
     <Compile Include="Factories\ComplexNodeFactory.cs" />
     <Compile Include="Factories\TypeResolverNodeFactory.cs" />
     <Compile Include="Interfaces\IBinarySerializer.cs" />
+    <Compile Include="Interfaces\ISerializerSettings.cs" />
     <Compile Include="Interfaces\IXmlSerializer.cs" />
     <Compile Include="Interfaces\IJsonSerializer.cs" />
     <Compile Include="Interfaces\ISerializer.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializers\BinarySerializer.cs" />
     <Compile Include="Serializers\ExpressionSerializer.cs" />
+    <Compile Include="Serializers\SerializerSettings.cs" />
     <Compile Include="Serializers\TextSerializer.cs" />
     <Compile Include="Serializers\XmlSerializer.cs" />
     <Compile Include="Serializers\JsonSerializer.cs" />

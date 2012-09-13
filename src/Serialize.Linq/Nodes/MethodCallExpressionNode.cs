@@ -8,9 +8,6 @@ namespace Serialize.Linq.Nodes
     [DataContract]   
     public class MethodCallExpressionNode : ExpressionNode<MethodCallExpression>
     {
-        public MethodCallExpressionNode(MethodCallExpression expression)
-            : base(expression) {}
-
         public MethodCallExpressionNode(INodeFactory factory, MethodCallExpression expression)
             : base(factory, expression) { }
 
