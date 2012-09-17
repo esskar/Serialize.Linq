@@ -7,6 +7,8 @@ namespace Serialize.Linq.Tests
     [TestClass]
     public class XmlSerializerTests
     {
+        public TestContext TestContext { get; set; }
+
         [TestMethod]
         public void SerializeXmlTest()
         {

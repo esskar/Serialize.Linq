@@ -7,6 +7,8 @@ namespace Serialize.Linq.Tests
     [TestClass]
     public class JsonSerializerTests
     {
+        public TestContext TestContext { get; set; }
+
         [TestMethod]
         public void SerializeJsonTest()
         {

@@ -8,6 +8,8 @@ namespace Serialize.Linq.Tests
     [TestClass]
     public class MemberInfoExtensionsTests
     {
+        public TestContext TestContext { get; set; }
+
         [TestMethod]
         public void GetReturnTypeOfPropertyTest()
         {
