@@ -13,13 +13,11 @@ namespace Serialize.Linq.Factories
         private readonly INodeFactory _innerFactory;
         private readonly Type[] _types;
 
-        public ComplexNodeFactory(ISerializerSettings settings, Type type)
-            : this(settings, new [] { type }) { }
+        public ComplexNodeFactory(Type type)
+            : this(new [] { type }) { }
         
-        public ComplexNodeFactory(ISerializerSettings settings, IEnumerable<Type> types)
+        public ComplexNodeFactory(IEnumerable<Type> types)
         {
-            if(settings == null)
-                throw new ArgumentNullException("settings");
             if(types == null)
                 throw new ArgumentNullException("types");
             
@@ -27,14 +25,9 @@ namespace Serialize.Linq.Factories
             if(_types.Length == 0 || _types.Any(t => t == null))
                 throw new ArgumentException("types");
             
-            _innerFactory = this.CreateFactory(settings);
+            _innerFactory = this.CreateFactory();
         }
-
-        public ISerializerSettings Settings
-        {
-            get { return _innerFactory.Settings; }
-        }
-
+        
         public ExpressionNode Create(Expression expression)
         {
             return _innerFactory.Create(expression);
@@ -45,17 +38,12 @@ namespace Serialize.Linq.Factories
             return _innerFactory.Create(type);
         }
 
-        public Type ResolveTypeRef(int typeRef)
-        {
-            return _innerFactory.ResolveTypeRef(typeRef);
-        }
-
-        private INodeFactory CreateFactory(ISerializerSettings settings)
+        private INodeFactory CreateFactory()
         {
             var expectedTypes = new HashSet<Type>();
             foreach (var type in _types)
                 expectedTypes.UnionWith(GetComplexMemberTypes(type));
-            return new TypeResolverNodeFactory(settings, expectedTypes);
+            return new TypeResolverNodeFactory(expectedTypes);
         }
 
         private static IEnumerable<Type> GetComplexMemberTypes(Type type)        

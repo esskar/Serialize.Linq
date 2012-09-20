@@ -27,7 +27,7 @@ namespace Serialize.Linq.Nodes
             : base(factory)
         {
             this.NodeType = nodeType;
-            this.Type = this.Factory.Create(type);
+            this.Type = new TypeNode(factory, type);
         }
 
         [DataMember]

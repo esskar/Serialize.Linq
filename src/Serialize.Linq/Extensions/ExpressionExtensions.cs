@@ -55,8 +55,8 @@ namespace Serialize.Linq.Extensions
         {
             var lambda = expression as LambdaExpression;
             if(lambda != null)
-                return  new ComplexNodeFactory(new SerializerSettings(),  lambda.Parameters.Select(p => p.Type));
-            return new NodeFactory(new SerializerSettings());
+                return  new ComplexNodeFactory(lambda.Parameters.Select(p => p.Type));
+            return new NodeFactory();
         }
 
         internal static IEnumerable<Expression> GetLinkNodes(this Expression expression)

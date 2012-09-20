@@ -11,19 +11,12 @@ namespace Serialize.Linq.Serializers
     public class ExpressionSerializer
     {
         private readonly ISerializer _serializer;
-        private readonly ISerializerSettings _settings;
-
+        
         public ExpressionSerializer(ISerializer serializer)
-            : this(serializer, new SerializerSettings()) { }
-
-        public ExpressionSerializer(ISerializer serializer, ISerializerSettings settings)
         {
             if(serializer == null)
                 throw new ArgumentNullException("serializer");
-            if(settings == null)
-                throw new ArgumentNullException("settings");
-            _serializer = serializer;
-            _settings = settings;
+            _serializer = serializer;            
         }
 
         public bool CanSerializeText
@@ -36,27 +29,20 @@ namespace Serialize.Linq.Serializers
             get { return _serializer is IBinarySerializer; }
         }
 
-        protected virtual INodeFactory CreateFactory(Expression expression, ISerializerSettings settings)
+        protected virtual INodeFactory CreateFactory(Expression expression)
         {
             var lambda = expression as LambdaExpression;
             if(lambda != null)
-                return new ComplexNodeFactory(settings, lambda.Parameters.Select(p => p.Type));
-            return new NodeFactory(settings);
+                return new ComplexNodeFactory(lambda.Parameters.Select(p => p.Type));
+            return new NodeFactory();
         }
 
         public void Serialize(Stream stream, Expression expression)
         {
-            this.Serialize(stream, expression, _settings);
-        }
-
-        public void Serialize(Stream stream, Expression expression, ISerializerSettings settings)
-        {
             if(stream == null)
                 throw new ArgumentNullException("stream");
-            if(settings == null)
-                throw new ArgumentNullException("settings");
 
-            var factory = this.CreateFactory(expression, settings);
+            var factory = this.CreateFactory(expression);
             var expressionNode = factory.Create(expression);
             _serializer.Serialize(stream, expressionNode);
         }
@@ -72,37 +58,19 @@ namespace Serialize.Linq.Serializers
 
         public string SerializeText(Expression expression)
         {
-            return this.SerializeText(expression, _settings);
-        }
-
-        public string SerializeText(Expression expression, ISerializerSettings settings)
-        {
-            if(settings == null)
-                throw new ArgumentNullException("settings");
-
-            var factory = this.CreateFactory(expression, settings);
-            var expressionNode = factory.Create(expression);
+            var expressionNode = this.CreateExpressionNode(expression);
             return this.TextSerializer.Serialize(expressionNode);
         }
 
         public Expression DeserializeText(string text)
         {
             var node = this.TextSerializer.Deserialize<ExpressionNode>(text);
-            return node != null ? node.ToExpression() : null;
+            return node == null ? null : node.ToExpression();
         }
 
         public byte[] SerializeBinary(Expression expression)
         {
-            return this.SerializeBinary(expression, _settings);
-        }
-
-        public byte[] SerializeBinary(Expression expression, ISerializerSettings settings)
-        {
-            if(settings == null)
-                throw new ArgumentNullException("settings");
-
-            var factory = this.CreateFactory(expression, settings);
-            var expressionNode = factory.Create(expression);
+            var expressionNode = this.CreateExpressionNode(expression);
             return this.BinarySerializer.Serialize(expressionNode);
         }
 
@@ -110,6 +78,12 @@ namespace Serialize.Linq.Serializers
         {
             var node = this.BinarySerializer.Deserialize<ExpressionNode>(bytes);
             return node != null ? node.ToExpression() : null;
+        }
+
+        private ExpressionNode CreateExpressionNode(Expression expression)
+        {
+            var factory = this.CreateFactory(expression);
+            return factory.Create(expression);
         }
 
         private ITextSerializer TextSerializer

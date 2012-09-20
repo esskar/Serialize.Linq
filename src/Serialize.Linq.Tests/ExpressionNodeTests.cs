@@ -3,7 +3,6 @@ using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Serializers;
 using Serialize.Linq.Tests.Internals;
 
 namespace Serialize.Linq.Tests
@@ -87,7 +86,7 @@ namespace Serialize.Linq.Tests
         private void AssertExpression<TFactory>(Expression expression, string message = null)
             where TFactory : INodeFactory
         {
-            var factory = (TFactory)Activator.CreateInstance(typeof(TFactory), new SerializerSettings());
+            var factory = (TFactory)Activator.CreateInstance(typeof(TFactory));
             var expressionNode = factory.Create(expression);
             var createdExpression = expressionNode.ToExpression();
 

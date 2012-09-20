@@ -43,7 +43,6 @@ namespace Serialize.Linq.Tests
             }            
         }
 
-        
         [TestMethod]
         public void SerializeDeserializeTextTest()
         {
@@ -53,6 +52,9 @@ namespace Serialize.Linq.Tests
                 foreach (var item in SerializerTestData.TestItems)
                 {
                     var text = serializer.SerializeText(item.Expression);
+
+                    this.TestContext.WriteLine("{0} serializes to text with length {1}: {2}", item.Expression, text.Length, text);
+
                     var expression = serializer.DeserializeText(text);
 
                     if (item.Expression == null)
@@ -64,7 +66,7 @@ namespace Serialize.Linq.Tests
                     Assert.AreEqual(item.Expression.ToString(), expression.ToString());
                 }
             }
-        }        
+        }
 
         [TestMethod]
         public void SerializeDeserializeBinaryTest()
@@ -74,8 +76,8 @@ namespace Serialize.Linq.Tests
                 var serializer = new ExpressionSerializer(binSerializer);
                 foreach (var item in SerializerTestData.TestItems)
                 {
-                    var text = serializer.SerializeBinary(item.Expression);
-                    var expression = serializer.DeserializeBinary(text);
+                    var bytes = serializer.SerializeBinary(item.Expression);
+                    var expression = serializer.DeserializeBinary(bytes);
 
                     if (item.Expression == null)
                     {
@@ -86,7 +88,7 @@ namespace Serialize.Linq.Tests
                     Assert.AreEqual(item.Expression.ToString(), expression.ToString());
                 }
             }
-        }        
+        }
 
         private static IEnumerable<ITextSerializer> CreateTextSerializers()
         {
@@ -96,6 +98,6 @@ namespace Serialize.Linq.Tests
         private static IEnumerable<IBinarySerializer> CreateBinarySerializers()
         {
             return new IBinarySerializer[] { new BinarySerializer() };
-        }
+        }        
     }
 }

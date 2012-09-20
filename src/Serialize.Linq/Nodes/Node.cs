@@ -31,7 +31,7 @@ namespace Serialize.Linq.Nodes
     [KnownType(typeof(NewArrayExpressionNode))]
     [KnownType(typeof(NewExpressionNode))]
     [KnownType(typeof(ParameterExpressionNode))]
-    [KnownType(typeof(PropertyInfoNode))]
+    [KnownType(typeof(PropertyInfoNode))]    
     [KnownType(typeof(TypeBinaryExpressionNode))]
     [KnownType(typeof(TypeNode))]
     [KnownType(typeof(UnaryExpressionNode))]
