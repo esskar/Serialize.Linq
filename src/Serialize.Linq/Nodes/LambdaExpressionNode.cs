@@ -56,4 +56,10 @@ namespace Serialize.Linq.Nodes
             parameterExpressions = parameters;
         }        
     }
+
+    public class LambdaExpressionNode<T> : LambdaExpressionNode
+    {
+        public LambdaExpressionNode(INodeFactory factory, Expression<T> expression)
+            : base(factory, expression) { }
+    }
 }
