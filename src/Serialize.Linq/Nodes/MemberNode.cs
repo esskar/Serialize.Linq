@@ -25,27 +25,27 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "D")]
+        [DataMember(EmitDefaultValue = false, Name = "D")]
 #endif
         #endregion
         public TypeNode DeclaringType { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "M")]
+        [DataMember(EmitDefaultValue = false, Name = "M")]
 #endif
         #endregion
         public MemberTypes MemberType { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "S")]
+        [DataMember(EmitDefaultValue = false, Name = "S")]
 #endif
         #endregion
         public string Signature { get; set; }

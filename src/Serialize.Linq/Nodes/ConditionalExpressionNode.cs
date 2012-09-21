@@ -18,27 +18,27 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "IFF")]
+        [DataMember(EmitDefaultValue = false, Name = "IFF")]
 #endif
         #endregion
         public ExpressionNode IfFalse { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "IFT")]
+        [DataMember(EmitDefaultValue = false, Name = "IFT")]
 #endif
         #endregion
         public ExpressionNode IfTrue { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "T")]
+        [DataMember(EmitDefaultValue = false, Name = "T")]
 #endif
         #endregion
         public ExpressionNode Test { get; set; }

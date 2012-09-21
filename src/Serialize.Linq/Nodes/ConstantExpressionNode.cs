@@ -44,9 +44,9 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
         #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "V")]
+        [DataMember(EmitDefaultValue = false, Name = "V")]
 #endif
         #endregion
         public object Value

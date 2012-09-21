@@ -20,18 +20,18 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "B")]
+        [DataMember(EmitDefaultValue = false, Name = "B")]
 #endif
         #endregion
         public ExpressionNode Body { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "P")]
+        [DataMember(EmitDefaultValue = false, Name = "P")]
 #endif
         #endregion
         public ExpressionNodeList Parameters { get; set; }

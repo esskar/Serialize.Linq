@@ -21,9 +21,9 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
         #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "E")]
+        [DataMember(EmitDefaultValue = false, Name = "E")]
 #endif
         #endregion
         public ExpressionNode Expression { get; set; }

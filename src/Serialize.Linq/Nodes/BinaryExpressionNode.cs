@@ -18,45 +18,45 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "C")]
+        [DataMember(EmitDefaultValue = false, Name = "C")]
 #endif
         #endregion
         public ExpressionNode Conversion { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "I")]
+        [DataMember(EmitDefaultValue = false, Name = "I")]
 #endif
         #endregion
         public bool IsLiftedToNull { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "L")]
+        [DataMember(EmitDefaultValue = false, Name = "L")]
 #endif
         #endregion
         public ExpressionNode Left { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "M")]
+        [DataMember(EmitDefaultValue = false, Name = "M")]
 #endif
         #endregion
         public MethodInfoNode Method { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "R")]
+        [DataMember(EmitDefaultValue = false, Name = "R")]
 #endif
         #endregion
         public ExpressionNode Right { get; set; }

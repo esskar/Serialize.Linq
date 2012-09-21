@@ -27,18 +27,18 @@ namespace Serialize.Linq.Nodes
         
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "BT")]
+        [DataMember(EmitDefaultValue = false, Name = "BT")]
 #endif
         #endregion
         public MemberBindingType BindingType { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "M")]
+        [DataMember(EmitDefaultValue = false, Name = "M")]
 #endif
         #endregion
         public MemberInfoNode Member { get; set; }

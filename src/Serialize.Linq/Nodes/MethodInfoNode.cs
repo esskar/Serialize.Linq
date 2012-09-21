@@ -26,18 +26,18 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "I")]
+        [DataMember(EmitDefaultValue = false, Name = "I")]
 #endif
         #endregion
         public bool IsGenericMethod { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "G")]
+        [DataMember(EmitDefaultValue = false, Name = "G")]
 #endif
         #endregion
         public TypeNode[] GenericArguments { get; set; }

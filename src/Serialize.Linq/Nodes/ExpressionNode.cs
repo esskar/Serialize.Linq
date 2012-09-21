@@ -44,18 +44,18 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "NT")]
+        [DataMember(EmitDefaultValue = false, Name = "NT")]
 #endif
         #endregion
         public ExpressionType NodeType { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(Name = "T")]
+        [DataMember(EmitDefaultValue = false, Name = "T")]
 #endif
         #endregion
         public virtual TypeNode Type { get; set; }
