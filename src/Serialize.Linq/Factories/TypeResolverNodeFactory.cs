@@ -96,13 +96,13 @@ namespace Serialize.Linq.Factories
             return base.Create(methodCallExpression);
         }
 
-        public override ExpressionNode Create(Expression Expression)
+        public override ExpressionNode Create(Expression expression)
         {
-            if (Expression is MemberExpression)
-                return this.ResolveMemberExpression(Expression as MemberExpression);
-            if (Expression is MethodCallExpression)
-                return this.ResolveMethodCallExpression(Expression as MethodCallExpression);
-            return base.Create(Expression);     
+            if (expression is MemberExpression)
+                return this.ResolveMemberExpression(expression as MemberExpression);
+            if (expression is MethodCallExpression)
+                return this.ResolveMethodCallExpression(expression as MethodCallExpression);
+            return base.Create(expression);     
         }
     }
 }

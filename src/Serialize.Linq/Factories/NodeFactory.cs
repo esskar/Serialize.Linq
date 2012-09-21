@@ -7,27 +7,27 @@ namespace Serialize.Linq.Factories
 {
     public class NodeFactory : INodeFactory
     {                
-        public virtual ExpressionNode Create(Expression Expression)
+        public virtual ExpressionNode Create(Expression expression)
         {
-            if (Expression == null)
+            if (expression == null)
                 return null;
 
-            if (Expression is BinaryExpression)        return new BinaryExpressionNode(this, Expression as BinaryExpression);
-            if (Expression is ConditionalExpression)   return new ConditionalExpressionNode(this, Expression as ConditionalExpression);
-            if (Expression is ConstantExpression)      return new ConstantExpressionNode(this, Expression as ConstantExpression);
-            if (Expression is InvocationExpression)    return new InvocationExpressionNode(this, Expression as InvocationExpression);
-            if (Expression is LambdaExpression)        return new LambdaExpressionNode(this, Expression as LambdaExpression);
-            if (Expression is ListInitExpression)      return new ListInitExpressionNode(this, Expression as ListInitExpression);
-            if (Expression is MemberExpression)        return new MemberExpressionNode(this, Expression as MemberExpression);
-            if (Expression is MemberInitExpression)    return new MemberInitExpressionNode(this, Expression as MemberInitExpression);
-            if (Expression is MethodCallExpression)    return new MethodCallExpressionNode(this, Expression as MethodCallExpression);
-            if (Expression is NewArrayExpression)      return new NewArrayExpressionNode(this, Expression as NewArrayExpression);
-            if (Expression is NewExpression)           return new NewExpressionNode(this, Expression as NewExpression);
-            if (Expression is ParameterExpression)     return new ParameterExpressionNode(this, Expression as ParameterExpression);                        
-            if (Expression is TypeBinaryExpression)    return new TypeBinaryExpressionNode(this, Expression as TypeBinaryExpression);
-            if (Expression is UnaryExpression)         return new UnaryExpressionNode(this, Expression as UnaryExpression);                        
+            if (expression is BinaryExpression)        return new BinaryExpressionNode(this, expression as BinaryExpression);
+            if (expression is ConditionalExpression)   return new ConditionalExpressionNode(this, expression as ConditionalExpression);
+            if (expression is ConstantExpression)      return new ConstantExpressionNode(this, expression as ConstantExpression);
+            if (expression is InvocationExpression)    return new InvocationExpressionNode(this, expression as InvocationExpression);
+            if (expression is LambdaExpression)        return new LambdaExpressionNode(this, expression as LambdaExpression);
+            if (expression is ListInitExpression)      return new ListInitExpressionNode(this, expression as ListInitExpression);
+            if (expression is MemberExpression)        return new MemberExpressionNode(this, expression as MemberExpression);
+            if (expression is MemberInitExpression)    return new MemberInitExpressionNode(this, expression as MemberInitExpression);
+            if (expression is MethodCallExpression)    return new MethodCallExpressionNode(this, expression as MethodCallExpression);
+            if (expression is NewArrayExpression)      return new NewArrayExpressionNode(this, expression as NewArrayExpression);
+            if (expression is NewExpression)           return new NewExpressionNode(this, expression as NewExpression);
+            if (expression is ParameterExpression)     return new ParameterExpressionNode(this, expression as ParameterExpression);                        
+            if (expression is TypeBinaryExpression)    return new TypeBinaryExpressionNode(this, expression as TypeBinaryExpression);
+            if (expression is UnaryExpression)         return new UnaryExpressionNode(this, expression as UnaryExpression);                        
 
-            throw new ArgumentException("Unknown Expression of type " + Expression.GetType());
+            throw new ArgumentException("Unknown expression of type " + expression.GetType());
         }
 
         public TypeNode Create(Type type)
