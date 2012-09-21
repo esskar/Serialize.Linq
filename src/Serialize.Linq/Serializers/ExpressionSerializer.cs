@@ -1,14 +1,12 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
 using System.Linq.Expressions;
-using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Serializers
 {
-    public class ExpressionSerializer
+    public class ExpressionSerializer : ExpressionConverter
     {
         private readonly ISerializer _serializer;
         
@@ -29,22 +27,11 @@ namespace Serialize.Linq.Serializers
             get { return _serializer is IBinarySerializer; }
         }
 
-        protected virtual INodeFactory CreateFactory(Expression expression)
-        {
-            var lambda = expression as LambdaExpression;
-            if(lambda != null)
-                return new DefaultNodeFactory(lambda.Parameters.Select(p => p.Type));
-            return new NodeFactory();
-        }
-
         public void Serialize(Stream stream, Expression expression)
         {
             if(stream == null)
-                throw new ArgumentNullException("stream");
-
-            var factory = this.CreateFactory(expression);
-            var expressionNode = factory.Create(expression);
-            _serializer.Serialize(stream, expressionNode);
+                throw new ArgumentNullException("stream");            
+            _serializer.Serialize(stream, this.Convert(expression));
         }
 
         public Expression Deserialize(Stream stream)
@@ -58,8 +45,7 @@ namespace Serialize.Linq.Serializers
 
         public string SerializeText(Expression expression)
         {
-            var expressionNode = this.CreateExpressionNode(expression);
-            return this.TextSerializer.Serialize(expressionNode);
+            return this.TextSerializer.Serialize(this.Convert(expression));
         }
 
         public Expression DeserializeText(string text)
@@ -70,20 +56,13 @@ namespace Serialize.Linq.Serializers
 
         public byte[] SerializeBinary(Expression expression)
         {
-            var expressionNode = this.CreateExpressionNode(expression);
-            return this.BinarySerializer.Serialize(expressionNode);
+            return this.BinarySerializer.Serialize(this.Convert(expression));
         }
 
         public Expression DeserializeBinary(byte[] bytes)
         {
             var node = this.BinarySerializer.Deserialize<ExpressionNode>(bytes);
             return node != null ? node.ToExpression() : null;
-        }
-
-        private ExpressionNode CreateExpressionNode(Expression expression)
-        {
-            var factory = this.CreateFactory(expression);
-            return factory.Create(expression);
         }
 
         private ITextSerializer TextSerializer

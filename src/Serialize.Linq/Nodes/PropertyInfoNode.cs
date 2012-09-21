@@ -6,7 +6,13 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
+    #region DataContract
+#if SERIALIZE_LINQ_WITH_LONG_DATA_NAMES
     [DataContract]
+#else
+    [DataContract(Name = "PI")]
+#endif
+    #endregion
     public class PropertyInfoNode : MemberNode<PropertyInfo>
     {
         public PropertyInfoNode(INodeFactory factory, PropertyInfo memberInfo) 

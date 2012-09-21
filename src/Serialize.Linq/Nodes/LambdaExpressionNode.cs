@@ -6,16 +6,34 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
+    #region DataContract
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
     [DataContract]
+#else
+    [DataContract(Name = "L")]
+#endif
+    #endregion
     public class LambdaExpressionNode : ExpressionNode<LambdaExpression>
     {
         public LambdaExpressionNode(INodeFactory factory, LambdaExpression expression)
             : base(factory, expression) { }
 
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember]
+#else
+        [DataMember(Name = "B")]
+#endif
+        #endregion
         public ExpressionNode Body { get; set; }
 
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember]
+#else
+        [DataMember(Name = "P")]
+#endif
+        #endregion
         public ExpressionNodeList Parameters { get; set; }
 
         protected override void Initialize(LambdaExpression expression)
@@ -23,7 +41,7 @@ namespace Serialize.Linq.Nodes
             this.Body = this.Factory.Create(expression.Body);
             this.Parameters = new ExpressionNodeList(this.Factory, expression.Parameters);
         }
-        
+
         public override Expression ToExpression()
         {
             Expression body;
@@ -36,7 +54,7 @@ namespace Serialize.Linq.Nodes
         {
             Expression body;
             ParameterExpression[] parameters;
-            this.BuildExpression(out body, out parameters);            
+            this.BuildExpression(out body, out parameters);
             return Expression.Lambda<TDelegate>(body, parameters);
         }
 
@@ -52,14 +70,8 @@ namespace Serialize.Linq.Nodes
                 if (matchingParameter.Length == 1)
                     parameters[i] = matchingParameter.First();
             }
-            
-            parameterExpressions = parameters;
-        }        
-    }
 
-    public class LambdaExpressionNode<T> : LambdaExpressionNode
-    {
-        public LambdaExpressionNode(INodeFactory factory, Expression<T> expression)
-            : base(factory, expression) { }
+            parameterExpressions = parameters;
+        }
     }
 }

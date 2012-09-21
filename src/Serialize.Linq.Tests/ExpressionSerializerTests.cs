@@ -49,21 +49,21 @@ namespace Serialize.Linq.Tests
             foreach (var textSerializer in CreateTextSerializers())
             {
                 var serializer = new ExpressionSerializer(textSerializer);
-                foreach (var item in SerializerTestData.TestItems)
+                foreach (var expected in SerializerTestData.TestExpressions)
                 {
-                    var text = serializer.SerializeText(item.Expression);
+                    var text = serializer.SerializeText(expected);
 
-                    this.TestContext.WriteLine("{0} serializes to text with length {1}: {2}", item.Expression, text.Length, text);
+                    this.TestContext.WriteLine("{0} serializes to text with length {1}: {2}", expected, text.Length, text);
 
-                    var expression = serializer.DeserializeText(text);
+                    var actual = serializer.DeserializeText(text);
 
-                    if (item.Expression == null)
+                    if (expected == null)
                     {
-                        Assert.IsNull(expression, "Input expression was null, but output is {0} for '{1}'", expression, textSerializer.GetType());
+                        Assert.IsNull(actual, "Input expression was null, but output is {0} for '{1}'", actual, textSerializer.GetType());
                         continue;
                     }
-                    Assert.IsNotNull(expression, "Input expression was {0}, but output is null for '{1}'", item.Expression, textSerializer.GetType());
-                    Assert.AreEqual(item.Expression.ToString(), expression.ToString());
+                    Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, textSerializer.GetType());
+                    ExpressionAssert.AreEqual(expected, actual);
                 }
             }
         }
@@ -74,18 +74,18 @@ namespace Serialize.Linq.Tests
             foreach (var binSerializer in CreateBinarySerializers())
             {
                 var serializer = new ExpressionSerializer(binSerializer);
-                foreach (var item in SerializerTestData.TestItems)
+                foreach (var expected in SerializerTestData.TestExpressions)
                 {
-                    var bytes = serializer.SerializeBinary(item.Expression);
-                    var expression = serializer.DeserializeBinary(bytes);
+                    var bytes = serializer.SerializeBinary(expected);
+                    var actual = serializer.DeserializeBinary(bytes);
 
-                    if (item.Expression == null)
+                    if (expected == null)
                     {
-                        Assert.IsNull(expression, "Input expression was null, but output is {0} for '{1}'", expression, binSerializer.GetType());
+                        Assert.IsNull(actual, "Input expression was null, but output is {0} for '{1}'", actual, binSerializer.GetType());
                         continue;
                     }
-                    Assert.IsNotNull(expression, "Input expression was {0}, but output is null for '{1}'", item.Expression, binSerializer.GetType());
-                    Assert.AreEqual(item.Expression.ToString(), expression.ToString());
+                    Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, binSerializer.GetType());
+                    ExpressionAssert.AreEqual(expected, actual);
                 }
             }
         }

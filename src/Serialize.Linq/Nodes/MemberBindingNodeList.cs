@@ -7,16 +7,22 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
-    [CollectionDataContract]    
+    #region CollectionDataContract
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+    [CollectionDataContract]
+#else
+    [CollectionDataContract(Name = "MBL")]    
+#endif
+    #endregion
     public class MemberBindingNodeList : List<MemberBindingNode>
     {
         public MemberBindingNodeList() { }
 
-        public MemberBindingNodeList(INodeFactory factory, IEnumerable<MemberBinding> items)            
+        public MemberBindingNodeList(INodeFactory factory, IEnumerable<MemberBinding> items)
         {
-            if(factory == null)
+            if (factory == null)
                 throw new ArgumentNullException("factory");
-            if(items == null)
+            if (items == null)
                 throw new ArgumentNullException("items");
             this.AddRange(items.Select(m => MemberBindingNode.Create(factory, m)));
         }
@@ -24,6 +30,6 @@ namespace Serialize.Linq.Nodes
         public IEnumerable<MemberBinding> GetMemberBindings()
         {
             return this.Select(memberBindingEntity => memberBindingEntity.ToMemberBinding());
-        }       
+        }
     }
 }

@@ -4,146 +4,153 @@ using System.Linq;
 using System.Linq.Expressions;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Nodes;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Extensions
 {
     public static class ExpressionExtensions
     {
-        public static string ToJson(this Expression expression)
+        public static ExpressionNode ToExpressionNode(this Expression Expression)
         {
-            return expression.ToJson(expression.GetDefaultFactory());
+            var converter = new ExpressionConverter();
+            return converter.Convert(Expression);
         }
 
-        public static string ToJson(this Expression expression, INodeFactory factory)
+        public static string ToJson(this Expression Expression)
         {
-            return expression.ToJson(factory, new JsonSerializer());
+            return Expression.ToJson(Expression.GetDefaultFactory());
         }
 
-        public static string ToJson(this Expression expression, INodeFactory factory, IJsonSerializer serializer)
+        public static string ToJson(this Expression Expression, INodeFactory factory)
         {
-            return expression.ToText(factory, serializer);
+            return Expression.ToJson(factory, new JsonSerializer());
         }
 
-        public static string ToXml(this Expression expression)
+        public static string ToJson(this Expression Expression, INodeFactory factory, IJsonSerializer serializer)
         {
-            return expression.ToXml(expression.GetDefaultFactory());
+            return Expression.ToText(factory, serializer);
         }
 
-        public static string ToXml(this Expression expression, INodeFactory factory)
+        public static string ToXml(this Expression Expression)
         {
-            return expression.ToXml(factory, new XmlSerializer());
+            return Expression.ToXml(Expression.GetDefaultFactory());
         }
 
-        public static string ToXml(this Expression expression, INodeFactory factory, IXmlSerializer serializer)
+        public static string ToXml(this Expression Expression, INodeFactory factory)
         {
-            return expression.ToText(factory, serializer);
+            return Expression.ToXml(factory, new XmlSerializer());
         }
 
-        public static string ToText(this Expression expression, INodeFactory factory, ITextSerializer serializer)
+        public static string ToXml(this Expression Expression, INodeFactory factory, IXmlSerializer serializer)
+        {
+            return Expression.ToText(factory, serializer);
+        }
+
+        public static string ToText(this Expression Expression, INodeFactory factory, ITextSerializer serializer)
         {            
             if(factory == null)
                 throw new ArgumentNullException("factory");
             if(serializer == null)
                 throw new ArgumentNullException("serializer");
 
-            var expressionNode = factory.Create(expression);
-            return serializer.Serialize(expressionNode);
+            var ExpressionNode = factory.Create(Expression);
+            return serializer.Serialize(ExpressionNode);
         }
 
-        internal static INodeFactory GetDefaultFactory(this Expression expression)
+        internal static INodeFactory GetDefaultFactory(this Expression Expression)
         {
-            var lambda = expression as LambdaExpression;
+            var lambda = Expression as LambdaExpression;
             if(lambda != null)
                 return  new DefaultNodeFactory(lambda.Parameters.Select(p => p.Type));
             return new NodeFactory();
         }
 
-        internal static IEnumerable<Expression> GetLinkNodes(this Expression expression)
+        internal static IEnumerable<Expression> GetLinkNodes(this Expression Expression)
         {
-            if (expression is LambdaExpression)
+            if (Expression is LambdaExpression)
             {
-                var lambdaExpression = (LambdaExpression)expression;
+                var lambdaExpression = (LambdaExpression)Expression;
 
                 yield return lambdaExpression.Body;
                 foreach (var parameter in lambdaExpression.Parameters)
                     yield return parameter;
             }
-            else if (expression is BinaryExpression)
+            else if (Expression is BinaryExpression)
             {
-                var binaryExpression = (BinaryExpression)expression;
+                var binaryExpression = (BinaryExpression)Expression;
 
                 yield return binaryExpression.Left;
                 yield return binaryExpression.Right;
             }
-            else if (expression is ConditionalExpression)
+            else if (Expression is ConditionalExpression)
             {
-                var conditionalExpression = (ConditionalExpression)expression;
+                var conditionalExpression = (ConditionalExpression)Expression;
 
                 yield return conditionalExpression.IfTrue;
                 yield return conditionalExpression.IfFalse;
                 yield return conditionalExpression.Test;
             }
-            else if (expression is InvocationExpression)
+            else if (Expression is InvocationExpression)
             {
-                var invocationExpression = (InvocationExpression)expression;
+                var invocationExpression = (InvocationExpression)Expression;
                 yield return invocationExpression.Expression;
                 foreach (var argument in invocationExpression.Arguments)
                     yield return argument;                
             }
-            else if (expression is ListInitExpression)
+            else if (Expression is ListInitExpression)
             {
-                yield return (expression as ListInitExpression).NewExpression;
+                yield return (Expression as ListInitExpression).NewExpression;
             }
-            else if (expression is MemberExpression)
+            else if (Expression is MemberExpression)
             {
-                yield return (expression as MemberExpression).Expression;
+                yield return (Expression as MemberExpression).Expression;
             }
-            else if (expression is MemberInitExpression)
+            else if (Expression is MemberInitExpression)
             {
-                yield return (expression as MemberInitExpression).NewExpression;
+                yield return (Expression as MemberInitExpression).NewExpression;
             }
-            else if (expression is MethodCallExpression)
+            else if (Expression is MethodCallExpression)
             {
-                var methodCallExpression = (MethodCallExpression)expression;
+                var methodCallExpression = (MethodCallExpression)Expression;
                 foreach (var argument in methodCallExpression.Arguments)
                     yield return argument;
                 if (methodCallExpression.Object != null)                
                     yield return methodCallExpression.Object;                
             }
-            else if (expression is NewArrayExpression)
+            else if (Expression is NewArrayExpression)
             {
-                foreach (var item in (expression as NewArrayExpression).Expressions)
+                foreach (var item in (Expression as NewArrayExpression).Expressions)
                     yield return item;
             }
-            else if (expression is NewExpression)
+            else if (Expression is NewExpression)
             {
-                foreach (var item in (expression as NewExpression).Arguments)
+                foreach (var item in (Expression as NewExpression).Arguments)
                     yield return item;
             }
-            else if (expression is TypeBinaryExpression)
+            else if (Expression is TypeBinaryExpression)
             {
-                yield return (expression as TypeBinaryExpression).Expression;
+                yield return (Expression as TypeBinaryExpression).Expression;
             }
-            else if (expression is UnaryExpression)
+            else if (Expression is UnaryExpression)
             {
-                yield return (expression as UnaryExpression).Operand;
+                yield return (Expression as UnaryExpression).Operand;
             }
         }
 
-        internal static IEnumerable<Expression> GetNodes(this Expression expression)
+        internal static IEnumerable<Expression> GetNodes(this Expression Expression)
         {
-            foreach (var node in expression.GetLinkNodes())
+            foreach (var node in Expression.GetLinkNodes())
             {
                 foreach (var subNode in node.GetNodes())
                     yield return subNode;
             }
-            yield return expression;
+            yield return Expression;
         }
 
-        internal static IEnumerable<TExpression> GetNodes<TExpression>(this Expression expression) where TExpression : Expression
+        internal static IEnumerable<TExpression> GetNodes<TExpression>(this Expression Expression) where TExpression : Expression
         {
-            return expression.GetNodes().OfType<TExpression>();
+            return Expression.GetNodes().OfType<TExpression>();
         }
     }
 }

@@ -7,16 +7,22 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
+    #region CollectionDataContract
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
     [CollectionDataContract]
-    public class ExpressionNodeList : List<ExpressionNode> 
+#else
+    [CollectionDataContract(Name = "EL")]
+#endif
+    #endregion
+    public class ExpressionNodeList : List<ExpressionNode>
     {
         public ExpressionNodeList() { }
 
-        public ExpressionNodeList(INodeFactory factory, IEnumerable<Expression> items)            
+        public ExpressionNodeList(INodeFactory factory, IEnumerable<Expression> items)
         {
-            if(factory == null)
+            if (factory == null)
                 throw new ArgumentNullException("factory");
-            if(items == null)
+            if (items == null)
                 throw new ArgumentNullException("items");
             this.AddRange(items.Select(factory.Create));
         }

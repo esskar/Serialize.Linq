@@ -7,16 +7,22 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
+    #region CollectionDataContract
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
     [CollectionDataContract]
+#else
+    [CollectionDataContract(Name = "EIL")]
+#endif
+    #endregion
     public class ElementInitNodeList : List<ElementInitNode>
     {
         public ElementInitNodeList() { }
 
-        public ElementInitNodeList(INodeFactory factory, IEnumerable<ElementInit> items)            
+        public ElementInitNodeList(INodeFactory factory, IEnumerable<ElementInit> items)
         {
-            if(factory == null)
+            if (factory == null)
                 throw new ArgumentNullException("factory");
-            if(items == null)
+            if (items == null)
                 throw new ArgumentNullException("items");
             this.AddRange(items.Select(item => new ElementInitNode(factory, item)));
         }

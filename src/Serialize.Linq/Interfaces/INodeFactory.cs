@@ -6,7 +6,7 @@ namespace Serialize.Linq.Interfaces
 {
     public interface INodeFactory
     {
-        ExpressionNode Create(Expression expression);
+        ExpressionNode Create(Expression Expression);
 
         TypeNode Create(Type type);
     }    

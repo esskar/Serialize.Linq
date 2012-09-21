@@ -88,6 +88,7 @@
     <Compile Include="Nodes\UnaryExpressionNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serializers\BinarySerializer.cs" />
+    <Compile Include="Serializers\ExpressionConverter.cs" />
     <Compile Include="Serializers\ExpressionSerializer.cs" />
     <Compile Include="Serializers\TextSerializer.cs" />
     <Compile Include="Serializers\XmlSerializer.cs" />

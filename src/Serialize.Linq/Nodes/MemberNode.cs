@@ -7,27 +7,51 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
+    #region DataContract
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
     [DataContract]
-    public abstract class MemberNode<TMemberInfo> : Node where TMemberInfo: MemberInfo
+#else
+    [DataContract(Name = "MN")]
+#endif
+    #endregion
+    public abstract class MemberNode<TMemberInfo> : Node where TMemberInfo : MemberInfo
     {
         protected MemberNode(INodeFactory factory, TMemberInfo memberInfo)
             : base(factory)
         {
-            if(memberInfo != null)
-                this.Initialize(memberInfo);            
+            if (memberInfo != null)
+                this.Initialize(memberInfo);
         }
 
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember]
+#else
+        [DataMember(Name = "D")]
+#endif
+        #endregion
         public TypeNode DeclaringType { get; set; }
 
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember]
+#else
+        [DataMember(Name = "M")]
+#endif
+        #endregion
         public MemberTypes MemberType { get; set; }
 
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember]
+#else
+        [DataMember(Name = "S")]
+#endif
+        #endregion
         public string Signature { get; set; }
 
         protected virtual void Initialize(TMemberInfo memberInfo)
-        {                        
+        {
             this.DeclaringType = this.Factory.Create(memberInfo.DeclaringType);
             this.MemberType = memberInfo.MemberType;
             this.Signature = memberInfo.ToString();
@@ -35,11 +59,11 @@ namespace Serialize.Linq.Nodes
 
         protected Type GetDeclaringType()
         {
-            if(this.DeclaringType == null)
+            if (this.DeclaringType == null)
                 throw new InvalidOperationException("DeclaringType is not set.");
 
             var declaringType = this.DeclaringType.ToType();
-            if(declaringType == null)
+            if (declaringType == null)
                 throw new TypeLoadException("Failed to load DeclaringType: " + this.DeclaringType);
 
             return declaringType;

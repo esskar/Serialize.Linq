@@ -14,11 +14,13 @@
     {
         public bool IsFoo;
 
-        public string Name { get; set; }
+        public string FirstName { get; set; }
+
+        public string LastName { get; set; }
 
         public string GetName()
         {
-            return this.Name;
+            return string.Format("{0} {1}", this.FirstName, this.LastName);
         }
     }
 

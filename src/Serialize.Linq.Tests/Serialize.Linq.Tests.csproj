@@ -48,15 +48,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExpressionSerializerTests.cs" />
-    <Compile Include="XmlSerializerTests.cs" />
     <Compile Include="ExpressionNodeTests.cs" />
     <Compile Include="Internals\ExpressionAssert.cs" />
     <Compile Include="Internals\ExpressionComparer.cs" />
     <Compile Include="Internals\Objects.cs" />
     <Compile Include="Internals\PublicInstancePropertiesAssert.cs" />
     <Compile Include="Internals\SerializerTestData.cs" />
-    <Compile Include="Internals\SerializerTestItem.cs" />
-    <Compile Include="JsonSerializerTests.cs" />
     <Compile Include="MemberInfoExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

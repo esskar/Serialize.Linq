@@ -6,7 +6,13 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
+    #region DataContract
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
     [DataContract]
+#else
+    [DataContract(Name = "T")]
+#endif
+    #endregion
     public class TypeNode : Node
     {
         private static readonly ConcurrentDictionary<string, Type> __typeCache;
@@ -19,34 +25,46 @@ namespace Serialize.Linq.Nodes
         public TypeNode(INodeFactory factory, Type type)
             : base(factory)
         {
-            this.Name = BuildName(type);            
+            this.Initialize(type);
         }
 
-        private static string BuildName(Type type)
+        private void Initialize(Type type)
         {
             if (type == null)
-                return null;
+                return;
 
-            var name = type.FullName;
-            if (type.IsGenericType && name != null)
+            if (type.IsGenericType)
             {
-                foreach (var paramType in type.GetGenericArguments().Distinct())
-                {
-                    var assemblyQualifiedName = paramType.AssemblyQualifiedName;
-                    if (string.IsNullOrWhiteSpace(assemblyQualifiedName)) continue;
-
-                    name = name.Replace(assemblyQualifiedName, BuildName(paramType));
-                }
+                this.GenericArguments = type.GetGenericArguments().Select(t => new TypeNode(this.Factory, t)).ToArray();
+                this.Name = type.GetGenericTypeDefinition().FullName;
+                
             }
-
-            return name;
+            else
+            {
+                this.Name = type.FullName;
+            }            
         }
 
-        [DataMember]        
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        [DataMember]
+#else
+        [DataMember(Name = "N")]        
+#endif
+        #endregion
         public string Name { get; set; }
 
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        [DataMember]
+#else
+        [DataMember(Name = "G")]        
+#endif
+        #endregion
+        public TypeNode[] GenericArguments { get; set; }
+
         private static Type ResolveType(string typeName)
-        {            
+        {
             return __typeCache.GetOrAdd(typeName, n =>
             {
                 var type = Type.GetType(n);
@@ -55,10 +73,10 @@ namespace Serialize.Linq.Nodes
                     foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
                     {
                         type = assembly.GetType(n);
-                        if(type != null)
+                        if (type != null)
                             break;
                     }
-                    
+
                 }
                 return type;
             });
@@ -72,7 +90,11 @@ namespace Serialize.Linq.Nodes
             var type = ResolveType(this.Name);
             if (type == null)
                 throw new SerializationException(string.Format("Failed to serialize '{0}' to a type object.", this.Name));
+
+            if (this.GenericArguments != null)            
+                type = type.MakeGenericType(this.GenericArguments.Select(t => t.ToType()).ToArray());
+            
             return type;
         }
-    }    
+    }
 }

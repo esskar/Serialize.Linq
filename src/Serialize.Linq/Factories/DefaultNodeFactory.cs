@@ -28,9 +28,9 @@ namespace Serialize.Linq.Factories
             _innerFactory = this.CreateFactory();
         }
         
-        public ExpressionNode Create(Expression expression)
+        public ExpressionNode Create(Expression Expression)
         {
-            return _innerFactory.Create(expression);
+            return _innerFactory.Create(Expression);
         }
 
         public TypeNode Create(Type type)

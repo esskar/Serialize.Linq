@@ -4,13 +4,25 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
+    #region DataContract
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
     [DataContract]
+#else
+    [DataContract(Name = "U")]
+#endif
+    #endregion
     public class UnaryExpressionNode : ExpressionNode<UnaryExpression>
     {
-        public UnaryExpressionNode(INodeFactory factory, UnaryExpression expression) 
+        public UnaryExpressionNode(INodeFactory factory, UnaryExpression expression)
             : base(factory, expression) { }
 
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember]
+#else
+        [DataMember(Name = "O")]
+#endif
+        #endregion
         public ExpressionNode Operand { get; set; }
 
         protected override void Initialize(UnaryExpression expression)

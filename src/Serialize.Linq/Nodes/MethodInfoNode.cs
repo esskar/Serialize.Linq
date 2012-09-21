@@ -7,10 +7,16 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
+    #region DataContract
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
     [DataContract]
+#else
+    [DataContract(Name = "MIN")]
+#endif
+    #endregion
     public class MethodInfoNode : MemberNode<MethodInfo>
     {
-        public MethodInfoNode(INodeFactory factory, MethodInfo memberInfo) 
+        public MethodInfoNode(INodeFactory factory, MethodInfo memberInfo)
             : base(factory, memberInfo) { }
 
         protected override IEnumerable<MethodInfo> GetMemberInfosForType(Type type)
@@ -18,18 +24,30 @@ namespace Serialize.Linq.Nodes
             return type.GetMethods();
         }
 
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember]
+#else
+        [DataMember(Name = "I")]
+#endif
+        #endregion
         public bool IsGenericMethod { get; set; }
 
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember]
+#else
+        [DataMember(Name = "G")]
+#endif
+        #endregion
         public TypeNode[] GenericArguments { get; set; }
 
         protected override void Initialize(MethodInfo memberInfo)
         {
             base.Initialize(memberInfo);
-            if(!memberInfo.IsGenericMethod)
+            if (!memberInfo.IsGenericMethod)
                 return;
-            
+
             this.IsGenericMethod = true;
             this.Signature = memberInfo.GetGenericMethodDefinition().ToString();
             this.GenericArguments = memberInfo.GetGenericArguments().Select(a => this.Factory.Create(a)).ToArray();
@@ -45,8 +63,8 @@ namespace Serialize.Linq.Nodes
             {
                 var arguments = this.GenericArguments
                     .Select(a => a.ToType())
-                    .Where(t => t != null).ToArray();       
-                if(arguments.Length > 0)
+                    .Where(t => t != null).ToArray();
+                if (arguments.Length > 0)
                     method = method.MakeGenericMethod(arguments);
             }
             return method;

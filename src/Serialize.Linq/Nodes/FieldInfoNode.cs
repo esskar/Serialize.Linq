@@ -6,15 +6,21 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
+    #region DataContract
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
     [DataContract]
-    public class MemberInfoNode : MemberNode<MemberInfo>
+#else
+    [DataContract(Name = "FI")]
+#endif
+    #endregion
+    public class FieldInfoNode : MemberNode<FieldInfo>
     {
-        public MemberInfoNode(INodeFactory factory, MemberInfo memberInfo) 
+        public FieldInfoNode(INodeFactory factory, FieldInfo memberInfo)
             : base(factory, memberInfo) { }
 
-        protected override IEnumerable<MemberInfo> GetMemberInfosForType(Type type)
+        protected override IEnumerable<FieldInfo> GetMemberInfosForType(Type type)
         {
-            return type.GetMembers();
+            return type.GetFields();
         }
     }
 }

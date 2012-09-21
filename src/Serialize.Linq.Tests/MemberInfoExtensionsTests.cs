@@ -13,7 +13,7 @@ namespace Serialize.Linq.Tests
         [TestMethod]
         public void GetReturnTypeOfPropertyTest()
         {
-            var actual = typeof(Bar).GetProperty("Name").GetReturnType();
+            var actual = typeof(Bar).GetProperty("FirstName").GetReturnType();
             Assert.AreEqual(typeof(string), actual);
         }
 

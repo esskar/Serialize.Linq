@@ -4,7 +4,13 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
+    #region DataContract
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
     [DataContract]
+#else
+    [DataContract(Name = "P")]
+#endif
+    #endregion
     public class ParameterExpressionNode : ExpressionNode<ParameterExpression>
     {
         private ParameterExpression _parameterExpression;
@@ -14,7 +20,13 @@ namespace Serialize.Linq.Nodes
         public ParameterExpressionNode(INodeFactory factory, ParameterExpression expression)
             : base(factory, expression) { }
 
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember]
+#else
+        [DataMember(Name = "I")]
+#endif
+        #endregion
         public bool IsByRef
         {
             get { return _isByRef; }
@@ -28,8 +40,14 @@ namespace Serialize.Linq.Nodes
             }
         }
 
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember]
-        public string Name 
+#else
+        [DataMember(Name = "N")]
+#endif
+        #endregion
+        public string Name
         {
             get { return _name; }
             set
@@ -48,10 +66,10 @@ namespace Serialize.Linq.Nodes
             this.Name = expression.Name;
             _parameterExpression = expression;
         }
-        
+
         public override Expression ToExpression()
         {
             return _parameterExpression ?? (_parameterExpression = Expression.Parameter(this.Type.ToType(), this.Name));
-        }        
+        }
     }
 }
