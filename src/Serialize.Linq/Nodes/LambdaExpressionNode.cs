@@ -44,26 +44,10 @@ namespace Serialize.Linq.Nodes
 
         public override Expression ToExpression()
         {
-            Expression body;
-            ParameterExpression[] parameters;
-            this.BuildExpression(out body, out parameters);
-            return Expression.Lambda(this.Type.ToType(), body, parameters);
-        }
-
-        public Expression<TDelegate> ToExpression<TDelegate>()
-        {
-            Expression body;
-            ParameterExpression[] parameters;
-            this.BuildExpression(out body, out parameters);
-            return Expression.Lambda<TDelegate>(body, parameters);
-        }
-
-        private void BuildExpression(out Expression bodyExpression, out ParameterExpression[] parameterExpressions)
-        {
-            bodyExpression = this.Body.ToExpression();
-
+            var body = this.Body.ToExpression();
             var parameters = this.Parameters.GetParameterExpressions().ToArray();
-            var bodyParameters = bodyExpression.GetNodes().OfType<ParameterExpression>().ToArray();
+
+            var bodyParameters = body.GetNodes().OfType<ParameterExpression>().ToArray();
             for (var i = 0; i < parameters.Length; ++i)
             {
                 var matchingParameter = bodyParameters.Where(p => p.Name == parameters[i].Name && p.Type == parameters[i].Type).ToArray();
@@ -71,7 +55,7 @@ namespace Serialize.Linq.Nodes
                     parameters[i] = matchingParameter.First();
             }
 
-            parameterExpressions = parameters;
+            return Expression.Lambda(this.Type.ToType(), body, parameters);
         }
     }
 }

@@ -62,6 +62,12 @@ namespace Serialize.Linq.Nodes
 
         public abstract Expression ToExpression();
 
+        public Expression<TDelegate> ToExpression<TDelegate>()
+        {
+            var expression = this.ToExpression();
+            return (Expression<TDelegate>)expression;
+        }
+
         public override string ToString()
         {
             return this.ToExpression().ToString();
