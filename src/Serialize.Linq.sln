@@ -17,16 +17,26 @@ Global
 		CategoryFile = Serialize.Linq.vsmdi
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug Optimize Size|Any CPU = Debug Optimize Size|Any CPU
 		Debug|Any CPU = Debug|Any CPU
+		Release Optimize Size|Any CPU = Release Optimize Size|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}.Debug Optimize Size|Any CPU.ActiveCfg = Debug Optimize Size|Any CPU
+		{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}.Debug Optimize Size|Any CPU.Build.0 = Debug Optimize Size|Any CPU
 		{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}.Release Optimize Size|Any CPU.ActiveCfg = Release Optimize Size|Any CPU
+		{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}.Release Optimize Size|Any CPU.Build.0 = Release Optimize Size|Any CPU
 		{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9854CEA9-3EBA-414F-AFE9-A92CA24A52D1}.Debug Optimize Size|Any CPU.ActiveCfg = Debug Optimize Size|Any CPU
+		{9854CEA9-3EBA-414F-AFE9-A92CA24A52D1}.Debug Optimize Size|Any CPU.Build.0 = Debug Optimize Size|Any CPU
 		{9854CEA9-3EBA-414F-AFE9-A92CA24A52D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9854CEA9-3EBA-414F-AFE9-A92CA24A52D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9854CEA9-3EBA-414F-AFE9-A92CA24A52D1}.Release Optimize Size|Any CPU.ActiveCfg = Release Optimize Size|Any CPU
+		{9854CEA9-3EBA-414F-AFE9-A92CA24A52D1}.Release Optimize Size|Any CPU.Build.0 = Release Optimize Size|Any CPU
 		{9854CEA9-3EBA-414F-AFE9-A92CA24A52D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9854CEA9-3EBA-414F-AFE9-A92CA24A52D1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection

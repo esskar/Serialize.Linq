@@ -20,7 +20,7 @@ namespace Serialize.Linq.Nodes
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember(EmitDefaultValue = false)]
 #else
-        [XmlIgnore]
+        [DataMember(EmitDefaultValue = false, Name = "B")]
 #endif
         #endregion
         public MemberBindingNodeList Bindings { get; set; }
