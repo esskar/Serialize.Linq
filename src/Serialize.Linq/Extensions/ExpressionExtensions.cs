@@ -55,7 +55,7 @@ namespace Serialize.Linq.Extensions
         {
             var lambda = expression as LambdaExpression;
             if(lambda != null)
-                return  new ComplexNodeFactory(lambda.Parameters.Select(p => p.Type));
+                return  new DefaultNodeFactory(lambda.Parameters.Select(p => p.Type));
             return new NodeFactory();
         }
 

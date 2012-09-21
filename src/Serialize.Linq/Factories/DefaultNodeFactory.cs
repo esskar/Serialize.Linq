@@ -8,15 +8,15 @@ using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Factories
 {
-    public class ComplexNodeFactory : INodeFactory
+    public class DefaultNodeFactory : INodeFactory
     {
         private readonly INodeFactory _innerFactory;
         private readonly Type[] _types;
 
-        public ComplexNodeFactory(Type type)
+        public DefaultNodeFactory(Type type)
             : this(new [] { type }) { }
         
-        public ComplexNodeFactory(IEnumerable<Type> types)
+        public DefaultNodeFactory(IEnumerable<Type> types)
         {
             if(types == null)
                 throw new ArgumentNullException("types");
