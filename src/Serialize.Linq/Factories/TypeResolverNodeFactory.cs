@@ -51,16 +51,22 @@ namespace Serialize.Linq.Factories
             switch (memberExpression.Member.MemberType)
             {
                 case MemberTypes.Field:
-                    if (memberExpression.Expression.NodeType == ExpressionType.Constant)
+                    if (memberExpression.Expression != null)
                     {
-                        var constantExpression = (ConstantExpression) memberExpression.Expression;
-                        var fields = constantExpression.Type.GetFields();
-                        var memberField = fields.Single(n => memberExpression.Member.Name.Contains(n.Name));
-                        constantValue = memberField.GetValue(constantExpression.Value);
-                        return true;
+                        if (memberExpression.Expression.NodeType == ExpressionType.Constant)
+                        {
+                            var constantExpression = (ConstantExpression)memberExpression.Expression;
+                            var fields = constantExpression.Type.GetFields();
+                            var memberField = fields.Single(n => memberExpression.Member.Name.Contains(n.Name));
+                            constantValue = memberField.GetValue(constantExpression.Value);
+                            return true;
+                        }
+                        memberExpression = (MemberExpression)memberExpression.Expression;
+                        return this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue);
                     }
-                    memberExpression = (MemberExpression) memberExpression.Expression;
-                    return this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue);
+                    var field = (FieldInfo)memberExpression.Member;
+                    constantValue = field.GetValue(null);
+                    return true;
 
                 case MemberTypes.Property:
                     constantValue = Expression.Lambda(memberExpression).Compile().DynamicInvoke();
@@ -85,8 +91,11 @@ namespace Serialize.Linq.Factories
             if (memberExpression != null)
             {
                 object constantValue;
-                if(this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue))
-                    return new ConstantExpressionNode(this, Expression.Lambda(methodCallExpression).Compile().DynamicInvoke());
+                if (this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue))
+                {
+                    if(methodCallExpression.Arguments.Count == 0)
+                        return new ConstantExpressionNode(this, Expression.Lambda(methodCallExpression).Compile().DynamicInvoke());
+                }
             }
             else if (methodCallExpression.Method.Name == "ToString" && methodCallExpression.Method.ReturnType == typeof(string))
 		    {

@@ -77,6 +77,9 @@ namespace Serialize.Linq.Tests
                 foreach (var expected in SerializerTestData.TestExpressions)
                 {
                     var bytes = serializer.SerializeBinary(expected);
+
+                    this.TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
+
                     var actual = serializer.DeserializeBinary(bytes);
 
                     if (expected == null)

@@ -60,8 +60,24 @@ namespace Serialize.Linq.Nodes
                 if (_value != null)
                 {
                     var type = base.Type != null ? base.Type.ToType() : null;
-                    if (type == null || !type.IsInstanceOfType(_value))
+                    if (type == null)
+                    {
                         base.Type = this.Factory.Create(_value.GetType());
+                        return;
+                    }
+                    if (!type.IsInstanceOfType(_value))
+                    {
+                        if (type.IsArray && _value.GetType().IsArray)
+                        {
+                            var valArray = (Array)_value;
+                            var temp = Array.CreateInstance(type.GetElementType(),valArray.Length);
+                            for(var i = 0; i < valArray.Length; ++i)
+                                temp.SetValue(valArray.GetValue(i), i);
+                            _value = temp;
+                            return;
+                        }
+                        base.Type = this.Factory.Create(_value.GetType());
+                    }
                 }
             }
         }

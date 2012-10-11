@@ -10,7 +10,7 @@ namespace Serialize.Linq.Serializers
     {
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
-            return new DataContractSerializer(type);
+            return new DataContractSerializer(type, this.GetKnownTypes());
         }
 
         public byte[] Serialize<T>(T obj)

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
@@ -9,12 +10,34 @@ namespace Serialize.Linq.Serializers
     {
         protected abstract XmlObjectSerializer CreateXmlObjectSerializer(Type type);
 
+        private static readonly Type[] __knownTypes = new [] { 
+            typeof(bool),
+            typeof(decimal), typeof(double),
+            typeof(float),
+            typeof(int), typeof(uint),
+            typeof(short), typeof(ushort),
+            typeof(long), typeof(ulong),
+            typeof(string),
+            typeof(DateTime), typeof(TimeSpan), typeof(Guid)
+        };
+
+        protected virtual IEnumerable<Type> GetKnownTypes()
+        {
+            foreach (var knownType in __knownTypes)
+            {
+                yield return knownType;
+                yield return knownType.MakeArrayType();
+                if (!knownType.IsClass)
+                    yield return typeof(Nullable<>).MakeGenericType(knownType);
+            }
+        }
+
         public virtual void Serialize<T>(Stream stream, T obj)
         {
             if(stream == null)
                 throw new ArgumentNullException("stream");
 
-            var serializer = this.CreateXmlObjectSerializer(typeof(T));
+            var serializer = this.CreateXmlObjectSerializer(typeof(T));                   
             serializer.WriteObject(stream, obj);
         }
 

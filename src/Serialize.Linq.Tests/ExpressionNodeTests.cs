@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Serialize.Linq.Extensions;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Nodes;
 using Serialize.Linq.Tests.Internals;
 
 namespace Serialize.Linq.Tests
@@ -78,6 +81,34 @@ namespace Serialize.Linq.Tests
             this.AssertExpression(propertyAccess);
         }
 
+        [TestMethod]
+        public void ToExpressionNodeTest()
+        {
+            AssertToExpressionNode(SerializerTestData.TestExpressions);
+            AssertToExpressionNode(SerializerTestData.TestNodesOnlyExpressions);
+        }
+
+        private void AssertToExpressionNode(IEnumerable<Expression> expressions)
+        {
+            foreach (var expression in expressions)
+            {
+                ExpressionNode node = null;
+                try 
+                { 
+                    node = expression.ToExpressionNode(); 
+                }
+                catch (Exception ex)
+                {
+                    Assert.Fail("Failed to convert '{0}' to expression node: {1}", expression, ex);                    
+                }
+
+                if (expression != null)
+                    Assert.IsNotNull(node, "Unable to convert '{0}' to expression node.", expression);
+                else
+                    Assert.IsNull(node, "Null expression should convert to null expression node.");
+            }
+        }
+
         private void AssertExpression(Expression expression, string message = null)
         {
             this.AssertExpression<NodeFactory>(expression, message);
@@ -91,24 +122,7 @@ namespace Serialize.Linq.Tests
             var createdExpression = expressionNode.ToExpression();
 
             PublicInstancePropertiesAssert.AreEqual(expression, createdExpression, message);
-            this.TestContext.WriteLine("'{0}' == '{1}'", expression.ToString(), createdExpression.ToString());            
-        }
-
-        private void AssertExpression<TFactory>(Expression expression, Expression expectedExpression, string message = null)
-            where TFactory : INodeFactory, new()
-        {
-            var factory = new TFactory();
-            var expressionNode = factory.Create(expression);
-            var createdExpression = expressionNode.ToExpression();
-
-            ExpressionAssert.AreEqual(expectedExpression, createdExpression, message);
             this.TestContext.WriteLine("'{0}' == '{1}'", expression.ToString(), createdExpression.ToString());
-        }
-
-        private void AssertExpression<TFactory, T, TResult>(Expression<Func<T, TResult>> expression, Expression<Func<T, TResult>> expectedExpression, string message = null)
-            where TFactory : INodeFactory, new()
-        {
-            this.AssertExpression<TFactory>(expression, expectedExpression, message);
         }
     }
 }

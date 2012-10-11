@@ -9,7 +9,7 @@ namespace Serialize.Linq.Serializers
     {
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
-            return new DataContractJsonSerializer(type);
+            return new DataContractJsonSerializer(type, this.GetKnownTypes());
         }
     }
 }

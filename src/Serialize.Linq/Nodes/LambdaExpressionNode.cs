@@ -38,8 +38,8 @@ namespace Serialize.Linq.Nodes
 
         protected override void Initialize(LambdaExpression expression)
         {
-            this.Body = this.Factory.Create(expression.Body);
             this.Parameters = new ExpressionNodeList(this.Factory, expression.Parameters);
+            this.Body = this.Factory.Create(expression.Body);            
         }
 
         public override Expression ToExpression()
