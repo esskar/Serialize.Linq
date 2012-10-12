@@ -9,6 +9,7 @@ Documentation is not really planed.
 
 ## Help and Support
 If you have a feature request or bug create an issue.
+For bugs: make sure you create a unit test, so it is easier for me to reproduce and fix it.
 
 ## Supported Platforms (or known to work with)
 * .NET 4.0
