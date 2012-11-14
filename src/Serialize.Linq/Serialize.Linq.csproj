@@ -80,6 +80,7 @@
     <Compile Include="Interfaces\ITextSerializer.cs" />
     <Compile Include="Internals\ComplexPropertyMemberTypeEnumerator.cs" />
     <Compile Include="Internals\ComplexPropertyMemberTypeFinder.cs" />
+    <Compile Include="Internals\ExpressionContext.cs" />
     <Compile Include="Internals\MemberTypeEnumerator.cs" />
     <Compile Include="Internals\PropertyMemberTypeEnumerator.cs" />
     <Compile Include="Nodes\ConstructorInfoNode.cs" />

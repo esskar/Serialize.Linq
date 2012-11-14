@@ -93,6 +93,29 @@ namespace Serialize.Linq.Tests
             }
         }
 
+        [TestMethod]
+        public void SerializeDeserializeBinaryComplexExpressionWithCompileTest()
+        {
+            foreach (var binSerializer in CreateBinarySerializers())
+            {
+                var serializer = new ExpressionSerializer(binSerializer);
+
+                //var expected = (System.Linq.Expressions.Expression<System.Func<Bar, bool>>)(p => p.LastName == "Miller");  // this expresion is ok
+
+                var expected = (System.Linq.Expressions.Expression<System.Func<Bar, bool>>)(p => p.LastName == "Miller" && p.FirstName.StartsWith("M"));
+                expected.Compile();
+
+                var bytes = serializer.SerializeBinary(expected);
+                this.TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
+
+                var actual = (System.Linq.Expressions.Expression<System.Func<Bar, bool>>)serializer.DeserializeBinary(bytes);
+                Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, binSerializer.GetType());
+                ExpressionAssert.AreEqual(expected, actual);
+
+                actual.Compile();
+            }
+        }
+
         private static IEnumerable<ITextSerializer> CreateTextSerializers()
         {
             return new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() };

@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -30,11 +31,11 @@ namespace Serialize.Linq.Nodes
             this.Operand = this.Factory.Create(expression.Operand);
         }
 
-        public override Expression ToExpression()
+        internal override Expression ToExpression(ExpressionContext context)
         {
             return this.NodeType == ExpressionType.UnaryPlus
-                ? Expression.UnaryPlus(this.Operand.ToExpression())
-                : Expression.MakeUnary(this.NodeType, this.Operand.ToExpression(), this.Type.ToType());
+                ? Expression.UnaryPlus(this.Operand.ToExpression(context))
+                : Expression.MakeUnary(this.NodeType, this.Operand.ToExpression(context), this.Type.ToType());
         }
     }
 }

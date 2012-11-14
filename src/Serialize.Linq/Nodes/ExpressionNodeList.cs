@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -27,14 +28,14 @@ namespace Serialize.Linq.Nodes
             this.AddRange(items.Select(factory.Create));
         }
 
-        public IEnumerable<Expression> GetExpressions()
+        internal IEnumerable<Expression> GetExpressions(ExpressionContext context)
         {
-            return this.Select(e => e.ToExpression());
+            return this.Select(e => e.ToExpression(context));
         }
 
-        public IEnumerable<ParameterExpression> GetParameterExpressions()
+        internal IEnumerable<ParameterExpression> GetParameterExpressions(ExpressionContext context)
         {
-            return this.OfType<ParameterExpressionNode>().Select(e => (ParameterExpression)e.ToExpression());
+            return this.OfType<ParameterExpressionNode>().Select(e => (ParameterExpression)e.ToExpression(context));
         }
     }
 }

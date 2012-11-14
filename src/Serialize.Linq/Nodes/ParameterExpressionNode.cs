@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -12,11 +13,7 @@ namespace Serialize.Linq.Nodes
 #endif
     #endregion
     public class ParameterExpressionNode : ExpressionNode<ParameterExpression>
-    {
-        private ParameterExpression _parameterExpression;
-        private string _name;
-        private bool _isByRef;
-
+    {        
         public ParameterExpressionNode(INodeFactory factory, ParameterExpression expression)
             : base(factory, expression) { }
 
@@ -26,19 +23,9 @@ namespace Serialize.Linq.Nodes
 #else
         [DataMember(EmitDefaultValue = false, Name = "I")]
 #endif
-        #endregion
-        public bool IsByRef
-        {
-            get { return _isByRef; }
-            set
-            {
-                if (_isByRef != value)
-                {
-                    _isByRef = value;
-                    _parameterExpression = null;
-                }
-            }
-        }
+
+            #endregion
+        public bool IsByRef { get; set; }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
@@ -47,29 +34,17 @@ namespace Serialize.Linq.Nodes
         [DataMember(EmitDefaultValue = false, Name = "N")]
 #endif
         #endregion
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                if (_name != value)
-                {
-                    _name = value;
-                    _parameterExpression = null;
-                }
-            }
-        }
+        public string Name { get; set; }
 
         protected override void Initialize(ParameterExpression expression)
         {
             this.IsByRef = expression.IsByRef;
-            this.Name = expression.Name;
-            _parameterExpression = expression;
+            this.Name = expression.Name;            
         }
 
-        public override Expression ToExpression()
+        internal override Expression ToExpression(ExpressionContext context)
         {
-            return _parameterExpression ?? (_parameterExpression = Expression.Parameter(this.Type.ToType(), this.Name));
+            return context.GetParameterExpression(this);
         }
     }
 }

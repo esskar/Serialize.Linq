@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -47,9 +48,9 @@ namespace Serialize.Linq.Nodes
         #endregion
         public MethodInfoNode AddMethod { get; set; }
 
-        public ElementInit ToElementInit()
+        internal ElementInit ToElementInit(ExpressionContext context)
         {
-            return Expression.ElementInit(this.AddMethod.ToMemberInfo(), this.Arguments.GetExpressions());
+            return Expression.ElementInit(this.AddMethod.ToMemberInfo(), this.Arguments.GetExpressions(context));
         }
     }
 }

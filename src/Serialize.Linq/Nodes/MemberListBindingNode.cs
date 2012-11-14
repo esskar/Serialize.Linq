@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -28,9 +29,9 @@ namespace Serialize.Linq.Nodes
         #endregion
         public ElementInitNodeList Initializers { get; set; }
 
-        public override MemberBinding ToMemberBinding()
+        internal override MemberBinding ToMemberBinding(ExpressionContext context)
         {
-            return Expression.ListBind(this.Member.ToMemberInfo(), this.Initializers.GetElementInits());
+            return Expression.ListBind(this.Member.ToMemberInfo(), this.Initializers.GetElementInits(context));
         }
     }
 }

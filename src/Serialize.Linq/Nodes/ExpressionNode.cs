@@ -2,6 +2,7 @@
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -60,7 +61,12 @@ namespace Serialize.Linq.Nodes
         #endregion
         public virtual TypeNode Type { get; set; }
 
-        public abstract Expression ToExpression();
+        internal abstract Expression ToExpression(ExpressionContext context);
+
+        public Expression ToExpression()
+        {
+            return this.ToExpression(new ExpressionContext());
+        }
 
         public Expression<TDelegate> ToExpression<TDelegate>()
         {

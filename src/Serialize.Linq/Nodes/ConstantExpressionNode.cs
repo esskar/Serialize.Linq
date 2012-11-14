@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Exceptions;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -87,7 +88,7 @@ namespace Serialize.Linq.Nodes
             this.Value = expression.Value;
         }
 
-        public override Expression ToExpression()
+        internal override Expression ToExpression(ExpressionContext context)
         {
             return this.Type != null ? Expression.Constant(this.Value, this.Type.ToType()) : Expression.Constant(this.Value);
         }

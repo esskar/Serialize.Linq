@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -27,9 +28,9 @@ namespace Serialize.Linq.Nodes
             this.AddRange(items.Select(item => new ElementInitNode(factory, item)));
         }
 
-        public IEnumerable<ElementInit> GetElementInits()
+        internal IEnumerable<ElementInit> GetElementInits(ExpressionContext context)
         {
-            return this.Select(item => item.ToElementInit());
+            return this.Select(item => item.ToElementInit(context));
         }
     }
 }

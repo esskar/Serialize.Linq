@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -50,9 +51,9 @@ namespace Serialize.Linq.Nodes
             this.IfFalse = this.Factory.Create(expression.IfFalse);
         }
 
-        public override Expression ToExpression()
+        internal override Expression ToExpression(ExpressionContext context)
         {
-            return Expression.Condition(this.Test.ToExpression(), this.IfTrue.ToExpression(), this.IfFalse.ToExpression());
+            return Expression.Condition(this.Test.ToExpression(context), this.IfTrue.ToExpression(context), this.IfFalse.ToExpression(context));
         }
     }
 }

@@ -3,6 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -43,7 +44,7 @@ namespace Serialize.Linq.Nodes
         #endregion
         public MemberInfoNode Member { get; set; }
 
-        public abstract MemberBinding ToMemberBinding();
+        internal abstract MemberBinding ToMemberBinding(ExpressionContext context);
 
         internal static MemberBindingNode Create(INodeFactory factory, MemberBinding memberBinding)
         {

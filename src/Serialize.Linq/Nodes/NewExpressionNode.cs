@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -50,10 +51,10 @@ namespace Serialize.Linq.Nodes
             this.Members = new MemberInfoNodeList(this.Factory, expression.Members);
         }
 
-        public override Expression ToExpression()
+        internal override Expression ToExpression(ExpressionContext context)
         {
             return this.Constructor != null
-                ? Expression.New(this.Constructor.ToMemberInfo(), this.Arguments.GetExpressions(), this.Members.GetMembers())
+                ? Expression.New(this.Constructor.ToMemberInfo(), this.Arguments.GetExpressions(context), this.Members.GetMembers())
                 : Expression.New(this.Type.ToType());
         }
     }

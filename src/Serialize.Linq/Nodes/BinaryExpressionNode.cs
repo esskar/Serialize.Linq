@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -70,24 +71,24 @@ namespace Serialize.Linq.Nodes
             this.IsLiftedToNull = expression.IsLiftedToNull;
         }
 
-        public override Expression ToExpression()
+        internal override Expression ToExpression(ExpressionContext context)
         {
             var conversion = this.Conversion != null ? this.Conversion.ToExpression() as LambdaExpression : null;
             if (this.Method != null && conversion != null)
                 return Expression.MakeBinary(
                     this.NodeType,
-                    this.Left.ToExpression(), this.Right.ToExpression(),
+                    this.Left.ToExpression(context), this.Right.ToExpression(context),
                     this.IsLiftedToNull,
                     this.Method.ToMemberInfo(),
                     conversion);
             if (this.Method != null)
                 return Expression.MakeBinary(
                     this.NodeType,
-                    this.Left.ToExpression(), this.Right.ToExpression(),
+                    this.Left.ToExpression(context), this.Right.ToExpression(context),
                     this.IsLiftedToNull,
                     this.Method.ToMemberInfo());
             return Expression.MakeBinary(this.NodeType,
-                    this.Left.ToExpression(), this.Right.ToExpression());
+                    this.Left.ToExpression(context), this.Right.ToExpression(context));
         }
     }
 }

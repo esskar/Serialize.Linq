@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -40,9 +41,9 @@ namespace Serialize.Linq.Nodes
             this.Member = new MemberInfoNode(this.Factory, expression.Member);
         }
 
-        public override Expression ToExpression()
+        internal override Expression ToExpression(ExpressionContext context)
         {
-            return System.Linq.Expressions.Expression.MakeMemberAccess(this.Expression.ToExpression(), this.Member.ToMemberInfo());
+            return System.Linq.Expressions.Expression.MakeMemberAccess(this.Expression.ToExpression(context), this.Member.ToMemberInfo());
         }
     }
 }
