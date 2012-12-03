@@ -6,7 +6,7 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
 {
-    internal abstract class TextSerializer : DataSerializer, ITextSerializer
+    public abstract class TextSerializer : DataSerializer, ITextSerializer
     {
         public string Serialize<T>(T obj)
         {

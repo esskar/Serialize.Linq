@@ -6,7 +6,7 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
 {
-    internal class BinarySerializer : DataSerializer, IBinarySerializer
+    public class BinarySerializer : DataSerializer, IBinarySerializer
     {
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {

@@ -4,7 +4,7 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
 {
-    internal class XmlSerializer : TextSerializer, IXmlSerializer
+    public class XmlSerializer : TextSerializer, IXmlSerializer
     {
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
