@@ -18,13 +18,12 @@ namespace Serialize.Linq.Nodes
     {
         public MemberInfoNodeList() { }
 
-        public MemberInfoNodeList(INodeFactory factory, IEnumerable<MemberInfo> items)
+        public MemberInfoNodeList(INodeFactory factory, IEnumerable<MemberInfo> items = null)
         {
             if (factory == null)
                 throw new ArgumentNullException("factory");
-            if (items == null)
-                throw new ArgumentNullException("items");
-            this.AddRange(items.Select(m => new MemberInfoNode(factory, m)));
+            if(items != null)
+                this.AddRange(items.Select(m => new MemberInfoNode(factory, m)));
         }
 
         public IEnumerable<MemberInfo> GetMembers()
