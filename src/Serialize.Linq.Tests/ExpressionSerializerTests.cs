@@ -119,11 +119,22 @@ namespace Serialize.Linq.Tests
         }
 
         [TestMethod]
-        public void SerializeNewObjWithoutNoParameters()
+        public void SerializeNewObjWithoutParameters()
         {
             var serializer = new ExpressionSerializer(new JsonSerializer());
 
             Expression<Func<List<int>, List<int>>> exp = l => new List<int>();
+
+            var result = serializer.SerializeText(exp);
+            Assert.IsNotNull(result);
+        }
+
+        [TestMethod]
+        public void SerializeFuncExpressionsWithoutParameters()
+        {
+            var serializer = new ExpressionSerializer(new JsonSerializer());
+
+            Expression<Func<bool>> exp = () => false;
 
             var result = serializer.SerializeText(exp);
             Assert.IsNotNull(result);

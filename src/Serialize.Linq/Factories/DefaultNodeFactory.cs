@@ -22,9 +22,8 @@ namespace Serialize.Linq.Factories
                 throw new ArgumentNullException("types");
             
             _types = types.ToArray();
-            if(_types.Length == 0 || _types.Any(t => t == null))
-                throw new ArgumentException("types");
-            
+            //if(_types.Length == 0 || _types.Any(t => t == null))
+            //    throw new ArgumentException("types");
             _innerFactory = this.CreateFactory();
         }
         
