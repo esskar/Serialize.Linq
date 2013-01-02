@@ -3,6 +3,11 @@
 Serialize.Linq is a c# library for serializing linq expressions. 
 Formats it supports (but it is not limited to) are JSON, XML and BINARY.
 
+## Installation
+Simple install via [NuGet](http://nuget.org/packages/Serialize.Linq):
+
+PM> Install-Package Serialize.Linq
+
 ## Documentation and Examples
 You probably find lots of examples at [http://blog.esskar.de/tags/serialize.linq.html](http://blog.esskar.de/tags/serialize.linq.html).
 Documentation is not really planed.
