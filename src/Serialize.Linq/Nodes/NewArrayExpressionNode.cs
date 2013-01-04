@@ -15,6 +15,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class NewArrayExpressionNode : ExpressionNode<NewArrayExpression>
     {
+        public NewArrayExpressionNode() { }
+
         public NewArrayExpressionNode(INodeFactory factory, NewArrayExpression expression)
             : base(factory, expression) { }
 

@@ -14,6 +14,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class ConditionalExpressionNode : ExpressionNode<ConditionalExpression>
     {
+        public ConditionalExpressionNode() { }
+
         public ConditionalExpressionNode(INodeFactory factory, ConditionalExpression expression)
             : base(factory, expression) { }
 

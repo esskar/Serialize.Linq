@@ -15,6 +15,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class ConstructorInfoNode : MemberNode<ConstructorInfo>
     {
+        public ConstructorInfoNode() { }
+
         public ConstructorInfoNode(INodeFactory factory, ConstructorInfo memberInfo)
             : base(factory, memberInfo) { }
 

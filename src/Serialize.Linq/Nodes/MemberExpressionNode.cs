@@ -14,6 +14,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class MemberExpressionNode : ExpressionNode<MemberExpression>
     {
+        public MemberExpressionNode() { }
+
         public MemberExpressionNode(INodeFactory factory, MemberExpression expression)
             : base(factory, expression) { }
 

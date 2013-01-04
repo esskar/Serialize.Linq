@@ -15,6 +15,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class ElementInitNode : Node
     {
+        public ElementInitNode() { }
+
         public ElementInitNode(INodeFactory factory, ElementInit elementInit)
             : base(factory)
         {

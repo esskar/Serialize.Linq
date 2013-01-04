@@ -14,6 +14,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class ListInitExpressionNode : ExpressionNode<ListInitExpression>
     {
+        public ListInitExpressionNode() { }
+
         public ListInitExpressionNode(INodeFactory factory, ListInitExpression expression)
             : base(factory, expression) { }
 

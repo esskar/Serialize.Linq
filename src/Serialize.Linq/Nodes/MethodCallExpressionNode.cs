@@ -15,6 +15,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class MethodCallExpressionNode : ExpressionNode<MethodCallExpression>
     {
+        public MethodCallExpressionNode() { }
+
         public MethodCallExpressionNode(INodeFactory factory, MethodCallExpression expression)
             : base(factory, expression) { }
 

@@ -16,6 +16,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class LambdaExpressionNode : ExpressionNode<LambdaExpression>
     {
+        public LambdaExpressionNode() { }
+
         public LambdaExpressionNode(INodeFactory factory, LambdaExpression expression)
             : base(factory, expression) { }
 

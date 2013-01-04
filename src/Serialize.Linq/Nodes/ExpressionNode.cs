@@ -15,6 +15,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public abstract class ExpressionNode<TExpression> : ExpressionNode where TExpression : Expression
     {
+        protected ExpressionNode() { }
+
         protected ExpressionNode(INodeFactory factory, TExpression expression)
             : base(factory, expression.NodeType, expression.Type)
         {
@@ -36,6 +38,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public abstract class ExpressionNode : Node
     {
+        protected ExpressionNode() { }
+
         protected ExpressionNode(INodeFactory factory, ExpressionType nodeType, Type type = null)
             : base(factory)
         {

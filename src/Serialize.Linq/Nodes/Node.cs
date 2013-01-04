@@ -38,6 +38,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public abstract class Node
     {
+        protected Node() { }
+
         protected Node(INodeFactory factory)
         {
             if(factory == null)

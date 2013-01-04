@@ -14,6 +14,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class InvocationExpressionNode : ExpressionNode<InvocationExpression>
     {
+        public InvocationExpressionNode() { }
+
         public InvocationExpressionNode(INodeFactory factory, InvocationExpression expression)
             : base(factory, expression) { }
 

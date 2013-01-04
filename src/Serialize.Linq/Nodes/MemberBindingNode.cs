@@ -16,6 +16,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public abstract class MemberBindingNode : Node
     {
+        protected MemberBindingNode() { }
+
         protected MemberBindingNode(INodeFactory factory)
             : base(factory) { }
 

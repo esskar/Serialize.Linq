@@ -13,7 +13,9 @@ namespace Serialize.Linq.Nodes
 #endif
     #endregion
     public class ParameterExpressionNode : ExpressionNode<ParameterExpression>
-    {        
+    {   
+        public ParameterExpressionNode() { }
+
         public ParameterExpressionNode(INodeFactory factory, ParameterExpression expression)
             : base(factory, expression) { }
 

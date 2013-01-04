@@ -14,6 +14,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class UnaryExpressionNode : ExpressionNode<UnaryExpression>
     {
+        public UnaryExpressionNode() { }
+
         public UnaryExpressionNode(INodeFactory factory, UnaryExpression expression)
             : base(factory, expression) { }
 

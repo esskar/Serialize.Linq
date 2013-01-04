@@ -18,6 +18,8 @@ namespace Serialize.Linq.Nodes
     {
         private object _value;
 
+        public ConstantExpressionNode() { }
+
         public ConstantExpressionNode(INodeFactory factory, object value)
             : base(factory, ExpressionType.Constant)
         {

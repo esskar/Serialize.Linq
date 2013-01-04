@@ -15,6 +15,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class FieldInfoNode : MemberNode<FieldInfo>
     {
+        public FieldInfoNode() { }
+
         public FieldInfoNode(INodeFactory factory, FieldInfo memberInfo)
             : base(factory, memberInfo) { }
 

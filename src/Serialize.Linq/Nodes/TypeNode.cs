@@ -22,6 +22,8 @@ namespace Serialize.Linq.Nodes
             __typeCache = new ConcurrentDictionary<string, Type>();
         }
 
+        public TypeNode() { }
+
         public TypeNode(INodeFactory factory, Type type)
             : base(factory)
         {

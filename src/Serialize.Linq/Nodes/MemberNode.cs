@@ -16,6 +16,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public abstract class MemberNode<TMemberInfo> : Node where TMemberInfo : MemberInfo
     {
+        protected MemberNode() { }
+
         protected MemberNode(INodeFactory factory, TMemberInfo memberInfo)
             : base(factory)
         {

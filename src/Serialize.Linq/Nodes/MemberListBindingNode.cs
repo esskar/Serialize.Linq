@@ -14,6 +14,8 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class MemberListBindingNode : MemberBindingNode
     {
+        public MemberListBindingNode() { }
+
         public MemberListBindingNode(INodeFactory factory, MemberListBinding memberListBinding)
             : base(factory, memberListBinding.BindingType, memberListBinding.Member)
         {
