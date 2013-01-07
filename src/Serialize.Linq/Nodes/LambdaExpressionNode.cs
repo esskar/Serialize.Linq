@@ -58,7 +58,7 @@ namespace Serialize.Linq.Nodes
                     parameters[i] = matchingParameter.First();
             }
 
-            return Expression.Lambda(this.Type.ToType(), body, parameters);
+            return Expression.Lambda(this.Type.ToType(context), body, parameters);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace Serialize.Linq.Nodes
             if (this.Object != null)
                 objectExpression = this.Object.ToExpression(context);
 
-            return Expression.Call(objectExpression, this.Method.ToMemberInfo(), this.Arguments.GetExpressions(context).ToArray());
+            return Expression.Call(objectExpression, this.Method.ToMemberInfo(context), this.Arguments.GetExpressions(context).ToArray());
         }
     }
 }

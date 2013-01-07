@@ -28,7 +28,7 @@ namespace Serialize.Linq.Nodes
 
         public ConstantExpressionNode(INodeFactory factory, ConstantExpression expression)
             : base(factory, expression) { }
-
+        
         public override TypeNode Type
         {
             get { return base.Type; }
@@ -38,8 +38,12 @@ namespace Serialize.Linq.Nodes
                 {
                     if (value == null)
                         value = this.Factory.Create(this.Value.GetType());
-                    else if (!value.ToType().IsInstanceOfType(this.Value))
-                        throw new InvalidTypeException(string.Format("Type '{0}' is not an instance of the current value type '{1}'.", value.ToType(), this.Value.GetType()));
+                    else
+                    {
+                        var context = new ExpressionContext();
+                        if (!value.ToType(context).IsInstanceOfType(this.Value))
+                            throw new InvalidTypeException(string.Format("Type '{0}' is not an instance of the current value type '{1}'.", value.ToType(context), this.Value.GetType()));
+                    }
                 }
                 base.Type = value;
             }
@@ -62,7 +66,7 @@ namespace Serialize.Linq.Nodes
                 _value = value;
                 if (_value != null)
                 {
-                    var type = base.Type != null ? base.Type.ToType() : null;
+                    var type = base.Type != null ? base.Type.ToType(new ExpressionContext()) : null;
                     if (type == null)
                     {
                         base.Type = this.Factory.Create(_value.GetType());
@@ -92,7 +96,7 @@ namespace Serialize.Linq.Nodes
 
         internal override Expression ToExpression(ExpressionContext context)
         {
-            return this.Type != null ? Expression.Constant(this.Value, this.Type.ToType()) : Expression.Constant(this.Value);
+            return this.Type != null ? Expression.Constant(this.Value, this.Type.ToType(context)) : Expression.Constant(this.Value);
         }
     }
 }

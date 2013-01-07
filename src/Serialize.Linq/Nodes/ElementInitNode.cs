@@ -52,7 +52,7 @@ namespace Serialize.Linq.Nodes
 
         internal ElementInit ToElementInit(ExpressionContext context)
         {
-            return Expression.ElementInit(this.AddMethod.ToMemberInfo(), this.Arguments.GetExpressions(context));
+            return Expression.ElementInit(this.AddMethod.ToMemberInfo(context), this.Arguments.GetExpressions(context));
         }
     }
 }

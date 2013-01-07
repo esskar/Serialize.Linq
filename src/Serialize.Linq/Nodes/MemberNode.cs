@@ -59,12 +59,12 @@ namespace Serialize.Linq.Nodes
             this.Signature = memberInfo.ToString();
         }
 
-        protected Type GetDeclaringType()
+        protected Type GetDeclaringType(ExpressionContext context)
         {
             if (this.DeclaringType == null)
                 throw new InvalidOperationException("DeclaringType is not set.");
 
-            var declaringType = this.DeclaringType.ToType();
+            var declaringType = this.DeclaringType.ToType(context);
             if (declaringType == null)
                 throw new TypeLoadException("Failed to load DeclaringType: " + this.DeclaringType);
 
@@ -73,12 +73,12 @@ namespace Serialize.Linq.Nodes
 
         protected abstract IEnumerable<TMemberInfo> GetMemberInfosForType(Type type);
 
-        public virtual TMemberInfo ToMemberInfo()
+        public virtual TMemberInfo ToMemberInfo(ExpressionContext context)
         {
             if (string.IsNullOrWhiteSpace(this.Signature))
                 return null;
 
-            return this.GetMemberInfosForType(this.GetDeclaringType()).First(m => m.ToString() == this.Signature);
+            return this.GetMemberInfosForType(this.GetDeclaringType(context)).First(m => m.ToString() == this.Signature);
         }
     }
 }

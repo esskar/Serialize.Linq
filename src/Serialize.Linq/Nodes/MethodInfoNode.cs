@@ -55,16 +55,16 @@ namespace Serialize.Linq.Nodes
             this.GenericArguments = memberInfo.GetGenericArguments().Select(a => this.Factory.Create(a)).ToArray();
         }
 
-        public override MethodInfo ToMemberInfo()
+        public override MethodInfo ToMemberInfo(ExpressionContext context)
         {
-            var method = base.ToMemberInfo();
+            var method = base.ToMemberInfo(context);
             if (method == null)
                 return null;
 
             if (this.IsGenericMethod && this.GenericArguments != null && this.GenericArguments.Length > 0)
             {
                 var arguments = this.GenericArguments
-                    .Select(a => a.ToType())
+                    .Select(a => a.ToType(context))
                     .Where(t => t != null).ToArray();
                 if (arguments.Length > 0)
                     method = method.MakeGenericMethod(arguments);
