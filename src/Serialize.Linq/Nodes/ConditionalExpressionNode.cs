@@ -53,7 +53,7 @@ namespace Serialize.Linq.Nodes
             this.IfFalse = this.Factory.Create(expression.IfFalse);
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
             return Expression.Condition(this.Test.ToExpression(context), this.IfTrue.ToExpression(context), this.IfFalse.ToExpression(context));
         }

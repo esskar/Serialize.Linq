@@ -34,7 +34,7 @@ namespace Serialize.Linq.Nodes
             this.Expressions = new ExpressionNodeList(this.Factory, expression.Expressions);
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
             switch (this.NodeType)
             {

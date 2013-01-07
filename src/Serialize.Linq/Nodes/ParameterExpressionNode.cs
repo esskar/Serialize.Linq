@@ -44,7 +44,7 @@ namespace Serialize.Linq.Nodes
             this.Name = expression.Name;            
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
             return context.GetParameterExpression(this);
         }

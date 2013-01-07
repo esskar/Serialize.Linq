@@ -45,7 +45,7 @@ namespace Serialize.Linq.Nodes
             this.Body = this.Factory.Create(expression.Body);            
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
             var body = this.Body.ToExpression(context);
             var parameters = this.Parameters.GetParameterExpressions(context).ToArray();

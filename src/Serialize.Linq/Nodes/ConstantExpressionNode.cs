@@ -94,7 +94,7 @@ namespace Serialize.Linq.Nodes
             this.Value = expression.Value;
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
             return this.Type != null ? Expression.Constant(this.Value, this.Type.ToType(context)) : Expression.Constant(this.Value);
         }

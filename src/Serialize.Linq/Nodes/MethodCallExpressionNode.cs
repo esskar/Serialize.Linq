@@ -54,7 +54,7 @@ namespace Serialize.Linq.Nodes
             this.Object = this.Factory.Create(expression.Object);
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
             Expression objectExpression = null;
             if (this.Object != null)

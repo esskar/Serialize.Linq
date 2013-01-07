@@ -73,7 +73,7 @@ namespace Serialize.Linq.Nodes
             this.IsLiftedToNull = expression.IsLiftedToNull;
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
             var conversion = this.Conversion != null ? this.Conversion.ToExpression() as LambdaExpression : null;
             if (this.Method != null && conversion != null)

@@ -33,7 +33,7 @@ namespace Serialize.Linq.Nodes
             this.Operand = this.Factory.Create(expression.Operand);
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
             return this.NodeType == ExpressionType.UnaryPlus
                 ? Expression.UnaryPlus(this.Operand.ToExpression(context))

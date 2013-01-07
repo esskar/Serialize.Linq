@@ -65,13 +65,13 @@ namespace Serialize.Linq.Nodes
         #endregion
         public virtual TypeNode Type { get; set; }
 
-        internal abstract Expression ToExpression(ExpressionContext context);
+        public abstract Expression ToExpression(ExpressionContext context);
 
         public Expression ToExpression()
         {
             return this.ToExpression(new ExpressionContext());
         }
-
+        
         public Expression<TDelegate> ToExpression<TDelegate>()
         {
             return this.ToExpression<TDelegate>(ConvertToExpression<TDelegate>);
