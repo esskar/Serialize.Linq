@@ -74,13 +74,25 @@ namespace Serialize.Linq.Nodes
 
         public Expression<TDelegate> ToExpression<TDelegate>()
         {
-            var expression = this.ToExpression();
-            return (Expression<TDelegate>)expression;
+            return this.ToExpression<TDelegate>(ConvertToExpression<TDelegate>);
+        }
+
+        public Expression<TDelegate> ToExpression<TDelegate>(Func<ExpressionNode, Expression<TDelegate>> conversionFunction)
+        {
+            if (conversionFunction == null)
+                throw new ArgumentNullException("conversionFunction");
+            return conversionFunction(this);
         }
 
         public override string ToString()
         {
             return this.ToExpression().ToString();
+        }
+
+        private static Expression<TDelegate> ConvertToExpression<TDelegate>(ExpressionNode expressionNode)
+        {
+            var expression = expressionNode.ToExpression();
+            return (Expression<TDelegate>)expression;
         }
     }
 }
