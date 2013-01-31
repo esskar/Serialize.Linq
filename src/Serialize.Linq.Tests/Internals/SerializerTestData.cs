@@ -8,7 +8,7 @@ namespace Serialize.Linq.Tests.Internals
     internal static class SerializerTestData
     {
         private static readonly int[] __arrayOfIds = new []{ 6, 7, 8, 9, 10 };
-        private static readonly List<int> __listOfIds = new List<int>{ 6, 7, 8, 9, 10 };        
+        private static readonly List<int> __listOfIds = new List<int>{ 6, 7, 8, 9, 10 };
         public static readonly Expression[] TestExpressions = new Expression[]  {
             null,
             (Expression<Func<bool, bool>>)(b => b), 
@@ -18,8 +18,10 @@ namespace Serialize.Linq.Tests.Internals
             (Expression<Func<bool>>)(() => false),
             (Expression<Func<bool>>)(() => 5 != 4),
             (Expression<Func<int>>)(() => 42),
-			(Expression<Func<Guid>>)(() => Guid.NewGuid()),
-			(Expression<Func<Guid>>)(() => Guid.Empty),
+        	(Expression<Func<Guid>>)(() => Guid.NewGuid()),
+            (Expression<Func<Guid>>)(() => new Guid("00000000-0000-0000-0000-00000000000")),
+			(Expression<Func<Guid>>)(() => Guid.Empty)            
+			
         };
         public static readonly Expression[] TestNodesOnlyExpressions = new Expression[]  {
             (Expression<Func<Bar, bool>>)(p => __arrayOfIds.Contains(p.Id)),

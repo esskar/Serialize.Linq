@@ -45,7 +45,8 @@ namespace Serialize.Linq.Nodes
 
         public override Expression ToExpression(ExpressionContext context)
         {
-            return System.Linq.Expressions.Expression.MakeMemberAccess(this.Expression.ToExpression(context), this.Member.ToMemberInfo(context));
+            var member = this.Member.ToMemberInfo(context);
+            return System.Linq.Expressions.Expression.MakeMemberAccess(this.Expression != null ? this.Expression.ToExpression(context) : null, member);
         }
     }
 }

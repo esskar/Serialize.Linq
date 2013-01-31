@@ -65,8 +65,12 @@ namespace Serialize.Linq.Factories
                         return this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue);
                     }
                     var field = (FieldInfo)memberExpression.Member;
-                    constantValue = field.GetValue(null);
-                    return true;
+                    if (field.IsPrivate || field.IsFamilyAndAssembly)
+                    {
+                        constantValue = field.GetValue(null);
+                        return true;
+                    }
+                    break;
 
                 case MemberTypes.Property:
                     constantValue = Expression.Lambda(memberExpression).Compile().DynamicInvoke();
@@ -75,6 +79,8 @@ namespace Serialize.Linq.Factories
                 default:
                     throw new NotSupportedException("MemberType '" + memberExpression.Member.MemberType + "' not yet supported.");
             }
+
+            return false;
         }
 
         private ExpressionNode ResolveMemberExpression(MemberExpression memberExpression)

@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Internals;
@@ -55,9 +56,13 @@ namespace Serialize.Linq.Nodes
 
         public override Expression ToExpression(ExpressionContext context)
         {
-            return this.Constructor != null
-                ? Expression.New(this.Constructor.ToMemberInfo(context), this.Arguments.GetExpressions(context), this.Members.GetMembers(context))
-                : Expression.New(this.Type.ToType(context));
+            if (this.Constructor == null)
+                return Expression.New(this.Type.ToType(context));
+
+            var constructor = this.Constructor.ToMemberInfo(context);
+            var arguments = this.Arguments.GetExpressions(context).ToArray();
+            var members = this.Members != null ? this.Members.GetMembers(context).ToArray() : null;
+            return members != null && members.Length > 0 ? Expression.New(constructor, arguments, members) : Expression.New(constructor, arguments);
         }
     }
 }
