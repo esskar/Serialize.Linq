@@ -79,7 +79,6 @@
     </CodeAnalysisDependentAssemblyPaths>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Specific\DeserializingExpressionsWithGuids.cs" />
     <Compile Include="ExpressionSerializerTests.cs" />
     <Compile Include="ExpressionNodeTests.cs" />
     <Compile Include="Internals\ExpressionAssert.cs" />
