@@ -26,9 +26,9 @@ namespace Serialize.Linq.Nodes
                 this.AddRange(items.Select(m => new MemberInfoNode(factory, m)));
         }
 
-        public IEnumerable<MemberInfo> GetMembers()
+        public IEnumerable<MemberInfo> GetMembers(ExpressionContext context)
         {
-            return this.Select(m => m.ToMemberInfo());
+            return this.Select(m => m.ToMemberInfo(context));
         }
     }
 }

@@ -53,11 +53,11 @@ namespace Serialize.Linq.Nodes
             this.Members = new MemberInfoNodeList(this.Factory, expression.Members);
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
             return this.Constructor != null
-                ? Expression.New(this.Constructor.ToMemberInfo(), this.Arguments.GetExpressions(context), this.Members.GetMembers())
-                : Expression.New(this.Type.ToType());
+                ? Expression.New(this.Constructor.ToMemberInfo(context), this.Arguments.GetExpressions(context), this.Members.GetMembers(context))
+                : Expression.New(this.Type.ToType(context));
         }
     }
 }

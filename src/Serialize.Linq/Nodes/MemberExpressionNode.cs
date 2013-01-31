@@ -43,9 +43,9 @@ namespace Serialize.Linq.Nodes
             this.Member = new MemberInfoNode(this.Factory, expression.Member);
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
-            return System.Linq.Expressions.Expression.MakeMemberAccess(this.Expression.ToExpression(context), this.Member.ToMemberInfo());
+            return System.Linq.Expressions.Expression.MakeMemberAccess(this.Expression.ToExpression(context), this.Member.ToMemberInfo(context));
         }
     }
 }

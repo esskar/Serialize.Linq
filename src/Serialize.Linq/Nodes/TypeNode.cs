@@ -14,14 +14,7 @@ namespace Serialize.Linq.Nodes
 #endif
     #endregion
     public class TypeNode : Node
-    {
-        private static readonly ConcurrentDictionary<string, Type> __typeCache;
-
-        static TypeNode()
-        {
-            __typeCache = new ConcurrentDictionary<string, Type>();
-        }
-
+    {        
         public TypeNode() { }
 
         public TypeNode(INodeFactory factory, Type type)
@@ -64,37 +57,19 @@ namespace Serialize.Linq.Nodes
 #endif
         #endregion
         public TypeNode[] GenericArguments { get; set; }
-
-        private static Type ResolveType(string typeName)
+        
+        public Type ToType(ExpressionContext context)
         {
-            return __typeCache.GetOrAdd(typeName, n =>
-            {
-                var type = Type.GetType(n);
-                if (type == null)
-                {
-                    foreach (var assembly in AppDomain.CurrentDomain.GetAssemblies())
-                    {
-                        type = assembly.GetType(n);
-                        if (type != null)
-                            break;
-                    }
-
-                }
-                return type;
-            });
-        }
-
-        public Type ToType()
-        {
-            if (string.IsNullOrWhiteSpace(this.Name))
-                return null;
-
-            var type = ResolveType(this.Name);
+            var type = context.ResolveType(this);
             if (type == null)
+            {
+                if (string.IsNullOrWhiteSpace(this.Name))
+                    return null;
                 throw new SerializationException(string.Format("Failed to serialize '{0}' to a type object.", this.Name));
+            }
 
             if (this.GenericArguments != null)            
-                type = type.MakeGenericType(this.GenericArguments.Select(t => t.ToType()).ToArray());
+                type = type.MakeGenericType(this.GenericArguments.Select(t => t.ToType(context)).ToArray());
             
             return type;
         }

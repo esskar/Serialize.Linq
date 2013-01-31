@@ -43,7 +43,7 @@ namespace Serialize.Linq.Nodes
             this.Expression = this.Factory.Create(expression.Expression);
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
             return System.Linq.Expressions.Expression.Invoke(this.Expression.ToExpression(context), this.Arguments.GetExpressions(context));
         }

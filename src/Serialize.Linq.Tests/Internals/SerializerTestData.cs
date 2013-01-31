@@ -18,6 +18,8 @@ namespace Serialize.Linq.Tests.Internals
             (Expression<Func<bool>>)(() => false),
             (Expression<Func<bool>>)(() => 5 != 4),
             (Expression<Func<int>>)(() => 42),
+			(Expression<Func<Guid>>)(() => Guid.NewGuid()),
+			(Expression<Func<Guid>>)(() => Guid.Empty),
         };
         public static readonly Expression[] TestNodesOnlyExpressions = new Expression[]  {
             (Expression<Func<Bar, bool>>)(p => __arrayOfIds.Contains(p.Id)),

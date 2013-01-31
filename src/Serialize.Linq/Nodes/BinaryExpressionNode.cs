@@ -73,7 +73,7 @@ namespace Serialize.Linq.Nodes
             this.IsLiftedToNull = expression.IsLiftedToNull;
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
             var conversion = this.Conversion != null ? this.Conversion.ToExpression() as LambdaExpression : null;
             if (this.Method != null && conversion != null)
@@ -81,14 +81,14 @@ namespace Serialize.Linq.Nodes
                     this.NodeType,
                     this.Left.ToExpression(context), this.Right.ToExpression(context),
                     this.IsLiftedToNull,
-                    this.Method.ToMemberInfo(),
+                    this.Method.ToMemberInfo(context),
                     conversion);
             if (this.Method != null)
                 return Expression.MakeBinary(
                     this.NodeType,
                     this.Left.ToExpression(context), this.Right.ToExpression(context),
                     this.IsLiftedToNull,
-                    this.Method.ToMemberInfo());
+                    this.Method.ToMemberInfo(context));
             return Expression.MakeBinary(this.NodeType,
                     this.Left.ToExpression(context), this.Right.ToExpression(context));
         }

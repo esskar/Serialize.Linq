@@ -33,7 +33,7 @@ namespace Serialize.Linq.Nodes
 
         internal override MemberBinding ToMemberBinding(ExpressionContext context)
         {
-            return Expression.MemberBind(this.Member.ToMemberInfo(), this.Bindings.GetMemberBindings(context));
+            return Expression.MemberBind(this.Member.ToMemberInfo(context), this.Bindings.GetMemberBindings(context));
         }
     }
 }

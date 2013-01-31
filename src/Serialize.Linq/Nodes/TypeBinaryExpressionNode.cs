@@ -33,9 +33,9 @@ namespace Serialize.Linq.Nodes
             this.Expression = this.Factory.Create(expression.Expression);
         }
 
-        internal override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(ExpressionContext context)
         {
-            return System.Linq.Expressions.Expression.TypeIs(this.Expression.ToExpression(context), this.Type.ToType());
+            return System.Linq.Expressions.Expression.TypeIs(this.Expression.ToExpression(context), this.Type.ToType(context));
         }
     }
 }
