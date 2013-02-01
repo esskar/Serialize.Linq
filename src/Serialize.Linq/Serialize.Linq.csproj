@@ -88,6 +88,7 @@
     <Compile Include="ExpressionContext.cs" />
     <Compile Include="Internals\MemberTypeEnumerator.cs" />
     <Compile Include="Internals\PropertyMemberTypeEnumerator.cs" />
+    <Compile Include="Internals\ValueConverter.cs" />
     <Compile Include="Nodes\ConstructorInfoNode.cs" />
     <Compile Include="Nodes\TypeNode.cs" />
     <Compile Include="Nodes\MemberInfoNode.cs" />

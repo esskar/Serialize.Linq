@@ -140,6 +140,48 @@ namespace Serialize.Linq.Tests
             Assert.IsNotNull(result);
         }
 
+        [TestMethod]
+        public void SerializeDeserializeGuidValueWithJson()
+        {
+            this.SerializeDeserializeGuidValueAsText(new JsonSerializer());
+        }
+
+        [TestMethod]
+        public void SerializeDeserializeGuidValueWithXml()
+        {
+            this.SerializeDeserializeGuidValueAsText(new XmlSerializer());
+        }
+
+        [TestMethod]
+        public void SerializeDeserializeGuidValueWithBinary()
+        {
+            this.SerializeDeserializeGuidValueAsBinary(new BinarySerializer());
+        }
+
+        private void SerializeDeserializeGuidValueAsText(ISerializer serializer)
+        {
+            var guidValue = Guid.NewGuid();
+            Expression<Func<Guid>> exp = () => guidValue;
+
+            var expressionSerializer = new ExpressionSerializer(serializer);
+            var serialized = expressionSerializer.SerializeText(exp);
+
+            expressionSerializer.DeserializeText(serialized);
+        }
+
+        private void SerializeDeserializeGuidValueAsBinary(ISerializer serializer)
+        {
+            var guidValue = Guid.NewGuid();
+            Expression<Func<Guid>> exp = () => guidValue;
+
+            var expressionSerializer = new ExpressionSerializer(serializer);
+            var serialized = expressionSerializer.SerializeBinary(exp);
+
+            expressionSerializer.DeserializeBinary(serialized);
+        }
+
+
+
         private static IEnumerable<ITextSerializer> CreateTextSerializers()
         {
             return new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() };
