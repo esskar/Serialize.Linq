@@ -10,7 +10,7 @@ namespace Serialize.Linq.Serializers
     {
         protected abstract XmlObjectSerializer CreateXmlObjectSerializer(Type type);
 
-        private static readonly Type[] __knownTypes = new [] { 
+        private static readonly Type[] _knownTypes = new [] { 
             typeof(bool),
             typeof(decimal), typeof(double),
             typeof(float),
@@ -23,7 +23,7 @@ namespace Serialize.Linq.Serializers
 
         protected virtual IEnumerable<Type> GetKnownTypes()
         {
-            foreach (var knownType in __knownTypes)
+            foreach (var knownType in _knownTypes)
             {
                 yield return knownType;
                 yield return knownType.MakeArrayType();

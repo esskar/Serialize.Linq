@@ -102,8 +102,6 @@ namespace Serialize.Linq.Tests
             {
                 var serializer = new ExpressionSerializer(binSerializer);
 
-                //var expected = (System.Linq.Expressions.Expression<System.Func<Bar, bool>>)(p => p.LastName == "Miller");  // this expresion is ok
-
                 var expected = (Expression<Func<Bar, bool>>)(p => p.LastName == "Miller" && p.FirstName.StartsWith("M"));
                 expected.Compile();
 
@@ -141,46 +139,67 @@ namespace Serialize.Linq.Tests
         }
 
         [TestMethod]
-        public void SerializeDeserializeGuidValueWithJson()
+        public void SerializeDeserializeGuidValueAsJson()
         {
-            this.SerializeDeserializeGuidValueAsText(new JsonSerializer());
+            SerializeDeserializeExpressionAsText(CreateGuidExpression(), new JsonSerializer());
         }
 
         [TestMethod]
-        public void SerializeDeserializeGuidValueWithXml()
+        public void SerializeDeserializeGuidValueAsXml()
         {
-            this.SerializeDeserializeGuidValueAsText(new XmlSerializer());
+            SerializeDeserializeExpressionAsText(CreateGuidExpression(), new XmlSerializer());
         }
 
         [TestMethod]
-        public void SerializeDeserializeGuidValueWithBinary()
+        public void SerializeDeserializeGuidValueAsBinary()
         {
-            this.SerializeDeserializeGuidValueAsBinary(new BinarySerializer());
+            SerializeDeserializeExpressionAsBinary(CreateGuidExpression(), new BinarySerializer());
         }
 
-        private void SerializeDeserializeGuidValueAsText(ISerializer serializer)
+        [TestMethod]
+        public void ExpressionWithConstantDateTimeAsJson()
+        {
+            SerializeDeserializeExpressionAsText(CreateConstantDateTimeExpression(), new JsonSerializer());
+        }
+
+        [TestMethod]
+        public void ExpressionWithConstantDateTimeAsXml()
+        {
+            SerializeDeserializeExpressionAsText(CreateConstantDateTimeExpression(), new XmlSerializer());
+        }
+
+        [TestMethod]
+        public void ExpressionWithConstantDateTimeAsBinary()
+        {
+            SerializeDeserializeExpressionAsBinary(CreateConstantDateTimeExpression(), new BinarySerializer());
+        }
+
+        private static ConstantExpression CreateConstantDateTimeExpression()
+        {
+            return Expression.Constant(DateTime.Today);            
+        }
+
+        private static Expression<Func<Guid>> CreateGuidExpression()
         {
             var guidValue = Guid.NewGuid();
-            Expression<Func<Guid>> exp = () => guidValue;
-
-            var expressionSerializer = new ExpressionSerializer(serializer);
-            var serialized = expressionSerializer.SerializeText(exp);
-
-            expressionSerializer.DeserializeText(serialized);
+            return () => guidValue;
         }
 
-        private void SerializeDeserializeGuidValueAsBinary(ISerializer serializer)
+        private static Expression SerializeDeserializeExpressionAsText(Expression expression, ISerializer serializer)
         {
-            var guidValue = Guid.NewGuid();
-            Expression<Func<Guid>> exp = () => guidValue;
-
             var expressionSerializer = new ExpressionSerializer(serializer);
-            var serialized = expressionSerializer.SerializeBinary(exp);
+            var serialized = expressionSerializer.SerializeText(expression);
 
-            expressionSerializer.DeserializeBinary(serialized);
+            return expressionSerializer.DeserializeText(serialized);
         }
 
+        private static Expression SerializeDeserializeExpressionAsBinary(Expression expression, ISerializer serializer)
+        {
+            var expressionSerializer = new ExpressionSerializer(serializer);
+            var serialized = expressionSerializer.SerializeBinary(expression);
 
+            return expressionSerializer.DeserializeBinary(serialized);
+        }
 
         private static IEnumerable<ITextSerializer> CreateTextSerializers()
         {
