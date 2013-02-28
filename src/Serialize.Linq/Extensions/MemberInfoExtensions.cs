@@ -3,7 +3,7 @@ using System.Reflection;
 
 namespace Serialize.Linq.Extensions
 {
-    internal static class MemberInfoExtensions
+    public static class MemberInfoExtensions
     {
         public static Type GetReturnType(this MemberInfo member)
         {
