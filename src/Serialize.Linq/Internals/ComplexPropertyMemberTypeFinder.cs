@@ -7,12 +7,26 @@ namespace Serialize.Linq.Internals
 {
     internal class ComplexPropertyMemberTypeFinder
     {
+        /// <summary>
+        /// Analyses the types.
+        /// </summary>
+        /// <param name="types">The types.</param>
+        /// <param name="seen">The seen.</param>
+        /// <param name="result">The result.</param>
+        /// <returns></returns>
         private bool AnalyseTypes(IEnumerable<Type> types, ISet<Type> seen, ISet<Type> result)
         {
             return types != null 
                 && types.Aggregate(false, (current, type) => this.BuildTypes(type, seen, result) || current);
         }
 
+        /// <summary>
+        /// Analyses the type.
+        /// </summary>
+        /// <param name="baseType">Type of the base.</param>
+        /// <param name="seen">The seen.</param>
+        /// <param name="result">The result.</param>
+        /// <returns></returns>
         private bool AnalyseType(Type baseType, ISet<Type> seen, ISet<Type> result)
         {
             bool retval;
@@ -34,6 +48,13 @@ namespace Serialize.Linq.Internals
             return retval;
         }
 
+        /// <summary>
+        /// Builds the types.
+        /// </summary>
+        /// <param name="baseType">Type of the base.</param>
+        /// <param name="seen">The seen.</param>
+        /// <param name="result">The result.</param>
+        /// <returns></returns>
         private bool BuildTypes(Type baseType, ISet<Type> seen, ISet<Type> result)
         {            
             if (seen.Contains(baseType))
@@ -57,6 +78,11 @@ namespace Serialize.Linq.Internals
             return retval;
         }
 
+        /// <summary>
+        /// Finds the types.
+        /// </summary>
+        /// <param name="baseType">Type of the base.</param>
+        /// <returns></returns>
         public IEnumerable<Type> FindTypes(Type baseType)
         {
             var retval = new HashSet<Type>();

@@ -10,7 +10,12 @@ namespace Serialize.Linq.Factories
     public class TypeResolverNodeFactory : NodeFactory
     {
         private readonly Type[] _expectedTypes;
-        
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TypeResolverNodeFactory"/> class.
+        /// </summary>
+        /// <param name="expectedTypes">The expected types.</param>
+        /// <exception cref="System.ArgumentNullException">expectedTypes</exception>
         public TypeResolverNodeFactory(IEnumerable<Type> expectedTypes)            
         {
             if(expectedTypes == null)
@@ -18,6 +23,13 @@ namespace Serialize.Linq.Factories
             _expectedTypes = expectedTypes.ToArray();            
         }
 
+        /// <summary>
+        /// Determines whether the specified type is expected.
+        /// </summary>
+        /// <param name="declaredType">Type of the declared.</param>
+        /// <returns>
+        ///   <c>true</c> if type is expected; otherwise, <c>false</c>.
+        /// </returns>
         private bool IsExpectedType(Type declaredType)
         {
             foreach (var expectedType in _expectedTypes)
@@ -35,6 +47,13 @@ namespace Serialize.Linq.Factories
             return false;
         }
 
+        /// <summary>
+        /// Tries the get constant value from member expression.
+        /// </summary>
+        /// <param name="memberExpression">The member expression.</param>
+        /// <param name="constantValue">The constant value.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotSupportedException">MemberType ' + memberExpression.Member.MemberType + ' not yet supported.</exception>
         private bool TryGetConstantValueFromMemberExpression(MemberExpression memberExpression, out object constantValue)
         {
             constantValue = null;
@@ -83,6 +102,11 @@ namespace Serialize.Linq.Factories
             return false;
         }
 
+        /// <summary>
+        /// Resolves the member expression.
+        /// </summary>
+        /// <param name="memberExpression">The member expression.</param>
+        /// <returns></returns>
         private ExpressionNode ResolveMemberExpression(MemberExpression memberExpression)
         {
             object constantValue;
@@ -91,6 +115,11 @@ namespace Serialize.Linq.Factories
                 : base.Create(memberExpression);
         }
 
+        /// <summary>
+        /// Resolves the method call expression.
+        /// </summary>
+        /// <param name="methodCallExpression">The method call expression.</param>
+        /// <returns></returns>
         private ExpressionNode ResolveMethodCallExpression(MethodCallExpression methodCallExpression)
         {
             var memberExpression = methodCallExpression.Object as MemberExpression;
@@ -111,6 +140,11 @@ namespace Serialize.Linq.Factories
             return base.Create(methodCallExpression);
         }
 
+        /// <summary>
+        /// Creates the specified expression.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <returns></returns>
         public override ExpressionNode Create(Expression expression)
         {
             if (expression is MemberExpression)

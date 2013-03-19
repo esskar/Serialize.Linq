@@ -9,44 +9,101 @@ using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Extensions
 {
+    /// <summary>
+    /// Expression externsions methods.
+    /// </summary>
     public static class ExpressionExtensions
     {
+        /// <summary>
+        /// Converts an expression to an expression node.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <returns></returns>
         public static ExpressionNode ToExpressionNode(this Expression expression)
         {
             var converter = new ExpressionConverter();
             return converter.Convert(expression);
         }
 
+        /// <summary>
+        /// Converts an expression to an json encoded string.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <returns></returns>
         public static string ToJson(this Expression expression)
         {
             return expression.ToJson(expression.GetDefaultFactory());
         }
 
+        /// <summary>
+        /// Converts an expression to an json encoded string using the given factory.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <param name="factory">The factory.</param>
+        /// <returns></returns>
         public static string ToJson(this Expression expression, INodeFactory factory)
         {
             return expression.ToJson(factory, new JsonSerializer());
         }
 
+        /// <summary>
+        /// Converts an expression to an json encoded string using the given factory and serializer.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <param name="factory">The factory.</param>
+        /// <param name="serializer">The serializer.</param>
+        /// <returns></returns>
         public static string ToJson(this Expression expression, INodeFactory factory, IJsonSerializer serializer)
         {
             return expression.ToText(factory, serializer);
         }
 
+        /// <summary>
+        /// Converts an expression to an xml encoded string.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <returns></returns>
         public static string ToXml(this Expression expression)
         {
             return expression.ToXml(expression.GetDefaultFactory());
         }
 
+        /// <summary>
+        /// Converts an expression to an xml encoded string using the given factory.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <param name="factory">The factory.</param>
+        /// <returns></returns>
         public static string ToXml(this Expression expression, INodeFactory factory)
         {
             return expression.ToXml(factory, new XmlSerializer());
         }
 
+        /// <summary>
+        /// Converts an expression to an xml encoded string using the given factory and serializer.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <param name="factory">The factory.</param>
+        /// <param name="serializer">The serializer.</param>
+        /// <returns></returns>
         public static string ToXml(this Expression expression, INodeFactory factory, IXmlSerializer serializer)
         {
             return expression.ToText(factory, serializer);
         }
 
+        /// <summary>
+        /// Converts an expression to an encoded string using the given factory and serializer.
+        /// The encoding is decided by the serializer.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <param name="factory">The factory.</param>
+        /// <param name="serializer">The serializer.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">
+        /// factory
+        /// or
+        /// serializer
+        /// </exception>
         public static string ToText(this Expression expression, INodeFactory factory, ITextSerializer serializer)
         {            
             if(factory == null)
@@ -57,6 +114,11 @@ namespace Serialize.Linq.Extensions
             return serializer.Serialize(factory.Create(expression));
         }
 
+        /// <summary>
+        /// Gets the default factory.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <returns></returns>
         internal static INodeFactory GetDefaultFactory(this Expression expression)
         {
             var lambda = expression as LambdaExpression;
@@ -65,6 +127,11 @@ namespace Serialize.Linq.Extensions
             return new NodeFactory();
         }
 
+        /// <summary>
+        /// Gets the link nodes of an expression tree.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <returns></returns>
         internal static IEnumerable<Expression> GetLinkNodes(this Expression expression)
         {
             if (expression is LambdaExpression)
@@ -137,6 +204,11 @@ namespace Serialize.Linq.Extensions
             }
         }
 
+        /// <summary>
+        /// Gets the nodes of an expression tree.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <returns></returns>
         internal static IEnumerable<Expression> GetNodes(this Expression expression)
         {
             foreach (var node in expression.GetLinkNodes())
@@ -147,6 +219,12 @@ namespace Serialize.Linq.Extensions
             yield return expression;
         }
 
+        /// <summary>
+        /// Gets the nodes of an expression tree of given expression type.
+        /// </summary>
+        /// <typeparam name="TExpression">The type of the expression.</typeparam>
+        /// <param name="expression">The expression.</param>
+        /// <returns></returns>
         internal static IEnumerable<TExpression> GetNodes<TExpression>(this Expression expression) where TExpression : Expression
         {
             return expression.GetNodes().OfType<TExpression>();

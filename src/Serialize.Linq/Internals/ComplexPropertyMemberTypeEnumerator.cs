@@ -5,10 +5,16 @@ using System.Reflection;
 
 namespace Serialize.Linq.Internals
 {
+    /// <summary>
+    /// 
+    /// </summary>
     internal class ComplexPropertyMemberTypeEnumerator : PropertyMemberTypeEnumerator
     {
         private static readonly Type[] __builtinTypes;
-        
+
+        /// <summary>
+        /// Initializes the <see cref="ComplexPropertyMemberTypeEnumerator"/> class.
+        /// </summary>
         static ComplexPropertyMemberTypeEnumerator()
         {
             __builtinTypes = new [] { typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal), typeof(double), typeof(float), 
@@ -16,17 +22,42 @@ namespace Serialize.Linq.Internals
                 typeof(Guid), typeof(Int16),typeof(Int32),typeof(Int64), typeof(UInt16), typeof(UInt32), typeof(UInt64), typeof(TimeSpan), typeof(DateTime) };
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ComplexPropertyMemberTypeEnumerator"/> class.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <param name="bindingFlags">The binding flags.</param>
         public ComplexPropertyMemberTypeEnumerator(Type type, BindingFlags bindingFlags)
             : this(new HashSet<Type>(), type, bindingFlags) { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ComplexPropertyMemberTypeEnumerator"/> class.
+        /// </summary>
+        /// <param name="seenTypes">The seen types.</param>
+        /// <param name="type">The type.</param>
+        /// <param name="bindingFlags">The binding flags.</param>
         public ComplexPropertyMemberTypeEnumerator(HashSet<Type> seenTypes, Type type, BindingFlags bindingFlags)
             : base(seenTypes, type, bindingFlags) { }
-       
+
+        /// <summary>
+        /// Determines whether [is builtin type] [the specified type].
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        ///   <c>true</c> if [is builtin type] [the specified type]; otherwise, <c>false</c>.
+        /// </returns>
         private static bool IsBuiltinType(Type type)
         {
             return __builtinTypes.Contains(type);
         }
 
+        /// <summary>
+        /// Determines whether [is considered type] [the specified type].
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns>
+        ///   <c>true</c> if [is considered type] [the specified type]; otherwise, <c>false</c>.
+        /// </returns>
         protected override bool IsConsideredType(Type type)
         {
             return !ComplexPropertyMemberTypeEnumerator.IsBuiltinType(type)

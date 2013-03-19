@@ -4,6 +4,9 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [DataContract]
     #region KnownTypes
     [KnownType(typeof(BinaryExpressionNode))]
@@ -38,8 +41,16 @@ namespace Serialize.Linq.Nodes
     #endregion
     public abstract class Node
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Node"/> class.
+        /// </summary>
         protected Node() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Node"/> class.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        /// <exception cref="System.ArgumentNullException">factory</exception>
         protected Node(INodeFactory factory)
         {
             if(factory == null)
@@ -48,6 +59,12 @@ namespace Serialize.Linq.Nodes
             this.Factory = factory;
         }
 
+        /// <summary>
+        /// Gets the factory.
+        /// </summary>
+        /// <value>
+        /// The factory.
+        /// </value>
         [IgnoreDataMember]
         public INodeFactory Factory
         {

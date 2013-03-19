@@ -137,7 +137,7 @@ namespace Serialize.Linq.Tests
             var result = serializer.SerializeText(exp);
             Assert.IsNotNull(result);
         }
-
+        
         [TestMethod]
         public void SerializeDeserializeGuidValueAsJson()
         {
@@ -176,7 +176,7 @@ namespace Serialize.Linq.Tests
 
         private static ConstantExpression CreateConstantDateTimeExpression()
         {
-            return Expression.Constant(DateTime.Today);            
+            return Expression.Constant(DateTime.Today);
         }
 
         private static Expression<Func<Guid>> CreateGuidExpression()

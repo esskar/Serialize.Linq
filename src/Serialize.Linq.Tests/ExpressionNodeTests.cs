@@ -88,7 +88,7 @@ namespace Serialize.Linq.Tests
             AssertToExpressionNode(SerializerTestData.TestNodesOnlyExpressions);
         }
 
-        private void AssertToExpressionNode(IEnumerable<Expression> expressions)
+        private static void AssertToExpressionNode(IEnumerable<Expression> expressions)
         {
             foreach (var expression in expressions)
             {

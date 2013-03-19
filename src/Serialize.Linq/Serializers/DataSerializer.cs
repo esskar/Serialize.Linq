@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
 
@@ -18,7 +19,7 @@ namespace Serialize.Linq.Serializers
             typeof(short), typeof(ushort),
             typeof(long), typeof(ulong),
             typeof(string),
-            typeof(DateTime), typeof(TimeSpan), typeof(Guid)
+            typeof(DateTime), typeof(TimeSpan), typeof(Guid),             
         };
 
         protected virtual IEnumerable<Type> GetKnownTypes()

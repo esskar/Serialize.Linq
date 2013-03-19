@@ -2,12 +2,15 @@
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
     #region DataContract
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <typeparam name="TExpression">The type of the expression.</typeparam>
     [DataContract]
 #else
     [DataContract(Name = "tE")]    
@@ -15,22 +18,43 @@ namespace Serialize.Linq.Nodes
     #endregion
     public abstract class ExpressionNode<TExpression> : ExpressionNode where TExpression : Expression
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExpressionNode{TExpression}"/> class.
+        /// </summary>
         protected ExpressionNode() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExpressionNode{TExpression}"/> class.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        /// <param name="expression">The expression.</param>
         protected ExpressionNode(INodeFactory factory, TExpression expression)
             : base(factory, expression.NodeType, expression.Type)
         {
             this.Initialize(expression);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExpressionNode{TExpression}"/> class.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        /// <param name="nodeType">Type of the node.</param>
+        /// <param name="type">The type.</param>
         protected ExpressionNode(INodeFactory factory, ExpressionType nodeType, Type type = null)
             : base(factory, nodeType, type) { }
 
+        /// <summary>
+        /// Initializes the specified expression.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
         protected abstract void Initialize(TExpression expression);
     }
 
     #region DataContract
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+    /// <summary>
+    /// 
+    /// </summary>
     [DataContract]
 #else
     [DataContract(Name = "E")]
@@ -38,8 +62,17 @@ namespace Serialize.Linq.Nodes
     #endregion
     public abstract class ExpressionNode : Node
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExpressionNode"/> class.
+        /// </summary>
         protected ExpressionNode() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExpressionNode"/> class.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        /// <param name="nodeType">Type of the node.</param>
+        /// <param name="type">The type.</param>
         protected ExpressionNode(INodeFactory factory, ExpressionType nodeType, Type type = null)
             : base(factory)
         {
@@ -49,6 +82,12 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        /// <summary>
+        /// Gets or sets the type of the node.
+        /// </summary>
+        /// <value>
+        /// The type of the node.
+        /// </value>
         [DataMember(EmitDefaultValue = false)]
 #else
         [DataMember(EmitDefaultValue = false, Name = "NT")]
@@ -58,6 +97,12 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        /// <summary>
+        /// Gets or sets the type.
+        /// </summary>
+        /// <value>
+        /// The type.
+        /// </value>
         [DataMember(EmitDefaultValue = false)]
 #else
         [DataMember(EmitDefaultValue = false, Name = "T")]
@@ -65,18 +110,35 @@ namespace Serialize.Linq.Nodes
         #endregion
         public virtual TypeNode Type { get; set; }
 
+        /// <summary>
+        /// To the expression.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
         public abstract Expression ToExpression(ExpressionContext context);
 
         public Expression ToExpression()
         {
             return this.ToExpression(new ExpressionContext());
         }
-        
+
+        /// <summary>
+        /// To the expression.
+        /// </summary>
+        /// <typeparam name="TDelegate">The type of the delegate.</typeparam>
+        /// <returns></returns>
         public Expression<TDelegate> ToExpression<TDelegate>()
         {
             return this.ToExpression<TDelegate>(ConvertToExpression<TDelegate>);
         }
 
+        /// <summary>
+        /// To the expression.
+        /// </summary>
+        /// <typeparam name="TDelegate">The type of the delegate.</typeparam>
+        /// <param name="conversionFunction">The conversion function.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentNullException">conversionFunction</exception>
         public Expression<TDelegate> ToExpression<TDelegate>(Func<ExpressionNode, Expression<TDelegate>> conversionFunction)
         {
             if (conversionFunction == null)
@@ -84,11 +146,23 @@ namespace Serialize.Linq.Nodes
             return conversionFunction(this);
         }
 
+        /// <summary>
+        /// Returns a <see cref="System.String" /> that represents this instance.
+        /// </summary>
+        /// <returns>
+        /// A <see cref="System.String" /> that represents this instance.
+        /// </returns>
         public override string ToString()
         {
             return this.ToExpression().ToString();
         }
 
+        /// <summary>
+        /// Converts to expression.
+        /// </summary>
+        /// <typeparam name="TDelegate">The type of the delegate.</typeparam>
+        /// <param name="expressionNode">The expression node.</param>
+        /// <returns></returns>
         private static Expression<TDelegate> ConvertToExpression<TDelegate>(ExpressionNode expressionNode)
         {
             var expression = expressionNode.ToExpression();

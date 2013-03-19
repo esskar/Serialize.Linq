@@ -1,7 +1,6 @@
 ﻿using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -14,13 +13,27 @@ namespace Serialize.Linq.Nodes
     #endregion
     public class BinaryExpressionNode : ExpressionNode<BinaryExpression>
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BinaryExpressionNode"/> class.
+        /// </summary>
         public BinaryExpressionNode() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BinaryExpressionNode"/> class.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        /// <param name="expression">The expression.</param>
         public BinaryExpressionNode(INodeFactory factory, BinaryExpression expression)
             : base(factory, expression) { }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        /// <summary>
+        /// Gets or sets the conversion.
+        /// </summary>
+        /// <value>
+        /// The conversion.
+        /// </value>
         [DataMember(EmitDefaultValue = false)]
 #else
         [DataMember(EmitDefaultValue = false, Name = "C")]
@@ -30,6 +43,12 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is lifted to null.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is lifted to null; otherwise, <c>false</c>.
+        /// </value>
         [DataMember(EmitDefaultValue = false)]
 #else
         [DataMember(EmitDefaultValue = false, Name = "I")]
@@ -39,6 +58,12 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        /// <summary>
+        /// Gets or sets the left.
+        /// </summary>
+        /// <value>
+        /// The left.
+        /// </value>
         [DataMember(EmitDefaultValue = false)]
 #else
         [DataMember(EmitDefaultValue = false, Name = "L")]
@@ -48,6 +73,12 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        /// <summary>
+        /// Gets or sets the method.
+        /// </summary>
+        /// <value>
+        /// The method.
+        /// </value>
         [DataMember(EmitDefaultValue = false)]
 #else
         [DataMember(EmitDefaultValue = false, Name = "M")]
@@ -57,6 +88,12 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        /// <summary>
+        /// Gets or sets the right.
+        /// </summary>
+        /// <value>
+        /// The right.
+        /// </value>
         [DataMember(EmitDefaultValue = false)]
 #else
         [DataMember(EmitDefaultValue = false, Name = "R")]
@@ -64,6 +101,10 @@ namespace Serialize.Linq.Nodes
         #endregion
         public ExpressionNode Right { get; set; }
 
+        /// <summary>
+        /// Initializes the specified expression.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
         protected override void Initialize(BinaryExpression expression)
         {
             this.Left = this.Factory.Create(expression.Left);

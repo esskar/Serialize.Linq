@@ -3,8 +3,17 @@ using System.Reflection;
 
 namespace Serialize.Linq.Extensions
 {
+    /// <summary>
+    /// MemberInfo extensions methods.
+    /// </summary>
     public static class MemberInfoExtensions
     {
+        /// <summary>
+        /// Gets the return type of an member.
+        /// </summary>
+        /// <param name="member">The member.</param>
+        /// <returns></returns>
+        /// <exception cref="System.NotSupportedException">Unable to get return type of member of type  + member.MemberType</exception>
         public static Type GetReturnType(this MemberInfo member)
         {
             switch (member.MemberType)
