@@ -16,8 +16,16 @@ namespace Serialize.Linq.Nodes
     #endregion
     public abstract class MemberNode<TMemberInfo> : Node where TMemberInfo : MemberInfo
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemberNode{TMemberInfo}"/> class.
+        /// </summary>
         protected MemberNode() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MemberNode{TMemberInfo}"/> class.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        /// <param name="memberInfo">The member info.</param>
         protected MemberNode(INodeFactory factory, TMemberInfo memberInfo)
             : base(factory)
         {
@@ -27,6 +35,12 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        /// <summary>
+        /// Gets or sets the type of the declaring.
+        /// </summary>
+        /// <value>
+        /// The type of the declaring.
+        /// </value>
         [DataMember(EmitDefaultValue = false)]
 #else
         [DataMember(EmitDefaultValue = false, Name = "D")]
@@ -36,6 +50,12 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        /// <summary>
+        /// Gets or sets the type of the member.
+        /// </summary>
+        /// <value>
+        /// The type of the member.
+        /// </value>
         [DataMember(EmitDefaultValue = false)]
 #else
         [DataMember(EmitDefaultValue = false, Name = "M")]
@@ -45,6 +65,12 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        /// <summary>
+        /// Gets or sets the signature.
+        /// </summary>
+        /// <value>
+        /// The signature.
+        /// </value>
         [DataMember(EmitDefaultValue = false)]
 #else
         [DataMember(EmitDefaultValue = false, Name = "S")]
@@ -52,6 +78,10 @@ namespace Serialize.Linq.Nodes
         #endregion
         public string Signature { get; set; }
 
+        /// <summary>
+        /// Initializes the instance using specified member info.
+        /// </summary>
+        /// <param name="memberInfo">The member info.</param>
         protected virtual void Initialize(TMemberInfo memberInfo)
         {
             this.DeclaringType = this.Factory.Create(memberInfo.DeclaringType);
@@ -59,6 +89,13 @@ namespace Serialize.Linq.Nodes
             this.Signature = memberInfo.ToString();
         }
 
+        /// <summary>
+        /// Gets the the declaring type.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        /// <exception cref="System.InvalidOperationException">DeclaringType is not set.</exception>
+        /// <exception cref="System.TypeLoadException">Failed to load DeclaringType:  + this.DeclaringType</exception>
         protected Type GetDeclaringType(ExpressionContext context)
         {
             if (this.DeclaringType == null)
@@ -71,8 +108,18 @@ namespace Serialize.Linq.Nodes
             return declaringType;
         }
 
+        /// <summary>
+        /// Converts this instance to an expression.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
         protected abstract IEnumerable<TMemberInfo> GetMemberInfosForType(Type type);
 
+        /// <summary>
+        /// Converts this instance to a member info object of type TMemberInfo.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
         public virtual TMemberInfo ToMemberInfo(ExpressionContext context)
         {
             if (string.IsNullOrWhiteSpace(this.Signature))

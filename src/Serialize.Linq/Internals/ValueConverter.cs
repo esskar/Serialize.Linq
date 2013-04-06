@@ -86,6 +86,7 @@ namespace Serialize.Linq.Internals
             if (TryCustomConvert(value, convertTo, out retval))
                 return retval;
 
+            // convert array types
             if (convertTo.IsArray && value.GetType().IsArray)
             {
                 var elementType = convertTo.GetElementType();
@@ -97,6 +98,7 @@ namespace Serialize.Linq.Internals
                 return result;
             }
 
+            // convert nullable types
             if (convertTo.IsGenericType && convertTo.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 var argumentTypes = convertTo.GetGenericArguments();

@@ -44,7 +44,7 @@ namespace Serialize.Linq.Nodes
             : base(factory, nodeType, type) { }
 
         /// <summary>
-        /// Initializes the specified expression.
+        /// Initializes this instance using the specified expression.
         /// </summary>
         /// <param name="expression">The expression.</param>
         protected abstract void Initialize(TExpression expression);
@@ -111,7 +111,7 @@ namespace Serialize.Linq.Nodes
         public virtual TypeNode Type { get; set; }
 
         /// <summary>
-        /// To the expression.
+        /// Converts this instance to an expression.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
@@ -123,7 +123,7 @@ namespace Serialize.Linq.Nodes
         }
 
         /// <summary>
-        /// To the expression.
+        /// Converts this instance to an expression.
         /// </summary>
         /// <typeparam name="TDelegate">The type of the delegate.</typeparam>
         /// <returns></returns>
@@ -133,7 +133,7 @@ namespace Serialize.Linq.Nodes
         }
 
         /// <summary>
-        /// To the expression.
+        /// Converts this instance to an expression.
         /// </summary>
         /// <typeparam name="TDelegate">The type of the delegate.</typeparam>
         /// <param name="conversionFunction">The conversion function.</param>

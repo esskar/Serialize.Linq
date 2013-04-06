@@ -18,17 +18,37 @@ namespace Serialize.Linq.Nodes
     {
         private object _value;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConstantExpressionNode"/> class.
+        /// </summary>
         public ConstantExpressionNode() { }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConstantExpressionNode"/> class.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        /// <param name="value">The value.</param>
         public ConstantExpressionNode(INodeFactory factory, object value)
             : base(factory, ExpressionType.Constant)
         {
             this.Value = value;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConstantExpressionNode"/> class.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        /// <param name="expression">The expression.</param>
         public ConstantExpressionNode(INodeFactory factory, ConstantExpression expression)
             : base(factory, expression) { }
-        
+
+        /// <summary>
+        /// Gets or sets the type.
+        /// </summary>
+        /// <value>
+        /// The type.
+        /// </value>
+        /// <exception cref="InvalidTypeException"></exception>
         public override TypeNode Type
         {
             get { return base.Type; }
@@ -51,6 +71,13 @@ namespace Serialize.Linq.Nodes
 
         #region DataMember
         #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        /// <summary>
+        /// Gets or sets the value.
+        /// </summary>
+        /// <value>
+        /// The value.
+        /// </value>
+        /// <exception cref="System.ArgumentException">Expression not allowed.;value</exception>
         [DataMember(EmitDefaultValue = false)]
 #else
         [DataMember(EmitDefaultValue = false, Name = "V")]
@@ -78,11 +105,20 @@ namespace Serialize.Linq.Nodes
             }
         }
 
+        /// <summary>
+        /// Initializes the specified expression.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
         protected override void Initialize(ConstantExpression expression)
         {
             this.Value = expression.Value;
         }
 
+        /// <summary>
+        /// Converts this instance to an expression.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
         public override Expression ToExpression(ExpressionContext context)
         {
             return this.Type != null ? Expression.Constant(this.Value, this.Type.ToType(context)) : Expression.Constant(this.Value);

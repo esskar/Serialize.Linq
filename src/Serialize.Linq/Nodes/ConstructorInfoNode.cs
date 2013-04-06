@@ -20,6 +20,11 @@ namespace Serialize.Linq.Nodes
         public ConstructorInfoNode(INodeFactory factory, ConstructorInfo memberInfo)
             : base(factory, memberInfo) { }
 
+        /// <summary>
+        /// Gets the member infos for the specified type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
         protected override IEnumerable<ConstructorInfo> GetMemberInfosForType(Type type)
         {
             return type.GetConstructors();

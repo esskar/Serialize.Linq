@@ -6,7 +6,13 @@ using Serialize.Linq.Nodes;
 namespace Serialize.Linq.Factories
 {
     public class NodeFactory : INodeFactory
-    {                
+    {
+        /// <summary>
+        /// Creates an expression node from an expression.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <returns></returns>
+        /// <exception cref="System.ArgumentException">Unknown expression of type  + expression.GetType()</exception>
         public virtual ExpressionNode Create(Expression expression)
         {
             if (expression == null)
@@ -30,6 +36,11 @@ namespace Serialize.Linq.Factories
             throw new ArgumentException("Unknown expression of type " + expression.GetType());
         }
 
+        /// <summary>
+        /// Creates an type node from a type.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
         public TypeNode Create(Type type)
         {
             return new TypeNode(this, type);
