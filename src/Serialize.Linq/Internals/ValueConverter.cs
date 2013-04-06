@@ -92,20 +92,19 @@ namespace Serialize.Linq.Internals
 
                 var valArray = (Array)value;
                 var result = Array.CreateInstance(elementType, valArray.Length);
-                for (var i = 0; i < valArray.Length; ++i)                
-                    result.SetValue(Convert(valArray.GetValue(i), elementType), i);                
+                for (var i = 0; i < valArray.Length; ++i)
+                    result.SetValue(Convert(valArray.GetValue(i), elementType), i);
                 return result;
             }
 
-            if (convertTo.IsGenericType && convertTo.GetGenericTypeDefinition() == typeof (Nullable<>))
+            if (convertTo.IsGenericType && convertTo.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 var argumentTypes = convertTo.GetGenericArguments();
-                if (argumentTypes.Length == 1)
-                {
-                    value = Convert(value, argumentTypes[0]);
-                }
+                if (argumentTypes.Length == 1)                
+                    value = Convert(value, argumentTypes[0]);                
             }
-
+            
+            // TODO: think about a better way; exception could may have an critical impact on performance
             try
             {
                 return System.Convert.ChangeType(value, convertTo);
@@ -113,7 +112,7 @@ namespace Serialize.Linq.Internals
             catch (Exception)
             {
                 return Activator.CreateInstance(convertTo, value);
-            }
+            }            
         }
 
         /// <summary>
