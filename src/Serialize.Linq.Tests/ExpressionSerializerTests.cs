@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Serialize.Linq.Extensions;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Nodes;
 using Serialize.Linq.Serializers;
 using Serialize.Linq.Tests.Internals;
 
@@ -114,6 +116,24 @@ namespace Serialize.Linq.Tests
 
                 actual.Compile();
             }
+        }
+
+        [TestMethod]
+        public void NullableDecimalTest()
+        {
+            foreach (var textSerializer in CreateTextSerializers())
+            {
+                var serializer = new ExpressionSerializer(textSerializer);
+                var expected = Expression.Constant(0m, typeof(Decimal?));
+
+                var text = serializer.SerializeText(expected);
+
+                this.TestContext.WriteLine("{0} serializes to text with length {1}: {2}", expected, text.Length, text);
+
+                var actual = serializer.DeserializeText(text);
+                Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, textSerializer.GetType());
+                ExpressionAssert.AreEqual(expected, actual);
+            }                        
         }
 
         [TestMethod]

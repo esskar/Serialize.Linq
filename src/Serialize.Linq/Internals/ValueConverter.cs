@@ -88,14 +88,32 @@ namespace Serialize.Linq.Internals
 
             if (convertTo.IsArray && value.GetType().IsArray)
             {
+                var elementType = convertTo.GetElementType();
+
                 var valArray = (Array)value;
-                var result = Array.CreateInstance(convertTo.GetElementType(), valArray.Length);
-                for (var i = 0; i < valArray.Length; ++i)
-                    result.SetValue(valArray.GetValue(i), i);
+                var result = Array.CreateInstance(elementType, valArray.Length);
+                for (var i = 0; i < valArray.Length; ++i)                
+                    result.SetValue(Convert(valArray.GetValue(i), elementType), i);                
                 return result;
             }
 
-            return Activator.CreateInstance(convertTo, value);
+            if (convertTo.IsGenericType && convertTo.GetGenericTypeDefinition() == typeof (Nullable<>))
+            {
+                var argumentTypes = convertTo.GetGenericArguments();
+                if (argumentTypes.Length == 1)
+                {
+                    value = Convert(value, argumentTypes[0]);
+                }
+            }
+
+            try
+            {
+                return System.Convert.ChangeType(value, convertTo);
+            }
+            catch (Exception)
+            {
+                return Activator.CreateInstance(convertTo, value);
+            }
         }
 
         /// <summary>
