@@ -25,6 +25,7 @@ namespace Serialize.Linq.Extensions
             return converter.Convert(expression);
         }
 
+#if !SILVERLIGHT
         /// <summary>
         /// Converts an expression to an json encoded string.
         /// </summary>
@@ -34,7 +35,7 @@ namespace Serialize.Linq.Extensions
         {
             return expression.ToJson(expression.GetDefaultFactory());
         }
-
+        
         /// <summary>
         /// Converts an expression to an json encoded string using the given factory.
         /// </summary>
@@ -45,6 +46,7 @@ namespace Serialize.Linq.Extensions
         {
             return expression.ToJson(factory, new JsonSerializer());
         }
+#endif
 
         /// <summary>
         /// Converts an expression to an json encoded string using the given factory and serializer.

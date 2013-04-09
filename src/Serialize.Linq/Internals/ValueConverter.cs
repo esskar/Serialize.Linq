@@ -1,13 +1,19 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Globalization;
 using System.Text.RegularExpressions;
+using System.Threading;
 
 namespace Serialize.Linq.Internals
 {
     public static class ValueConverter
     {
         private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
-        private static readonly Regex _dateRegex = new Regex(@"/Date\((\d+)([-+])(\d+)\)/", RegexOptions.Compiled);
+        private static readonly Regex _dateRegex = new Regex(@"/Date\((\d+)([-+])(\d+)\)/"
+#if !SILVERLIGHT            
+            ,RegexOptions.Compiled
+#endif
+            );
         private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
 
         /// <summary>
@@ -57,7 +63,7 @@ namespace Serialize.Linq.Internals
                 throw new ArgumentNullException("converter");
 
             if (!_userDefinedConverters.TryAdd(convertTo, converter))
-                throw new ApplicationException("Failed to add converter.");
+                throw new Exception("Failed to add converter.");
         }
 
         /// <summary>
@@ -109,7 +115,11 @@ namespace Serialize.Linq.Internals
             // TODO: think about a better way; exception could may have an critical impact on performance
             try
             {
+#if SILVERLIGHT
+                return System.Convert.ChangeType(value, convertTo, Thread.CurrentThread.CurrentCulture);
+#else
                 return System.Convert.ChangeType(value, convertTo);
+#endif
             }
             catch (Exception)
             {

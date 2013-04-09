@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("Serialize.Linq")]
@@ -7,3 +8,4 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyVersion("1.1.*")]
 [assembly: AssemblyFileVersion("1.1.0.0")]
 
+[assembly: CLSCompliant(true)]
