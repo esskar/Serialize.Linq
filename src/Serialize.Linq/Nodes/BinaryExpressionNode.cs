@@ -101,6 +101,10 @@ namespace Serialize.Linq.Nodes
         #endregion
         public ExpressionNode Right { get; set; }
 
+        /// <summary>
+        /// Initializes the specified expression.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
         protected override void Initialize(BinaryExpression expression)
         {
             this.Left = this.Factory.Create(expression.Left);
