@@ -152,13 +152,14 @@ namespace Serialize.Linq.Internals
         /// <summary>
         /// Builds the types.
         /// </summary>
-        protected virtual void BuildTypes()
+        /// <returns></returns>
+        protected virtual Type[] BuildTypes()
         {
             var types = new List<Type>();
             var members = _type.GetMembers(_bindingFlags);
             foreach (var memberInfo in members.Where(this.IsConsideredMember))
                 types.AddRange(this.GetTypesOfType(memberInfo.GetReturnType()));
-            _allTypes = types.ToArray();
+            return types.ToArray();
         }
 
         /// <summary>
@@ -173,7 +174,7 @@ namespace Serialize.Linq.Internals
                 return false;
 
             if (_allTypes == null)
-                this.BuildTypes();
+                _allTypes = this.BuildTypes();
 
             while (++_currentIndex < _allTypes.Length)
             {                

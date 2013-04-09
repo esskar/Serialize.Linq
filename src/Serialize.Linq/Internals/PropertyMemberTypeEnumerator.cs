@@ -24,11 +24,11 @@ namespace Serialize.Linq.Internals
             : base(seenTypes, type, bindingFlags | BindingFlags.SetProperty | BindingFlags.GetProperty) { }
 
         /// <summary>
-        /// Determines whether [is considered member] [the specified member].
+        /// Determines whether the specified member is to be considered.
         /// </summary>
         /// <param name="member">The member.</param>
         /// <returns>
-        ///   <c>true</c> if [is considered member] [the specified member]; otherwise, <c>false</c>.
+        ///   <c>true</c> if the specified member is to be considered; otherwise, <c>false</c>.
         /// </returns>
         protected override bool IsConsideredMember(MemberInfo member)
         {

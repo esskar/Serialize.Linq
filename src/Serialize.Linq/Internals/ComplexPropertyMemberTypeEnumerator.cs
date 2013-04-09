@@ -10,14 +10,14 @@ namespace Serialize.Linq.Internals
     /// </summary>
     internal class ComplexPropertyMemberTypeEnumerator : PropertyMemberTypeEnumerator
     {
-        private static readonly Type[] __builtinTypes;
+        private static readonly Type[] _builtinTypes;
 
         /// <summary>
         /// Initializes the <see cref="ComplexPropertyMemberTypeEnumerator"/> class.
         /// </summary>
         static ComplexPropertyMemberTypeEnumerator()
         {
-            __builtinTypes = new [] { typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal), typeof(double), typeof(float), 
+            _builtinTypes = new [] { typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal), typeof(double), typeof(float), 
                 typeof(int), typeof(uint), typeof(long), typeof(ulong), typeof(object), typeof(short), typeof(ushort), typeof(string),
                 typeof(Guid), typeof(Int16),typeof(Int32),typeof(Int64), typeof(UInt16), typeof(UInt32), typeof(UInt64), typeof(TimeSpan), typeof(DateTime) };
         }
@@ -48,7 +48,7 @@ namespace Serialize.Linq.Internals
         /// </returns>
         private static bool IsBuiltinType(Type type)
         {
-            return __builtinTypes.Contains(type);
+            return _builtinTypes.Contains(type);
         }
 
         /// <summary>
