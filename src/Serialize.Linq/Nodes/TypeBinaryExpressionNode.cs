@@ -28,14 +28,25 @@ namespace Serialize.Linq.Nodes
         #endregion
         public ExpressionNode Expression { get; set; }
 
+        #region DataMember
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        [DataMember(EmitDefaultValue = false)]
+#else
+        [DataMember(EmitDefaultValue = false, Name = "O")]
+#endif
+        #endregion
+        public TypeNode TypeOperand { get; set; }
+
+
         protected override void Initialize(TypeBinaryExpression expression)
         {
             this.Expression = this.Factory.Create(expression.Expression);
+            this.TypeOperand = this.Factory.Create(expression.TypeOperand);
         }
 
         public override Expression ToExpression(ExpressionContext context)
         {
-            return System.Linq.Expressions.Expression.TypeIs(this.Expression.ToExpression(context), this.Type.ToType(context));
+            return System.Linq.Expressions.Expression.TypeIs(this.Expression.ToExpression(context), this.TypeOperand.ToType(context));
         }
     }
 }
