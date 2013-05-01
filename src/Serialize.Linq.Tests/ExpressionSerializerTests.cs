@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Serialize.Linq.Extensions;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Nodes;
 using Serialize.Linq.Serializers;
 using Serialize.Linq.Tests.Internals;
 
@@ -135,7 +133,7 @@ namespace Serialize.Linq.Tests
                 ExpressionAssert.AreEqual(expected, actual);
             }                        
         }
-
+        
         [TestMethod]
         public void SerializeNewObjWithoutParameters()
         {

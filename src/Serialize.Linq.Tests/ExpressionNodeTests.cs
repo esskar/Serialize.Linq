@@ -67,7 +67,7 @@ namespace Serialize.Linq.Tests
         public void SimpleTypeBinaryTest()
         {
             this.AssertExpression(Expression.TypeIs(Expression.Variable(this.GetType()), typeof(object)));
-        }
+        }        
 
         [TestMethod]
         public void SimpleMemberTest()
