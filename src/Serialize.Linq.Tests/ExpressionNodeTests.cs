@@ -121,7 +121,8 @@ namespace Serialize.Linq.Tests
             var expressionNode = factory.Create(expression);
             var createdExpression = expressionNode.ToExpression();
 
-            PublicInstancePropertiesAssert.AreEqual(expression, createdExpression, message);
+            Assert.AreEqual(expression.ToString(), createdExpression.ToString(), message);
+
             this.TestContext.WriteLine("'{0}' == '{1}'", expression.ToString(), createdExpression.ToString());
         }
     }
