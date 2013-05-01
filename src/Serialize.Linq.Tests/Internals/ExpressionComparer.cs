@@ -24,15 +24,24 @@ namespace Serialize.Linq.Tests.Internals
                 case ExpressionType.Quote:
                 case ExpressionType.TypeAs:
                 case ExpressionType.UnaryPlus:
-                    return this.AreEqualUnary((UnaryExpression)x, (UnaryExpression)y);                    
+                    return this.AreEqualUnary((UnaryExpression)x, (UnaryExpression)y);
                 case ExpressionType.Add:
-                case ExpressionType.AddChecked:                
+                case ExpressionType.AddAssign:
+                case ExpressionType.AddAssignChecked:
+                case ExpressionType.AddChecked:
+                case ExpressionType.Assign:
                 case ExpressionType.Subtract:
-                case ExpressionType.SubtractChecked:
+                case ExpressionType.SubtractAssign:
+                case ExpressionType.SubtractAssignChecked:
+                case ExpressionType.SubtractChecked:                
                 case ExpressionType.Multiply:
+                case ExpressionType.MultiplyAssign:
+                case ExpressionType.MultiplyAssignChecked:
                 case ExpressionType.MultiplyChecked:
                 case ExpressionType.Divide:
+                case ExpressionType.DivideAssign:
                 case ExpressionType.Modulo:
+                case ExpressionType.ModuloAssign:
                 case ExpressionType.And:
                 case ExpressionType.AndAlso:
                 case ExpressionType.Or:
@@ -48,32 +57,32 @@ namespace Serialize.Linq.Tests.Internals
                 case ExpressionType.RightShift:
                 case ExpressionType.LeftShift:
                 case ExpressionType.ExclusiveOr:
-                    return this.AreEqualBinary((BinaryExpression)x, (BinaryExpression)y);                    
+                    return this.AreEqualBinary((BinaryExpression)x, (BinaryExpression)y);
                 case ExpressionType.TypeIs:
-                    return this.AreEqualTypeIs((TypeBinaryExpression)x, (TypeBinaryExpression)y);                                        
+                    return this.AreEqualTypeIs((TypeBinaryExpression)x, (TypeBinaryExpression)y);
                 case ExpressionType.Conditional:
-                    return this.AreEqualConditional((ConditionalExpression)x, (ConditionalExpression)y);                                        
+                    return this.AreEqualConditional((ConditionalExpression)x, (ConditionalExpression)y);
                 case ExpressionType.Constant:
                     return this.AreEqualConstant((ConstantExpression)x, (ConstantExpression)y);
                 case ExpressionType.Parameter:
-                    return this.AreEqualParameter((ParameterExpression)x, (ParameterExpression)y);                    
+                    return this.AreEqualParameter((ParameterExpression)x, (ParameterExpression)y);
                 case ExpressionType.MemberAccess:
-                    return this.AreEqualMemberAccess((MemberExpression)x, (MemberExpression)y);                                        
+                    return this.AreEqualMemberAccess((MemberExpression)x, (MemberExpression)y);
                 case ExpressionType.Call:
                     return this.AreEqualMethodCall((MethodCallExpression)x, (MethodCallExpression)y);
                 case ExpressionType.Lambda:
-                    return this.AreEqualLambda((LambdaExpression)x, (LambdaExpression)y);                    
+                    return this.AreEqualLambda((LambdaExpression)x, (LambdaExpression)y);
                 case ExpressionType.New:
-                    return this.AreEqualNew((NewExpression)x, (NewExpression)y);                    
+                    return this.AreEqualNew((NewExpression)x, (NewExpression)y);
                 case ExpressionType.NewArrayInit:
                 case ExpressionType.NewArrayBounds:
-                    return this.AreEqualNewArray((NewArrayExpression)x, (NewArrayExpression)y);                    
+                    return this.AreEqualNewArray((NewArrayExpression)x, (NewArrayExpression)y);
                 case ExpressionType.Invoke:
-                    return this.AreEqualInvocation((InvocationExpression)x, (InvocationExpression)y);                    
+                    return this.AreEqualInvocation((InvocationExpression)x, (InvocationExpression)y);
                 case ExpressionType.MemberInit:
                     return this.AreEqualMemberInit((MemberInitExpression)x, (MemberInitExpression)y);
                 case ExpressionType.ListInit:
-                    return this.AreEqualListInit((ListInitExpression)x, (ListInitExpression)y);                    
+                    return this.AreEqualListInit((ListInitExpression)x, (ListInitExpression)y);
                 default:
                     throw new Exception(string.Format("Unhandled expression type: '{0}'", x.NodeType));
             }
@@ -83,15 +92,15 @@ namespace Serialize.Linq.Tests.Internals
         {
             if (x.BindingType != y.BindingType)
                 return false;
-            
+
             switch (x.BindingType)
             {
                 case MemberBindingType.Assignment:
-                    return this.AreEqualMemberAssignment((MemberAssignment)x, (MemberAssignment)y);                    
+                    return this.AreEqualMemberAssignment((MemberAssignment)x, (MemberAssignment)y);
                 case MemberBindingType.MemberBinding:
-                    return this.AreEqualMemberMemberBinding((MemberMemberBinding)x, (MemberMemberBinding)y);                    
+                    return this.AreEqualMemberMemberBinding((MemberMemberBinding)x, (MemberMemberBinding)y);
                 case MemberBindingType.ListBinding:
-                    return this.AreEqualMemberListBinding((MemberListBinding)x, (MemberListBinding)y);                                        
+                    return this.AreEqualMemberListBinding((MemberListBinding)x, (MemberListBinding)y);
                 default:
                     throw new Exception(string.Format("Unhandled binding type '{0}'", y.BindingType));
             }
@@ -111,30 +120,30 @@ namespace Serialize.Linq.Tests.Internals
         {
             return this.AreEqual(x.Left, y.Left)
                 && this.AreEqual(x.Right, y.Right)
-                && this.AreEqual(x.Conversion, y.Conversion);            
+                && this.AreEqual(x.Conversion, y.Conversion);
         }
 
         protected virtual bool AreEqualTypeIs(TypeBinaryExpression x, TypeBinaryExpression y)
-        {            
-            return x.TypeOperand == y.TypeOperand 
+        {
+            return x.TypeOperand == y.TypeOperand
                 && this.AreEqual(x.Expression, y.Expression);
         }
 
-        protected virtual bool AreEqualConstant(ConstantExpression x, ConstantExpression y) 
+        protected virtual bool AreEqualConstant(ConstantExpression x, ConstantExpression y)
         {
             return x.Type == y.Type
-                && (object.ReferenceEquals(x.Value, y.Value) || x.Value.Equals(y.Value));            
+                && (object.ReferenceEquals(x.Value, y.Value) || x.Value.Equals(y.Value));
         }
 
         protected virtual bool AreEqualConditional(ConditionalExpression x, ConditionalExpression y)
         {
             return this.AreEqual(x.Test, y.Test)
                 && this.AreEqual(x.IfTrue, y.IfTrue)
-                && this.AreEqual(x.IfFalse, y.IfFalse);            
+                && this.AreEqual(x.IfFalse, y.IfFalse);
         }
 
-        protected virtual bool AreEqualParameter(ParameterExpression x, ParameterExpression y) 
-        { 
+        protected virtual bool AreEqualParameter(ParameterExpression x, ParameterExpression y)
+        {
             return x.Type == y.Type
                 && (object.ReferenceEquals(x.Name, y.Name) || x.Name.Equals(y.Name));
         }
@@ -147,7 +156,7 @@ namespace Serialize.Linq.Tests.Internals
         protected virtual bool AreEqualMethodCall(MethodCallExpression x, MethodCallExpression y)
         {
             var isEqual = this.AreEqual(x.Object, y.Object);
-            if(isEqual) isEqual = this.AreEqualExpressionList(x.Arguments, y.Arguments);
+            if (isEqual) isEqual = this.AreEqualExpressionList(x.Arguments, y.Arguments);
             return isEqual;
         }
 
@@ -209,7 +218,7 @@ namespace Serialize.Linq.Tests.Internals
         protected virtual bool AreEqualListInit(ListInitExpression x, ListInitExpression y)
         {
             return this.AreEqualNew(x.NewExpression, y.NewExpression)
-                && this.AreEqualElementInitializerList(x.Initializers, y.Initializers);            
+                && this.AreEqualElementInitializerList(x.Initializers, y.Initializers);
         }
 
         protected virtual bool AreEqualNewArray(NewArrayExpression x, NewArrayExpression y)
@@ -220,7 +229,7 @@ namespace Serialize.Linq.Tests.Internals
         protected virtual bool AreEqualInvocation(InvocationExpression x, InvocationExpression y)
         {
             return this.AreEqualExpressionList(x.Arguments, y.Arguments)
-                && this.AreEqual(x.Expression, y.Expression);            
-        }
-    }    
+                && this.AreEqual(x.Expression, y.Expression);
+        }        
+    }
 }
