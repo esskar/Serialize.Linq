@@ -19,3 +19,4 @@ For bugs: make sure you create a unit test, so it is easier for me to reproduce 
 ## Supported Platforms (or known to work with)
 * .NET 4.0
 * .NET 4.5
+* Silverlight 5.0
