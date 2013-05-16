@@ -40,7 +40,7 @@ namespace Serialize.Linq.Nodes
         protected override void Initialize(ListInitExpression expression)
         {
             this.Initializers = new ElementInitNodeList(this.Factory, expression.Initializers);
-            this.NewExpression = this.Factory.Create(expression);
+            this.NewExpression = this.Factory.Create(expression.NewExpression);
         }
 
         public override Expression ToExpression(ExpressionContext context)
