@@ -21,7 +21,7 @@ namespace Serialize.Linq
             if(node == null)
                 throw new ArgumentNullException("node");
             var key = node.Type.Name + Environment.NewLine + node.Name;
-            return _parameterExpressions.GetOrAdd(key, k => Expression.Parameter(this.ResolveType(node.Type), node.Name));
+            return _parameterExpressions.GetOrAdd(key, k => Expression.Parameter(node.Type.ToType(this), node.Name));
         }
 
         public virtual Type ResolveType(TypeNode node)
