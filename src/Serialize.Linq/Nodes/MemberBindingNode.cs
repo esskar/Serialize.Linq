@@ -3,7 +3,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -12,6 +11,9 @@ namespace Serialize.Linq.Nodes
     [DataContract]
 #else
     [DataContract(Name = "MB")]
+#endif
+#if !SILVERLIGHT
+    [Serializable]
 #endif
     #endregion
     public abstract class MemberBindingNode : Node

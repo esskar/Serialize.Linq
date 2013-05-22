@@ -1,9 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Extensions;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -12,6 +12,9 @@ namespace Serialize.Linq.Nodes
     [DataContract]
 #else
     [DataContract(Name = "L")]
+#endif
+#if !SILVERLIGHT
+    [Serializable]
 #endif
     #endregion
     public class LambdaExpressionNode : ExpressionNode<LambdaExpression>

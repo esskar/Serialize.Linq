@@ -92,6 +92,7 @@
   <ItemGroup>
     <Compile Include="ExpressionSerializerTests.cs" />
     <Compile Include="ExpressionNodeTests.cs" />
+    <Compile Include="Internals\BinarayFormatterSerializer.cs" />
     <Compile Include="Internals\ExpressionAssert.cs" />
     <Compile Include="Internals\ExpressionComparer.cs" />
     <Compile Include="Internals\Objects.cs" />

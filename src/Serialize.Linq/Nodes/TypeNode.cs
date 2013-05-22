@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 using System.Linq;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
@@ -11,6 +10,9 @@ namespace Serialize.Linq.Nodes
     [DataContract]
 #else
     [DataContract(Name = "T")]
+#endif
+#if !SILVERLIGHT
+    [Serializable]
 #endif
     #endregion
     public class TypeNode : Node

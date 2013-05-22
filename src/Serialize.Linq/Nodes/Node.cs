@@ -7,7 +7,11 @@ namespace Serialize.Linq.Nodes
     /// <summary>
     /// 
     /// </summary>
+    #region DataContract
     [DataContract]
+#if !SILVERLIGHT
+    [Serializable]
+#endif
     #region KnownTypes
     [KnownType(typeof(BinaryExpressionNode))]
     [KnownType(typeof(ConditionalExpressionNode))]
@@ -39,6 +43,7 @@ namespace Serialize.Linq.Nodes
     [KnownType(typeof(TypeNode))]
     [KnownType(typeof(UnaryExpressionNode))]
     #endregion
+    #endregion
     public abstract class Node
     {
         /// <summary>
@@ -66,9 +71,9 @@ namespace Serialize.Linq.Nodes
         /// The factory.
         /// </value>
         [IgnoreDataMember]
-        public INodeFactory Factory
-        {
-            get; private set;
-        }
+#if !SILVERLIGHT
+        [NonSerialized]
+#endif
+        public readonly INodeFactory Factory;        
     }
 }

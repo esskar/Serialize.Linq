@@ -226,7 +226,7 @@ namespace Serialize.Linq.Tests
 
         private static IEnumerable<IBinarySerializer> CreateBinarySerializers()
         {
-            return new IBinarySerializer[] { new BinarySerializer() };
+            return new IBinarySerializer[] { new BinarySerializer(), new BinarayFormatterSerializer()  };
         }
     }
 }

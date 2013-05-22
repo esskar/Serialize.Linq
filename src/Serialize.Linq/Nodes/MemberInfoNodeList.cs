@@ -13,6 +13,9 @@ namespace Serialize.Linq.Nodes
 #else
     [CollectionDataContract(Name = "MIL")]
 #endif
+#if !SILVERLIGHT
+    [Serializable]
+#endif
     #endregion
     public class MemberInfoNodeList : List<MemberInfoNode>
     {

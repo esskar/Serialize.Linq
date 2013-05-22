@@ -13,6 +13,9 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "MIN")]
 #endif
+#if !SILVERLIGHT
+    [Serializable]
+#endif
     #endregion
     public class MethodInfoNode : MemberNode<MethodInfo>
     {

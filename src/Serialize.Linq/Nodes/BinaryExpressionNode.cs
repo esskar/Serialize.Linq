@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using System;
+using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
 
@@ -9,6 +10,9 @@ namespace Serialize.Linq.Nodes
     [DataContract]
 #else
     [DataContract(Name = "B")]
+#endif
+#if !SILVERLIGHT
+    [Serializable]
 #endif
     #endregion
     public class BinaryExpressionNode : ExpressionNode<BinaryExpression>

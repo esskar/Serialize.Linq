@@ -13,6 +13,9 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "C")]   
 #endif
+#if !SILVERLIGHT
+    [Serializable]
+#endif
     #endregion
     public class ConstantExpressionNode : ExpressionNode<ConstantExpression>
     {
