@@ -7,10 +7,18 @@ using Serialize.Linq.Interfaces;
 namespace Serialize.Linq.Nodes
 {
     #region DataContract
-#if SERIALIZE_LINQ_WITH_LONG_DATA_NAMES
-    [DataContract]
+#if SERIALIZE_LINQ_BORKED_VERION
+    #if SERIALIZE_LINQ_WITH_LONG_DATA_NAMES
+        [DataContract]
+    #else
+        [DataContract(Name = "PI")]
+    #endif
 #else
-    [DataContract(Name = "PI")]
+    #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+        [DataContract]
+    #else
+        [DataContract(Name = "PI")]
+    #endif
 #endif
 #if !SILVERLIGHT
     [Serializable]
