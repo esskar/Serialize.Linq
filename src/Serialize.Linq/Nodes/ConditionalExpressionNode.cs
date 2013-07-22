@@ -44,7 +44,7 @@ namespace Serialize.Linq.Nodes
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(EmitDefaultValue = false, Name = "T")]
+        [DataMember(EmitDefaultValue = false, Name = "C")]
 #endif
         #endregion
         public ExpressionNode Test { get; set; }
