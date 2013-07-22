@@ -6,12 +6,12 @@ using Serialize.Linq.Interfaces;
 namespace Serialize.Linq.Nodes
 {
     #region DataContract
-#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <typeparam name="TExpression">The type of the expression.</typeparam>
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE    
+    #if SERIALIZE_LINQ_BORKED_VERION
     [DataContract]
+    #else
+    [DataContract(Name = "ExpressionNodeGeneric")]
+    #endif
 #else
     [DataContract(Name = "tE")]    
 #endif

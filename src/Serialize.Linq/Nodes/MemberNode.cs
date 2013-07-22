@@ -9,7 +9,11 @@ namespace Serialize.Linq.Nodes
 {
     #region DataContract
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+    #if SERIALIZE_LINQ_BORKED_VERION
     [DataContract]
+    #else
+    [DataContract(Name = "MemberNodeGeneric")]
+    #endif
 #else
     [DataContract(Name = "MN")]
 #endif
