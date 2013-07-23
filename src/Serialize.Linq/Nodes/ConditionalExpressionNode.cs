@@ -44,7 +44,11 @@ namespace Serialize.Linq.Nodes
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember(EmitDefaultValue = false)]
 #else
+    #if SERIALIZE_LINQ_BORKED_VERION
+        [DataMember(EmitDefaultValue = false, Name = "T")]
+    #else
         [DataMember(EmitDefaultValue = false, Name = "C")]
+    #endif
 #endif
         #endregion
         public ExpressionNode Test { get; set; }
