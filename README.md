@@ -20,4 +20,4 @@ For bugs: make sure you create a unit test, so it is easier for me to reproduce 
 * .NET 4.0
 * .NET 4.5
 * Silverlight 5.0
-* Windows Phone 8
+* Windows Phone (7.1, 8); 7.1 lacks support for JSON

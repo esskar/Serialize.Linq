@@ -6,7 +6,9 @@
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
 
+#if !WINDOWS_PHONE7
 using System;
+#endif
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
@@ -52,8 +54,12 @@ namespace Serialize.Linq.Nodes
 
         protected override void Initialize(LambdaExpression expression)
         {
+#if !WINDOWS_PHONE7
             this.Parameters = new ExpressionNodeList(this.Factory, expression.Parameters);
-            this.Body = this.Factory.Create(expression.Body);            
+#else
+            this.Parameters = new ExpressionNodeList(this.Factory, expression.Parameters.Select(p => (Expression)p));
+#endif
+            this.Body = this.Factory.Create(expression.Body);
         }
 
         public override Expression ToExpression(ExpressionContext context)
