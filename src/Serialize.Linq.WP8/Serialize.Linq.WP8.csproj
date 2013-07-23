@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>10.0.20506</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{269B6008-6ED9-4F09-9F81-1D1BBF7F9962}</ProjectGuid>
+    <ProjectTypeGuids>{C089C8C0-30E0-4E22-80C0-CE093F111A43};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Serialize.Linq</RootNamespace>
+    <AssemblyName>Serialize.Linq.WP8</AssemblyName>
+    <TargetFrameworkIdentifier>WindowsPhone</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v8.0</TargetFrameworkVersion>
+    <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
+    <SilverlightApplication>false</SilverlightApplication>
+    <ValidateXaml>true</ValidateXaml>
+    <MinimumVisualStudioVersion>11.0</MinimumVisualStudioVersion>
+    <ThrowErrorsInValidation>true</ThrowErrorsInValidation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\x86\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|ARM' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>Bin\ARM\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|ARM' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>Bin\ARM\Release</OutputPath>
+    <DefineConstants>TRACE;SILVERLIGHT;WINDOWS_PHONE</DefineConstants>
+    <NoStdLib>true</NoStdLib>
+    <NoConfig>true</NoConfig>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="..\Serialize.Linq\Exceptions\InvalidTypeException.cs">
+      <Link>Exceptions\InvalidTypeException.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\ExpressionContext.cs">
+      <Link>ExpressionContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Extensions\ExpressionExtensions.cs">
+      <Link>Extensions\ExpressionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Extensions\MemberInfoExtensions.cs">
+      <Link>Extensions\MemberInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Factories\DefaultNodeFactory.cs">
+      <Link>Factories\DefaultNodeFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Factories\NodeFactory.cs">
+      <Link>Factories\NodeFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Factories\TypeResolverNodeFactory.cs">
+      <Link>Factories\TypeResolverNodeFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\IBinarySerializer.cs">
+      <Link>Interfaces\IBinarySerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\IJsonSerializer.cs">
+      <Link>Interfaces\IJsonSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\INodeFactory.cs">
+      <Link>Interfaces\INodeFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\ISerializer.cs">
+      <Link>Interfaces\ISerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\ITextSerializer.cs">
+      <Link>Interfaces\ITextSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\IXmlSerializer.cs">
+      <Link>Interfaces\IXmlSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Internals\ComplexPropertyMemberTypeEnumerator.cs">
+      <Link>Internals\ComplexPropertyMemberTypeEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Internals\ComplexPropertyMemberTypeFinder.cs">
+      <Link>Internals\ComplexPropertyMemberTypeFinder.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Internals\MemberTypeEnumerator.cs">
+      <Link>Internals\MemberTypeEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Internals\PropertyMemberTypeEnumerator.cs">
+      <Link>Internals\PropertyMemberTypeEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Internals\ValueConverter.cs">
+      <Link>Internals\ValueConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\BinaryExpressionNode.cs">
+      <Link>Nodes\BinaryExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ConditionalExpressionNode.cs">
+      <Link>Nodes\ConditionalExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ConstantExpressionNode.cs">
+      <Link>Nodes\ConstantExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ConstructorInfoNode.cs">
+      <Link>Nodes\ConstructorInfoNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ElementInitNode.cs">
+      <Link>Nodes\ElementInitNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ElementInitNodeList.cs">
+      <Link>Nodes\ElementInitNodeList.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ExpressionNode.cs">
+      <Link>Nodes\ExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ExpressionNodeList.cs">
+      <Link>Nodes\ExpressionNodeList.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\FieldInfoNode.cs">
+      <Link>Nodes\FieldInfoNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\InvocationExpressionNode.cs">
+      <Link>Nodes\InvocationExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\LambdaExpressionNode.cs">
+      <Link>Nodes\LambdaExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ListInitExpressionNode.cs">
+      <Link>Nodes\ListInitExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberAssignmentNode.cs">
+      <Link>Nodes\MemberAssignmentNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberBindingNode.cs">
+      <Link>Nodes\MemberBindingNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberBindingNodeList.cs">
+      <Link>Nodes\MemberBindingNodeList.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberExpressionNode.cs">
+      <Link>Nodes\MemberExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberInfoNode.cs">
+      <Link>Nodes\MemberInfoNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberInfoNodeList.cs">
+      <Link>Nodes\MemberInfoNodeList.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberInitExpressionNode.cs">
+      <Link>Nodes\MemberInitExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberListBindingNode.cs">
+      <Link>Nodes\MemberListBindingNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberMemberBindingNode.cs">
+      <Link>Nodes\MemberMemberBindingNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberNode.cs">
+      <Link>Nodes\MemberNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MethodCallExpressionNode.cs">
+      <Link>Nodes\MethodCallExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MethodInfoNode.cs">
+      <Link>Nodes\MethodInfoNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\NewArrayExpressionNode.cs">
+      <Link>Nodes\NewArrayExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\NewExpressionNode.cs">
+      <Link>Nodes\NewExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\Node.cs">
+      <Link>Nodes\Node.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ParameterExpressionNode.cs">
+      <Link>Nodes\ParameterExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\PropertyInfoNode.cs">
+      <Link>Nodes\PropertyInfoNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\TypeBinaryExpressionNode.cs">
+      <Link>Nodes\TypeBinaryExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\TypeNode.cs">
+      <Link>Nodes\TypeNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\UnaryExpressionNode.cs">
+      <Link>Nodes\UnaryExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\BinarySerializer.cs">
+      <Link>Serializers\BinarySerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\DataSerializer.cs">
+      <Link>Serializers\DataSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\ExpressionConverter.cs">
+      <Link>Serializers\ExpressionConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\ExpressionSerializer.cs">
+      <Link>Serializers\ExpressionSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\JsonSerializer.cs">
+      <Link>Serializers\JsonSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\TextSerializer.cs">
+      <Link>Serializers\TextSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\XmlSerializer.cs">
+      <Link>Serializers\XmlSerializer.cs</Link>
+    </Compile>
+    <Compile Include="Internals\ConcurrentDictionary.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).$(TargetFrameworkVersion).Overrides.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\$(TargetFrameworkIdentifier)\$(TargetFrameworkVersion)\Microsoft.$(TargetFrameworkIdentifier).CSharp.targets" />
+  <ProjectExtensions />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -7,6 +7,7 @@
 #endregion
 
 using System;
+using System.IO;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
 
@@ -14,9 +15,34 @@ namespace Serialize.Linq.Serializers
 {
     public class XmlSerializer : TextSerializer, IXmlSerializer
     {
+#if !WINDOWS_PHONE
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
             return new DataContractSerializer(type, this.GetKnownTypes());
         }
+#else
+        private DataContractSerializer CreateDataContractSerializer(Type type)
+        {
+            return new DataContractSerializer(type, this.GetKnownTypes());
+        }
+
+        public override void Serialize<T>(Stream stream, T obj)
+        {
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+
+            var serializer = this.CreateDataContractSerializer(typeof(T));
+            serializer.WriteObject(stream, obj);
+        }
+
+        public override T Deserialize<T>(Stream stream)
+        {
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+
+            var serializer = this.CreateDataContractSerializer(typeof(T));
+            return (T)serializer.ReadObject(stream);
+        }
+#endif
     }
 }

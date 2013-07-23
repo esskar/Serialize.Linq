@@ -9,15 +9,15 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+#if !WINDOWS_PHONE
 using System.Runtime.Serialization;
+#endif
 using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
 {
     public abstract class DataSerializer : ISerializer
-    {
-        protected abstract XmlObjectSerializer CreateXmlObjectSerializer(Type type);
-
+    {        
         private static readonly Type[] _knownTypes = new[] { 
             typeof(bool),
             typeof(decimal), typeof(double),
@@ -40,6 +40,8 @@ namespace Serialize.Linq.Serializers
             }
         }
 
+#if !WINDOWS_PHONE
+
         public virtual void Serialize<T>(Stream stream, T obj)
         {
             if (stream == null)
@@ -57,5 +59,15 @@ namespace Serialize.Linq.Serializers
             var serializer = this.CreateXmlObjectSerializer(typeof(T));
             return (T)serializer.ReadObject(stream);
         }
+
+        protected abstract XmlObjectSerializer CreateXmlObjectSerializer(Type type);
+
+#else
+
+        public abstract void Serialize<T>(Stream stream, T obj);
+
+        public abstract T Deserialize<T>(Stream stream);
+
+#endif
     }
 }

@@ -16,11 +16,6 @@ namespace Serialize.Linq.Serializers
 {
     public class BinarySerializer : DataSerializer, IBinarySerializer
     {
-        protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
-        {
-            return new DataContractSerializer(type, this.GetKnownTypes());
-        }
-
         public byte[] Serialize<T>(T obj)
         {
             using (var ms = new MemoryStream())
@@ -38,7 +33,7 @@ namespace Serialize.Linq.Serializers
 
         public override void Serialize<T>(Stream stream, T obj)
         {
-            if(stream == null)
+            if (stream == null)
                 throw new ArgumentNullException("stream");
 
             var serializer = this.CreateXmlObjectSerializer(typeof(T));
@@ -51,12 +46,28 @@ namespace Serialize.Linq.Serializers
 
         public override T Deserialize<T>(Stream stream)
         {
-            if(stream == null)
+            if (stream == null)
                 throw new ArgumentNullException("stream");
 
-            var serializer = this.CreateXmlObjectSerializer(typeof(T));            
+            var serializer = this.CreateXmlObjectSerializer(typeof(T));
             using (var reader = XmlDictionaryReader.CreateBinaryReader(stream, XmlDictionaryReaderQuotas.Max))
                 return (T)serializer.ReadObject(reader);
         }
+
+#if !WINDOWS_PHONE
+
+        protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
+        {
+            return new DataContractSerializer(type, this.GetKnownTypes());
+        }        
+
+#else
+
+        private XmlObjectSerializer CreateXmlObjectSerializer(Type type)
+        {
+            return new DataContractSerializer(type, this.GetKnownTypes());
+        }
+
+#endif
     }
 }
