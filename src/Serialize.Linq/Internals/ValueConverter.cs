@@ -1,8 +1,14 @@
-﻿using System;
+﻿#region Copyright
+//  Copyright, Sascha Kiefer (esskar)
+//  Released under LGPL License.
+//  
+//  License: https://raw.github.com/esskar/Serialize.Linq/master/LICENSE
+//  Contributing: https://github.com/esskar/Serialize.Linq
+#endregion
+
+using System;
 using System.Collections.Concurrent;
-using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Threading;
 
 namespace Serialize.Linq.Internals
 {
@@ -10,7 +16,7 @@ namespace Serialize.Linq.Internals
     {
         private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
         private static readonly Regex _dateRegex = new Regex(@"/Date\((\d+)([-+])(\d+)\)/"
-#if !SILVERLIGHT            
+#if !SILVERLIGHT
             ,RegexOptions.Compiled
 #endif
             );
@@ -116,7 +122,7 @@ namespace Serialize.Linq.Internals
             try
             {
 #if SILVERLIGHT
-                return System.Convert.ChangeType(value, convertTo, Thread.CurrentThread.CurrentCulture);
+                return System.Convert.ChangeType(value, convertTo, System.Threading.Thread.CurrentThread.CurrentCulture);
 #else
                 return System.Convert.ChangeType(value, convertTo);
 #endif

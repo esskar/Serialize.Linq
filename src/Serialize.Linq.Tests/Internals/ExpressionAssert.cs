@@ -1,4 +1,12 @@
-﻿using System.Linq.Expressions;
+﻿#region Copyright
+//  Copyright, Sascha Kiefer (esskar)
+//  Released under LGPL License.
+//  
+//  License: https://raw.github.com/esskar/Serialize.Linq/master/LICENSE
+//  Contributing: https://github.com/esskar/Serialize.Linq
+#endregion
+
+using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Serialize.Linq.Tests.Internals

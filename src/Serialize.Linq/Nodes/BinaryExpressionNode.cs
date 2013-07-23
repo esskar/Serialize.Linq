@@ -1,4 +1,12 @@
-﻿using System;
+﻿#region Copyright
+//  Copyright, Sascha Kiefer (esskar)
+//  Released under LGPL License.
+//  
+//  License: https://raw.github.com/esskar/Serialize.Linq/master/LICENSE
+//  Contributing: https://github.com/esskar/Serialize.Linq
+#endregion
+
+using System;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
