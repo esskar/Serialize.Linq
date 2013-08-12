@@ -18,7 +18,8 @@ namespace Serialize.Linq.Serializers
 {
     public abstract class DataSerializer : ISerializer
     {        
-        private static readonly Type[] _knownTypes = new[] { 
+        private static readonly Type[] _knownTypes =
+        { 
             typeof(bool),
             typeof(decimal), typeof(double),
             typeof(float),
@@ -26,7 +27,7 @@ namespace Serialize.Linq.Serializers
             typeof(short), typeof(ushort),
             typeof(long), typeof(ulong),
             typeof(string),
-            typeof(DateTime), typeof(TimeSpan), typeof(Guid)
+            typeof(DateTime), typeof(TimeSpan), typeof(Guid), typeof(DayOfWeek)
         };
 
         protected virtual IEnumerable<Type> GetKnownTypes()
