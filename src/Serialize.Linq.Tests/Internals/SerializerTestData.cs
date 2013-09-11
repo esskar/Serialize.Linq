@@ -30,7 +30,11 @@ namespace Serialize.Linq.Tests.Internals
             (Expression<Func<Guid>>)(() => Guid.NewGuid()),
             (Expression<Func<Guid>>)(() => new Guid("00000000-0000-0000-0000-00000000000")),
             (Expression<Func<Guid>>)(() => Guid.Empty),
-            (Expression<Func<DayOfWeek, bool>>)(p => p == DayOfWeek.Monday)
+            (Expression<Func<DayOfWeek, bool>>)(p => p == DayOfWeek.Monday),
+            (Expression<Func<Struct>>)(() => new Struct()),
+            (Expression<Func<Struct, string>>)(s => s.Name),
+            (Expression<Func<EmptyStruct>>)(() => new EmptyStruct()),
+            (Expression<Func<Bar>>)(() => new Bar())
 			
         };
         public static readonly Expression[] TestNodesOnlyExpressions =

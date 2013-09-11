@@ -38,4 +38,11 @@ namespace Serialize.Linq.Tests.Internals
     {
         public int? Count { get; set; }
     }
+
+    public struct EmptyStruct { }
+
+    public struct Struct
+    {
+        public string Name { get; set; }
+    }
 }
