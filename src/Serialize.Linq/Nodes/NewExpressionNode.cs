@@ -71,6 +71,9 @@ namespace Serialize.Linq.Nodes
                 return Expression.New(this.Type.ToType(context));
 
             var constructor = this.Constructor.ToMemberInfo(context);
+            if (constructor == null)
+                return Expression.New(this.Type.ToType(context));
+
             var arguments = this.Arguments.GetExpressions(context).ToArray();
             var members = this.Members != null ? this.Members.GetMembers(context).ToArray() : null;
             return members != null && members.Length > 0 ? Expression.New(constructor, arguments, members) : Expression.New(constructor, arguments);
