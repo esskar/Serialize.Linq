@@ -1,4 +1,4 @@
-# Serialize.Linq
+# Serialize.Linq [![Build status](https://ci.appveyor.com/api/projects/status?id=s5ajm6xd3v2h338f)](https://ci.appveyor.com/project/serialize-linq)
 
 Serialize.Linq is a c# library for serializing linq expressions. 
 Formats it supports (but it is not limited to) are JSON, XML and BINARY.
