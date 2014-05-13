@@ -141,6 +141,9 @@
     <Compile Include="Serializers\DataSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\README.md">
+      <Link>README.md</Link>
+    </None>
     <None Include="Serialize.Linq Signing Key.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
