@@ -7,7 +7,6 @@
 #endregion
 
 using System;
-using System.Collections.Generic;
 using System.IO;
 #if !WINDOWS_PHONE
 using System.Runtime.Serialization;
@@ -16,33 +15,9 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
 {
-    public abstract class DataSerializer : ISerializer
-    {        
-        private static readonly Type[] _knownTypes =
-        { 
-            typeof(bool),
-            typeof(decimal), typeof(double),
-            typeof(float),
-            typeof(int), typeof(uint),
-            typeof(short), typeof(ushort),
-            typeof(long), typeof(ulong),
-            typeof(string),
-            typeof(DateTime), typeof(TimeSpan), typeof(Guid), typeof(DayOfWeek)
-        };
-
-        protected virtual IEnumerable<Type> GetKnownTypes()
-        {
-            foreach (var knownType in _knownTypes)
-            {
-                yield return knownType;
-                yield return knownType.MakeArrayType();
-                if (!knownType.IsClass)
-                    yield return typeof(Nullable<>).MakeGenericType(knownType);
-            }
-        }
-
+    public abstract class DataSerializer : SerializerBase, ISerializer
+    {
 #if !WINDOWS_PHONE
-
         public virtual void Serialize<T>(Stream stream, T obj)
         {
             if (stream == null)

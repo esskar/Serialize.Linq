@@ -226,6 +226,9 @@
     <Compile Include="..\Serialize.Linq\Serializers\ExpressionSerializer.cs">
       <Link>Serializers\ExpressionSerializer.cs</Link>
     </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\SerializerBase.cs">
+      <Link>Serializers\SerializerBase.cs</Link>
+    </Compile>
     <Compile Include="..\Serialize.Linq\Serializers\TextSerializer.cs">
       <Link>Serializers\TextSerializer.cs</Link>
     </Compile>

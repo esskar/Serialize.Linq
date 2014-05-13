@@ -6,12 +6,26 @@
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 
 namespace Serialize.Linq.Interfaces
 {
     public interface ISerializer
     {
+        /// <summary>
+        /// Adds a new type to the list of known types.
+        /// </summary>
+        /// <param name="type">The type.</param>
+        void AddKnownType(Type type);
+
+        /// <summary>
+        /// Adds a collection of new types to the list of known types.
+        /// </summary>
+        /// <param name="types">The types.</param>
+        void AddKnownTypes(IEnumerable<Type> types);
+
         /// <summary>
         /// Serializes the specified object to the specified stream.
         /// </summary>

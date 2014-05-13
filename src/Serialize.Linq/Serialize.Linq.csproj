@@ -135,6 +135,7 @@
     <Compile Include="Serializers\BinarySerializer.cs" />
     <Compile Include="Serializers\ExpressionConverter.cs" />
     <Compile Include="Serializers\ExpressionSerializer.cs" />
+    <Compile Include="Serializers\SerializerBase.cs" />
     <Compile Include="Serializers\TextSerializer.cs" />
     <Compile Include="Serializers\XmlSerializer.cs" />
     <Compile Include="Serializers\JsonSerializer.cs" />

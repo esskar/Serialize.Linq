@@ -100,6 +100,9 @@ namespace Serialize.Linq.Internals
             if (TryCustomConvert(value, convertTo, out retval))
                 return retval;
 
+            if (convertTo.IsEnum)
+                return Enum.ToObject(convertTo, value);            
+
             // convert array types
             if (convertTo.IsArray && value.GetType().IsArray)
             {

@@ -248,6 +248,9 @@
     <Compile Include="..\Serialize.Linq\Serializers\JsonSerializer.cs">
       <Link>Serializers\JsonSerializer.cs</Link>
     </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\SerializerBase.cs">
+      <Link>Serializers\SerializerBase.cs</Link>
+    </Compile>
     <Compile Include="..\Serialize.Linq\Serializers\TextSerializer.cs">
       <Link>Serializers\TextSerializer.cs</Link>
     </Compile>

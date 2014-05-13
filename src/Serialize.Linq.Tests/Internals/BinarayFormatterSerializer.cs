@@ -9,10 +9,11 @@
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Internals
 {
-    internal class BinarayFormatterSerializer : IBinarySerializer
+    internal class BinarayFormatterSerializer : SerializerBase, IBinarySerializer
     {
         private readonly BinaryFormatter _formatter;
 
@@ -38,7 +39,7 @@ namespace Serialize.Linq.Tests.Internals
 
         public void Serialize<T>(Stream stream, T obj)
         {
-            if(obj != null)
+            if(!ReferenceEquals(obj, null))
                 _formatter.Serialize(stream, obj);
         }
 
