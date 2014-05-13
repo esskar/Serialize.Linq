@@ -97,6 +97,7 @@
     <Compile Include="Internals\ExpressionComparer.cs" />
     <Compile Include="Internals\Objects.cs" />
     <Compile Include="Internals\SerializerTestData.cs" />
+    <Compile Include="Issues\Issue30.cs" />
     <Compile Include="MemberInfoExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

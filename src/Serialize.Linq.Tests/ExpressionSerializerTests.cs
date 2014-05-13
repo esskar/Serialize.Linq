@@ -123,7 +123,7 @@ namespace Serialize.Linq.Tests
                 actual.Compile();
             }
         }
-
+        
         [TestMethod]
         public void NullableDecimalTest()
         {
@@ -235,6 +235,6 @@ namespace Serialize.Linq.Tests
         private static IEnumerable<IBinarySerializer> CreateBinarySerializers()
         {
             return new IBinarySerializer[] { new BinarySerializer(), new BinarayFormatterSerializer()  };
-        }
+        }        
     }
 }

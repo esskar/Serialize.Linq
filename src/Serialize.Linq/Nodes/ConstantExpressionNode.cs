@@ -40,9 +40,21 @@ namespace Serialize.Linq.Nodes
         /// <param name="factory">The factory.</param>
         /// <param name="value">The value.</param>
         public ConstantExpressionNode(INodeFactory factory, object value)
+            : this(factory, value, null) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConstantExpressionNode" /> class.
+        /// </summary>
+        /// <param name="factory">The factory.</param>
+        /// <param name="value">The value.</param>
+        /// <param name="type">The type.</param>
+        public ConstantExpressionNode(INodeFactory factory, object value, Type type)
             : base(factory, ExpressionType.Constant)
         {
             this.Value = value;
+            if (type != null)
+                base.Type = factory.Create(type);
+
         }
 
         /// <summary>

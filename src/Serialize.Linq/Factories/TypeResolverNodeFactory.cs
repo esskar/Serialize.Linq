@@ -24,11 +24,11 @@ namespace Serialize.Linq.Factories
         /// </summary>
         /// <param name="expectedTypes">The expected types.</param>
         /// <exception cref="System.ArgumentNullException">expectedTypes</exception>
-        public TypeResolverNodeFactory(IEnumerable<Type> expectedTypes)            
+        public TypeResolverNodeFactory(IEnumerable<Type> expectedTypes)
         {
-            if(expectedTypes == null)
+            if (expectedTypes == null)
                 throw new ArgumentNullException("expectedTypes");
-            _expectedTypes = expectedTypes.ToArray();            
+            _expectedTypes = expectedTypes.ToArray();
         }
 
         /// <summary>
@@ -60,11 +60,13 @@ namespace Serialize.Linq.Factories
         /// </summary>
         /// <param name="memberExpression">The member expression.</param>
         /// <param name="constantValue">The constant value.</param>
+        /// <param name="constantValueType">Type of the constant value.</param>
         /// <returns></returns>
         /// <exception cref="System.NotSupportedException">MemberType ' + memberExpression.Member.MemberType + ' not yet supported.</exception>
-        private bool TryGetConstantValueFromMemberExpression(MemberExpression memberExpression, out object constantValue)
+        private bool TryGetConstantValueFromMemberExpression(MemberExpression memberExpression, out object constantValue, out Type constantValueType)
         {
             constantValue = null;
+            constantValueType = null;
 
             var run = memberExpression;
             while (run != null)
@@ -85,11 +87,12 @@ namespace Serialize.Linq.Factories
                             var constantExpression = (ConstantExpression)memberExpression.Expression;
                             var fields = constantExpression.Type.GetFields();
                             var memberField = fields.Single(n => memberExpression.Member.Name.Contains(n.Name));
+                            constantValueType = memberField.FieldType;
                             constantValue = memberField.GetValue(constantExpression.Value);
                             return true;
                         }
                         memberExpression = (MemberExpression)memberExpression.Expression;
-                        return this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue);
+                        return this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue, out constantValueType);
                     }
                     var field = (FieldInfo)memberExpression.Member;
                     if (field.IsPrivate || field.IsFamilyAndAssembly)
@@ -118,8 +121,9 @@ namespace Serialize.Linq.Factories
         private ExpressionNode ResolveMemberExpression(MemberExpression memberExpression)
         {
             object constantValue;
-            return this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue) 
-                ? new ConstantExpressionNode(this, constantValue) 
+            Type constantValueType;
+            return this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue, out constantValueType)
+                ? new ConstantExpressionNode(this, constantValue, constantValueType)
                 : base.Create(memberExpression);
         }
 
@@ -134,16 +138,17 @@ namespace Serialize.Linq.Factories
             if (memberExpression != null)
             {
                 object constantValue;
-                if (this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue))
+                Type constantValueType;
+                if (this.TryGetConstantValueFromMemberExpression(memberExpression, out constantValue, out constantValueType))
                 {
-                    if(methodCallExpression.Arguments.Count == 0)
+                    if (methodCallExpression.Arguments.Count == 0)
                         return new ConstantExpressionNode(this, Expression.Lambda(methodCallExpression).Compile().DynamicInvoke());
                 }
             }
             else if (methodCallExpression.Method.Name == "ToString" && methodCallExpression.Method.ReturnType == typeof(string))
-		    {
-			    var constantValue = Expression.Lambda(methodCallExpression).Compile().DynamicInvoke();
-				return new ConstantExpressionNode(this, constantValue);				
+            {
+                var constantValue = Expression.Lambda(methodCallExpression).Compile().DynamicInvoke();
+                return new ConstantExpressionNode(this, constantValue);
             }
             return base.Create(methodCallExpression);
         }
@@ -159,7 +164,7 @@ namespace Serialize.Linq.Factories
                 return this.ResolveMemberExpression(expression as MemberExpression);
             if (expression is MethodCallExpression)
                 return this.ResolveMethodCallExpression(expression as MethodCallExpression);
-            return base.Create(expression);     
+            return base.Create(expression);
         }
     }
 }
