@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System.Linq.Expressions" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System.Linq.Expressions" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:simpleType name="MemberBindingType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Assignment" />
+      <xs:enumeration value="MemberBinding" />
+      <xs:enumeration value="ListBinding" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="MemberBindingType" nillable="true" type="tns:MemberBindingType" />
+  <xs:simpleType name="ExpressionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Add" />
+      <xs:enumeration value="AddChecked" />
+      <xs:enumeration value="And" />
+      <xs:enumeration value="AndAlso" />
+      <xs:enumeration value="ArrayLength" />
+      <xs:enumeration value="ArrayIndex" />
+      <xs:enumeration value="Call" />
+      <xs:enumeration value="Coalesce" />
+      <xs:enumeration value="Conditional" />
+      <xs:enumeration value="Constant" />
+      <xs:enumeration value="Convert" />
+      <xs:enumeration value="ConvertChecked" />
+      <xs:enumeration value="Divide" />
+      <xs:enumeration value="Equal" />
+      <xs:enumeration value="ExclusiveOr" />
+      <xs:enumeration value="GreaterThan" />
+      <xs:enumeration value="GreaterThanOrEqual" />
+      <xs:enumeration value="Invoke" />
+      <xs:enumeration value="Lambda" />
+      <xs:enumeration value="LeftShift" />
+      <xs:enumeration value="LessThan" />
+      <xs:enumeration value="LessThanOrEqual" />
+      <xs:enumeration value="ListInit" />
+      <xs:enumeration value="MemberAccess" />
+      <xs:enumeration value="MemberInit" />
+      <xs:enumeration value="Modulo" />
+      <xs:enumeration value="Multiply" />
+      <xs:enumeration value="MultiplyChecked" />
+      <xs:enumeration value="Negate" />
+      <xs:enumeration value="UnaryPlus" />
+      <xs:enumeration value="NegateChecked" />
+      <xs:enumeration value="New" />
+      <xs:enumeration value="NewArrayInit" />
+      <xs:enumeration value="NewArrayBounds" />
+      <xs:enumeration value="Not" />
+      <xs:enumeration value="NotEqual" />
+      <xs:enumeration value="Or" />
+      <xs:enumeration value="OrElse" />
+      <xs:enumeration value="Parameter" />
+      <xs:enumeration value="Power" />
+      <xs:enumeration value="Quote" />
+      <xs:enumeration value="RightShift" />
+      <xs:enumeration value="Subtract" />
+      <xs:enumeration value="SubtractChecked" />
+      <xs:enumeration value="TypeAs" />
+      <xs:enumeration value="TypeIs" />
+      <xs:enumeration value="Assign" />
+      <xs:enumeration value="Block" />
+      <xs:enumeration value="DebugInfo" />
+      <xs:enumeration value="Decrement" />
+      <xs:enumeration value="Dynamic" />
+      <xs:enumeration value="Default" />
+      <xs:enumeration value="Extension" />
+      <xs:enumeration value="Goto" />
+      <xs:enumeration value="Increment" />
+      <xs:enumeration value="Index" />
+      <xs:enumeration value="Label" />
+      <xs:enumeration value="RuntimeVariables" />
+      <xs:enumeration value="Loop" />
+      <xs:enumeration value="Switch" />
+      <xs:enumeration value="Throw" />
+      <xs:enumeration value="Try" />
+      <xs:enumeration value="Unbox" />
+      <xs:enumeration value="AddAssign" />
+      <xs:enumeration value="AndAssign" />
+      <xs:enumeration value="DivideAssign" />
+      <xs:enumeration value="ExclusiveOrAssign" />
+      <xs:enumeration value="LeftShiftAssign" />
+      <xs:enumeration value="ModuloAssign" />
+      <xs:enumeration value="MultiplyAssign" />
+      <xs:enumeration value="OrAssign" />
+      <xs:enumeration value="PowerAssign" />
+      <xs:enumeration value="RightShiftAssign" />
+      <xs:enumeration value="SubtractAssign" />
+      <xs:enumeration value="AddAssignChecked" />
+      <xs:enumeration value="MultiplyAssignChecked" />
+      <xs:enumeration value="SubtractAssignChecked" />
+      <xs:enumeration value="PreIncrementAssign" />
+      <xs:enumeration value="PreDecrementAssign" />
+      <xs:enumeration value="PostIncrementAssign" />
+      <xs:enumeration value="PostDecrementAssign" />
+      <xs:enumeration value="TypeEqual" />
+      <xs:enumeration value="OnesComplement" />
+      <xs:enumeration value="IsTrue" />
+      <xs:enumeration value="IsFalse" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="ExpressionType" nillable="true" type="tns:ExpressionType" />
+</xs:schema>

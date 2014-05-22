@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/System.Reflection" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/System.Reflection" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:9000/PersonService?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:simpleType name="MemberTypes">
+    <xs:list>
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="Constructor" />
+          <xs:enumeration value="Event" />
+          <xs:enumeration value="Field" />
+          <xs:enumeration value="Method" />
+          <xs:enumeration value="Property" />
+          <xs:enumeration value="TypeInfo" />
+          <xs:enumeration value="Custom" />
+          <xs:enumeration value="NestedType" />
+          <xs:enumeration value="All">
+            <xs:annotation>
+              <xs:appinfo>
+                <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">191</EnumerationValue>
+              </xs:appinfo>
+            </xs:annotation>
+          </xs:enumeration>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:list>
+  </xs:simpleType>
+  <xs:element name="MemberTypes" nillable="true" type="tns:MemberTypes" />
+</xs:schema>
