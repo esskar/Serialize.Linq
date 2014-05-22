@@ -147,7 +147,18 @@ namespace Serialize.Linq.Nodes
         /// <returns></returns>
         public Expression<TDelegate> ToExpression<TDelegate>(ExpressionContext context = null)
         {
-            return this.ToExpression<TDelegate>(ConvertToExpression<TDelegate>, context ?? new ExpressionContext());
+            return this.ToExpression(ConvertToExpression<TDelegate>, context ?? new ExpressionContext());
+        }
+
+        /// <summary>
+        /// Converts this instance to an boolean expression.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        public Expression<Func<TEntity, bool>> ToBooleanExpression<TEntity>(ExpressionContext context = null)
+        {
+            return this.ToExpression(ConvertToBooleanExpression<TEntity>, context ?? new ExpressionContext());
         }
 
         /// <summary>
@@ -174,8 +185,7 @@ namespace Serialize.Linq.Nodes
         /// <exception cref="System.ArgumentNullException">
         /// Parameter <paramref name="conversionFunction"/> or <paramref name="context"/> is null.
         /// </exception>
-        public Expression<TDelegate> ToExpression<TDelegate>(
-            Func<ExpressionNode, ExpressionContext, Expression<TDelegate>> conversionFunction, ExpressionContext context)
+        public Expression<TDelegate> ToExpression<TDelegate>(Func<ExpressionNode, ExpressionContext, Expression<TDelegate>> conversionFunction, ExpressionContext context)
         {
             if (conversionFunction == null)
                 throw new ArgumentNullException("conversionFunction");
@@ -196,7 +206,7 @@ namespace Serialize.Linq.Nodes
         }
 
         /// <summary>
-        /// Converts to expression.
+        /// Converts to an expression.
         /// </summary>
         /// <typeparam name="TDelegate">The type of the delegate.</typeparam>
         /// <param name="expressionNode">The expression node.</param>
@@ -206,6 +216,18 @@ namespace Serialize.Linq.Nodes
         {
             var expression = expressionNode.ToExpression(context);
             return (Expression<TDelegate>)expression;
+        }
+
+        /// <summary>
+        /// Converts to a boolean expression.
+        /// </summary>
+        /// <typeparam name="TEntity">The type of the entity.</typeparam>
+        /// <param name="expressionNode">The expression node.</param>
+        /// <param name="context">The context.</param>
+        /// <returns></returns>
+        private static Expression<Func<TEntity, bool>> ConvertToBooleanExpression<TEntity>(ExpressionNode expressionNode, ExpressionContext context)
+        {
+            return ConvertToExpression<Func<TEntity, bool>>(expressionNode, context);
         }
     }
 }
