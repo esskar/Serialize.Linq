@@ -32,36 +32,36 @@ namespace Serialize.Linq.Examples.WcfClientWithServiceReference
         private static void RunAllPersonsFromJapan(IPersonService client)
         {
             Console.WriteLine("All persons from Japan");
-            Expression<Func<Person, bool>> exprPesonsFromJapan = p => p.Residence == "Japan";
+            Expression<Func<Person, bool>> expression = p => p.Residence == "Japan";
 
-            var persons = client.FindPersons(exprPesonsFromJapan.ToExpressionNode());
+            var persons = client.FindPersons(expression.ToExpressionNode());
             ShowPersons(persons);
         }
 
         private static void RunAllPersonsOfAge100(IPersonService client)
         {
             Console.WriteLine("All persons of Age >= 100");
-            Expression<Func<Person, bool>> exprPesonsFromJapan = p => p.Age >= 100;
+            Expression<Func<Person, bool>> expression = p => p.Age >= 100;
 
-            var persons = client.FindPersons(exprPesonsFromJapan.ToExpressionNode());
+            var persons = client.FindPersons(expression.ToExpressionNode());
             ShowPersons(persons);
         }
 
         private static void RunAllMalePersons(IPersonService client)
         {
             Console.WriteLine("All male persons");
-            Expression<Func<Person, bool>> exprPesonsFromJapan = p => p.Gender == Gender.Male;
+            Expression<Func<Person, bool>> expression = p => p.Gender == Gender.Male;
 
-            var persons = client.FindPersons(exprPesonsFromJapan.ToExpressionNode());
+            var persons = client.FindPersons(expression.ToExpressionNode());
             ShowPersons(persons);
         }
 
         private static void RunAllLivingPersons(IPersonService client)
         {
             Console.WriteLine("All living persons");
-            Expression<Func<Person, bool>> exprPesonsFromJapan = p => p.DeathDate == null;
+            Expression<Func<Person, bool>> expression = p => p.DeathDate == null;
 
-            var persons = client.FindPersons(exprPesonsFromJapan.ToExpressionNode());
+            var persons = client.FindPersons(expression.ToExpressionNode());
             ShowPersons(persons);
         }
 
