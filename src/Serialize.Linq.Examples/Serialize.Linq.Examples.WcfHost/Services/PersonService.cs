@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
 using Serialize.Linq.Examples.WcfContracts.Entities;
 using Serialize.Linq.Examples.WcfContracts.Interfaces;
@@ -45,7 +44,7 @@ namespace Serialize.Linq.Examples.WcfHost.Services
             {
                 Console.Error.WriteLine(ex);
                 return new List<Person>();
-            }            
+            }
         }
 
         private void Initialize()
@@ -103,7 +102,7 @@ namespace Serialize.Linq.Examples.WcfHost.Services
             return age;
         }
 
-        private static string[] ReadPersonRecords()
+        private static IEnumerable<string> ReadPersonRecords()
         {
             var csvStream = Assembly.GetEntryAssembly().GetManifestResourceStream("Serialize.Linq.Examples.WcfHost.Persons.csv");
             if (csvStream == null)
