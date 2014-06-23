@@ -99,6 +99,7 @@
     <Compile Include="Internals\SerializerTestData.cs" />
     <Compile Include="Issues\Issue30.cs" />
     <Compile Include="Issues\Issue31.cs" />
+    <Compile Include="Issues\Issue34.cs" />
     <Compile Include="MemberInfoExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

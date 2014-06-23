@@ -17,7 +17,7 @@ namespace Serialize.Linq.Internals
     public static class ValueConverter
     {
         private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
-        private static readonly Regex _dateRegex = new Regex(@"/Date\((\d+)([-+])(\d+)\)/"
+        private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/"
 #if !SILVERLIGHT
             ,RegexOptions.Compiled
 #endif
@@ -184,13 +184,12 @@ namespace Serialize.Linq.Internals
             if (!match.Success)
                 return false;
 
-            // try to parse the string into a long. then create a datetime and convert to local time.
+            // try to parse the string into a long. then create a datetime.
             long msFromEpoch;
-            if (!long.TryParse(match.Groups[1].Value, out msFromEpoch))
+            if (!long.TryParse(match.Groups["date"].Value, out msFromEpoch))
                 return false;
 
             var fromEpoch = TimeSpan.FromMilliseconds(msFromEpoch);
-
             dateTime = _epoch.Add(fromEpoch);
             return true;
         }
