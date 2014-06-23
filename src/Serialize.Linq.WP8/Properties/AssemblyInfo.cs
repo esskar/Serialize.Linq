@@ -1,4 +1,4 @@
-﻿#region Copyright
+#region Copyright
 //  Copyright, Sascha Kiefer (esskar)
 //  Released under LGPL License.
 //  
@@ -16,6 +16,6 @@ using System.Resources;
 [assembly: ComVisible(false)]
 [assembly: Guid("269b6008-6ed9-4f09-9f81-1d1bbf7f9962")]
 
-[assembly: AssemblyVersion("1.1.*")]
-[assembly: AssemblyFileVersion("1.1.4.0")]
+[assembly: AssemblyVersion("1.1.5")]
+[assembly: AssemblyFileVersion("1.1.5")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
