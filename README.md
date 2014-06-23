@@ -8,9 +8,16 @@ Simple install via [NuGet][1]:
 
     PM> Install-Package Serialize.Linq
 
+## Building the source
+
+    git clone https://github.com/esskar/Serialize.Linq.git
+
+After cloning the repository, run build.cmd.
+*NOTE*: Opening the solution requires VS 2012.
+
 ## Examples
 There is an working WCF and REST API example included in the [examples folder][5].
-You might find some examples on [esskar's][2] [blog][3].
+You might also find some examples on [esskar's][2] [blog][3].
 
 ## Help and Support
 If you have a feature request, a bug or any other question, just create an [issue][4].
