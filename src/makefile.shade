@@ -1,0 +1,47 @@
+var VERSION = "1.1.5"
+var VERSION_FULL = "${VERSION}"
+
+var CONFIGURATION = "Release"
+
+var OUTPUT_DIR = "${Directory.GetCurrentDirectory()}/bin"
+
+#default .clean .build .test
+
+#all .clean .build .buildwp7 .buildwp8 .buildexamples .test
+
+#build .clean
+  build projectFile="Serialize.Linq.sln" outputDir="${OUTPUT_DIR}" configuration="${CONFIGURATION}"
+  
+#buildwp7 .clean
+  build projectFile="Serialize.Linq.WP7.sln" outputDir="${OUTPUT_DIR}" configuration="${CONFIGURATION}"
+  
+#buildwp8 .clean
+  build projectFile="Serialize.Linq.WP8.sln" outputDir="${OUTPUT_DIR}" configuration="${CONFIGURATION}"
+  
+#buildexamples .clean
+  build projectFile="Serialize.Linq.Examples.sln" outputDir="${OUTPUT_DIR}" configuration="${CONFIGURATION}"
+  
+#test
+
+#clean
+  directory delete="${OUTPUT_DIR}"
+  directory delete="Serialize.Linq\bin"
+  directory delete="Serialize.Linq\obj"
+  directory delete="Serialize.Linq.SL\bin"
+  directory delete="Serialize.Linq.SL\obj"
+  directory delete="Serialize.Linq.WP7\bin"
+  directory delete="Serialize.Linq.WP7\obj"
+  directory delete="Serialize.Linq.WP8\bin"
+  directory delete="Serialize.Linq.WP8\obj"  
+  directory delete="Serialize.Linq.Examples\Serialize.Linq.Examples.RestApi\bin"
+  directory delete="Serialize.Linq.Examples\Serialize.Linq.Examples.RestApi\obj"
+  directory delete="Serialize.Linq.Examples\Serialize.Linq.Examples.RestClient\bin"
+  directory delete="Serialize.Linq.Examples\Serialize.Linq.Examples.RestClient\obj"
+  directory delete="Serialize.Linq.Examples\Serialize.Linq.Examples.RestContracts\bin"
+  directory delete="Serialize.Linq.Examples\Serialize.Linq.Examples.RestContracts\obj"  
+  directory delete="Serialize.Linq.Examples\Serialize.Linq.Examples.WcfClientWithServiceReference\bin"
+  directory delete="Serialize.Linq.Examples\Serialize.Linq.Examples.WcfClientWithServiceReference\obj"
+  directory delete="Serialize.Linq.Examples\Serialize.Linq.Examples.WcfContracts\bin"
+  directory delete="Serialize.Linq.Examples\Serialize.Linq.Examples.WcfContracts\obj"
+  directory delete="Serialize.Linq.Examples\Serialize.Linq.Examples.WcfHost\bin"
+  directory delete="Serialize.Linq.Examples\Serialize.Linq.Examples.WcfHost\obj"
