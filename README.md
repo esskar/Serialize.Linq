@@ -12,7 +12,10 @@ Simple install via [NuGet][1]:
 
     git clone https://github.com/esskar/Serialize.Linq.git
 
-After cloning the repository, run build.cmd.
+After cloning the repository, run 
+
+    cd src\
+    build.cmd
 
 __NOTE__: Opening the solution requires VS 2012.
 
