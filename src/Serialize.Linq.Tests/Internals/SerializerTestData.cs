@@ -17,7 +17,7 @@ namespace Serialize.Linq.Tests.Internals
     {
         private static readonly int[] _arrayOfIds = { 6, 7, 8, 9, 10 };
         private static readonly List<int> _listOfIds = new List<int> { 6, 7, 8, 9, 10 };
-        public static readonly Expression[] TestExpressions =
+        public static readonly List<Expression> TestExpressions = new List<Expression>
         {
             null,
             (Expression<Func<bool, bool>>)(b => b), 
@@ -42,5 +42,27 @@ namespace Serialize.Linq.Tests.Internals
             (Expression<Func<Bar, bool>>)(p => _arrayOfIds.Contains(p.Id)),
             (Expression<Func<Bar, bool>>)(p => _listOfIds.Contains(p.Id))
         };
+
+        static SerializerTestData()
+        {
+            AddLetExpressions();
+        }
+
+        private static void AddLetExpressions()
+        {
+            Expression<Func<IEnumerable<int>, IEnumerable<int>>> intExpr = c => 
+                from x in c
+                let test = 8
+                where x == test
+                select x;
+            TestExpressions.Add(intExpr);
+
+            Expression<Func<IEnumerable<string>, IEnumerable<string>>> strExpr = c => 
+                from x in c
+                let test = "bar"
+                where x == test
+                select x;
+            TestExpressions.Add(strExpr);
+        }
     }
 }

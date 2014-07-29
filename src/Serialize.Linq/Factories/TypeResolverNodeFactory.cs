@@ -103,9 +103,17 @@ namespace Serialize.Linq.Factories
                     break;
 
                 case MemberTypes.Property:
-                    constantValue = Expression.Lambda(memberExpression).Compile().DynamicInvoke();
-                    return true;
-
+                    try
+                    {
+                        constantValue = Expression.Lambda(memberExpression).Compile().DynamicInvoke();
+                        return true;
+                    }
+                    catch (InvalidOperationException)
+                    {
+                        constantValue = null;
+                        return false;
+                    }                    
+                                        
                 default:
                     throw new NotSupportedException("MemberType '" + memberExpression.Member.MemberType + "' not yet supported.");
             }
