@@ -8,6 +8,6 @@ using System.Resources;
 [assembly: ComVisible(false)]
 [assembly: Guid("91818534-bc4d-4c6a-9f1c-67d5335d3638")]
 
-[assembly: AssemblyVersion("1.1.5")]
-[assembly: AssemblyFileVersion("1.1.5")]
+[assembly: AssemblyVersion("1.2")]
+[assembly: AssemblyFileVersion("1.2")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
