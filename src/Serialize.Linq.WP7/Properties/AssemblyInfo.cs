@@ -4,10 +4,10 @@ using System.Resources;
 
 [assembly: AssemblyTitle("Serialize.Linq.WP7")]
 [assembly: AssemblyProduct("Serialize.Linq")]
-[assembly: AssemblyCopyright("Copyright © 2012-2014")]
+[assembly: AssemblyCopyright("Copyright © 2012-2015")]
 [assembly: ComVisible(false)]
 [assembly: Guid("91818534-bc4d-4c6a-9f1c-67d5335d3638")]
 
-[assembly: AssemblyVersion("1.2")]
-[assembly: AssemblyFileVersion("1.2")]
+[assembly: AssemblyVersion("1.2.1")]
+[assembly: AssemblyFileVersion("1.2.1")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
