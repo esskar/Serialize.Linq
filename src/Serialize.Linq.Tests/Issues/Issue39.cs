@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Text;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-
-using Serialize.Linq;
 using Serialize.Linq.Extensions;
 using Serialize.Linq.Nodes;
 
@@ -22,20 +18,6 @@ namespace Serialize.Linq.Tests.Issues
             public int AcctId;
         }
 
-        private TestContext testContextInstance;
-
-        public TestContext TestContext
-        {
-            get
-            {
-                return testContextInstance;
-            }
-            set
-            {
-                testContextInstance = value;
-            }
-        }
-
         [TestMethod]
         public void ToExpressionNodeWithSimilarConstantNames()
         {
@@ -45,9 +27,9 @@ namespace Serialize.Linq.Tests.Issues
             Expression<Func<DataPoint, bool>> expression =
                 dp => dp.Timestamp >= feb1 && dp.Timestamp < feb15 && dp.AcctId == 1;
 
-            ExpressionNode Result = expression.ToExpressionNode();
+            var result = expression.ToExpressionNode();
 
-            Assert.IsNotNull(Result);
+            Assert.IsNotNull(result);
         }
     }
 }
