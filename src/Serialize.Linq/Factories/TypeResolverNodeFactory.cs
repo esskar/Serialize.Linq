@@ -86,7 +86,7 @@ namespace Serialize.Linq.Factories
                         {
                             var constantExpression = (ConstantExpression)memberExpression.Expression;
                             var fields = constantExpression.Type.GetFields();
-                            var memberField = fields.Single(n => memberExpression.Member.Name.Contains(n.Name));
+                            var memberField = fields.Single(n => memberExpression.Member.Name.Equals(n.Name));
                             constantValueType = memberField.FieldType;
                             constantValue = memberField.GetValue(constantExpression.Value);
                             return true;
@@ -140,7 +140,7 @@ namespace Serialize.Linq.Factories
 
             var constantExpression = (ConstantExpression)memberExpression.Expression;
             var fields = constantExpression.Type.GetFields();
-            var memberField = fields.Single(n => memberExpression.Member.Name.Contains(n.Name));
+            var memberField = fields.Single(n => memberExpression.Member.Name.Equals(n.Name));
             var constantValue = memberField.GetValue(constantExpression.Value);
 
             inlineExpression = constantValue as Expression;
