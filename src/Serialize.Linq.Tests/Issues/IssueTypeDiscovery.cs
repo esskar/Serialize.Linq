@@ -27,25 +27,25 @@ namespace Serialize.Linq.Tests.Issues
         public void SerializeWithInterferingAssembly()
         {
             // Interfering expression
-            Expression<Func<IEnumerable<int>, IEnumerable<int>>> Expr = c =>
+            Expression<Func<IEnumerable<int>, IEnumerable<int>>> interferingExpression = c =>
                 from x in c
                 let anotherConst = 100
                 where (x == anotherConst)
                 select x;
 
-            var DesiredContainer = new Serialize.Linq.Tests.TestDesiredAssembly.Container();
+            var container = new Serialize.Linq.Tests.TestContainerAssembly.Container();
 
-            var Expression = ((Serialize.Linq.Tests.TestDesiredAssembly.Container)DesiredContainer).GetExpression();
+            var expression = container.GetExpression();
 
             foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
             {
                 var serializer = new ExpressionSerializer(textSerializer);
 
-                var serialized = serializer.SerializeText(Expression);
+                var serialized = serializer.SerializeText(expression);
 
                 var actual = serializer.DeserializeText(serialized);
 
-                ExpressionAssert.AreEqual(Expression, actual);
+                ExpressionAssert.AreEqual(expression, actual);
             }
         }
 
@@ -53,21 +53,21 @@ namespace Serialize.Linq.Tests.Issues
         public void ToExpressionWithInterferingAssembly()
         {
             // Interfering expression
-            Expression<Func<IEnumerable<int>, IEnumerable<int>>> Expr = c =>
+            Expression<Func<IEnumerable<int>, IEnumerable<int>>> interferingExpression = c =>
                 from x in c
                 let anotherConst = 100
                 where (x == anotherConst)
                 select x;
 
-            var DesiredContainer = new Serialize.Linq.Tests.TestDesiredAssembly.Container();
+            var container = new Serialize.Linq.Tests.TestContainerAssembly.Container();
 
-            var Expression = ((Serialize.Linq.Tests.TestDesiredAssembly.Container)DesiredContainer).GetExpression();
+            var expression = container.GetExpression();
 
-            var Node = Expression.ToExpressionNode();
+            var node = expression.ToExpressionNode();
 
-            var Result = Node.ToExpression();
+            var result = node.ToExpression();
 
-            ExpressionAssert.AreEqual(Expression, Result);
+            ExpressionAssert.AreEqual(expression, result);
         }
     }
 }
