@@ -34,7 +34,8 @@ namespace Serialize.Linq.Tests.Internals
             (Expression<Func<Struct>>)(() => new Struct()),
             (Expression<Func<Struct, string>>)(s => s.Name),
             (Expression<Func<EmptyStruct>>)(() => new EmptyStruct()),
-            (Expression<Func<Bar>>)(() => new Bar())
+            (Expression<Func<Bar>>)(() => new Bar()),
+            (Expression<Func<IEnumerable<int>, IEnumerable<int>>>)(c => from x in c let a = 100 where (x == a) select x)
 			
         };
         public static readonly Expression[] TestNodesOnlyExpressions =
