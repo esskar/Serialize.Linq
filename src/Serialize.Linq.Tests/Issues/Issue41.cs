@@ -10,7 +10,7 @@ using Serialize.Linq.Tests.Internals;
 namespace Serialize.Linq.Tests.Issues
 {
     [TestClass]
-    public class Issue40
+    public class Issue41
     {
         [TestMethod]
         public void ToExpressionWithInterferingType()
