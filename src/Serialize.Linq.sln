@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq", "Serialize.Linq\Serialize.Linq.csproj", "{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq.Tests", "Serialize.Linq.Tests\Serialize.Linq.Tests.csproj", "{9854CEA9-3EBA-414F-AFE9-A92CA24A52D1}"
@@ -14,10 +16,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq.SL", "Serialize.Linq.SL\Serialize.Linq.SL.csproj", "{E7B65AD0-BDB6-4FE9-A1C5-3C1007D51340}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq.Tests.TestContainerAssembly", "Serialize.Linq.Tests.TestContainerAssembly\Serialize.Linq.Tests.TestContainerAssembly.csproj", "{B629652B-BC76-46DB-ACAA-896FA678AA4A}"
+EndProject
 Global
-	GlobalSection(TestCaseManagementSettings) = postSolution
-		CategoryFile = Serialize.Linq.vsmdi
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Optimize Size|Any CPU = Debug Optimize Size|Any CPU
 		Debug|Any CPU = Debug|Any CPU
@@ -49,8 +50,19 @@ Global
 		{E7B65AD0-BDB6-4FE9-A1C5-3C1007D51340}.Release Optimize Size|Any CPU.Build.0 = Release|Any CPU
 		{E7B65AD0-BDB6-4FE9-A1C5-3C1007D51340}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7B65AD0-BDB6-4FE9-A1C5-3C1007D51340}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B629652B-BC76-46DB-ACAA-896FA678AA4A}.Debug Optimize Size|Any CPU.ActiveCfg = Debug|Any CPU
+		{B629652B-BC76-46DB-ACAA-896FA678AA4A}.Debug Optimize Size|Any CPU.Build.0 = Debug|Any CPU
+		{B629652B-BC76-46DB-ACAA-896FA678AA4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B629652B-BC76-46DB-ACAA-896FA678AA4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B629652B-BC76-46DB-ACAA-896FA678AA4A}.Release Optimize Size|Any CPU.ActiveCfg = Release|Any CPU
+		{B629652B-BC76-46DB-ACAA-896FA678AA4A}.Release Optimize Size|Any CPU.Build.0 = Release|Any CPU
+		{B629652B-BC76-46DB-ACAA-896FA678AA4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B629652B-BC76-46DB-ACAA-896FA678AA4A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Serialize.Linq.vsmdi
 	EndGlobalSection
 EndGlobal
