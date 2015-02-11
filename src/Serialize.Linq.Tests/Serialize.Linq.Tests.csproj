@@ -104,10 +104,15 @@
     <Compile Include="Issues\Issue37.cs" />
     <Compile Include="Issues\Issue38.cs" />
     <Compile Include="Issues\Issue39.cs" />
+    <Compile Include="Issues\Issue40.cs" />
     <Compile Include="MemberInfoExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Serialize.Linq.Tests.Container\Serialize.Linq.Tests.Container.csproj">
+      <Project>{439F88AF-F18C-4D27-B8D6-01D249BE647D}</Project>
+      <Name>Serialize.Linq.Tests.Container</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Serialize.Linq\Serialize.Linq.csproj">
       <Project>{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}</Project>
       <Name>Serialize.Linq</Name>

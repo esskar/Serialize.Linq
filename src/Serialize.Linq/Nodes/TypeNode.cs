@@ -41,12 +41,12 @@ namespace Serialize.Linq.Nodes
             if (type.IsGenericType)
             {
                 this.GenericArguments = type.GetGenericArguments().Select(t => new TypeNode(this.Factory, t)).ToArray();
-                this.Name = type.GetGenericTypeDefinition().FullName;
+                this.Name = type.GetGenericTypeDefinition().AssemblyQualifiedName;
                 
             }
             else
             {
-                this.Name = type.FullName;
+                this.Name = type.AssemblyQualifiedName;
             }            
         }
 

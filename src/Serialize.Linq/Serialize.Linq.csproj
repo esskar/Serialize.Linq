@@ -83,6 +83,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\MemberNotFoundException.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
     <Compile Include="Factories\DefaultNodeFactory.cs" />
     <Compile Include="Factories\TypeResolverNodeFactory.cs" />

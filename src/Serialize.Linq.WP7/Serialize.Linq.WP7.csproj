@@ -53,6 +53,9 @@
     <Compile Include="..\Serialize.Linq\Exceptions\InvalidTypeException.cs">
       <Link>Exceptions\InvalidTypeException.cs</Link>
     </Compile>
+    <Compile Include="..\Serialize.Linq\Exceptions\MemberNotFoundException.cs">
+      <Link>Exceptions\MemberNotFoundException.cs</Link>
+    </Compile>
     <Compile Include="..\Serialize.Linq\ExpressionContext.cs">
       <Link>ExpressionContext.cs</Link>
     </Compile>

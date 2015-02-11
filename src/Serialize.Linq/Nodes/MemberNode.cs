@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
+using Serialize.Linq.Exceptions;
 using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
@@ -140,7 +141,14 @@ namespace Serialize.Linq.Nodes
             if (string.IsNullOrWhiteSpace(this.Signature))
                 return null;
 
-            return this.GetMemberInfosForType(this.GetDeclaringType(context)).First(m => m.ToString() == this.Signature);
+            var declaringType = this.GetDeclaringType(context);
+            var members = this.GetMemberInfosForType(declaringType);
+
+            var member = members.FirstOrDefault(m => m.ToString() == this.Signature);
+            if (member == null)
+                throw new MemberNotFoundException("MemberInfo not found. See DeclaringType and MemberSignature properties for more details.", 
+                    declaringType, this.Signature);
+            return member;
         }
     }
 }
