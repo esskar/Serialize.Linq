@@ -105,6 +105,7 @@
     <Compile Include="Issues\Issue38.cs" />
     <Compile Include="Issues\Issue39.cs" />
     <Compile Include="Issues\Issue41.cs" />
+    <Compile Include="Issues\Issue43.cs" />
     <Compile Include="MemberInfoExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
