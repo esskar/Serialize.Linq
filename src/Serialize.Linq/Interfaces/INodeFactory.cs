@@ -8,12 +8,18 @@
 
 using System;
 using System.Linq.Expressions;
+using Serialize.Linq.Factories;
 using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Interfaces
 {
     public interface INodeFactory
     {
+        /// <summary>
+        /// Returns the factory settings for this instance
+        /// </summary>
+        FactorySettings Settings { get; }
+
         /// <summary>
         /// Creates the specified expression node an expression.
         /// </summary>

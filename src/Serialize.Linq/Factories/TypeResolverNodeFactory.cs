@@ -23,8 +23,10 @@ namespace Serialize.Linq.Factories
         /// Initializes a new instance of the <see cref="TypeResolverNodeFactory"/> class.
         /// </summary>
         /// <param name="expectedTypes">The expected types.</param>
+        /// <param name="factorySettings">The factory settings to use.</param>
         /// <exception cref="System.ArgumentNullException">expectedTypes</exception>
-        public TypeResolverNodeFactory(IEnumerable<Type> expectedTypes)
+        public TypeResolverNodeFactory(IEnumerable<Type> expectedTypes, FactorySettings factorySettings = null)
+            : base(factorySettings)
         {
             if (expectedTypes == null)
                 throw new ArgumentNullException("expectedTypes");

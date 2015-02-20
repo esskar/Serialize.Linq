@@ -38,10 +38,11 @@ namespace Serialize.Linq.Extensions
         /// Converts an expression to an json encoded string.
         /// </summary>
         /// <param name="expression">The expression.</param>
+        /// <param name="factorySettings">The factory settings to use.</param>
         /// <returns></returns>
-        public static string ToJson(this Expression expression)
+        public static string ToJson(this Expression expression, FactorySettings factorySettings = null)
         {
-            return expression.ToJson(expression.GetDefaultFactory());
+            return expression.ToJson(expression.GetDefaultFactory(factorySettings));
         }
         
         /// <summary>
@@ -72,10 +73,11 @@ namespace Serialize.Linq.Extensions
         /// Converts an expression to an xml encoded string.
         /// </summary>
         /// <param name="expression">The expression.</param>
+        /// <param name="factorySettings">The factory settings to use.</param>
         /// <returns></returns>
-        public static string ToXml(this Expression expression)
+        public static string ToXml(this Expression expression, FactorySettings factorySettings = null)
         {
-            return expression.ToXml(expression.GetDefaultFactory());
+            return expression.ToXml(expression.GetDefaultFactory(factorySettings));
         }
 
         /// <summary>
@@ -128,13 +130,14 @@ namespace Serialize.Linq.Extensions
         /// Gets the default factory.
         /// </summary>
         /// <param name="expression">The expression.</param>
+        /// <param name="factorySettings">The factory settings to use.</param>
         /// <returns></returns>
-        internal static INodeFactory GetDefaultFactory(this Expression expression)
+        internal static INodeFactory GetDefaultFactory(this Expression expression, FactorySettings factorySettings)
         {
             var lambda = expression as LambdaExpression;
             if(lambda != null)
-                return  new DefaultNodeFactory(lambda.Parameters.Select(p => p.Type));
-            return new NodeFactory();
+                return  new DefaultNodeFactory(lambda.Parameters.Select(p => p.Type), factorySettings);
+            return new NodeFactory(factorySettings);
         }
 
         /// <summary>

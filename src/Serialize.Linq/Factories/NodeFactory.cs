@@ -15,6 +15,28 @@ namespace Serialize.Linq.Factories
 {
     public class NodeFactory : INodeFactory
     {
+        private readonly FactorySettings _factorySettings;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NodeFactory"/> class.
+        /// </summary>
+        public NodeFactory()
+            : this(null) { }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NodeFactory"/> class.
+        /// </summary>
+        /// <param name="factorySettings">The factory settings to use.</param>
+        public NodeFactory(FactorySettings factorySettings)
+        {
+            _factorySettings = factorySettings ?? new FactorySettings();
+        }
+
+        public FactorySettings Settings
+        {
+            get { return _factorySettings; }
+        }
+
         /// <summary>
         /// Creates an expression node from an expression.
         /// </summary>

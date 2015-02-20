@@ -8,7 +8,7 @@ namespace Serialize.Linq.Serializers
 {
     public class ExpressionConverter
     {
-        public ExpressionNode Convert(Expression expression)
+        public ExpressionNode Convert(Expression expression, FactorySettings factorySettings = null)
         {
             var factory = this.CreateFactory(expression);
             return factory.Create(expression);
@@ -16,10 +16,15 @@ namespace Serialize.Linq.Serializers
 
         protected virtual INodeFactory CreateFactory(Expression expression)
         {
+            return this.CreateFactory(expression, null);
+        }
+
+        protected virtual INodeFactory CreateFactory(Expression expression, FactorySettings factorySettings)
+        {
             var lambda = expression as LambdaExpression;
             if(lambda != null)
-                return new DefaultNodeFactory(lambda.Parameters.Select(p => p.Type));
-            return new NodeFactory();
+                return new DefaultNodeFactory(lambda.Parameters.Select(p => p.Type), factorySettings);
+            return new NodeFactory(factorySettings);
         }        
     }
 }

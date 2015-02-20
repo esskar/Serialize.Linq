@@ -8,6 +8,8 @@
 
 using System;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
 
@@ -38,15 +40,29 @@ namespace Serialize.Linq.Nodes
             if (type == null)
                 return;
 
+            var isAnonymousType = Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
+                && type.IsGenericType && type.Name.Contains("AnonymousType")
+                && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
+                && (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
+
             if (type.IsGenericType)
             {
                 this.GenericArguments = type.GetGenericArguments().Select(t => new TypeNode(this.Factory, t)).ToArray();
-                this.Name = type.GetGenericTypeDefinition().AssemblyQualifiedName;
-                
+
+                var typeDefinition = type.GetGenericTypeDefinition();
+                if (isAnonymousType || !this.Factory.Settings.UseRelaxedTypeNames)
+                    this.Name = typeDefinition.AssemblyQualifiedName;
+                else
+                    this.Name = typeDefinition.FullName;
+
+
             }
             else
             {
-                this.Name = type.AssemblyQualifiedName;
+                if (isAnonymousType || !this.Factory.Settings.UseRelaxedTypeNames)
+                    this.Name = type.AssemblyQualifiedName;
+                else
+                    this.Name = type.FullName;
             }            
         }
 

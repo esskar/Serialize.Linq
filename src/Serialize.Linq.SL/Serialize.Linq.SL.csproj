@@ -82,6 +82,9 @@
     <Compile Include="..\Serialize.Linq\Factories\DefaultNodeFactory.cs">
       <Link>Factories\DefaultNodeFactory.cs</Link>
     </Compile>
+    <Compile Include="..\Serialize.Linq\Factories\FactorySettings.cs">
+      <Link>Factories\FactorySettings.cs</Link>
+    </Compile>
     <Compile Include="..\Serialize.Linq\Factories\NodeFactory.cs">
       <Link>Factories\NodeFactory.cs</Link>
     </Compile>
