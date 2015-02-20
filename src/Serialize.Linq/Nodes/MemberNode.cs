@@ -67,21 +67,6 @@ namespace Serialize.Linq.Nodes
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         /// <summary>
-        /// Gets or sets the type of the member.
-        /// </summary>
-        /// <value>
-        /// The type of the member.
-        /// </value>
-        [DataMember(EmitDefaultValue = false)]
-#else
-        [DataMember(EmitDefaultValue = false, Name = "M")]
-#endif
-        #endregion
-        public MemberTypes MemberType { get; set; }
-
-        #region DataMember
-#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
-        /// <summary>
         /// Gets or sets the signature.
         /// </summary>
         /// <value>
@@ -101,7 +86,6 @@ namespace Serialize.Linq.Nodes
         protected virtual void Initialize(TMemberInfo memberInfo)
         {
             this.DeclaringType = this.Factory.Create(memberInfo.DeclaringType);
-            this.MemberType = memberInfo.MemberType;
             this.Signature = memberInfo.ToString();
         }
 
