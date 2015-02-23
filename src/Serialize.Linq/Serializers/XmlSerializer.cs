@@ -10,6 +10,7 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Serializers
 {

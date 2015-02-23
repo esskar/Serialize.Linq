@@ -11,12 +11,13 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Serializers
 {
     public abstract class TextSerializer : DataSerializer, ITextSerializer
     {
-        public string Serialize<T>(T obj)
+        public string Serialize<T>(T obj) where T : Node
         {
             try
             {
@@ -35,7 +36,7 @@ namespace Serialize.Linq.Serializers
             }
         }
 
-        public T Deserialize<T>(string text)
+        public T Deserialize<T>(string text) where T : Node
         {
             using (var ms = new MemoryStream())
             {

@@ -9,6 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Interfaces
 {
@@ -32,7 +33,7 @@ namespace Serialize.Linq.Interfaces
         /// <typeparam name="T"></typeparam>
         /// <param name="stream">The stream.</param>
         /// <param name="obj">The obj.</param>
-        void Serialize<T>(Stream stream, T obj);
+        void Serialize<T>(Stream stream, T obj) where T : Node;
 
         /// <summary>
         /// Deserializes an object of type T from the specified stream.
@@ -40,6 +41,6 @@ namespace Serialize.Linq.Interfaces
         /// <typeparam name="T"></typeparam>
         /// <param name="stream">The stream.</param>
         /// <returns></returns>
-        T Deserialize<T>(Stream stream);
+        T Deserialize<T>(Stream stream) where T : Node;
     }
 }

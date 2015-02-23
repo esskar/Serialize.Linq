@@ -11,12 +11,13 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Xml;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Serializers
 {
     public class BinarySerializer : DataSerializer, IBinarySerializer
     {
-        public byte[] Serialize<T>(T obj)
+        public byte[] Serialize<T>(T obj) where T : Node
         {
             using (var ms = new MemoryStream())
             {
@@ -25,7 +26,7 @@ namespace Serialize.Linq.Serializers
             }
         }
 
-        public T Deserialize<T>(byte[] bytes)
+        public T Deserialize<T>(byte[] bytes) where T : Node
         {
             using (var ms = new MemoryStream(bytes))
                 return this.Deserialize<T>(ms);

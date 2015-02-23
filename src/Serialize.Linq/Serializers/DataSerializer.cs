@@ -8,6 +8,7 @@
 
 using System;
 using System.IO;
+using Serialize.Linq.Nodes;
 #if !WINDOWS_PHONE
 using System.Runtime.Serialization;
 #endif
@@ -18,7 +19,7 @@ namespace Serialize.Linq.Serializers
     public abstract class DataSerializer : SerializerBase, ISerializer
     {
 #if !WINDOWS_PHONE
-        public virtual void Serialize<T>(Stream stream, T obj)
+        public virtual void Serialize<T>(Stream stream, T obj) where T : Node
         {
             if (stream == null)
                 throw new ArgumentNullException("stream");
@@ -27,7 +28,7 @@ namespace Serialize.Linq.Serializers
             serializer.WriteObject(stream, obj);
         }
 
-        public virtual T Deserialize<T>(Stream stream)
+        public virtual T Deserialize<T>(Stream stream) where T : Node
         {
             if (stream == null)
                 throw new ArgumentNullException("stream");
@@ -40,9 +41,9 @@ namespace Serialize.Linq.Serializers
 
 #else
 
-        public abstract void Serialize<T>(Stream stream, T obj);
+        public abstract void Serialize<T>(Stream stream, T obj) where T : Node;
 
-        public abstract T Deserialize<T>(Stream stream);
+        public abstract T Deserialize<T>(Stream stream) where T : Node;
 
 #endif
     }
