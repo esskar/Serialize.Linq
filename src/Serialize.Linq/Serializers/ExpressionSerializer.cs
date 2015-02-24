@@ -56,10 +56,10 @@ namespace Serialize.Linq.Serializers
             return this.TextSerializer.Serialize(this.Convert(expression));
         }
 
-        public Expression DeserializeText(string text)
+        public Expression DeserializeText(string text, ExpressionContext context = null)
         {
             var node = this.TextSerializer.Deserialize<ExpressionNode>(text);
-            return node == null ? null : node.ToExpression();
+            return node == null ? null : node.ToExpression(context);
         }
 
         public byte[] SerializeBinary(Expression expression)
@@ -67,10 +67,10 @@ namespace Serialize.Linq.Serializers
             return this.BinarySerializer.Serialize(this.Convert(expression));
         }
 
-        public Expression DeserializeBinary(byte[] bytes)
+        public Expression DeserializeBinary(byte[] bytes, ExpressionContext context = null)
         {
             var node = this.BinarySerializer.Deserialize<ExpressionNode>(bytes);
-            return node != null ? node.ToExpression() : null;
+            return node == null ? null : node.ToExpression(context);
         }
 
         private ITextSerializer TextSerializer
