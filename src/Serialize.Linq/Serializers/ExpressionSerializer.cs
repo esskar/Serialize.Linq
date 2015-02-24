@@ -56,8 +56,17 @@ namespace Serialize.Linq.Serializers
             return this.TextSerializer.Serialize(this.Convert(expression));
         }
 
-        public Expression DeserializeText(string text, ExpressionContext context = null)
+        public Expression DeserializeText(string text)
         {
+            var node = this.TextSerializer.Deserialize<ExpressionNode>(text);
+            return node == null ? null : node.ToExpression();
+        }
+
+        public Expression DeserializeText(string text, ExpressionContext context)
+        {
+            if (context == null)
+                throw new ArgumentNullException("context");
+
             var node = this.TextSerializer.Deserialize<ExpressionNode>(text);
             return node == null ? null : node.ToExpression(context);
         }
@@ -67,8 +76,17 @@ namespace Serialize.Linq.Serializers
             return this.BinarySerializer.Serialize(this.Convert(expression));
         }
 
-        public Expression DeserializeBinary(byte[] bytes, ExpressionContext context = null)
+        public Expression DeserializeBinary(byte[] bytes)
         {
+            var node = this.BinarySerializer.Deserialize<ExpressionNode>(bytes);
+            return node == null ? null : node.ToExpression();
+        }
+
+        public Expression DeserializeBinary(byte[] bytes, ExpressionContext context)
+        {
+            if (context == null)
+                throw new ArgumentNullException("context");
+
             var node = this.BinarySerializer.Deserialize<ExpressionNode>(bytes);
             return node == null ? null : node.ToExpression(context);
         }
