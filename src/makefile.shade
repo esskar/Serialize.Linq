@@ -2,6 +2,8 @@ var VERSION='1.2.3'
 var FULL_VERSION='${VERSION}'
 var AUTHORS='Sascha Kiefer (esskar)'
 
+var assemblyCopyright='Copyright © 2012-2015'
+
 var BASE_DIR='${Directory.GetCurrentDirectory()}'
 var TARGET_DIR='${Path.Combine(BASE_DIR, "target")}'
 var BUILD_DIR='${Path.Combine(TARGET_DIR, "build")}'

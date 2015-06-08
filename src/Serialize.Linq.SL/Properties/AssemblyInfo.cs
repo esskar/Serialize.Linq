@@ -11,7 +11,7 @@ using System.Reflection;
 
 [assembly: AssemblyTitle("Serialize.Linq.SL")]
 [assembly: AssemblyProduct("Serialize.Linq.SL")]
-[assembly: AssemblyCopyright("Copyright © 2012-2014")]
+[assembly: AssemblyCopyright("Copyright © 2012-2015")]
 [assembly: AssemblyVersion("1.2.3")]
 [assembly: AssemblyFileVersion("1.2.3")]
 
