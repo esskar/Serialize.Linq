@@ -1,4 +1,4 @@
-var VERSION='1.2.3'
+var VERSION='1.2.4'
 var FULL_VERSION='${VERSION}'
 var AUTHORS='Sascha Kiefer (esskar)'
 
