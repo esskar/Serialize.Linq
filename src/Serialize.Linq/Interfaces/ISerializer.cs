@@ -16,6 +16,24 @@ namespace Serialize.Linq.Interfaces
     public interface ISerializer
     {
         /// <summary>
+        /// If set to true, and types are added as known types, also adds the type as array
+        /// Example: string -> string[] 
+        /// </summary>
+        /// <remarks>
+        /// If set to true, <see cref="AutoAddKnownTypesAsListTypes"/> will be set to false.
+        /// </remarks>
+        bool AutoAddKnownTypesAsArrayTypes { get; set; }
+
+        /// <summary>
+        /// If set to true, and types are added as known types, also adds the type as list
+        /// Example: string -> List&lt;string&gt;
+        /// </summary>
+        /// <remarks>
+        /// If set to true, <see cref="AutoAddKnownTypesAsArrayTypes"/> will be set to false.
+        /// </remarks>
+        bool AutoAddKnownTypesAsListTypes { get; set; }
+
+        /// <summary>
         /// Adds a new type to the list of known types.
         /// </summary>
         /// <param name="type">The type.</param>
