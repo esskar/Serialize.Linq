@@ -23,10 +23,35 @@ namespace Serialize.Linq.Serializers
         };
 
         private readonly HashSet<Type> _customKnownTypes;
+        private bool _autoAddKnownTypesAsArrayTypes;
+        private bool _autoAddKnownTypesAsListTypes;
 
         protected SerializerBase()
         {
             _customKnownTypes = new HashSet<Type>();
+            this.AutoAddKnownTypesAsArrayTypes = true;
+        }
+
+        public bool AutoAddKnownTypesAsArrayTypes
+        {
+            get { return _autoAddKnownTypesAsArrayTypes; }
+            set
+            {
+                _autoAddKnownTypesAsArrayTypes = value;
+                if (value)
+                    _autoAddKnownTypesAsListTypes = false;
+            }
+        }
+
+        public bool AutoAddKnownTypesAsListTypes
+        {
+            get { return _autoAddKnownTypesAsListTypes; }
+            set
+            {
+                _autoAddKnownTypesAsListTypes = value;
+                if (value)
+                    _autoAddKnownTypesAsArrayTypes = false;
+            }
         }
 
         public void AddKnownType(Type type)
@@ -48,15 +73,18 @@ namespace Serialize.Linq.Serializers
 
         protected virtual IEnumerable<Type> GetKnownTypes()
         {
-            return ExplodeKnownTypes(_knownTypes).Concat(ExplodeKnownTypes(_customKnownTypes));
+            return this.ExplodeKnownTypes(_knownTypes).Concat(this.ExplodeKnownTypes(_customKnownTypes));
         }
 
-        private static IEnumerable<Type> ExplodeKnownTypes(IEnumerable<Type> types)
+        private IEnumerable<Type> ExplodeKnownTypes(IEnumerable<Type> types)
         {
             foreach (var type in types)
             {
                 yield return type;
-                yield return type.MakeArrayType();
+                if (this.AutoAddKnownTypesAsArrayTypes)
+                    yield return type.MakeArrayType();
+                else if (this.AutoAddKnownTypesAsListTypes)
+                    yield return typeof(List<>).MakeGenericType(type);
                 if (!type.IsClass)
                     yield return typeof(Nullable<>).MakeGenericType(type);
             }

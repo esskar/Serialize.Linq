@@ -7,6 +7,7 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
 using Serialize.Linq.Interfaces;
@@ -25,6 +26,18 @@ namespace Serialize.Linq.Serializers
             _serializer = serializer;            
         }
 
+        public bool AutoAddKnownTypesAsArrayTypes
+        {
+            get { return _serializer.AutoAddKnownTypesAsArrayTypes; }
+            set { _serializer.AutoAddKnownTypesAsArrayTypes = value; }
+        }
+
+        public bool AutoAddKnownTypesAsListTypes
+        {
+            get { return _serializer.AutoAddKnownTypesAsListTypes; }
+            set { _serializer.AutoAddKnownTypesAsListTypes = value; }
+        }
+
         public bool CanSerializeText
         {
             get { return _serializer is ITextSerializer; }
@@ -33,6 +46,16 @@ namespace Serialize.Linq.Serializers
         public bool CanSerializeBinary
         {
             get { return _serializer is IBinarySerializer; }
+        }
+
+        public void AddKnownType(Type type)
+        {
+            _serializer.AddKnownType(type);
+        }
+
+        public void AddKnownTypes(IEnumerable<Type> types)
+        {
+            _serializer.AddKnownTypes(types);
         }
 
         public void Serialize(Stream stream, Expression expression)
