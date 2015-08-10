@@ -82,24 +82,25 @@ namespace Serialize.Linq.Tests.Issues
 
         private void TestExpression(Expression<Func<Test, bool>> expression, bool shouldSerializeFieldValue)
         {
+            var initialValue = 42;
+            var actualValue = -1;
+
             // Initialize fields
-            SetFields(42);
+            SetFields(initialValue);
 
             // Serialize expression
             var serializer = new ExpressionSerializer(new JsonSerializer());
             var value = serializer.SerializeText(expression);
 
-            // Reset fields
-            SetFields(-1);
+            // Modify fields
+            SetFields(actualValue);
 
             // Deserialize expression
             var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeText(value);
             var func = actualExpression.Compile();
 
             // Set expected value.
-            // For instance fields and for private static fields - the initial value is expected.
-            // For other static fields - the actual one.
-            int expectedValue = shouldSerializeFieldValue ? 42 : -1;
+            int expectedValue = shouldSerializeFieldValue ? initialValue : actualValue;
 
             // Assert
             Assert.IsTrue(func(new Test { IntProperty = expectedValue }));
