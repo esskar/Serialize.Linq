@@ -33,7 +33,7 @@ namespace Serialize.Linq.Nodes
 
         protected override IEnumerable<MemberInfo> GetMemberInfosForType(Type type)
         {
-            return type.GetMembers();
+            return type.GetMembers(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
         }
     }
 }
