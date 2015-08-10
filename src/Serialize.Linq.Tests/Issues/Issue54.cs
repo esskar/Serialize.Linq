@@ -8,24 +8,22 @@ namespace Serialize.Linq.Tests.Issues
     [TestClass]
     public class Issue54
     {
-        // ReSharper disable InconsistentNaming
-        public int _publicField = 42;
+        public int PublicField = 42;
         private int _privateField = 42;
-        protected int _protectedField = 42;
-        internal int _internalField = 42;
-        protected internal int _protectedInternalField = 42;
+        protected int ProtectedField = 42;
+        internal int InternalField = 42;
+        protected internal int ProtectedInternalField = 42;
 
-        private static int _privateStaticField = 42;
-        public static int _publicStaticField = 42;
-        protected static int _protectedStaticField = 42;
-        internal static int _internalStaticField = 42;
-        protected internal static int _protectedInternalStaticField = 42;
-        // ReSharper restore InconsistentNaming
+        private static readonly int _privateStaticField = 42;
+        public static int PublicStaticField = 42;
+        protected static int ProtectedStaticField = 42;
+        internal static int InternalStaticField = 42;
+        protected internal static int ProtectedInternalStaticField = 42;
 
         [TestMethod]
         public void SerializePublicField()
         {
-            TestExpression(test => test.IntProperty == _publicField);
+            TestExpression(test => test.IntProperty == PublicField);
         }
 
         [TestMethod]
@@ -37,25 +35,25 @@ namespace Serialize.Linq.Tests.Issues
         [TestMethod]
         public void SerializeProtectedField()
         {
-            TestExpression(test => test.IntProperty == _protectedField);
+            TestExpression(test => test.IntProperty == ProtectedField);
         }
 
         [TestMethod]
         public void SerializeInternalField()
         {
-            TestExpression(test => test.IntProperty == _internalField);
+            TestExpression(test => test.IntProperty == InternalField);
         }
 
         [TestMethod]
         public void SerializeProtectedInternalField()
         {
-            TestExpression(test => test.IntProperty == _protectedInternalField);
+            TestExpression(test => test.IntProperty == ProtectedInternalField);
         }
 
         [TestMethod]
         public void SerializePublicStaticField()
         {
-            TestExpression(test => test.IntProperty == _publicStaticField);
+            TestExpression(test => test.IntProperty == PublicStaticField);
         }
 
         [TestMethod]
@@ -67,19 +65,19 @@ namespace Serialize.Linq.Tests.Issues
         [TestMethod]
         public void SerializeProtectedStaticField()
         {
-            TestExpression(test => test.IntProperty == _protectedStaticField);
+            TestExpression(test => test.IntProperty == ProtectedStaticField);
         }
 
         [TestMethod]
         public void SerializeInternalStaticField()
         {
-            TestExpression(test => test.IntProperty == _internalStaticField);
+            TestExpression(test => test.IntProperty == InternalStaticField);
         }
 
         [TestMethod]
         public void SerializeProtectedInternalStaticField()
         {
-            TestExpression(test => test.IntProperty == _protectedInternalStaticField);
+            TestExpression(test => test.IntProperty == ProtectedInternalStaticField);
         }
 
         private void TestExpression(Expression<Func<Test, bool>> expression)
