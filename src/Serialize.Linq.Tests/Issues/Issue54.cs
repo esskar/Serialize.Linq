@@ -23,64 +23,64 @@ namespace Serialize.Linq.Tests.Issues
         [TestMethod]
         public void SerializePublicField()
         {
-            TestExpression(test => test.IntProperty == PublicField, true);
+            TestExpression(test => test.IntProperty == PublicField, ReadFieldOn.Serialization);
         }
 
         [TestMethod]
         public void SerializePrivateField()
         {
-            TestExpression(test => test.IntProperty == _privateField, true);
+            TestExpression(test => test.IntProperty == _privateField, ReadFieldOn.Serialization);
         }
 
         [TestMethod]
         public void SerializeProtectedField()
         {
-            TestExpression(test => test.IntProperty == ProtectedField, true);
+            TestExpression(test => test.IntProperty == ProtectedField, ReadFieldOn.Serialization);
         }
 
         [TestMethod]
         public void SerializeInternalField()
         {
-            TestExpression(test => test.IntProperty == InternalField, true);
+            TestExpression(test => test.IntProperty == InternalField, ReadFieldOn.Serialization);
         }
 
         [TestMethod]
         public void SerializeProtectedInternalField()
         {
-            TestExpression(test => test.IntProperty == ProtectedInternalField, true);
+            TestExpression(test => test.IntProperty == ProtectedInternalField, ReadFieldOn.Serialization);
         }
 
         [TestMethod]
         public void SerializePublicStaticField()
         {
-            TestExpression(test => test.IntProperty == PublicStaticField, false);
+            TestExpression(test => test.IntProperty == PublicStaticField, ReadFieldOn.Execution);
         }
 
         [TestMethod]
         public void SerializePrivateStaticField()
         {
-            TestExpression(test => test.IntProperty == _privateStaticField, true);
+            TestExpression(test => test.IntProperty == _privateStaticField, ReadFieldOn.Serialization);
         }
 
         [TestMethod]
         public void SerializeProtectedStaticField()
         {
-            TestExpression(test => test.IntProperty == ProtectedStaticField, false);
+            TestExpression(test => test.IntProperty == ProtectedStaticField, ReadFieldOn.Execution);
         }
 
         [TestMethod]
         public void SerializeInternalStaticField()
         {
-            TestExpression(test => test.IntProperty == InternalStaticField, false);
+            TestExpression(test => test.IntProperty == InternalStaticField, ReadFieldOn.Execution);
         }
 
         [TestMethod]
         public void SerializeProtectedInternalStaticField()
         {
-            TestExpression(test => test.IntProperty == ProtectedInternalStaticField, false);
+            TestExpression(test => test.IntProperty == ProtectedInternalStaticField, ReadFieldOn.Execution);
         }
 
-        private void TestExpression(Expression<Func<Test, bool>> expression, bool shouldSerializeFieldValue)
+        private void TestExpression(Expression<Func<Test, bool>> expression, ReadFieldOn readFieldOn)
         {
             var initialValue = 42;
             var actualValue = -1;
@@ -100,7 +100,9 @@ namespace Serialize.Linq.Tests.Issues
             var func = actualExpression.Compile();
 
             // Set expected value.
-            int expectedValue = shouldSerializeFieldValue ? initialValue : actualValue;
+            int expectedValue = readFieldOn == ReadFieldOn.Serialization
+                ? initialValue
+                : actualValue;
 
             // Assert
             Assert.IsTrue(func(new Test { IntProperty = expectedValue }));
@@ -123,6 +125,12 @@ namespace Serialize.Linq.Tests.Issues
         public class Test
         {
             public int IntProperty { get; set; }
+        }
+
+        public enum ReadFieldOn
+        {
+            Serialization,
+            Execution
         }
     }
 }
