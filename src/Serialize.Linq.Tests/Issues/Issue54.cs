@@ -86,6 +86,11 @@ namespace Serialize.Linq.Tests.Issues
             var value = serializer.SerializeText(expression);
 
             Assert.IsNotNull(value);
+
+            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeText(value);
+            var func = actualExpression.Compile();
+            Assert.IsTrue(func(new Test { IntProperty = 42 }), "one failed.");
+            Assert.IsFalse(func(new Test { IntProperty = 55 }), "two failed.");
         }
 
         public class Test
