@@ -25,107 +25,65 @@ namespace Serialize.Linq.Tests.Issues
         [TestMethod]
         public void SerializePublicField()
         {
-            Expression<Func<Test, bool>> expression = test => test.IntProperty == _publicField;
-
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-            var value = serializer.SerializeText(expression);
-
-            Assert.IsNotNull(value);
+            TestExpression(test => test.IntProperty == _publicField);
         }
 
         [TestMethod]
         public void SerializePrivateField()
         {
-            Expression<Func<Test, bool>> expression = test => test.IntProperty == _privateField;
-
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-            var value = serializer.SerializeText(expression);
-
-            Assert.IsNotNull(value);
+            TestExpression(test => test.IntProperty == _privateField);
         }
 
         [TestMethod]
         public void SerializeProtectedField()
         {
-            Expression<Func<Test, bool>> expression = test => test.IntProperty == _protectedField;
-
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-            var value = serializer.SerializeText(expression);
-
-            Assert.IsNotNull(value);
+            TestExpression(test => test.IntProperty == _protectedField);
         }
 
         [TestMethod]
         public void SerializeInternalField()
         {
-            Expression<Func<Test, bool>> expression = test => test.IntProperty == _internalField;
-
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-            var value = serializer.SerializeText(expression);
-
-            Assert.IsNotNull(value);
+            TestExpression(test => test.IntProperty == _internalField);
         }
 
         [TestMethod]
         public void SerializeProtectedInternalField()
         {
-            Expression<Func<Test, bool>> expression = test => test.IntProperty == _protectedInternalField;
-
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-            var value = serializer.SerializeText(expression);
-
-            Assert.IsNotNull(value);
+            TestExpression(test => test.IntProperty == _protectedInternalField);
         }
 
         [TestMethod]
         public void SerializePublicStaticField()
         {
-            Expression<Func<Test, bool>> expression = test => test.IntProperty == _publicStaticField;
-
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-            var value = serializer.SerializeText(expression);
-
-            Assert.IsNotNull(value);
+            TestExpression(test => test.IntProperty == _publicStaticField);
         }
 
         [TestMethod]
         public void SerializePrivateStaticField()
         {
-            Expression<Func<Test, bool>> expression = test => test.IntProperty == _privateStaticField;
-
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-            var value = serializer.SerializeText(expression);
-
-            Assert.IsNotNull(value);
+            TestExpression(test => test.IntProperty == _privateStaticField);
         }
 
         [TestMethod]
         public void SerializeProtectedStaticField()
         {
-            Expression<Func<Test, bool>> expression = test => test.IntProperty == _protectedStaticField;
-
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-            var value = serializer.SerializeText(expression);
-
-            Assert.IsNotNull(value);
+            TestExpression(test => test.IntProperty == _protectedStaticField);
         }
 
         [TestMethod]
         public void SerializeInternalStaticField()
         {
-            Expression<Func<Test, bool>> expression = test => test.IntProperty == _internalStaticField;
-
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-            var value = serializer.SerializeText(expression);
-
-            Assert.IsNotNull(value);
+            TestExpression(test => test.IntProperty == _internalStaticField);
         }
 
         [TestMethod]
         public void SerializeProtectedInternalStaticField()
         {
-            Expression<Func<Test, bool>> expression = test => test.IntProperty == _protectedInternalStaticField;
+            TestExpression(test => test.IntProperty == _protectedInternalStaticField);
+        }
 
+        private void TestExpression(Expression<Func<Test, bool>> expression)
+        {
             var serializer = new ExpressionSerializer(new JsonSerializer());
             var value = serializer.SerializeText(expression);
 
