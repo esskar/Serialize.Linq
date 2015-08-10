@@ -12,11 +12,13 @@ namespace Serialize.Linq.Tests.Issues
         public int _publicField = 42;
         private int _privateField = 42;
         protected int _protectedField = 42;
+        internal int _internalField = 42;
         protected internal int _protectedInternalField = 42;
 
         private static int _privateStaticField = 42;
         public static int _publicStaticField = 42;
         protected static int _protectedStaticField = 42;
+        internal static int _internalStaticField = 42;
         protected internal static int _protectedInternalStaticField = 42;
         // ReSharper restore InconsistentNaming
 
@@ -46,6 +48,17 @@ namespace Serialize.Linq.Tests.Issues
         public void SerializeProtectedField()
         {
             Expression<Func<Test, bool>> expression = test => test.IntProperty == _protectedField;
+
+            var serializer = new ExpressionSerializer(new JsonSerializer());
+            var value = serializer.SerializeText(expression);
+
+            Assert.IsNotNull(value);
+        }
+
+        [TestMethod]
+        public void SerializeInternalField()
+        {
+            Expression<Func<Test, bool>> expression = test => test.IntProperty == _internalField;
 
             var serializer = new ExpressionSerializer(new JsonSerializer());
             var value = serializer.SerializeText(expression);
@@ -90,6 +103,17 @@ namespace Serialize.Linq.Tests.Issues
         public void SerializeProtectedStaticField()
         {
             Expression<Func<Test, bool>> expression = test => test.IntProperty == _protectedStaticField;
+
+            var serializer = new ExpressionSerializer(new JsonSerializer());
+            var value = serializer.SerializeText(expression);
+
+            Assert.IsNotNull(value);
+        }
+
+        [TestMethod]
+        public void SerializeInternalStaticField()
+        {
+            Expression<Func<Test, bool>> expression = test => test.IntProperty == _internalStaticField;
 
             var serializer = new ExpressionSerializer(new JsonSerializer());
             var value = serializer.SerializeText(expression);
