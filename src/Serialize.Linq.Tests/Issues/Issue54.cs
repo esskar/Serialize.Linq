@@ -20,12 +20,6 @@ namespace Serialize.Linq.Tests.Issues
         internal static int InternalStaticField;
         protected internal static int ProtectedInternalStaticField;
 
-        [TestInitialize]
-        public void Init()
-        {
-            SetFields(42);
-        }
-
         [TestMethod]
         public void SerializePublicField()
         {
