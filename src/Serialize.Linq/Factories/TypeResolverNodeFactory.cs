@@ -87,7 +87,7 @@ namespace Serialize.Linq.Factories
                         if (memberExpression.Expression.NodeType == ExpressionType.Constant)
                         {
                             var constantExpression = (ConstantExpression)memberExpression.Expression;
-                            var fields = constantExpression.Type.GetFields();
+                            var fields = constantExpression.Type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
                             var memberField = fields.Single(n => memberExpression.Member.Name.Equals(n.Name));
                             constantValueType = memberField.FieldType;
                             constantValue = memberField.GetValue(constantExpression.Value);
