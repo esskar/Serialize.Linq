@@ -85,8 +85,16 @@ namespace Serialize.Linq.Serializers
                     yield return type.MakeArrayType();
                 else if (this.AutoAddKnownTypesAsListTypes)
                     yield return typeof(List<>).MakeGenericType(type);
-                if (!type.IsClass)
-                    yield return typeof(Nullable<>).MakeGenericType(type);
+                
+                if (type.IsClass) 
+                    continue;
+
+                var nullableType = typeof (Nullable<>).MakeGenericType(type);
+                yield return nullableType;
+                if (this.AutoAddKnownTypesAsArrayTypes)
+                    yield return nullableType.MakeArrayType();
+                else if (this.AutoAddKnownTypesAsListTypes)
+                    yield return typeof(List<>).MakeGenericType(nullableType);
             }
         }
     }
