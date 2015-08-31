@@ -31,9 +31,14 @@ namespace Serialize.Linq.Nodes
         public MemberInfoNode(INodeFactory factory, MemberInfo memberInfo)
             : base(factory, memberInfo) { }
 
-        protected override IEnumerable<MemberInfo> GetMemberInfosForType(Type type)
+        protected override IEnumerable<MemberInfo> GetMemberInfosForType(ExpressionContext context, Type type)
         {
-            return type.GetMembers();
+            BindingFlags? flags = null;
+            if (context != null)
+                flags = context.GetBindingFlags();
+            else if (this.Factory != null)
+                flags = this.Factory.GetBindingFlags();
+            return flags == null ? type.GetMembers() : type.GetMembers(flags.Value);
         }
     }
 }

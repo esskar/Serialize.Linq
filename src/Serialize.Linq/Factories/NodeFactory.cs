@@ -8,6 +8,7 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Nodes;
 
@@ -74,6 +75,17 @@ namespace Serialize.Linq.Factories
         public TypeNode Create(Type type)
         {
             return new TypeNode(this, type);
+        }
+
+        /// <summary>
+        /// Gets binding flags to be used when accessing type members.
+        /// </summary>
+        public BindingFlags? GetBindingFlags()
+        {
+            if (!this.Settings.AllowPrivateFieldAccess)
+                return null;
+
+            return BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
         }
     }
 }

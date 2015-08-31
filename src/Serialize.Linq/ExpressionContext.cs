@@ -7,6 +7,7 @@
 #endregion
 
 using System;
+using System.Reflection;
 #if !WINDOWS_PHONE
 using System.Collections.Concurrent;
 #else
@@ -26,6 +27,16 @@ namespace Serialize.Linq
         {
             _parameterExpressions = new ConcurrentDictionary<string, ParameterExpression>();
             _typeCache = new ConcurrentDictionary<string, Type>();
+        }
+
+        public bool AllowPrivateFieldAccess { get; set; }
+
+        public virtual BindingFlags? GetBindingFlags()
+        {
+            if (!this.AllowPrivateFieldAccess)
+                return null;
+
+            return BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
         }
 
         public virtual ParameterExpression GetParameterExpression(ParameterExpressionNode node)

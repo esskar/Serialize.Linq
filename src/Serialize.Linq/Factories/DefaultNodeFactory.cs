@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Internals;
 using Serialize.Linq.Nodes;
@@ -72,6 +73,14 @@ namespace Serialize.Linq.Factories
         public TypeNode Create(Type type)
         {
             return _innerFactory.Create(type);
+        }
+
+        /// <summary>
+        /// Gets binding flags to be used when accessing type members.
+        /// </summary>
+        public BindingFlags? GetBindingFlags()
+        {
+            return _innerFactory.GetBindingFlags();
         }
 
         /// <summary>

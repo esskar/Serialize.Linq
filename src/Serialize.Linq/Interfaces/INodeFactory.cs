@@ -8,6 +8,7 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Nodes;
 
@@ -33,5 +34,10 @@ namespace Serialize.Linq.Interfaces
         /// <param name="type">The type.</param>
         /// <returns></returns>
         TypeNode Create(Type type);
+
+        /// <summary>
+        /// Gets binding flags to be used when accessing type members.
+        /// </summary>
+        BindingFlags? GetBindingFlags();
     }    
 }

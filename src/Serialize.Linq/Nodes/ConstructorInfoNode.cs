@@ -34,9 +34,10 @@ namespace Serialize.Linq.Nodes
         /// <summary>
         /// Gets the member infos for the specified type.
         /// </summary>
+        /// <param name="context">The expression context.</param>
         /// <param name="type">The type.</param>
         /// <returns></returns>
-        protected override IEnumerable<ConstructorInfo> GetMemberInfosForType(Type type)
+        protected override IEnumerable<ConstructorInfo> GetMemberInfosForType(ExpressionContext context, Type type)
         {
             return type.GetConstructors();
         }
