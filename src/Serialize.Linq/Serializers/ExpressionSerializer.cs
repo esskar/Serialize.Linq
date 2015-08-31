@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq.Expressions;
+using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Nodes;
 
@@ -18,12 +19,14 @@ namespace Serialize.Linq.Serializers
     public class ExpressionSerializer : ExpressionConverter
     {
         private readonly ISerializer _serializer;
-        
-        public ExpressionSerializer(ISerializer serializer)
+        private readonly FactorySettings _factorySettings;
+
+        public ExpressionSerializer(ISerializer serializer, FactorySettings factorySettings = null)
         {
-            if(serializer == null)
+            if (serializer == null)
                 throw new ArgumentNullException("serializer");
-            _serializer = serializer;            
+            _serializer = serializer;
+            _factorySettings = factorySettings;
         }
 
         public bool AutoAddKnownTypesAsArrayTypes
@@ -58,25 +61,25 @@ namespace Serialize.Linq.Serializers
             _serializer.AddKnownTypes(types);
         }
 
-        public void Serialize(Stream stream, Expression expression)
+        public void Serialize(Stream stream, Expression expression, FactorySettings factorySettings = null)
         {
-            if(stream == null)
-                throw new ArgumentNullException("stream");            
-            _serializer.Serialize(stream, this.Convert(expression));
+            if (stream == null)
+                throw new ArgumentNullException("stream");
+            _serializer.Serialize(stream, this.Convert(expression, factorySettings ?? _factorySettings));
         }
 
         public Expression Deserialize(Stream stream)
         {
-            if(stream == null)
+            if (stream == null)
                 throw new ArgumentNullException("stream");
 
             var node = _serializer.Deserialize<ExpressionNode>(stream);
             return node != null ? node.ToExpression() : null;
-        }        
+        }
 
-        public string SerializeText(Expression expression)
+        public string SerializeText(Expression expression, FactorySettings factorySettings = null)
         {
-            return this.TextSerializer.Serialize(this.Convert(expression));
+            return this.TextSerializer.Serialize(this.Convert(expression, factorySettings ?? _factorySettings));
         }
 
         public Expression DeserializeText(string text)
@@ -94,9 +97,9 @@ namespace Serialize.Linq.Serializers
             return node == null ? null : node.ToExpression(context);
         }
 
-        public byte[] SerializeBinary(Expression expression)
+        public byte[] SerializeBinary(Expression expression, FactorySettings factorySettings = null)
         {
-            return this.BinarySerializer.Serialize(this.Convert(expression));
+            return this.BinarySerializer.Serialize(this.Convert(expression, factorySettings ?? _factorySettings));
         }
 
         public Expression DeserializeBinary(byte[] bytes)
@@ -116,10 +119,10 @@ namespace Serialize.Linq.Serializers
 
         private ITextSerializer TextSerializer
         {
-            get 
+            get
             {
                 var textSerializer = _serializer as ITextSerializer;
-                if(textSerializer == null)
+                if (textSerializer == null)
                     throw new InvalidOperationException("Unable to serialize text.");
                 return textSerializer;
             }
@@ -127,10 +130,10 @@ namespace Serialize.Linq.Serializers
 
         private IBinarySerializer BinarySerializer
         {
-            get 
+            get
             {
                 var binarySerializer = _serializer as IBinarySerializer;
-                if(binarySerializer == null)
+                if (binarySerializer == null)
                     throw new InvalidOperationException("Unable to serialize binary.");
                 return binarySerializer;
             }

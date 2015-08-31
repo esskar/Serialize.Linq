@@ -10,13 +10,8 @@ namespace Serialize.Linq.Serializers
     {
         public ExpressionNode Convert(Expression expression, FactorySettings factorySettings = null)
         {
-            var factory = this.CreateFactory(expression);
+            var factory = this.CreateFactory(expression, factorySettings);
             return factory.Create(expression);
-        }
-
-        protected virtual INodeFactory CreateFactory(Expression expression)
-        {
-            return this.CreateFactory(expression, null);
         }
 
         protected virtual INodeFactory CreateFactory(Expression expression, FactorySettings factorySettings)
