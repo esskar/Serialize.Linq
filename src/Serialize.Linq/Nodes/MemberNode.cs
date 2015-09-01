@@ -111,9 +111,10 @@ namespace Serialize.Linq.Nodes
         /// <summary>
         /// Converts this instance to an expression.
         /// </summary>
+        /// <param name="context">The expression context.</param>
         /// <param name="type">The type.</param>
         /// <returns></returns>
-        protected abstract IEnumerable<TMemberInfo> GetMemberInfosForType(Type type);
+        protected abstract IEnumerable<TMemberInfo> GetMemberInfosForType(ExpressionContext context, Type type);
 
         /// <summary>
         /// Converts this instance to a member info object of type TMemberInfo.
@@ -126,7 +127,7 @@ namespace Serialize.Linq.Nodes
                 return null;
 
             var declaringType = this.GetDeclaringType(context);
-            var members = this.GetMemberInfosForType(declaringType);
+            var members = this.GetMemberInfosForType(context, declaringType);
 
             var member = members.FirstOrDefault(m => m.ToString() == this.Signature);
             if (member == null)

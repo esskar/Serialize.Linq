@@ -8,5 +8,7 @@
         }
 
         public bool UseRelaxedTypeNames { get; set; }
+
+        public bool AllowPrivateFieldAccess { get; set; }
     }
 }

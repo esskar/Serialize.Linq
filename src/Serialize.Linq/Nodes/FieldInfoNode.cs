@@ -31,7 +31,7 @@ namespace Serialize.Linq.Nodes
         public FieldInfoNode(INodeFactory factory, FieldInfo memberInfo)
             : base(factory, memberInfo) { }
 
-        protected override IEnumerable<FieldInfo> GetMemberInfosForType(Type type)
+        protected override IEnumerable<FieldInfo> GetMemberInfosForType(ExpressionContext context, Type type)
         {
             return type.GetFields();
         }

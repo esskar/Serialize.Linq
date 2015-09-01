@@ -39,7 +39,7 @@ namespace Serialize.Linq.Nodes
         public PropertyInfoNode(INodeFactory factory, PropertyInfo memberInfo) 
             : base(factory, memberInfo) { }
 
-        protected override IEnumerable<PropertyInfo> GetMemberInfosForType(Type type)
+        protected override IEnumerable<PropertyInfo> GetMemberInfosForType(ExpressionContext context, Type type)
         {
             return type.GetProperties();
         }
