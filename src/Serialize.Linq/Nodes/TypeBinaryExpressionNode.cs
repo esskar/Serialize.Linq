@@ -58,7 +58,17 @@ namespace Serialize.Linq.Nodes
 
         public override Expression ToExpression(ExpressionContext context)
         {
-            return System.Linq.Expressions.Expression.TypeIs(this.Expression.ToExpression(context), this.TypeOperand.ToType(context));
+            switch (this.NodeType)
+            {
+                case ExpressionType.TypeIs:
+                    return System.Linq.Expressions.Expression.TypeIs(this.Expression.ToExpression(context), this.TypeOperand.ToType(context));
+                    
+                case ExpressionType.TypeEqual:
+                    return System.Linq.Expressions.Expression.TypeEqual(this.Expression.ToExpression(context), this.TypeOperand.ToType(context));
+                    
+                default:
+                    throw new NotSupportedException("unrecognised TypeBinaryExpression.NodeType " + Enum.GetName(typeof(ExpressionType), this.NodeType));
+            }
         }
     }
 }

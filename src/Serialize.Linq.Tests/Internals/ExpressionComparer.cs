@@ -67,7 +67,8 @@ namespace Serialize.Linq.Tests.Internals
                 case ExpressionType.ExclusiveOr:
                     return this.AreEqualBinary((BinaryExpression)x, (BinaryExpression)y);
                 case ExpressionType.TypeIs:
-                    return this.AreEqualTypeIs((TypeBinaryExpression)x, (TypeBinaryExpression)y);
+                case ExpressionType.TypeEqual:
+                    return this.AreEqualTypeBinary((TypeBinaryExpression)x, (TypeBinaryExpression)y);
                 case ExpressionType.Conditional:
                     return this.AreEqualConditional((ConditionalExpression)x, (ConditionalExpression)y);
                 case ExpressionType.Constant:
@@ -131,9 +132,10 @@ namespace Serialize.Linq.Tests.Internals
                 && this.AreEqual(x.Conversion, y.Conversion);
         }
 
-        protected virtual bool AreEqualTypeIs(TypeBinaryExpression x, TypeBinaryExpression y)
+        protected virtual bool AreEqualTypeBinary(TypeBinaryExpression x, TypeBinaryExpression y)
         {
-            return x.TypeOperand == y.TypeOperand
+            return x.NodeType == y.NodeType 
+                && x.TypeOperand == y.TypeOperand
                 && this.AreEqual(x.Expression, y.Expression);
         }
 
