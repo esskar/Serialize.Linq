@@ -80,12 +80,16 @@ namespace Serialize.Linq.Nodes
                 if (this.Value != null)
                 {
                     if (value == null)
+                    {
                         value = this.Factory.Create(this.Value.GetType());
+                    }
                     else
                     {
                         var context = new ExpressionContext();
                         if (!value.ToType(context).IsInstanceOfType(this.Value))
-                            throw new InvalidTypeException(string.Format("Type '{0}' is not an instance of the current value type '{1}'.", value.ToType(context), this.Value.GetType()));
+                            throw new InvalidTypeException(
+                                string.Format("Type '{0}' is not an instance of the current value type '{1}'.",
+                                    value.ToType(context), this.Value.GetType()));
                     }
                 }
                 base.Type = value;
@@ -93,7 +97,7 @@ namespace Serialize.Linq.Nodes
         }
 
         #region DataMember
-        #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
+#if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         /// <summary>
         /// Gets or sets the value.
         /// </summary>
@@ -113,18 +117,23 @@ namespace Serialize.Linq.Nodes
             {
                 if (value is Expression)
                     throw new ArgumentException("Expression not allowed.", "value");
-                _value = value;
-                if (_value != null)
+
+                if (value is Type)
+                    _value = this.Factory.Create(value as Type);
+                else
+                    _value = value;
+
+                if (_value == null || _value is TypeNode) 
+                    return;
+
+                var type = base.Type != null ? base.Type.ToType(new ExpressionContext()) : null;
+                if (type == null)
                 {
-                    var type = base.Type != null ? base.Type.ToType(new ExpressionContext()) : null;
-                    if (type == null)
-                    {
-                        if(this.Factory != null)
-                            base.Type = this.Factory.Create(_value.GetType());
-                        return;
-                    }
-                    _value = ValueConverter.Convert(_value, type);
+                    if (this.Factory != null)
+                        base.Type = this.Factory.Create(_value.GetType());
+                    return;
                 }
+                _value = ValueConverter.Convert(_value, type);
             }
         }
 
@@ -144,7 +153,12 @@ namespace Serialize.Linq.Nodes
         /// <returns></returns>
         public override Expression ToExpression(ExpressionContext context)
         {
-            return this.Type != null ? Expression.Constant(this.Value, this.Type.ToType(context)) : Expression.Constant(this.Value);
+            var typeNode = this.Value as TypeNode;
+            if (typeNode != null)
+                return Expression.Constant(typeNode.ToType(context), this.Type.ToType(context));
+            return this.Type != null 
+                ? Expression.Constant(this.Value, this.Type.ToType(context)) 
+                : Expression.Constant(this.Value);
         }
     }
 }
