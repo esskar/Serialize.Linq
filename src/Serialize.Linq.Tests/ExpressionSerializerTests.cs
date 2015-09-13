@@ -200,6 +200,24 @@ namespace Serialize.Linq.Tests
             SerializeDeserializeExpressionAsBinary(CreateConstantDateTimeExpression(), new BinarySerializer());
         }
 
+        [TestMethod]
+        public void ExpressionWithConstantTypeAsJson()
+        {
+            SerializeDeserializeExpressionAsText(CreateConstantTypeExpression(), new JsonSerializer());
+        }
+
+        [TestMethod]
+        public void ExpressionWithConstantTypeAsXml()
+        {
+            SerializeDeserializeExpressionAsText(CreateConstantTypeExpression(), new XmlSerializer());
+        }
+
+        [TestMethod]
+        public void ExpressionWithConstantTypeAsBinary()
+        {
+            SerializeDeserializeExpressionAsBinary(CreateConstantTypeExpression(), new BinarySerializer());
+        }
+
         private static ConstantExpression CreateConstantDateTimeExpression()
         {
             return Expression.Constant(DateTime.Today);
@@ -209,6 +227,11 @@ namespace Serialize.Linq.Tests
         {
             var guidValue = Guid.NewGuid();
             return () => guidValue;
+        }
+
+        private static ConstantExpression CreateConstantTypeExpression()
+        {
+            return Expression.Constant(typeof(string));
         }
 
         private static Expression SerializeDeserializeExpressionAsText(Expression expression, ISerializer serializer)
