@@ -62,10 +62,10 @@ namespace Serialize.Linq.Nodes
             {
                 case ExpressionType.TypeIs:
                     return System.Linq.Expressions.Expression.TypeIs(this.Expression.ToExpression(context), this.TypeOperand.ToType(context));
-                    
+#if !SILVERLIGHT
                 case ExpressionType.TypeEqual:
                     return System.Linq.Expressions.Expression.TypeEqual(this.Expression.ToExpression(context), this.TypeOperand.ToType(context));
-                    
+#endif                    
                 default:
                     throw new NotSupportedException("unrecognised TypeBinaryExpression.NodeType " + Enum.GetName(typeof(ExpressionType), this.NodeType));
             }
