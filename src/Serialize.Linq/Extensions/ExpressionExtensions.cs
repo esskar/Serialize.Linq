@@ -26,11 +26,12 @@ namespace Serialize.Linq.Extensions
         /// Converts an expression to an expression node.
         /// </summary>
         /// <param name="expression">The expression.</param>
+        /// <param name="factorySettings">The factory settings to use.</param>
         /// <returns></returns>
-        public static ExpressionNode ToExpressionNode(this Expression expression)
+        public static ExpressionNode ToExpressionNode(this Expression expression, FactorySettings factorySettings = null)
         {
             var converter = new ExpressionConverter();
-            return converter.Convert(expression);
+            return converter.Convert(expression, factorySettings);
         }
 
 #if !SILVERLIGHT

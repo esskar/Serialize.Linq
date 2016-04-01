@@ -7,6 +7,9 @@ using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Issues
 {
+    /// <summary>
+    /// https://github.com/esskar/Serialize.Linq/issues/50
+    /// </summary>
     [TestClass]
     public class Issue50
     {

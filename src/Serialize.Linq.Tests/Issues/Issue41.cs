@@ -9,6 +9,9 @@ using Serialize.Linq.Tests.Internals;
 
 namespace Serialize.Linq.Tests.Issues
 {
+    /// <summary>
+    /// https://github.com/esskar/Serialize.Linq/issues/41
+    /// </summary>
     [TestClass]
     public class Issue41
     {

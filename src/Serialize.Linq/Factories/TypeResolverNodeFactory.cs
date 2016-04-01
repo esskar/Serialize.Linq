@@ -71,57 +71,59 @@ namespace Serialize.Linq.Factories
             constantValueType = null;
 
             var run = memberExpression;
-            while (run != null)
+            while (true)
             {
-                if (this.IsExpectedType(run.Member.DeclaringType))
-                    return false;
-
-                run = run.Expression as MemberExpression;
-            }
-
-            switch (memberExpression.Member.MemberType)
-            {
-                case MemberTypes.Field:
-                    if (memberExpression.Expression != null)
-                    {
-                        if (memberExpression.Expression.NodeType == ExpressionType.Constant)
-                        {
-                            var constantExpression = (ConstantExpression)memberExpression.Expression;
-                            var flags = this.GetBindingFlags();
-                            var fields = flags == null
-                                ? constantExpression.Type.GetFields()
-                                : constantExpression.Type.GetFields(flags.Value);
-                            var memberField = fields.Single(n => memberExpression.Member.Name.Equals(n.Name));
-                            constantValueType = memberField.FieldType;
-                            constantValue = memberField.GetValue(constantExpression.Value);
-                            return true;
-                        }
-                        var subExpression = memberExpression.Expression as MemberExpression;
-                        if (subExpression != null)
-                            return this.TryGetConstantValueFromMemberExpression(subExpression, out constantValue, out constantValueType);
-                    }
-                    var field = (FieldInfo)memberExpression.Member;
-                    if (field.IsPrivate || field.IsFamilyAndAssembly)
-                    {
-                        constantValue = field.GetValue(null);
-                        return true;
-                    }
+                var next = run.Expression as MemberExpression;
+                if (next == null)
                     break;
 
-                case MemberTypes.Property:
-                    try
+                run = next;
+            }
+
+            if (this.IsExpectedType(run.Member.DeclaringType))
+                return false;
+
+            var field = memberExpression.Member as FieldInfo;
+            if (field != null)
+            {
+                if (memberExpression.Expression != null)
+                {
+                    if (memberExpression.Expression.NodeType == ExpressionType.Constant)
                     {
-                        constantValue = Expression.Lambda(memberExpression).Compile().DynamicInvoke();
+                        var constantExpression = (ConstantExpression)memberExpression.Expression;
+                        var flags = this.GetBindingFlags();
+                        var fields = flags == null ? constantExpression.Type.GetFields() : constantExpression.Type.GetFields(flags.Value);
+                        var memberField = fields.Single(n => memberExpression.Member.Name.Equals(n.Name));
+                        constantValueType = memberField.FieldType;
+                        constantValue = memberField.GetValue(constantExpression.Value);
                         return true;
                     }
-                    catch (InvalidOperationException)
-                    {
-                        constantValue = null;
-                        return false;
-                    }
-
-                default:
-                    throw new NotSupportedException("MemberType '" + memberExpression.Member.MemberType + "' not yet supported.");
+                    var subExpression = memberExpression.Expression as MemberExpression;
+                    if (subExpression != null)
+                        return this.TryGetConstantValueFromMemberExpression(subExpression, out constantValue, out constantValueType);
+                }
+                if (field.IsPrivate || field.IsFamilyAndAssembly)
+                {
+                    constantValue = field.GetValue(null);
+                    return true;
+                }
+            }
+            else if (memberExpression.Member is PropertyInfo)
+            {
+                try
+                {
+                    constantValue = Expression.Lambda(memberExpression).Compile().DynamicInvoke();
+                    return true;
+                }
+                catch (InvalidOperationException)
+                {
+                    constantValue = null;
+                    return false;
+                }
+            }
+            else
+            {
+                throw new NotSupportedException("MemberType '" + memberExpression.Member.GetType().Name + "' not yet supported.");
             }
 
             return false;
@@ -137,7 +139,8 @@ namespace Serialize.Linq.Factories
         {
             inlineExpression = null;
 
-            if (memberExpression.Member.MemberType != MemberTypes.Field)
+
+            if (!(memberExpression.Member is FieldInfo))
                 return false;
 
             if (memberExpression.Expression == null || memberExpression.Expression.NodeType != ExpressionType.Constant)
@@ -207,10 +210,14 @@ namespace Serialize.Linq.Factories
         /// <returns></returns>
         public override ExpressionNode Create(Expression expression)
         {
-            if (expression is MemberExpression)
-                return this.ResolveMemberExpression(expression as MemberExpression);
-            if (expression is MethodCallExpression)
-                return this.ResolveMethodCallExpression(expression as MethodCallExpression);
+            var member = expression as MemberExpression;
+            if (member != null)
+                return this.ResolveMemberExpression(member);
+
+            var method = expression as MethodCallExpression;
+            if (method != null)
+                return this.ResolveMethodCallExpression(method);
+
             return base.Create(expression);
         }
     }
