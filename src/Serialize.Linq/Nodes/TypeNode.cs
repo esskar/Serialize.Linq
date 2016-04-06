@@ -54,8 +54,6 @@ namespace Serialize.Linq.Nodes
                     this.Name = typeDefinition.AssemblyQualifiedName;
                 else
                     this.Name = typeDefinition.FullName;
-
-
             }
             else
             {

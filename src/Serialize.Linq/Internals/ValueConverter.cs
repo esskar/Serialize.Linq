@@ -17,13 +17,12 @@ namespace Serialize.Linq.Internals
     public static class ValueConverter
     {
         private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
-        private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/"
+        private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>-?\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/"
 #if !SILVERLIGHT
             ,RegexOptions.Compiled
 #endif
             );
-        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
+        
         /// <summary>
         /// Initializes the <see cref="ValueConverter"/> class.
         /// </summary>
@@ -189,8 +188,34 @@ namespace Serialize.Linq.Internals
             if (!long.TryParse(match.Groups["date"].Value, out msFromEpoch))
                 return false;
 
+            var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
             var fromEpoch = TimeSpan.FromMilliseconds(msFromEpoch);
-            dateTime = _epoch.Add(fromEpoch);
+            dateTime = epoch.Add(fromEpoch);
+
+            var offsign = match.Groups["offsign"].Value;
+            if (offsign.Length > 0)
+            {
+                var sign = offsign == "-" ? -1 : 1;
+
+                var offhours = match.Groups["offhours"].Value;
+                if (offhours.Length > 0)
+                {
+                    int hours;
+                    if (!int.TryParse(offhours, out hours))
+                        return false;
+                    dateTime = dateTime.AddHours(hours*sign);
+                }
+
+                var offminutes = match.Groups["offminutes"].Value;
+                if (match.Groups["offminutes"].Length > 0)
+                {
+                    int minutes;
+                    if (!int.TryParse(offminutes, out minutes))
+                        return false;
+                    dateTime = dateTime.AddMinutes(minutes*sign);
+                }
+            }
+
             return true;
         }
     }
