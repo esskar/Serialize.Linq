@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Reflection;
+using Xunit;
 using Serialize.Linq.Extensions;
 
 namespace Serialize.Linq.Tests.Issues
@@ -10,7 +11,7 @@ namespace Serialize.Linq.Tests.Issues
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/43
     /// </summary>
-    [TestClass]
+
     public class Issue43
     {
         class User
@@ -22,7 +23,7 @@ namespace Serialize.Linq.Tests.Issues
             }
         }
 
-        [TestMethod, Ignore]
+        [Fact(Skip = "ThrowsStackOverflowException")]
         public void ThrowsStackOverflowException()
         {
             var idCollection = new List<Guid>();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Serialize.Linq.Extensions;
 using Serialize.Linq.Tests.Container;
 using Serialize.Linq.Tests.Internals;
@@ -12,10 +12,10 @@ namespace Serialize.Linq.Tests.Issues
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/41
     /// </summary>
-    [TestClass]
+    
     public class Issue41
     {
-        [TestMethod]
+        [Fact]
         public void ToExpressionWithInterferingType()
         {
             Expression<Func<IEnumerable<int>, IEnumerable<int>>> expression = c =>
@@ -31,7 +31,7 @@ namespace Serialize.Linq.Tests.Issues
             ExpressionAssert.AreEqual(expression, result);
         }
 
-        [TestMethod]
+        [Fact]
         public void ToExpressionWithInterferingTypeFromOtherAssembly()
         {
             var container = new ExpressionContainer();

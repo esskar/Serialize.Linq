@@ -1,11 +1,11 @@
-﻿using System;
+﻿#if DNXCORE50
+// skip this test for DNXCORE50 -->
+// System.MissingMethodException : Method not found: 'System.Linq.Expressions.Expression`1<!0> System.Linq.Expressions.Expression`1.Update(System.Linq.Expressions.Expression, System.Collections.Generic.IEnumerable`1<System.Linq.Expressions.ParameterExpression>)'.
+#else
+using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Serialize.Linq.Extensions;
+using Xunit;
 using Serialize.Linq.Serializers;
 using Serialize.Linq.Tests.Internals;
 
@@ -14,54 +14,52 @@ namespace Serialize.Linq.Tests.Issues
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/69
     /// </summary>
-    [TestClass]
-    public class Issue69
+    public class Issue69 : IDisposable
     {
         private ExpressionSerializer _jsonExpressionSerializer;
 
-        [TestInitialize]
-        public void Initialize()
+        public Issue69()
         {
             _jsonExpressionSerializer = new ExpressionSerializer(new JsonSerializer());
         }
 
-        [TestMethod]
-        public void JsonSerialzeAndDeserialize1969Utc()
+        [Fact]
+        public void JsonSerializeAndDeserialize1969Utc()
         {
-            this.SerialzeAndDeserializeDateTimeJson(new DateTime(1969, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+            SerializeAndDeserializeDateTimeJson(new DateTime(1969, 1, 1, 0, 0, 0, DateTimeKind.Utc));
         }
 
-        [TestMethod]
-        public void JsonSerialzeAndDeserialize1969Local()
+        [Fact]
+        public void JsonSerializeAndDeserialize1969Local()
         {
-            this.SerialzeAndDeserializeDateTimeJson(new DateTime(1969, 1, 1, 0, 0, 0, DateTimeKind.Local));
+            SerializeAndDeserializeDateTimeJson(new DateTime(1969, 1, 1, 0, 0, 0, DateTimeKind.Local));
         }
 
-        [TestMethod]
-        public void JsonSerialzeAndDeserialize1970Utc()
+        [Fact]
+        public void JsonSerializeAndDeserialize1970Utc()
         {
-            this.SerialzeAndDeserializeDateTimeJson(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc));            
+            SerializeAndDeserializeDateTimeJson(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc));
         }
 
-        [TestMethod]
-        public void JsonSerialzeAndDeserialize1970Local()
+        [Fact]
+        public void JsonSerializeAndDeserialize1970Local()
         {
-            this.SerialzeAndDeserializeDateTimeJson(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local));
+            SerializeAndDeserializeDateTimeJson(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local));
         }
 
-        [TestMethod]
-        public void JsonSerialzeAndDeserialize1971Utc()
+        [Fact]
+        public void JsonSerializeAndDeserialize1971Utc()
         {
-            this.SerialzeAndDeserializeDateTimeJson(new DateTime(1971, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+            SerializeAndDeserializeDateTimeJson(new DateTime(1971, 1, 1, 0, 0, 0, DateTimeKind.Utc));
         }
 
-        [TestMethod]
-        public void JsonSerialzeAndDeserialize1971Local()
+        [Fact]
+        public void JsonSerializeAndDeserialize1971Local()
         {
-            this.SerialzeAndDeserializeDateTimeJson(new DateTime(1971, 1, 1, 0, 0, 0, DateTimeKind.Local));
+            SerializeAndDeserializeDateTimeJson(new DateTime(1971, 1, 1, 0, 0, 0, DateTimeKind.Local));
         }
-        
-        private void SerialzeAndDeserializeDateTimeJson(DateTime dt)
+
+        private void SerializeAndDeserializeDateTimeJson(DateTime dt)
         {
             Expression<Func<DateTime>> actual = () => dt;
             actual = actual.Update(Expression.Constant(dt), new List<ParameterExpression>());
@@ -70,5 +68,11 @@ namespace Serialize.Linq.Tests.Issues
             var expected = _jsonExpressionSerializer.DeserializeText(serialized);
             ExpressionAssert.AreEqual(expected, actual);
         }
+
+        public void Dispose()
+        {
+            _jsonExpressionSerializer = null;
+        }
     }
 }
+#endif

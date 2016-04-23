@@ -44,9 +44,9 @@ namespace Serialize.Linq.Factories
         {
             foreach (var expectedType in _expectedTypes)
             {
-                if (declaredType == expectedType || declaredType.IsSubclassOf(expectedType))
+                if (declaredType == expectedType || declaredType.GetTypeInfo().IsSubclassOf(expectedType))
                     return true;
-                if (expectedType.IsInterface)
+                if (expectedType.GetTypeInfo().IsInterface)
                 {
                     var resultTypes = declaredType.GetInterfaces();
                     if (resultTypes.Contains(expectedType))

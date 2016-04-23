@@ -8,7 +8,7 @@
 
 using System;
 using System.IO;
-#if !WINDOWS_PHONE
+#if !(WINDOWS_PHONE || DNXCORE50 || DOTNET5_4)
 using System.Runtime.Serialization;
 #endif
 using System.Runtime.Serialization.Json;
@@ -18,7 +18,7 @@ namespace Serialize.Linq.Serializers
 {
     public class JsonSerializer : TextSerializer, IJsonSerializer
     {
-#if !WINDOWS_PHONE
+#if !(WINDOWS_PHONE || DNXCORE50 || DOTNET5_4)
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
             return new DataContractJsonSerializer(type, this.GetKnownTypes());

@@ -17,27 +17,27 @@ namespace Serialize.Linq.Extensions
     public static class MemberInfoExtensions
     {
         /// <summary>
-        /// Gets the return type of an member.
+        /// Gets the return type of a member.
         /// </summary>
         /// <param name="member">The member.</param>
         /// <returns></returns>
-        /// <exception cref="System.NotSupportedException">Unable to get return type of member of type  + member.MemberType</exception>
+        /// <exception cref="System.NotSupportedException">Unable to get return type of member of type {member.MemberType}</exception>
         public static Type GetReturnType(this MemberInfo member)
         {
-            switch (member.MemberType)
-            {
-                case MemberTypes.Property:
-                    return ((PropertyInfo)member).PropertyType;
+            // https://github.com/dotnet/corefx/issues/4670
+            PropertyInfo property = member as PropertyInfo;
+            if (property != null)
+                return property.PropertyType;
 
-                case MemberTypes.Method:
-                    return ((MethodInfo)member).ReturnType;
+            MethodInfo method = member as MethodInfo;
+            if (method != null)
+                return method.ReturnType;
 
-                case MemberTypes.Field:
-                    return ((FieldInfo)member).FieldType;
+            FieldInfo field = member as FieldInfo;
+            if (field != null)
+                return field.FieldType;
 
-                default:
-                    throw new NotSupportedException("Unable to get return type of member of type " + member.MemberType);
-            }
+            throw new NotSupportedException("Unable to get return type of MemberInfo of type " + member);
         }
     }
 }

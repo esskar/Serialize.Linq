@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Issues
 {
     // https://github.com/esskar/Serialize.Linq/issues/31
-    [TestClass]
+    
     public class Issue31
     {
-        [TestMethod]
+        [Fact]
         public void SerializeLambdaWithEnumTest()
         {
             foreach (var serializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
@@ -34,7 +34,7 @@ namespace Serialize.Linq.Tests.Issues
                 var actualExpression = (Expression<Func<ItemWithEnum, bool>>)expressionSerializer.DeserializeText(serialized);
                 var actual = fish.Where(actualExpression.Compile()).Count();
 
-                Assert.AreEqual(expected, actual);
+                Assert.Equal(expected, actual);
             }
         }
 

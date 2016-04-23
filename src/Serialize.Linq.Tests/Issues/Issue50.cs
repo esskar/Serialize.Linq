@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Issues
@@ -10,10 +10,10 @@ namespace Serialize.Linq.Tests.Issues
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/50
     /// </summary>
-    [TestClass]
+    
     public class Issue50
     {
-        [TestMethod]
+        [Fact]
         public void SerializeArrayAsJson()
         {
             var list = new [] { "one", "two" };
@@ -22,10 +22,10 @@ namespace Serialize.Linq.Tests.Issues
             var serializer = new ExpressionSerializer(new JsonSerializer());
             var value = serializer.SerializeText(expression);
 
-            Assert.IsNotNull(value);
+            Assert.NotNull(value);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeArrayAsBinary()
         {
             var list = new[] { "one", "two" };
@@ -34,10 +34,10 @@ namespace Serialize.Linq.Tests.Issues
             var serializer = new ExpressionSerializer(new BinarySerializer());
             var value = serializer.SerializeBinary(expression);
 
-            Assert.IsNotNull(value);
+            Assert.NotNull(value);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeListAsJson()
         {
             var list = new List<string> { "one", "two" };
@@ -49,10 +49,10 @@ namespace Serialize.Linq.Tests.Issues
             };
             var value = serializer.SerializeText(expression);
 
-            Assert.IsNotNull(value);
+            Assert.NotNull(value);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeListAsBinary()
         {
             var list = new List<string> { "one", "two" };
@@ -64,10 +64,10 @@ namespace Serialize.Linq.Tests.Issues
             };
             var value = serializer.SerializeBinary(expression);
 
-            Assert.IsNotNull(value);
+            Assert.NotNull(value);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeDeserializeArrayAsJson()
         {
             var list = new[] { "one", "two" };
@@ -80,12 +80,12 @@ namespace Serialize.Linq.Tests.Issues
             var func = actualExpression.Compile();
 
 
-            Assert.IsTrue(func(new Test { Code = "one" }), "one failed.");
-            Assert.IsTrue(func(new Test { Code = "two" }), "two failed.");
-            Assert.IsFalse(func(new Test { Code = "three" }), "three failed.");
+            Assert.True(func(new Test { Code = "one" }), "one failed.");
+            Assert.True(func(new Test { Code = "two" }), "two failed.");
+            Assert.False(func(new Test { Code = "three" }), "three failed.");
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeDeserializeArrayAsBinary()
         {
             var list = new[] { "one", "two" };
@@ -97,9 +97,9 @@ namespace Serialize.Linq.Tests.Issues
             var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeBinary(value);
             var func = actualExpression.Compile();
 
-            Assert.IsTrue(func(new Test { Code = "one" }), "one failed.");
-            Assert.IsTrue(func(new Test { Code = "two" }), "two failed.");
-            Assert.IsFalse(func(new Test { Code = "three" }), "three failed.");
+            Assert.True(func(new Test { Code = "one" }), "one failed.");
+            Assert.True(func(new Test { Code = "two" }), "two failed.");
+            Assert.False(func(new Test { Code = "three" }), "three failed.");
         }
 
         public class Test

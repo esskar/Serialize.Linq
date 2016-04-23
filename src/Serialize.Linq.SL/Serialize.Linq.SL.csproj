@@ -10,7 +10,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Serialize.Linq.SL</RootNamespace>
-    <AssemblyName>Serialize.Linq.SL</AssemblyName>
+    <AssemblyName>Serialize.Linq</AssemblyName>
     <TargetFrameworkIdentifier>Silverlight</TargetFrameworkIdentifier>
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <SilverlightVersion>$(TargetFrameworkVersion)</SilverlightVersion>
@@ -64,6 +64,9 @@
     <Reference Include="System.Windows.Browser" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Serialize.Linq\Compatiblity\IntrospectionExtensions.cs">
+      <Link>Compatibility\IntrospectionExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Serialize.Linq\Exceptions\InvalidTypeException.cs">
       <Link>Exceptions\InvalidTypeException.cs</Link>
     </Compile>

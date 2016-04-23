@@ -21,18 +21,18 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "T")]
 #endif
-#if !SILVERLIGHT
+#if !(SILVERLIGHT || DNXCORE50 || DOTNET5_4)
     [Serializable]
 #endif
     #endregion
     public class TypeNode : Node
-    {        
+    {
         public TypeNode() { }
 
         public TypeNode(INodeFactory factory, Type type)
             : base(factory)
         {
-            this.Initialize(type);
+            Initialize(type);
         }
 
         private void Initialize(Type type)
@@ -40,12 +40,17 @@ namespace Serialize.Linq.Nodes
             if (type == null)
                 return;
 
-            var isAnonymousType = Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
-                && type.IsGenericType && type.Name.Contains("AnonymousType")
+#if DNXCORE50 || DOTNET5_4
+            bool isAttributeDefined = type.GetTypeInfo().GetCustomAttribute(typeof(CompilerGeneratedAttribute)) != null;
+#else
+            bool isAttributeDefined = Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false);
+#endif
+            var isAnonymousType = isAttributeDefined
+                && type.GetTypeInfo().IsGenericType && type.Name.Contains("AnonymousType")
                 && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
-                && (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
+                && (type.GetTypeInfo().Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
 
-            if (type.IsGenericType)
+            if (type.GetTypeInfo().IsGenericType)
             {
                 this.GenericArguments = type.GetGenericArguments().Select(t => new TypeNode(this.Factory, t)).ToArray();
 
@@ -61,7 +66,7 @@ namespace Serialize.Linq.Nodes
                     this.Name = type.AssemblyQualifiedName;
                 else
                     this.Name = type.FullName;
-            }            
+            }
         }
 
         #region DataMember
@@ -81,7 +86,7 @@ namespace Serialize.Linq.Nodes
 #endif
         #endregion
         public TypeNode[] GenericArguments { get; set; }
-        
+
         public Type ToType(ExpressionContext context)
         {
             var type = context.ResolveType(this);
@@ -92,9 +97,9 @@ namespace Serialize.Linq.Nodes
                 throw new SerializationException(string.Format("Failed to serialize '{0}' to a type object.", this.Name));
             }
 
-            if (this.GenericArguments != null)            
+            if (this.GenericArguments != null)
                 type = type.MakeGenericType(this.GenericArguments.Select(t => t.ToType(context)).ToArray());
-            
+
             return type;
         }
     }

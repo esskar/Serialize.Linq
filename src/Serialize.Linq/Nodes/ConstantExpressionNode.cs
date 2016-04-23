@@ -8,6 +8,7 @@
 
 using System;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.Serialization;
 using Serialize.Linq.Exceptions;
 using Serialize.Linq.Interfaces;
@@ -21,7 +22,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "C")]   
 #endif
-#if !SILVERLIGHT
+#if !(SILVERLIGHT || DNXCORE50 || DOTNET5_4)
     [Serializable]
 #endif
     #endregion

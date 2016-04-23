@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Issues
@@ -9,10 +9,10 @@ namespace Serialize.Linq.Tests.Issues
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/56
     /// </summary>
-    [TestClass]
+    
     public class Issue56
     {
-        [TestMethod]
+        [Fact]
         public void SerializeContainsWithNullablesAndWithoutNullableKey()
         {
             var enterpriseKeys = new List<long?> {1, 2, 3, 4};
@@ -28,10 +28,10 @@ namespace Serialize.Linq.Tests.Issues
             };
             var predicatePartSerializedToString = serializeTo.SerializeText(predicatePart);
 
-            Assert.IsNotNull(predicatePartSerializedToString);
+            Assert.NotNull(predicatePartSerializedToString);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeContainsWithNullablesAndWithNullableKey()
         {
             var enterpriseKeys = new List<long?> { 1, 2, 3, 4 };
@@ -47,7 +47,7 @@ namespace Serialize.Linq.Tests.Issues
             };
             var predicatePartSerializedToString = serializeTo.SerializeText(predicatePart);
 
-            Assert.IsNotNull(predicatePartSerializedToString);
+            Assert.NotNull(predicatePartSerializedToString);
         }
 
         class GroupEntityWithoutNullable

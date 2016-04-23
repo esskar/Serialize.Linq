@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Serializers;
 
@@ -9,7 +9,7 @@ namespace Serialize.Linq.Tests.Issues
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/54
     /// </summary>
-    [TestClass]
+    
     public class Issue54
     {
         public int PublicField;
@@ -24,61 +24,61 @@ namespace Serialize.Linq.Tests.Issues
         internal static int InternalStaticField;
         protected internal static int ProtectedInternalStaticField;
 
-        [TestMethod]
+        [Fact]
         public void SerializePublicField()
         {
             TestExpression(test => test.IntProperty == PublicField, ReadFieldOn.Serialization);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializePrivateField()
         {
             TestExpression(test => test.IntProperty == _privateField, ReadFieldOn.Serialization);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeProtectedField()
         {
             TestExpression(test => test.IntProperty == ProtectedField, ReadFieldOn.Serialization);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeInternalField()
         {
             TestExpression(test => test.IntProperty == InternalField, ReadFieldOn.Serialization);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeProtectedInternalField()
         {
             TestExpression(test => test.IntProperty == ProtectedInternalField, ReadFieldOn.Serialization);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializePublicStaticField()
         {
             TestExpression(test => test.IntProperty == PublicStaticField, ReadFieldOn.Execution);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializePrivateStaticField()
         {
             TestExpression(test => test.IntProperty == _privateStaticField, ReadFieldOn.Serialization);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeProtectedStaticField()
         {
             TestExpression(test => test.IntProperty == ProtectedStaticField, ReadFieldOn.Execution);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeInternalStaticField()
         {
             TestExpression(test => test.IntProperty == InternalStaticField, ReadFieldOn.Execution);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeProtectedInternalStaticField()
         {
             TestExpression(test => test.IntProperty == ProtectedInternalStaticField, ReadFieldOn.Execution);
@@ -113,7 +113,7 @@ namespace Serialize.Linq.Tests.Issues
                 : actualValue;
 
             // Assert
-            Assert.IsTrue(func(new Test { IntProperty = expectedValue }));
+            Assert.True(func(new Test { IntProperty = expectedValue }));
         }
 
         public void SetFields(int value)

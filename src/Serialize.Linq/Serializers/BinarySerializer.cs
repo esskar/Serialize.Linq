@@ -55,7 +55,7 @@ namespace Serialize.Linq.Serializers
                 return (T)serializer.ReadObject(reader);
         }
 
-#if !WINDOWS_PHONE
+#if !(WINDOWS_PHONE || DNXCORE50 || DOTNET5_4)
 
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {

@@ -7,7 +7,8 @@
 #endregion
 
 using System;
-#if !WINDOWS_PHONE
+using System.Reflection;
+#if !(WINDOWS_PHONE)
 using System.Collections.Concurrent;
 #endif
 using System.Text.RegularExpressions;
@@ -18,7 +19,7 @@ namespace Serialize.Linq.Internals
     {
         private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
         private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>-?\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/"
-#if !SILVERLIGHT
+#if !(SILVERLIGHT)
             ,RegexOptions.Compiled
 #endif
             );
@@ -90,7 +91,7 @@ namespace Serialize.Linq.Internals
         public static object Convert(object value, Type convertTo)
         {
             if (value == null)
-                return convertTo.IsValueType ? Activator.CreateInstance(convertTo) : null;
+                return convertTo.GetTypeInfo().IsValueType ? Activator.CreateInstance(convertTo) : null;
 
             if (convertTo.IsInstanceOfType(value))
                 return value;
@@ -99,7 +100,7 @@ namespace Serialize.Linq.Internals
             if (TryCustomConvert(value, convertTo, out retval))
                 return retval;
 
-            if (convertTo.IsEnum)
+            if (convertTo.GetTypeInfo().IsEnum)
                 return Enum.ToObject(convertTo, value);            
 
             // convert array types
@@ -115,7 +116,7 @@ namespace Serialize.Linq.Internals
             }
 
             // convert nullable types
-            if (convertTo.IsGenericType && convertTo.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (convertTo.GetTypeInfo().IsGenericType && convertTo.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 var argumentTypes = convertTo.GetGenericArguments();
                 if (argumentTypes.Length == 1)                

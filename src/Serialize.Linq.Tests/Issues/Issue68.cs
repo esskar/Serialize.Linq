@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Serialize.Linq.Extensions;
 
 namespace Serialize.Linq.Tests.Issues
@@ -8,7 +8,7 @@ namespace Serialize.Linq.Tests.Issues
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/68
     /// </summary>
-    [TestClass]
+    
     public class Issue68
     {
         class MyEntity
@@ -16,7 +16,7 @@ namespace Serialize.Linq.Tests.Issues
             public string Name { get; set; }
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializePropertyAsConstant()
         {
             var obj = new MyEntity { Name = "Peter" };
@@ -24,10 +24,10 @@ namespace Serialize.Linq.Tests.Issues
                 x => x.Name != obj.Name;
 
             var exp = expression.ToExpressionNode().ToString();
-            Assert.AreEqual("x => (x.Name != \"Peter\")", exp);
+            Assert.Equal("x => (x.Name != \"Peter\")", exp);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializePropertyOfPropertyAsConstant()
         {
             var obj = new MyEntity { Name = "Peter" };
@@ -35,7 +35,7 @@ namespace Serialize.Linq.Tests.Issues
                 x => x.Name.Length != obj.Name.Length;
 
             var exp = expression.ToExpressionNode().ToString();
-            Assert.AreEqual("x => (x.Name.Length != 5)", exp);
+            Assert.Equal("x => (x.Name.Length != 5)", exp);
         }
     }
 }

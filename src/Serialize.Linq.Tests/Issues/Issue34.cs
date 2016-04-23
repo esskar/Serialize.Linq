@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Issues
 {
     // https://github.com/esskar/Serialize.Linq/issues/34
-    [TestClass]
+    
     public class Issue34
     {
-        [TestMethod]
+        [Fact]
         public void SerializeWithDateTimeUtcTest()
         {
             foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
@@ -32,11 +32,11 @@ namespace Serialize.Linq.Tests.Issues
                 var actualExpression = (Expression<Func<Yarr, bool>>)serializer.DeserializeText(serialized);
                 var actual = yarrs.Where(actualExpression.Compile()).Count();
 
-                Assert.AreEqual(expected, actual);
+                Assert.Equal(expected, actual);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeWithDateTimeLocalTest()
         {
             foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
@@ -57,7 +57,7 @@ namespace Serialize.Linq.Tests.Issues
                 var actualExpression = (Expression<Func<Yarr, bool>>)serializer.DeserializeText(serialized);
                 var actual = yarrs.Where(actualExpression.Compile()).Count();
 
-                Assert.AreEqual(expected, actual);
+                Assert.Equal(expected, actual);
             }
         }
 

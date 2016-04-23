@@ -1,19 +1,18 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Serializers;
 using Serialize.Linq.Tests.Internals;
+using Xunit;
 
 namespace Serialize.Linq.Tests.Issues
 {
     // https://github.com/esskar/Serialize.Linq/issues/30
-    [TestClass]
     public class Issue30
     {
         /*
-        [TestMethod]
+        [Fact]
         public void SerializeDeserializeLambdaWithNullableTest()
         {
             foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
@@ -34,11 +33,11 @@ namespace Serialize.Linq.Tests.Issues
                     actual = serializer.SerializeText(actualExpression);
                 }
 
-                Assert.AreEqual(expected, actual);
+                Assert.Equal(expected, actual);
             }
         }*/
 
-        [TestMethod]
+        [Fact]
         public void SerializeLambdaWithNullableTest()
         {
             foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
@@ -59,7 +58,7 @@ namespace Serialize.Linq.Tests.Issues
                 var actualExpression = (Expression<Func<Fish, bool>>)serializer.DeserializeText(serialized);
                 var actual = fish.Where(actualExpression.Compile()).Count();
 
-                Assert.AreEqual(expected, actual);
+                Assert.Equal(expected, actual);
             }
         }
     }
