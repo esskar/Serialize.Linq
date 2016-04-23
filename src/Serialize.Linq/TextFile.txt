@@ -1,0 +1,44 @@
+﻿        "net35": {
+            "frameworkAssemblies": {
+                "System.Runtime.Serialization": "",
+                "System.Xml": "",
+                "System.Xml.Linq": ""
+            },
+            "dependencies": {
+                "NetLegacySupport.ConcurrentDictionary": "1.1.0"
+            }
+        },
+
+        "sl5": {
+            "frameworkAssemblies": {
+                "System.Core": "",
+                "System.Runtime.Serialization": "",
+                "System.Net": "",
+                "System.Xml": "",
+                "System.Windows": "",
+                "System.Windows.Browser": ""
+            }
+        },
+
+
+,
+        "wp81": {
+            "dependencies": {
+                "Microsoft.CSharp": "4.0.1-beta-*",
+
+                "System.Collections": "4.0.11-beta-*",
+
+                "System.Linq": "4.0.1-beta-*",
+
+                "System.Reflection": "4.1.0-beta-*",
+                "System.Reflection.Extensions": "4.0.1-beta-*",
+                "System.Reflection.TypeExtensions": "4.1.0-beta-*",
+
+                "System.Runtime": "4.0.21-beta-*",
+                "System.Runtime.Serialization.Json": "4.0.1-beta-*",
+                "System.Runtime.Serialization.Primitives": "4.1.0-beta-*",
+                "System.Runtime.Serialization.Xml": "4.1.0-beta-*",
+
+                "System.Xml.XmlSerializer": "4.0.11-beta-*"
+            }
+        }

@@ -1,17 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Serializers;
 using Serialize.Linq.Tests.Internals;
 
 namespace Serialize.Linq.Tests.Issues
 {
-    [TestClass]
+    
     public class Issue37
     {
-        [TestMethod]
+        [Fact]
         public void DynamicsTests()
         {
             var expressions = new List<Expression>();

@@ -6,7 +6,7 @@
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
 
-#if !WINDOWS_PHONE7
+#if !(WINDOWS_PHONE7 || DNXCORE50 || DOTNET5_4)
 using System;
 #endif
 using System.Linq.Expressions;
@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "P")]
 #endif
-#if !SILVERLIGHT
+#if !(SILVERLIGHT || DNXCORE50 || DOTNET5_4)
     [Serializable]
 #endif
     #endregion
@@ -53,7 +53,7 @@ namespace Serialize.Linq.Nodes
 
         protected override void Initialize(ParameterExpression expression)
         {
-#if !WINDOWS_PHONE7
+#if !(WINDOWS_PHONE7 || DNXCORE50 || DOTNET5_4)
             this.IsByRef = expression.IsByRef;
 #else
             this.IsByRef = false;

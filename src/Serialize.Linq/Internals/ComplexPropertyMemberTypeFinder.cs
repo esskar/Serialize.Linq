@@ -24,7 +24,7 @@ namespace Serialize.Linq.Internals
         /// <returns></returns>
         private bool AnalyseTypes(IEnumerable<Type> types, ISet<Type> seen, ISet<Type> result)
         {
-            return types != null 
+            return types != null
                 && types.Aggregate(false, (current, type) => this.BuildTypes(type, seen, result) || current);
         }
 
@@ -48,11 +48,13 @@ namespace Serialize.Linq.Internals
                 retval = true;
             }
 
-            if (baseType.IsGenericType)
+            if (baseType.GetTypeInfo().IsGenericType)
                 retval = this.AnalyseTypes(baseType.GetGenericArguments(), seen, result) || retval;
+
             retval = this.AnalyseTypes(baseType.GetInterfaces(), seen, result) || retval;
-            if (baseType.BaseType != null && baseType.BaseType != typeof(object))
-                retval = this.BuildTypes(baseType.BaseType, seen, result) || retval;
+
+            if (baseType.GetTypeInfo().BaseType != null && baseType.GetTypeInfo().BaseType != typeof(object))
+                retval = this.BuildTypes(baseType.GetTypeInfo().BaseType, seen, result) || retval;
             return retval;
         }
 
@@ -64,9 +66,9 @@ namespace Serialize.Linq.Internals
         /// <param name="result">The result.</param>
         /// <returns></returns>
         private bool BuildTypes(Type baseType, ISet<Type> seen, ISet<Type> result)
-        {            
+        {
             if (seen.Contains(baseType))
-                return false;            
+                return false;
             seen.Add(baseType);
             if (!this.AnalyseType(baseType, seen, result))
                 return false;
@@ -95,7 +97,7 @@ namespace Serialize.Linq.Internals
         {
             var retval = new HashSet<Type>();
             this.BuildTypes(baseType, new HashSet<Type>(), retval);
-            return retval;            
+            return retval;
         }
     }
 }

@@ -7,7 +7,7 @@
 #endregion
 
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace Serialize.Linq.Tests.Internals
 {
@@ -27,7 +27,7 @@ namespace Serialize.Linq.Tests.Internals
 
             var failMessage = !string.IsNullOrWhiteSpace(message) ? message : string.Empty;
             failMessage += string.Format("Expected was <{0}>, Actual was <{1}>", expected, actual);
-            Assert.Fail(failMessage);
+            Assert.True(false, failMessage);
         }
     }
 }

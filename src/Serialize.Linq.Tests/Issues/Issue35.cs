@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Serializers;
 using Serialize.Linq.Tests.Internals;
@@ -10,10 +10,10 @@ using Serialize.Linq.Tests.Internals;
 namespace Serialize.Linq.Tests.Issues
 {
     // https://github.com/esskar/Serialize.Linq/issues/35
-    [TestClass]
+    
     public class Issue35
     {
-        [TestMethod]
+        [Fact]
         public void LetExpressionTests()
         {
             var expressions = new List<Expression>();

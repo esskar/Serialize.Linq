@@ -1,0 +1,117 @@
+{
+    "version": "2.0.0",
+    "title": "Serialize.Linq",
+    "description": "A .NET Core C# library for serializing linq expressions. Formats it supports (but it is not limited to) are JSON, XML and BINARY.",
+    "summary": "A .NET Core C# library for serializing linq expressions. Formats it supports (but it is not limited to) are JSON, XML and BINARY.",
+    "tags": [ "serialize", "linq" ],
+    "authors": [ "Sascha Kiefer", "Stef Heyenrath" ],
+    "owners": [ "Sascha Kiefer", "Stef Heyenrath" ],
+    "projectUrl": "https://github.com/esskar/Serialize.Linq",
+    "licenseUrl": "https://raw.githubusercontent.com/esskar/Serialize.Linq/master/LICENSE",
+    "releaseNotes": "Intitial .NET Core support",
+
+    "compilationOptions": {
+        "define": [ "SERIALIZE_LINQ_OPTIMIZE_SIZE" ]
+    },
+
+    "frameworks": {
+        "net40": {
+            "frameworkAssemblies": {
+                "System.Runtime.Serialization": "",
+                "System.Xml": ""
+            }
+        },
+        "net45": {
+            "frameworkAssemblies": {
+                "System.Runtime.Serialization": "",
+                "System.Xml": ""
+            }
+        },
+        "net451": {
+            "frameworkAssemblies": {
+                "System.Runtime.Serialization": "",
+                "System.Xml": ""
+            }
+        },
+        "net452": {
+            "frameworkAssemblies": {
+                "System.Runtime.Serialization": "",
+                "System.Xml": ""
+            }
+        },
+        "dnx451": {
+            "frameworkAssemblies": {
+                "System.Runtime.Serialization": "",
+                "System.Xml": ""
+            }
+        },
+        "dnx452": {
+            "frameworkAssemblies": {
+                "System.Runtime.Serialization": "",
+                "System.Xml": ""
+            }
+        },
+        "dnx46": {
+            "frameworkAssemblies": {
+                "System.Runtime.Serialization": "",
+                "System.Xml": ""
+            }
+        },
+        "dnx461": {
+            "frameworkAssemblies": {
+                "System.Runtime.Serialization": "",
+                "System.Xml": ""
+            }
+        },
+        "dnxcore5": {
+            "dependencies": {
+                "Microsoft.CSharp": "4.0.1-beta-*",
+
+                "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
+
+                "System.Collections": "4.0.11-beta-*",
+                "System.Collections.Concurrent": "4.0.11-beta-*",
+
+                "System.Linq": "4.0.1-beta-*",
+
+                "System.Reflection": "4.1.0-beta-*",
+                "System.Reflection.Extensions": "4.0.1-beta-*",
+                "System.Reflection.TypeExtensions": "4.1.0-beta-*",
+
+                "System.Reflection.Emit": "4.0.1-beta-*",
+
+                "System.Runtime": "4.0.21-beta-*",
+                "System.Runtime.Serialization.Json": "4.0.1-beta-*",
+                "System.Runtime.Serialization.Primitives": "4.1.0-beta-*",
+                "System.Runtime.Serialization.Xml": "4.1.0-beta-*",
+
+                "System.Xml.XmlSerializer": "4.0.11-beta-*"
+            }
+        },
+        "dotnet54": {
+            "dependencies": {
+                "Microsoft.CSharp": "4.0.1-beta-*",
+
+                "Microsoft.Extensions.PlatformAbstractions": "1.0.0-rc1-final",
+
+                "System.Collections": "4.0.11-beta-*",
+                "System.Collections.Concurrent": "4.0.11-beta-*",
+
+                "System.Linq": "4.0.1-beta-*",
+
+                "System.Reflection": "4.1.0-beta-*",
+                "System.Reflection.Extensions": "4.0.1-beta-*",
+                "System.Reflection.TypeExtensions": "4.1.0-beta-*",
+
+                "System.Reflection.Emit": "4.0.1-beta-*",
+
+                "System.Runtime": "4.0.21-beta-*",
+                "System.Runtime.Serialization.Json": "4.0.1-beta-*",
+                "System.Runtime.Serialization.Primitives": "4.1.0-beta-*",
+                "System.Runtime.Serialization.Xml": "4.1.0-beta-*",
+
+                "System.Xml.XmlSerializer": "4.0.11-beta-*"
+            }
+        }
+    }
+}

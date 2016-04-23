@@ -6,6 +6,7 @@
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
 
+#if !DNXCORE50
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using Serialize.Linq.Interfaces;
@@ -14,11 +15,11 @@ using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Internals
 {
-    internal class BinarayFormatterSerializer : SerializerBase, IBinarySerializer
+    internal class BinaryFormatterSerializer : SerializerBase, IBinarySerializer
     {
         private readonly BinaryFormatter _formatter;
 
-        public BinarayFormatterSerializer()
+        public BinaryFormatterSerializer()
         {
             _formatter = new BinaryFormatter();
         }
@@ -40,7 +41,7 @@ namespace Serialize.Linq.Tests.Internals
 
         public void Serialize<T>(Stream stream, T obj) where T : Node
         {
-            if(!ReferenceEquals(obj, null))
+            if (!ReferenceEquals(obj, null))
                 _formatter.Serialize(stream, obj);
         }
 
@@ -49,6 +50,7 @@ namespace Serialize.Linq.Tests.Internals
             if (stream.Length == 0)
                 return default(T);
             return (T)_formatter.Deserialize(stream);
-        }        
+        }
     }
 }
+#endif

@@ -8,7 +8,7 @@
 
 using System;
 using System.Reflection;
-#if !WINDOWS_PHONE
+#if !(WINDOWS_PHONE)
 using System.Collections.Concurrent;
 #else
 using Serialize.Linq.Internals;

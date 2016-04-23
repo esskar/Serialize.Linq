@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Serialize.Linq.Extensions;
 using Serialize.Linq.Nodes;
 
@@ -9,7 +9,7 @@ namespace Serialize.Linq.Tests.Issues
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/39
     /// </summary>
-    [TestClass]
+    
     public class Issue39
     {
         private class DataPoint
@@ -18,7 +18,7 @@ namespace Serialize.Linq.Tests.Issues
             public int AcctId;
         }
 
-        [TestMethod]
+        [Fact]
         public void ToExpressionNodeWithSimilarConstantNames()
         {
             var feb1 = new DateTime(2015, 2, 1);
@@ -29,7 +29,7 @@ namespace Serialize.Linq.Tests.Issues
 
             var result = expression.ToExpressionNode();
 
-            Assert.IsNotNull(result);
+            Assert.NotNull(result);
         }
     }
 }

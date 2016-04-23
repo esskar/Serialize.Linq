@@ -7,9 +7,10 @@
 #endregion
 
 using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Serialize.Linq.Extensions;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
@@ -18,12 +19,10 @@ using Serialize.Linq.Tests.Internals;
 
 namespace Serialize.Linq.Tests
 {
-    [TestClass]
+    
     public class ExpressionNodeTests
     {
-        public TestContext TestContext { get; set; }
-
-        [TestMethod]
+        [Fact]
         public void SimpleBinaryExpressionTest()
         {
             this.AssertExpression(Expression.Add(Expression.Constant(5), Expression.Constant(10)));
@@ -37,14 +36,14 @@ namespace Serialize.Linq.Tests
             this.AssertExpression(Expression.DivideAssign(Expression.Variable(typeof(int), "x"), Expression.Constant(10)));
         }
 
-        [TestMethod]
+        [Fact]
         public void SimpleConditionalTest()
         {
             this.AssertExpression(Expression.Condition(Expression.Constant(true), Expression.Constant(5), Expression.Constant(10)));
             this.AssertExpression(Expression.Condition(Expression.Constant(false), Expression.Constant(5), Expression.Constant(10)));
         }
 
-        [TestMethod]
+        [Fact]
         public void SimpleConditionalWithNullConstantTest()
         {
             var argParam = Expression.Parameter(typeof(Type), "type");
@@ -53,32 +52,34 @@ namespace Serialize.Linq.Tests
             this.AssertExpression(Expression.Condition(Expression.Constant(true), stringProperty, Expression.Constant(null, typeof(string))));
         }
 
-        [TestMethod]
+        [Fact]
         public void SimpleUnaryTest()
         {
             this.AssertExpression(Expression.UnaryPlus(Expression.Constant(43)));
         }
 
-        [TestMethod]
+        [Fact]
         public void SimpleTypedNullConstantTest()
         {
             this.AssertExpression(Expression.Constant(null, typeof(string)));
         }
 
-        [TestMethod]
+        [Fact]
         public void SimpleLambdaTest()
         {
             this.AssertExpression(Expression.Lambda(Expression.Constant("body"), Expression.Parameter(typeof(string))));
         }
 
-        [TestMethod]
+        [Fact]
         public void SimpleTypeBinaryTest()
         {
             this.AssertExpression(Expression.TypeIs(Expression.Variable(this.GetType()), typeof(object)));
             this.AssertExpression(Expression.TypeEqual(Expression.Variable(this.GetType()), typeof(object)));
         }        
 
-        [TestMethod]
+        public string TestContext { get; set; }
+
+        [Fact]
         public void SimpleMemberTest()
         {
             var type = this.GetType();
@@ -90,7 +91,7 @@ namespace Serialize.Linq.Tests
             this.AssertExpression(propertyAccess);
         }
 
-        [TestMethod]
+        [Fact]
         public void ToExpressionNodeTest()
         {
             AssertToExpressionNode(SerializerTestData.TestExpressions);
@@ -108,13 +109,13 @@ namespace Serialize.Linq.Tests
                 }
                 catch (Exception ex)
                 {
-                    Assert.Fail("Failed to convert '{0}' to expression node: {1}", expression, ex);                    
+                    Assert.True(false, $"Failed to convert '{expression}' to expression node: {ex}");                    
                 }
 
                 if (expression != null)
-                    Assert.IsNotNull(node, "Unable to convert '{0}' to expression node.", expression);
+                    Assert.NotNull(node); //, "Unable to convert '{0}' to expression node.", expression);
                 else
-                    Assert.IsNull(node, "Null expression should convert to null expression node.");
+                    Assert.Null(node); //, "Null expression should convert to null expression node.");
             }
         }
 
@@ -132,10 +133,10 @@ namespace Serialize.Linq.Tests
 
             ExpressionAssert.AreEqual(expression, createdExpression, message);
 
-            //PublicInstancePropertiesAssert.AreEqual(expression, createdExpression, message);
-            //Assert.AreEqual(expression.ToString(), createdExpression.ToString(), message);
+            //PublicInstancePropertiesAssert.Equal(expression, createdExpression, message);
+            //Assert.Equal(expression.ToString(), createdExpression.ToString(), message);
 
-            this.TestContext.WriteLine("'{0}' == '{1}'", expression.ToString(), createdExpression.ToString());
+            // this.TestContext.WriteLine("'{0}' == '{1}'", expression.ToString(), createdExpression.ToString());
         }
     }
 }

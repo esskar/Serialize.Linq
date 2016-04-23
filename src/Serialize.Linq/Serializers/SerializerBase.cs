@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -86,7 +87,7 @@ namespace Serialize.Linq.Serializers
                 else if (this.AutoAddKnownTypesAsListTypes)
                     yield return typeof(List<>).MakeGenericType(type);
                 
-                if (type.IsClass) 
+                if (type.GetTypeInfo().IsClass) 
                     continue;
 
                 var nullableType = typeof (Nullable<>).MakeGenericType(type);

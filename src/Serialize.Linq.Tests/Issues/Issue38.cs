@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Issues
 {
-    [TestClass]
+    
     public class Issue38
     {
-        [TestMethod]
+        [Fact]
         public void SerializeAsQueryableWithPredicateTest()
         {
             Expression<Func<Order, bool>> predicate = x => x.Id > 0 && x.Id < 5;
@@ -20,10 +20,10 @@ namespace Serialize.Linq.Tests.Issues
             var serializer = new ExpressionSerializer(new BinarySerializer());
             var value = serializer.SerializeBinary(pred);
 
-            Assert.IsNotNull(value);
+            Assert.NotNull(value);
         }
 
-        [TestMethod]
+        [Fact]
         public void SerializeAndDeserializeAsQueryableWithPredicateTest()
         {
             Expression<Func<Order, bool>> predicate = x => x.Id > 0 && x.Id < 5;
@@ -34,7 +34,7 @@ namespace Serialize.Linq.Tests.Issues
             var value = serializer.SerializeBinary(pred);
 
             var expression = serializer.DeserializeBinary(value);
-            Assert.IsNotNull(expression);
+            Assert.NotNull(expression);
         }
 
         public class Order
