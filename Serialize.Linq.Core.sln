@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E603D0DB-EB3B-4189-ABEE-B8E08C24FFFE}"
 	ProjectSection(SolutionItems) = preProject
@@ -20,6 +20,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq.SL", "src\Serialize.Linq.SL\Serialize.Linq.SL.csproj", "{E7B65AD0-BDB6-4FE9-A1C5-3C1007D51340}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq.WP8", "src\Serialize.Linq.WP8\Serialize.Linq.WP8.csproj", "{269B6008-6ED9-4F09-9F81-1D1BBF7F9962}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{17485581-4DE3-4C2A-A44A-264531F3A5E4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq.Examples.RestContracts", "src\Serialize.Linq.Examples\Serialize.Linq.Examples.RestContracts\Serialize.Linq.Examples.RestContracts.csproj", "{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq.Examples.RestClient", "src\Serialize.Linq.Examples\Serialize.Linq.Examples.RestClient\Serialize.Linq.Examples.RestClient.csproj", "{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -79,6 +85,30 @@ Global
 		{269B6008-6ED9-4F09-9F81-1D1BBF7F9962}.Release|ARM.Build.0 = Release|ARM
 		{269B6008-6ED9-4F09-9F81-1D1BBF7F9962}.Release|x86.ActiveCfg = Release|x86
 		{269B6008-6ED9-4F09-9F81-1D1BBF7F9962}.Release|x86.Build.0 = Release|x86
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}.Debug|ARM.Build.0 = Debug|Any CPU
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}.Debug|x86.Build.0 = Debug|Any CPU
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}.Release|ARM.ActiveCfg = Release|Any CPU
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}.Release|ARM.Build.0 = Release|Any CPU
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}.Release|x86.ActiveCfg = Release|Any CPU
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44}.Release|x86.Build.0 = Release|Any CPU
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Debug|ARM.Build.0 = Debug|Any CPU
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Debug|x86.Build.0 = Debug|Any CPU
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Release|ARM.ActiveCfg = Release|Any CPU
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Release|ARM.Build.0 = Release|Any CPU
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Release|x86.ActiveCfg = Release|Any CPU
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -88,6 +118,8 @@ Global
 		{45D205D1-2338-438A-A850-52A9677ECAAA} = {4868D8A4-C1C7-4739-84CF-D7F47859153E}
 		{E7B65AD0-BDB6-4FE9-A1C5-3C1007D51340} = {6CC15ADF-F7F5-4E8B-A1E8-4DCBC564B1CA}
 		{269B6008-6ED9-4F09-9F81-1D1BBF7F9962} = {6CC15ADF-F7F5-4E8B-A1E8-4DCBC564B1CA}
+		{F54A72E6-2BEA-453C-8430-7CAFCDAF0A44} = {17485581-4DE3-4C2A-A44A-264531F3A5E4}
+		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2} = {17485581-4DE3-4C2A-A44A-264531F3A5E4}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Serialize.Linq.vsmdi
