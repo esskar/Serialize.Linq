@@ -14,6 +14,15 @@
         "define": [ "SERIALIZE_LINQ_OPTIMIZE_SIZE" ]
     },
 
+    "packInclude": {
+        "lib/sl50/": [
+            "../../src/Serialize.Linq.SL/Bin/Release/Serialize.Linq.dll"
+        ],
+        "lib/wp8/": [
+            "../../src/Serialize.Linq.WP8/Bin/Release/Serialize.Linq.dll"
+        ]
+    },
+
     "frameworks": {
         "net40": {
             "frameworkAssemblies": {
