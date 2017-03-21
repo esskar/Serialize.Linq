@@ -18,7 +18,7 @@ namespace Serialize.Linq.Internals
     {
         private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
         private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>-?\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/"
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
             ,RegexOptions.Compiled
 #endif
             );

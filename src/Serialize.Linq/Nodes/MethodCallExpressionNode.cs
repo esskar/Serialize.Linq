@@ -20,7 +20,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "MC")]   
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -65,7 +65,7 @@ namespace Serialize.Linq.Nodes
             this.Object = this.Factory.Create(expression.Object);
         }
 
-        public override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(IExpressionContext context)
         {
             Expression objectExpression = null;
             if (this.Object != null)

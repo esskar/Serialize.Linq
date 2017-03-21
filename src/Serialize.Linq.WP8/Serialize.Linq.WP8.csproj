@@ -92,6 +92,9 @@
     <Compile Include="..\Serialize.Linq\ExpressionContext.cs">
       <Link>ExpressionContext.cs</Link>
     </Compile>
+    <Compile Include="..\Serialize.Linq\ExpressionContextBase.cs">
+      <Link>ExpressionContextBase.cs</Link>
+    </Compile>
     <Compile Include="..\Serialize.Linq\Extensions\ExpressionExtensions.cs">
       <Link>Extensions\ExpressionExtensions.cs</Link>
     </Compile>
@@ -112,6 +115,9 @@
     </Compile>
     <Compile Include="..\Serialize.Linq\Interfaces\IBinarySerializer.cs">
       <Link>Interfaces\IBinarySerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\IExpressionContext.cs">
+      <Link>Interfaces\IExpressionContext.cs</Link>
     </Compile>
     <Compile Include="..\Serialize.Linq\Interfaces\IJsonSerializer.cs">
       <Link>Interfaces\IJsonSerializer.cs</Link>

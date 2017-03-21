@@ -34,7 +34,7 @@ namespace Serialize.Linq.Extensions
             return converter.Convert(expression, factorySettings);
         }
 
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
         /// <summary>
         /// Converts an expression to an json encoded string.
         /// </summary>

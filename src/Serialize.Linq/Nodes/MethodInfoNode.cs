@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "MIN")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -32,7 +32,7 @@ namespace Serialize.Linq.Nodes
         public MethodInfoNode(INodeFactory factory, MethodInfo memberInfo)
             : base(factory, memberInfo) { }
 
-        protected override IEnumerable<MethodInfo> GetMemberInfosForType(ExpressionContext context, Type type)
+        protected override IEnumerable<MethodInfo> GetMemberInfosForType(IExpressionContext context, Type type)
         {
             return type.GetMethods();
         }
@@ -66,7 +66,7 @@ namespace Serialize.Linq.Nodes
             this.GenericArguments = memberInfo.GetGenericArguments().Select(a => this.Factory.Create(a)).ToArray();
         }
 
-        public override MethodInfo ToMemberInfo(ExpressionContext context)
+        public override MethodInfo ToMemberInfo(IExpressionContext context)
         {
             var method = base.ToMemberInfo(context);
             if (method == null)

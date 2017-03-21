@@ -19,7 +19,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "TB")]   
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
 
@@ -56,13 +56,13 @@ namespace Serialize.Linq.Nodes
             this.TypeOperand = this.Factory.Create(expression.TypeOperand);
         }
 
-        public override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(IExpressionContext context)
         {
             switch (this.NodeType)
             {
                 case ExpressionType.TypeIs:
                     return System.Linq.Expressions.Expression.TypeIs(this.Expression.ToExpression(context), this.TypeOperand.ToType(context));
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
                 case ExpressionType.TypeEqual:
                     return System.Linq.Expressions.Expression.TypeEqual(this.Expression.ToExpression(context), this.TypeOperand.ToType(context));
 #endif                    

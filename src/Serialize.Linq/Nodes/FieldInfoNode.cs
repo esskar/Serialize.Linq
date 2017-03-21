@@ -20,7 +20,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "FI")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -31,7 +31,7 @@ namespace Serialize.Linq.Nodes
         public FieldInfoNode(INodeFactory factory, FieldInfo memberInfo)
             : base(factory, memberInfo) { }
 
-        protected override IEnumerable<FieldInfo> GetMemberInfosForType(ExpressionContext context, Type type)
+        protected override IEnumerable<FieldInfo> GetMemberInfosForType(IExpressionContext context, Type type)
         {
             return type.GetFields();
         }

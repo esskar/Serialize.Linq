@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
 #else
     [CollectionDataContract(Name = "EIL")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -38,7 +38,7 @@ namespace Serialize.Linq.Nodes
             this.AddRange(items.Select(item => new ElementInitNode(factory, item)));
         }
 
-        internal IEnumerable<ElementInit> GetElementInits(ExpressionContext context)
+        internal IEnumerable<ElementInit> GetElementInits(IExpressionContext context)
         {
             return this.Select(item => item.ToElementInit(context));
         }

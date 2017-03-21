@@ -23,7 +23,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "tE")]    
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -70,7 +70,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "E")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -129,7 +129,7 @@ namespace Serialize.Linq.Nodes
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public virtual Expression ToExpression(ExpressionContext context)
+        public virtual Expression ToExpression(IExpressionContext context)
         {
             return null;
         }

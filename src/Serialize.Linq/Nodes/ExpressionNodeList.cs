@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
 #else
     [CollectionDataContract(Name = "EL")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -38,12 +38,12 @@ namespace Serialize.Linq.Nodes
             this.AddRange(items.Select(factory.Create));
         }
 
-        internal IEnumerable<Expression> GetExpressions(ExpressionContext context)
+        internal IEnumerable<Expression> GetExpressions(IExpressionContext context)
         {
             return this.Select(e => e.ToExpression(context));
         }
 
-        internal IEnumerable<ParameterExpression> GetParameterExpressions(ExpressionContext context)
+        internal IEnumerable<ParameterExpression> GetParameterExpressions(IExpressionContext context)
         {
             return this.OfType<ParameterExpressionNode>().Select(e => (ParameterExpression)e.ToExpression(context));
         }

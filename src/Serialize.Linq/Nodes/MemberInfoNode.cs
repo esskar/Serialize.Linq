@@ -20,7 +20,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "MI")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -31,7 +31,7 @@ namespace Serialize.Linq.Nodes
         public MemberInfoNode(INodeFactory factory, MemberInfo memberInfo)
             : base(factory, memberInfo) { }
 
-        protected override IEnumerable<MemberInfo> GetMemberInfosForType(ExpressionContext context, Type type)
+        protected override IEnumerable<MemberInfo> GetMemberInfosForType(IExpressionContext context, Type type)
         {
             BindingFlags? flags = null;
             if (context != null)

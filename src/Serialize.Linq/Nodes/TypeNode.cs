@@ -81,8 +81,8 @@ namespace Serialize.Linq.Nodes
 #endif
         #endregion
         public TypeNode[] GenericArguments { get; set; }
-        
-        public Type ToType(ExpressionContext context)
+
+        public Type ToType(IExpressionContext context)
         {
             var type = context.ResolveType(this);
             if (type == null)

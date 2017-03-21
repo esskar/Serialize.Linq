@@ -17,7 +17,7 @@ namespace Serialize.Linq.Nodes
     /// </summary>
     #region DataContract
     [DataContract]
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #region KnownTypes
@@ -79,7 +79,7 @@ namespace Serialize.Linq.Nodes
         /// The factory.
         /// </value>
         [IgnoreDataMember]
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
         [NonSerialized]
 #endif
         public readonly INodeFactory Factory;        

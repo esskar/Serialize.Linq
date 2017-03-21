@@ -59,6 +59,9 @@
     <Compile Include="..\Serialize.Linq\ExpressionContext.cs">
       <Link>ExpressionContext.cs</Link>
     </Compile>
+	<Compile Include="..\Serialize.Linq\ExpressionContextBase.cs">
+      <Link>ExpressionContextBase.cs</Link>
+    </Compile>
     <Compile Include="..\Serialize.Linq\Extensions\ExpressionExtensions.cs">
       <Link>Extensions\ExpressionExtensions.cs</Link>
     </Compile>
@@ -94,6 +97,9 @@
     </Compile>
     <Compile Include="..\Serialize.Linq\Interfaces\IXmlSerializer.cs">
       <Link>Interfaces\IXmlSerializer.cs</Link>
+    </Compile>
+	<Compile Include="..\Serialize.Linq\Interfaces\IExpressionContext.cs">
+      <Link>Interfaces\IExpressionContext.cs</Link>
     </Compile>
     <Compile Include="..\Serialize.Linq\Internals\ComplexPropertyMemberTypeEnumerator.cs">
       <Link>Internals\ComplexPropertyMemberTypeEnumerator.cs</Link>
