@@ -148,7 +148,7 @@ namespace Serialize.Linq.Internals
             var types = new List<Type> { type };
             if (type.HasElementType)
                 types.AddRange(this.GetTypesOfType(type.GetElementType()));
-            if (type.IsGenericType)
+            if (type.IsGenericType())
             {
                 foreach (var genericType in type.GetGenericArguments())
                     types.AddRange(this.GetTypesOfType(genericType));

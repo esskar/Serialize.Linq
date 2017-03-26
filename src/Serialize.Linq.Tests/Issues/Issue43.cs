@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Extensions;
+using Serialize.Linq.Tests.Internals;
 
 namespace Serialize.Linq.Tests.Issues
 {

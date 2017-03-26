@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <RootNamespace>Serialize.Linq.Tests.Container</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Serialize.Linq.Tests.Container\ExpressionContainer.cs" Link="ExpressionContainer.cs" />
+  </ItemGroup>
+
+</Project>

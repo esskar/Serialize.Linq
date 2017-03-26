@@ -9,6 +9,9 @@
 using System;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
+#if NETCOREAPP1_1
+using System.Reflection;
+#endif
 using Serialize.Linq.Exceptions;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Internals;

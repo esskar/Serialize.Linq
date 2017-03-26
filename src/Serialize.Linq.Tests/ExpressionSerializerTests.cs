@@ -257,7 +257,11 @@ namespace Serialize.Linq.Tests
 
         private static IEnumerable<IBinarySerializer> CreateBinarySerializers()
         {
-            return new IBinarySerializer[] { new BinarySerializer(), new BinarayFormatterSerializer()  };
+#if NETCOREAPP1_1
+            return new IBinarySerializer[] { new BinarySerializer() };
+#else
+            return new IBinarySerializer[] { new BinarySerializer(), new BinarayFormatterSerializer() };
+#endif
         }        
     }
 }
