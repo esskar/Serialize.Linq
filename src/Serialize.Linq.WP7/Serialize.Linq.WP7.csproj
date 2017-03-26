@@ -68,6 +68,9 @@
     <Compile Include="..\Serialize.Linq\Extensions\MemberInfoExtensions.cs">
       <Link>Extensions\MemberInfoExtensions.cs</Link>
     </Compile>
+	<Compile Include="..\Serialize.Linq\Extensions\TypeExtensions.cs">
+      <Link>Extensions\TypeExtensions.cs</Link>
+    </Compile>
     <Compile Include="..\Serialize.Linq\Factories\DefaultNodeFactory.cs">
       <Link>Factories\DefaultNodeFactory.cs</Link>
     </Compile>
