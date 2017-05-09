@@ -12,10 +12,10 @@ using System.Resources;
 
 [assembly: AssemblyTitle("Serialize.Linq.WP8")]
 [assembly: AssemblyProduct("Serialize.Linq")]
-[assembly: AssemblyCopyright("Copyright © 2012-2015")]
+[assembly: AssemblyCopyright("Copyright © 2012-2017")]
 [assembly: ComVisible(false)]
 [assembly: Guid("269b6008-6ed9-4f09-9f81-1d1bbf7f9962")]
 
-[assembly: AssemblyVersion("1.2.4")]
-[assembly: AssemblyFileVersion("1.2.4")]
+[assembly: AssemblyVersion("1.3.0")]
+[assembly: AssemblyFileVersion("1.3.0")]
 [assembly: NeutralResourcesLanguageAttribute("en-US")]
