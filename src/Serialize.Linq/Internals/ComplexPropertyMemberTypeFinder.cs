@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Serialize.Linq.Extensions;
 
 namespace Serialize.Linq.Internals
 {
@@ -48,11 +49,12 @@ namespace Serialize.Linq.Internals
                 retval = true;
             }
 
-            if (baseType.IsGenericType)
+            if (baseType.IsGenericType())
                 retval = this.AnalyseTypes(baseType.GetGenericArguments(), seen, result) || retval;
             retval = this.AnalyseTypes(baseType.GetInterfaces(), seen, result) || retval;
-            if (baseType.BaseType != null && baseType.BaseType != typeof(object))
-                retval = this.BuildTypes(baseType.BaseType, seen, result) || retval;
+            var subBaseType = baseType.GetBaseType();
+            if (subBaseType != null && subBaseType != typeof(object))
+                retval = this.BuildTypes(subBaseType, seen, result) || retval;
             return retval;
         }
 

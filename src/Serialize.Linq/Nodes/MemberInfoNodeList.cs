@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
 #else
     [CollectionDataContract(Name = "MIL")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -37,7 +37,7 @@ namespace Serialize.Linq.Nodes
                 this.AddRange(items.Select(m => new MemberInfoNode(factory, m)));
         }
 
-        public IEnumerable<MemberInfo> GetMembers(ExpressionContext context)
+        public IEnumerable<MemberInfo> GetMembers(IExpressionContext context)
         {
             return this.Select(m => m.ToMemberInfo(context));
         }

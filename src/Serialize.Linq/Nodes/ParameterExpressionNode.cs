@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "P")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -61,7 +61,7 @@ namespace Serialize.Linq.Nodes
             this.Name = expression.Name;
         }
 
-        public override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(IExpressionContext context)
         {
             return context.GetParameterExpression(this);
         }

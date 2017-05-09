@@ -28,7 +28,7 @@ namespace Serialize.Linq.Nodes
         [DataContract(Name = "PI")]
     #endif
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -39,7 +39,7 @@ namespace Serialize.Linq.Nodes
         public PropertyInfoNode(INodeFactory factory, PropertyInfo memberInfo) 
             : base(factory, memberInfo) { }
 
-        protected override IEnumerable<PropertyInfo> GetMemberInfosForType(ExpressionContext context, Type type)
+        protected override IEnumerable<PropertyInfo> GetMemberInfosForType(IExpressionContext context, Type type)
         {
             return type.GetProperties();
         }

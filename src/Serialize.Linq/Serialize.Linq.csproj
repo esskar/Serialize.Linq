@@ -84,11 +84,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\MemberNotFoundException.cs" />
+    <Compile Include="ExpressionContextBase.cs" />
     <Compile Include="Extensions\MemberInfoExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Factories\DefaultNodeFactory.cs" />
     <Compile Include="Factories\FactorySettings.cs" />
     <Compile Include="Factories\TypeResolverNodeFactory.cs" />
     <Compile Include="Interfaces\IBinarySerializer.cs" />
+    <Compile Include="Interfaces\IExpressionContext.cs" />
     <Compile Include="Interfaces\IXmlSerializer.cs" />
     <Compile Include="Interfaces\IJsonSerializer.cs" />
     <Compile Include="Interfaces\ISerializer.cs" />

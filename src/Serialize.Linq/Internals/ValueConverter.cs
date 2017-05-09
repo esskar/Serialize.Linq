@@ -10,7 +10,11 @@ using System;
 #if !WINDOWS_PHONE
 using System.Collections.Concurrent;
 #endif
+#if NETCOREAPP1_1
+using System.Reflection;
+#endif
 using System.Text.RegularExpressions;
+using Serialize.Linq.Extensions;
 
 namespace Serialize.Linq.Internals
 {
@@ -18,7 +22,7 @@ namespace Serialize.Linq.Internals
     {
         private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
         private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>-?\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/"
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
             ,RegexOptions.Compiled
 #endif
             );
@@ -90,7 +94,7 @@ namespace Serialize.Linq.Internals
         public static object Convert(object value, Type convertTo)
         {
             if (value == null)
-                return convertTo.IsValueType ? Activator.CreateInstance(convertTo) : null;
+                return convertTo.IsValueType() ? Activator.CreateInstance(convertTo) : null;
 
             if (convertTo.IsInstanceOfType(value))
                 return value;
@@ -99,11 +103,11 @@ namespace Serialize.Linq.Internals
             if (TryCustomConvert(value, convertTo, out retval))
                 return retval;
 
-            if (convertTo.IsEnum)
+            if (convertTo.IsEnum())
                 return Enum.ToObject(convertTo, value);            
 
             // convert array types
-            if (convertTo.IsArray && value.GetType().IsArray)
+            if (convertTo.IsArray && value.GetType().IsArray())
             {
                 var elementType = convertTo.GetElementType();
 
@@ -115,7 +119,7 @@ namespace Serialize.Linq.Internals
             }
 
             // convert nullable types
-            if (convertTo.IsGenericType && convertTo.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (convertTo.IsGenericType() && convertTo.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 var argumentTypes = convertTo.GetGenericArguments();
                 if (argumentTypes.Length == 1)                

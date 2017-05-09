@@ -19,7 +19,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "U")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -44,7 +44,7 @@ namespace Serialize.Linq.Nodes
             this.Operand = this.Factory.Create(expression.Operand);
         }
 
-        public override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(IExpressionContext context)
         {
             return this.NodeType == ExpressionType.UnaryPlus
                 ? Expression.UnaryPlus(this.Operand.ToExpression(context))

@@ -19,7 +19,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "M")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -54,7 +54,7 @@ namespace Serialize.Linq.Nodes
             this.Member = new MemberInfoNode(this.Factory, expression.Member);
         }
 
-        public override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(IExpressionContext context)
         {
             var member = this.Member.ToMemberInfo(context);
             return System.Linq.Expressions.Expression.MakeMemberAccess(this.Expression != null ? this.Expression.ToExpression(context) : null, member);

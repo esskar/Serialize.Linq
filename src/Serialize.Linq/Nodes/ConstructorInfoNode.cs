@@ -20,7 +20,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "CI")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -37,7 +37,7 @@ namespace Serialize.Linq.Nodes
         /// <param name="context">The expression context.</param>
         /// <param name="type">The type.</param>
         /// <returns></returns>
-        protected override IEnumerable<ConstructorInfo> GetMemberInfosForType(ExpressionContext context, Type type)
+        protected override IEnumerable<ConstructorInfo> GetMemberInfosForType(IExpressionContext context, Type type)
         {
             return type.GetConstructors();
         }

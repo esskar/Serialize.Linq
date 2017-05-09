@@ -20,7 +20,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "MB")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -56,7 +56,7 @@ namespace Serialize.Linq.Nodes
         #endregion
         public MemberInfoNode Member { get; set; }
 
-        internal abstract MemberBinding ToMemberBinding(ExpressionContext context);
+        internal abstract MemberBinding ToMemberBinding(IExpressionContext context);
 
         internal static MemberBindingNode Create(INodeFactory factory, MemberBinding memberBinding)
         {

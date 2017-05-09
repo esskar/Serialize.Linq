@@ -11,6 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
+using Serialize.Linq.Extensions;
 using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
@@ -21,7 +22,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "T")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -40,12 +41,12 @@ namespace Serialize.Linq.Nodes
             if (type == null)
                 return;
 
-            var isAnonymousType = Attribute.IsDefined(type, typeof(CompilerGeneratedAttribute), false)
-                && type.IsGenericType && type.Name.Contains("AnonymousType")
+            var isAnonymousType = type.IsCustomAttributeDefined(typeof(CompilerGeneratedAttribute), false)
+                && type.IsGenericType() && type.Name.Contains("AnonymousType")
                 && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
-                && (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
+                && (type.GetTypeAttributes() & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
 
-            if (type.IsGenericType)
+            if (type.IsGenericType())
             {
                 this.GenericArguments = type.GetGenericArguments().Select(t => new TypeNode(this.Factory, t)).ToArray();
 
@@ -81,8 +82,8 @@ namespace Serialize.Linq.Nodes
 #endif
         #endregion
         public TypeNode[] GenericArguments { get; set; }
-        
-        public Type ToType(ExpressionContext context)
+
+        public Type ToType(IExpressionContext context)
         {
             var type = context.ResolveType(this);
             if (type == null)

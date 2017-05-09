@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
 #else
     [CollectionDataContract(Name = "MBL")]    
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -38,7 +38,7 @@ namespace Serialize.Linq.Nodes
             this.AddRange(items.Select(m => MemberBindingNode.Create(factory, m)));
         }
 
-        internal IEnumerable<MemberBinding> GetMemberBindings(ExpressionContext context)
+        internal IEnumerable<MemberBinding> GetMemberBindings(IExpressionContext context)
         {
             return this.Select(memberBindingEntity => memberBindingEntity.ToMemberBinding(context));
         }

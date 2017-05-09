@@ -19,7 +19,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "MLB")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -42,7 +42,7 @@ namespace Serialize.Linq.Nodes
         #endregion
         public ElementInitNodeList Initializers { get; set; }
 
-        internal override MemberBinding ToMemberBinding(ExpressionContext context)
+        internal override MemberBinding ToMemberBinding(IExpressionContext context)
         {
             return Expression.ListBind(this.Member.ToMemberInfo(context), this.Initializers.GetElementInits(context));
         }

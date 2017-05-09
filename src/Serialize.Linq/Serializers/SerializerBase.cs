@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Serialize.Linq.Extensions;
 
 #if WINDOWS_PHONE7
 using Serialize.Linq.Internals;
@@ -86,7 +87,7 @@ namespace Serialize.Linq.Serializers
                 else if (this.AutoAddKnownTypesAsListTypes)
                     yield return typeof(List<>).MakeGenericType(type);
                 
-                if (type.IsClass) 
+                if (type.IsClass()) 
                     continue;
 
                 var nullableType = typeof (Nullable<>).MakeGenericType(type);

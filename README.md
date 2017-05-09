@@ -31,7 +31,8 @@ For bugs: make sure you create a unit test, so it is easier for me to reproduce 
 * .NET 4.0
 * .NET 4.5
 * Silverlight 5.0
-* Windows Phone (7.1, 8); 7.1 lacks support for JSON
+* .Net Core 1.1
+* Windows Phone 8
 
 [1]: http://nuget.org/packages/Serialize.Linq
 [2]: https://github.com/esskar

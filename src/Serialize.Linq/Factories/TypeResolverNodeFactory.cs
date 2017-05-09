@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using Serialize.Linq.Extensions;
 using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Factories
@@ -46,7 +47,7 @@ namespace Serialize.Linq.Factories
             {
                 if (declaredType == expectedType || declaredType.IsSubclassOf(expectedType))
                     return true;
-                if (expectedType.IsInterface)
+                if (expectedType.IsInterface())
                 {
                     var resultTypes = declaredType.GetInterfaces();
                     if (resultTypes.Contains(expectedType))

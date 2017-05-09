@@ -9,6 +9,9 @@
 using System;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
+#if NETCOREAPP1_1
+using System.Reflection;
+#endif
 using Serialize.Linq.Exceptions;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Internals;
@@ -21,7 +24,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "C")]   
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -151,7 +154,7 @@ namespace Serialize.Linq.Nodes
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public override Expression ToExpression(ExpressionContext context)
+        public override Expression ToExpression(IExpressionContext context)
         {
             var typeNode = this.Value as TypeNode;
             if (typeNode != null)

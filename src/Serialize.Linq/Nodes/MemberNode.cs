@@ -26,7 +26,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "MN")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -96,7 +96,7 @@ namespace Serialize.Linq.Nodes
         /// <returns></returns>
         /// <exception cref="System.InvalidOperationException">DeclaringType is not set.</exception>
         /// <exception cref="System.TypeLoadException">Failed to load DeclaringType:  + this.DeclaringType</exception>
-        protected Type GetDeclaringType(ExpressionContext context)
+        protected Type GetDeclaringType(IExpressionContext context)
         {
             if (this.DeclaringType == null)
                 throw new InvalidOperationException("DeclaringType is not set.");
@@ -114,14 +114,14 @@ namespace Serialize.Linq.Nodes
         /// <param name="context">The expression context.</param>
         /// <param name="type">The type.</param>
         /// <returns></returns>
-        protected abstract IEnumerable<TMemberInfo> GetMemberInfosForType(ExpressionContext context, Type type);
+        protected abstract IEnumerable<TMemberInfo> GetMemberInfosForType(IExpressionContext context, Type type);
 
         /// <summary>
         /// Converts this instance to a member info object of type TMemberInfo.
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public virtual TMemberInfo ToMemberInfo(ExpressionContext context)
+        public virtual TMemberInfo ToMemberInfo(IExpressionContext context)
         {
             if (string.IsNullOrWhiteSpace(this.Signature))
                 return null;

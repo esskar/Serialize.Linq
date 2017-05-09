@@ -19,7 +19,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "EI")]
 #endif
-#if !SILVERLIGHT
+#if !SILVERLIGHT && !NETCOREAPP1_1
     [Serializable]
 #endif
     #endregion
@@ -85,7 +85,7 @@ namespace Serialize.Linq.Nodes
         #endregion
         public MethodInfoNode AddMethod { get; set; }
 
-        internal ElementInit ToElementInit(ExpressionContext context)
+        internal ElementInit ToElementInit(IExpressionContext context)
         {
             return Expression.ElementInit(this.AddMethod.ToMemberInfo(context), this.Arguments.GetExpressions(context));
         }
