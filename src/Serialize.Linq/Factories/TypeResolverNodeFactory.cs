@@ -114,6 +114,9 @@ namespace Serialize.Linq.Factories
                 try
                 {
                     constantValue = Expression.Lambda(memberExpression).Compile().DynamicInvoke();
+                    
+                    var propertyInfo = (PropertyInfo) memberExpression.Member;
+                    constantValueType = propertyInfo.PropertyType;
                     return true;
                 }
                 catch (InvalidOperationException)

@@ -121,10 +121,8 @@ namespace Serialize.Linq.Nodes
                 if (value is Expression)
                     throw new ArgumentException("Expression not allowed.", "value");
 
-                if (value is Type)
-                    _value = this.Factory.Create(value as Type);
-                else
-                    _value = value;
+                var valueType = value as Type;
+                _value = valueType != null ? this.Factory.Create(valueType) : value;
 
                 if (_value == null || _value is TypeNode) 
                     return;
