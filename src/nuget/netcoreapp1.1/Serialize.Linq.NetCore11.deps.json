@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v1.1": {
-      "serialize.linq.netcore11/1.0.0": {
+      "serialize.linq.netcore11/1.3.1": {
         "dependencies": {
           "Microsoft.Extensions.DependencyModel": "1.1.1",
           "System.Runtime.Serialization.Json": "4.3.0",
@@ -87,7 +87,7 @@
     }
   },
   "libraries": {
-    "serialize.linq.netcore11/1.0.0": {
+    "serialize.linq.netcore11/1.3.1": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

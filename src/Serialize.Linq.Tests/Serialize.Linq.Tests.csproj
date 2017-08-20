@@ -111,6 +111,7 @@
     <Compile Include="Issues\Issue56.cs" />
     <Compile Include="Issues\Issue68.cs" />
     <Compile Include="Issues\Issue69.cs" />
+    <Compile Include="Issues\Issue81.cs" />
     <Compile Include="MemberInfoExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
