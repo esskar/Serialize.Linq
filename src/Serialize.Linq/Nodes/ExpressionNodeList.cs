@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
 #else
     [CollectionDataContract(Name = "EL")]
 #endif
-#if !SILVERLIGHT && !NETCOREAPP1_1
+#if !SILVERLIGHT && !NETCOREAPP1_1 && !NETFX_CORE && !WINDOWS_UWP
     [Serializable]
 #endif
     #endregion

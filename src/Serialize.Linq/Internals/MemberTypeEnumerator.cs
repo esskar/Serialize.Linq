@@ -25,14 +25,6 @@ namespace Serialize.Linq.Internals
         /// <summary>
         /// Initializes a new instance of the <see cref="MemberTypeEnumerator"/> class.
         /// </summary>
-        /// <param name="type">The type.</param>
-        /// <param name="bindingFlags">The binding flags.</param>
-        public MemberTypeEnumerator(Type type, BindingFlags bindingFlags = BindingFlags.Default)
-            : this(new HashSet<Type>(), type, bindingFlags) { }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MemberTypeEnumerator"/> class.
-        /// </summary>
         /// <param name="seenTypes">The seen types.</param>
         /// <param name="type">The type.</param>
         /// <param name="bindingFlags">The binding flags.</param>

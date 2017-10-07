@@ -24,20 +24,20 @@ namespace Serialize.Linq.Extensions
         /// <exception cref="System.NotSupportedException">Unable to get return type of member of type  + member.MemberType</exception>
         public static Type GetReturnType(this MemberInfo member)
         {
-            switch (member.MemberType)
-            {
-                case MemberTypes.Property:
-                    return ((PropertyInfo)member).PropertyType;
+            var propertyInfo = member as PropertyInfo;
+            if (propertyInfo != null)
+                return propertyInfo.PropertyType;
 
-                case MemberTypes.Method:
-                    return ((MethodInfo)member).ReturnType;
+            var methodInfo = member as MethodInfo;
+            if (methodInfo != null)
+                return methodInfo.ReturnType;
 
-                case MemberTypes.Field:
-                    return ((FieldInfo)member).FieldType;
+            var fieldInfo = member as FieldInfo;
+            if (fieldInfo != null)
+                return fieldInfo.FieldType;
 
-                default:
-                    throw new NotSupportedException("Unable to get return type of member of type " + member.MemberType);
-            }
+            
+            throw new NotSupportedException("Unable to get return type of member of type " + member.GetType().Name);
         }
     }
 }

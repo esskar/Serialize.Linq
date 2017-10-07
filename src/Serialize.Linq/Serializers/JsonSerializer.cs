@@ -18,7 +18,7 @@ namespace Serialize.Linq.Serializers
 {
     public class JsonSerializer : TextSerializer, IJsonSerializer
     {
-#if !WINDOWS_PHONE && !NETCOREAPP1_1
+#if !WINDOWS_PHONE && !NETCOREAPP1_1 && !NETFX_CORE && !WINDOWS_UWP
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
             return new DataContractJsonSerializer(type, this.GetKnownTypes());
