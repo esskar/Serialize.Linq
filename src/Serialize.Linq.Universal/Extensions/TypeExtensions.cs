@@ -52,6 +52,21 @@ namespace Serialize.Linq.Extensions
             return typeInfo.BaseType;
         }
 
+        public static FieldInfo GetField(this Type type, string fieldName)
+        {
+            return System.Reflection.TypeExtensions.GetField(type, fieldName);
+        }
+
+        public static PropertyInfo GetProperty(this Type type, string propertyName)
+        {
+            return System.Reflection.TypeExtensions.GetProperty(type, propertyName);
+        }
+
+        public static MethodInfo GetMethod(this Type type, string methodName)
+        {
+            return System.Reflection.TypeExtensions.GetMethod(type, methodName);
+        }
+
         public static TypeAttributes GetTypeAttributes(this Type type)
         {
             var typeInfo = type.GetTypeInfo();
