@@ -229,6 +229,9 @@
     <Compile Include="..\Serialize.Linq\Nodes\UnaryExpressionNode.cs">
       <Link>Nodes\UnaryExpressionNode.cs</Link>
     </Compile>
+    <Compile Include="..\Serialize.Linq\Properties\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="..\Serialize.Linq\Serializers\BinarySerializer.cs">
       <Link>Serializers\BinarySerializer.cs</Link>
     </Compile>
@@ -253,10 +256,12 @@
     <Compile Include="Mono\ConcurrentDictionary.cs" />
     <Compile Include="Mono\SpinWait.cs" />
     <Compile Include="Mono\SplitOrderedList.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Serialize.Linq Signing Key.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Silverlight\$(SilverlightVersion)\Microsoft.Silverlight.CSharp.targets" />
   <ProjectExtensions>

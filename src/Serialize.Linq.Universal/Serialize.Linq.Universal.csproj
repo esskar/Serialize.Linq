@@ -269,6 +269,9 @@
     <Compile Include="..\Serialize.Linq\Nodes\UnaryExpressionNode.cs">
       <Link>Nodes\UnaryExpressionNode.cs</Link>
     </Compile>
+    <Compile Include="..\Serialize.Linq\Properties\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="..\Serialize.Linq\Serializers\BinarySerializer.cs">
       <Link>Serializers\BinarySerializer.cs</Link>
     </Compile>
@@ -296,10 +299,10 @@
     <Compile Include="ExpressionContext.cs" />
     <Compile Include="Extensions\TypeExtensions.cs" />
     <Compile Include="Internals\AppDomain.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Properties\Serialize.Linq.Universal.rd.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>
@@ -308,6 +311,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\Serialize.Linq\Serialize.Linq Signing Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>true</DelaySign>
   </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
