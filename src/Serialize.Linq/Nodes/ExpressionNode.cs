@@ -19,11 +19,11 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     #else
     [DataContract(Name = "ExpressionNodeGeneric")]
-    #endif
+#endif
 #else
     [DataContract(Name = "tE")]    
 #endif
-#if !SILVERLIGHT && !NETCOREAPP1_1
+#if !SILVERLIGHT && !NETCOREAPP1_1 && !NETFX_CORE && !WINDOWS_UWP
     [Serializable]
 #endif
     #endregion
@@ -70,7 +70,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "E")]
 #endif
-#if !SILVERLIGHT && !NETCOREAPP1_1
+#if !SILVERLIGHT && !NETCOREAPP1_1 && !NETFX_CORE && !WINDOWS_UWP
     [Serializable]
 #endif
     #endregion

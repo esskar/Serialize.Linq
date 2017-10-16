@@ -1,0 +1,326 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{D7A2593F-725E-4C65-8B3F-CE2003874BF0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Serialize.Linq</RootNamespace>
+    <AssemblyName>Serialize.Linq.Universal</AssemblyName>
+    <DefaultLanguage>en-US</DefaultLanguage>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <PlatformTarget>x86</PlatformTarget>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\ARM\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <PlatformTarget>ARM</PlatformTarget>
+    <OutputPath>bin\ARM\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>ARM</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <PlatformTarget>x64</PlatformTarget>
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
+    <Optimize>true</Optimize>
+    <NoWarn>;2008</NoWarn>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <ErrorReport>prompt</ErrorReport>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="..\Serialize.Linq\Serialize.Linq Signing Key.snk">
+      <Link>Serialize.Linq Signing Key.snk</Link>
+    </None>
+    <None Include="project.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Serialize.Linq\Exceptions\InvalidTypeException.cs">
+      <Link>Exceptions\InvalidTypeException.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Exceptions\MemberNotFoundException.cs">
+      <Link>Exceptions\MemberNotFoundException.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\ExpressionContextBase.cs">
+      <Link>ExpressionContextBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Extensions\ExpressionExtensions.cs">
+      <Link>Extensions\ExpressionExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Extensions\MemberInfoExtensions.cs">
+      <Link>Extensions\MemberInfoExtensions.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Factories\DefaultNodeFactory.cs">
+      <Link>Factories\DefaultNodeFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Factories\FactorySettings.cs">
+      <Link>Factories\FactorySettings.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Factories\NodeFactory.cs">
+      <Link>Factories\NodeFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Factories\TypeResolverNodeFactory.cs">
+      <Link>Factories\TypeResolverNodeFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\IBinarySerializer.cs">
+      <Link>Interfaces\IBinarySerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\IExpressionContext.cs">
+      <Link>Interfaces\IExpressionContext.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\IJsonSerializer.cs">
+      <Link>Interfaces\IJsonSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\INodeFactory.cs">
+      <Link>Interfaces\INodeFactory.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\ISerializer.cs">
+      <Link>Interfaces\ISerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\ITextSerializer.cs">
+      <Link>Interfaces\ITextSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Interfaces\IXmlSerializer.cs">
+      <Link>Interfaces\IXmlSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Internals\ComplexPropertyMemberTypeEnumerator.cs">
+      <Link>Internals\ComplexPropertyMemberTypeEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Internals\ComplexPropertyMemberTypeFinder.cs">
+      <Link>Internals\ComplexPropertyMemberTypeFinder.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Internals\MemberTypeEnumerator.cs">
+      <Link>Internals\MemberTypeEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Internals\PropertyMemberTypeEnumerator.cs">
+      <Link>Internals\PropertyMemberTypeEnumerator.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Internals\ValueConverter.cs">
+      <Link>Internals\ValueConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\BinaryExpressionNode.cs">
+      <Link>Nodes\BinaryExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ConditionalExpressionNode.cs">
+      <Link>Nodes\ConditionalExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ConstantExpressionNode.cs">
+      <Link>Nodes\ConstantExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ConstructorInfoNode.cs">
+      <Link>Nodes\ConstructorInfoNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ElementInitNode.cs">
+      <Link>Nodes\ElementInitNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ElementInitNodeList.cs">
+      <Link>Nodes\ElementInitNodeList.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ExpressionNode.cs">
+      <Link>Nodes\ExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ExpressionNodeList.cs">
+      <Link>Nodes\ExpressionNodeList.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\FieldInfoNode.cs">
+      <Link>Nodes\FieldInfoNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\InvocationExpressionNode.cs">
+      <Link>Nodes\InvocationExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\LambdaExpressionNode.cs">
+      <Link>Nodes\LambdaExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ListInitExpressionNode.cs">
+      <Link>Nodes\ListInitExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberAssignmentNode.cs">
+      <Link>Nodes\MemberAssignmentNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberBindingNode.cs">
+      <Link>Nodes\MemberBindingNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberBindingNodeList.cs">
+      <Link>Nodes\MemberBindingNodeList.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberExpressionNode.cs">
+      <Link>Nodes\MemberExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberInfoNode.cs">
+      <Link>Nodes\MemberInfoNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberInfoNodeList.cs">
+      <Link>Nodes\MemberInfoNodeList.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberInitExpressionNode.cs">
+      <Link>Nodes\MemberInitExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberListBindingNode.cs">
+      <Link>Nodes\MemberListBindingNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberMemberBindingNode.cs">
+      <Link>Nodes\MemberMemberBindingNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MemberNode.cs">
+      <Link>Nodes\MemberNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MethodCallExpressionNode.cs">
+      <Link>Nodes\MethodCallExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\MethodInfoNode.cs">
+      <Link>Nodes\MethodInfoNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\NewArrayExpressionNode.cs">
+      <Link>Nodes\NewArrayExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\NewExpressionNode.cs">
+      <Link>Nodes\NewExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\Node.cs">
+      <Link>Nodes\Node.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\ParameterExpressionNode.cs">
+      <Link>Nodes\ParameterExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\PropertyInfoNode.cs">
+      <Link>Nodes\PropertyInfoNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\TypeBinaryExpressionNode.cs">
+      <Link>Nodes\TypeBinaryExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\TypeNode.cs">
+      <Link>Nodes\TypeNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Nodes\UnaryExpressionNode.cs">
+      <Link>Nodes\UnaryExpressionNode.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Properties\AssemblyInfo.cs">
+      <Link>AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\BinarySerializer.cs">
+      <Link>Serializers\BinarySerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\DataSerializer.cs">
+      <Link>Serializers\DataSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\ExpressionConverter.cs">
+      <Link>Serializers\ExpressionConverter.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\ExpressionSerializer.cs">
+      <Link>Serializers\ExpressionSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\JsonSerializer.cs">
+      <Link>Serializers\JsonSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\SerializerBase.cs">
+      <Link>Serializers\SerializerBase.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\TextSerializer.cs">
+      <Link>Serializers\TextSerializer.cs</Link>
+    </Compile>
+    <Compile Include="..\Serialize.Linq\Serializers\XmlSerializer.cs">
+      <Link>Serializers\XmlSerializer.cs</Link>
+    </Compile>
+    <Compile Include="ExpressionContext.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Internals\AppDomain.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
+  </ItemGroup>
+  <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
+    <VisualStudioVersion>14.0</VisualStudioVersion>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\Serialize.Linq\Serialize.Linq Signing Key.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -22,11 +22,11 @@ namespace Serialize.Linq.Nodes
     [DataContract]
     #else
     [DataContract(Name = "MemberNodeGeneric")]
-    #endif
+#endif
 #else
     [DataContract(Name = "MN")]
 #endif
-#if !SILVERLIGHT && !NETCOREAPP1_1
+#if !SILVERLIGHT && !NETCOREAPP1_1 && !NETFX_CORE && !WINDOWS_UWP
     [Serializable]
 #endif
     #endregion

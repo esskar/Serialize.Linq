@@ -24,11 +24,11 @@ namespace Serialize.Linq.Nodes
 #else
     #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataContract]
-    #else
+#else
         [DataContract(Name = "PI")]
-    #endif
 #endif
-#if !SILVERLIGHT && !NETCOREAPP1_1
+#endif
+#if !SILVERLIGHT && !NETCOREAPP1_1 && !NETFX_CORE && !WINDOWS_UWP
     [Serializable]
 #endif
     #endregion
