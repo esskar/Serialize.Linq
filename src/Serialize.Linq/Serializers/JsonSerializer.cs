@@ -8,7 +8,7 @@
 
 using System;
 using System.IO;
-#if !WINDOWS_PHONE && !NETCOREAPP1_1
+#if !WINDOWS_PHONE && !NETCOREAPP1_1 && !NETSTANDARD1_6 && !NETCOREAPP2_0
 using System.Runtime.Serialization;
 #endif
 using System.Runtime.Serialization.Json;
@@ -18,7 +18,7 @@ namespace Serialize.Linq.Serializers
 {
     public class JsonSerializer : TextSerializer, IJsonSerializer
     {
-#if !WINDOWS_PHONE && !NETCOREAPP1_1 && !NETFX_CORE && !WINDOWS_UWP
+#if !WINDOWS_PHONE && !NETCOREAPP1_1 && !NETSTANDARD1_6 && !NETCOREAPP2_0 && !NETFX_CORE && !WINDOWS_UWP 
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
             return new DataContractJsonSerializer(type, this.GetKnownTypes());

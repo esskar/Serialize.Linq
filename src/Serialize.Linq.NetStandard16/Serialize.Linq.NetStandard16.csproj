@@ -1,18 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>netstandard1.6</TargetFramework>
     <RootNamespace>Serialize.Linq</RootNamespace>
-    <Version>1.4.0</Version>
+    <Version>1.4.0$(VersionSuffix)</Version>
     <Company />
-    <Product>Serialize.Linq.NetCore11</Product>
+    <Product>Serialize.Linq.NetStandard16</Product>
     <Authors />
     <Description>C# library to serialize LINQ expressions</Description>
     <Copyright>Copyright © 2012-2017</Copyright>
     <PackageProjectUrl>https://github.com/esskar/Serialize.Linq</PackageProjectUrl>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>Serialize.Linq Signing Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -88,7 +85,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="1.1.1" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.0.0" />
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Xml" Version="4.3.0" />
