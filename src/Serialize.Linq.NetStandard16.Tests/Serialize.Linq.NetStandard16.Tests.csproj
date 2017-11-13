@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>    
-    <TargetFramework>netcoreapp1.1</TargetFramework>    
+    <TargetFramework>netcoreapp2.0</TargetFramework>    
     <RootNamespace>Serialize.Linq.Tests</RootNamespace>
   </PropertyGroup>
 
@@ -37,8 +37,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Serialize.Linq.NetCore11.Tests.Container\Serialize.Linq.NetCore11.Tests.Container.csproj" />
-    <ProjectReference Include="..\Serialize.Linq.NetCore11\Serialize.Linq.NetCore11.csproj" />
+    <ProjectReference Include="..\Serialize.Linq.NetStandard16.Tests.Container\Serialize.Linq.NetStandard16.Tests.Container.csproj" />
+    <ProjectReference Include="..\Serialize.Linq.NetStandard16\Serialize.Linq.NetStandard16.csproj" />
   </ItemGroup>
 
   <ItemGroup>

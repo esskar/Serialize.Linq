@@ -34,7 +34,7 @@ namespace Serialize.Linq.Extensions
             return converter.Convert(expression, factorySettings);
         }
 
-#if !SILVERLIGHT && !NETCOREAPP1_1
+#if !SILVERLIGHT && !NETCOREAPP1_1 && !NETSTANDARD1_6 && !NETCOREAPP2_0
         /// <summary>
         /// Converts an expression to an json encoded string.
         /// </summary>

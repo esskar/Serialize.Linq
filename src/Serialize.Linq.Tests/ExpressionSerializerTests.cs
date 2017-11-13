@@ -257,7 +257,7 @@ namespace Serialize.Linq.Tests
 
         private static IEnumerable<IBinarySerializer> CreateBinarySerializers()
         {
-#if NETCOREAPP1_1 || NETFX_CORE || WINDOWS_UWP 
+#if NETCOREAPP1_1 || NETFX_CORE || WINDOWS_UWP  || NETCOREAPP2_0 || NETSTANDARD1_6
             return new IBinarySerializer[] { new BinarySerializer() };
 #else
             return new IBinarySerializer[] { new BinarySerializer(), new BinarayFormatterSerializer() };
