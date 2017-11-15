@@ -7,6 +7,7 @@
 #endregion
 
 using System;
+using System.Diagnostics;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
@@ -27,6 +28,7 @@ namespace Serialize.Linq.Nodes
     [Serializable]
 #endif
     #endregion
+    [DebuggerDisplay("ExpressionNode")]
     public abstract class ExpressionNode<TExpression> : ExpressionNode where TExpression : Expression
     {
         /// <summary>
