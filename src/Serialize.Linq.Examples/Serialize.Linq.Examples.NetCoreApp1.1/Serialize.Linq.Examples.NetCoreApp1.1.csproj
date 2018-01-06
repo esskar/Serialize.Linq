@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <RootNamespace>Serialize.Linq.Examples.NetCoreApp1</RootNamespace>
+    <AssemblyName>Serialize.Linq.Examples.NetCoreApp1</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="System.AppDomain.NetCoreApp" Version="1.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Serialize.Linq\Serialize.Linq.csproj" />
+  </ItemGroup>
+
+</Project>

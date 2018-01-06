@@ -123,7 +123,7 @@
       <Name>Serialize.Linq.Tests.Container</Name>
     </ProjectReference>
     <ProjectReference Include="..\Serialize.Linq\Serialize.Linq.csproj">
-      <Project>{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}</Project>
+      <Project>{0004924b-c805-4d58-b448-9c71f45a62fa}</Project>
       <Name>Serialize.Linq</Name>
     </ProjectReference>
   </ItemGroup>

@@ -16,7 +16,14 @@ namespace Serialize.Linq
     {
         protected override IEnumerable<Assembly> GetAssemblies()
         {
+#if NETSTANDARD1_3
+            return System.Linq.Enumerable.Empty<Assembly>();
+#elif (NETCOREAPP1_0 || NETCOREAPP1_1 || UAP10_0)
+            return System.Linq.Enumerable.Empty<Assembly>();
+            // return System.AppDomain.NetCoreApp.AppDomain.CurrentDomain.GetAssemblies(GetType());
+#else
             return AppDomain.CurrentDomain.GetAssemblies();
+#endif
         }
     }
 }

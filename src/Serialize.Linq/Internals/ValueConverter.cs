@@ -10,7 +10,7 @@ using System;
 #if !WINDOWS_PHONE
 using System.Collections.Concurrent;
 #endif
-#if NETCOREAPP1_1 || NETFX_CORE || WINDOWS_UWP
+#if NETSTANDARD || NETFX_CORE || WINDOWS_UWP
 using System.Reflection;
 #endif
 using System.Text.RegularExpressions;
@@ -22,7 +22,7 @@ namespace Serialize.Linq.Internals
     {
         private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
         private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>-?\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/"
-#if !SILVERLIGHT && !NETCOREAPP1_1
+#if !SILVERLIGHT && !NETSTANDARD
             ,RegexOptions.Compiled
 #endif
             );
