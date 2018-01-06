@@ -24672,30 +24672,29 @@
     "UAP,Version=v10.0.10240": []
   },
   "packageFolders": {
-    "C:\\Users\\azureuser\\.nuget\\packages\\": {},
+    "C:\\Users\\esskar\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\": {}
   },
   "project": {
     "restore": {
       "projectUniqueName": "C:\\Users\\azureuser\\Documents\\Github\\_forks\\Serialize.Linq\\src\\Serialize.Linq.Universal.Tests\\Serialize.Linq.Universal.Tests.csproj",
       "projectName": "Serialize.Linq.Universal.Tests",
-      "projectPath": "C:\\Users\\azureuser\\Documents\\Github\\_forks\\Serialize.Linq\\src\\Serialize.Linq.Universal.Tests\\Serialize.Linq.Universal.Tests.csproj",
-      "projectJsonPath": "C:\\Users\\azureuser\\Documents\\Github\\_forks\\Serialize.Linq\\src\\Serialize.Linq.Universal.Tests\\project.json",
-      "packagesPath": "C:\\Users\\azureuser\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\azureuser\\Documents\\Github\\_forks\\Serialize.Linq\\src\\Serialize.Linq.Universal.Tests\\obj\\",
+      "projectPath": "C:\\Dev\\Esskar\\Serialize.Linq\\src\\Serialize.Linq.Universal.Tests\\Serialize.Linq.Universal.Tests.csproj",
+      "projectJsonPath": "C:\\Dev\\Esskar\\Serialize.Linq\\src\\Serialize.Linq.Universal.Tests\\project.json",
+      "packagesPath": "C:\\Users\\esskar\\.nuget\\packages\\",
+      "outputPath": "C:\\Dev\\Esskar\\Serialize.Linq\\src\\Serialize.Linq.Universal.Tests\\obj\\",
       "projectStyle": "ProjectJson",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackagesFallback\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\azureuser\\Documents\\Github\\_forks\\Serialize.Linq\\src\\.nuget\\NuGet.Config",
-        "C:\\Users\\azureuser\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Dev\\Esskar\\Serialize.Linq\\src\\.nuget\\NuGet.Config",
+        "C:\\Users\\esskar\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.Fallback.config"
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Users\\azureuser\\.dotnet\\NuGetFallbackFolder": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
