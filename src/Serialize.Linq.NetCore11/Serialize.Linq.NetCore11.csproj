@@ -3,12 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <RootNamespace>Serialize.Linq</RootNamespace>
-    <Version>1.4.0</Version>
+    <Version>1.5.0</Version>
     <Company />
     <Product>Serialize.Linq.NetCore11</Product>
     <Authors />
     <Description>C# library to serialize LINQ expressions</Description>
-    <Copyright>Copyright © 2012-2017</Copyright>
+    <Copyright>Copyright © 2012-2018</Copyright>
     <PackageProjectUrl>https://github.com/esskar/Serialize.Linq</PackageProjectUrl>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <SignAssembly>True</SignAssembly>
