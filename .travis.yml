@@ -8,7 +8,7 @@ addons:
     - sourceline: 'deb [arch=amd64] https://apt-mo.trafficmanager.net/repos/dotnet-release/ trusty main'
       key_url: 'https://apt-mo.trafficmanager.net/keys/microsoft.asc'
     packages:
-    - dotnet-dev-1.0.1
+    - dotnet-sdk-2.1.3
 
 env:  
   - DOTNET_SKIP_FIRST_TIME_EXPERIENCE=true
@@ -16,10 +16,7 @@ env:
 script:
   - dotnet --info
   - dotnet restore source
-  - dotnet build src/Serialize.Linq.NetCore11/Serialize.Linq.NetCore11.csproj --configuration Debug --framework netcoreapp1.1
-  - dotnet build src/Serialize.Linq.NetCore11/Serialize.Linq.NetCore11.csproj --configuration Release --framework netcoreapp1.1
-  - dotnet test src/Serialize.Linq.NetCore11.Tests/Serialize.Linq.NetCore11.Tests.csproj --configuration Debug --framework netcoreapp1.1
-  - dotnet test src/Serialize.Linq.NetCore11.Tests/Serialize.Linq.NetCore11.Tests.csproj --configuration Release --framework netcoreapp1.1
+  - dotnet build src/Serialize.Linq/Serialize.Linq.csproj --configuration Release --framework netstandard1.3
 
 notifications:
   email:
