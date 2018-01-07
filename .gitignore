@@ -166,4 +166,5 @@ pip-log.txt
 src/packages/
 src/target/
 
-src/\.vs/
+# Visual Studio 2015 cache/options directory
+.vs/
