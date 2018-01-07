@@ -6,7 +6,6 @@
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
 
-using System;
 using System.Reflection;
 using System.Collections.Generic;
 
@@ -17,12 +16,9 @@ namespace Serialize.Linq
         protected override IEnumerable<Assembly> GetAssemblies()
         {
 #if NETSTANDARD1_3
-            return System.Linq.Enumerable.Empty<Assembly>();
-#elif (NETCOREAPP1_0 || NETCOREAPP1_1 || UAP10_0)
-            return System.Linq.Enumerable.Empty<Assembly>();
-            // return System.AppDomain.NetCoreApp.AppDomain.CurrentDomain.GetAssemblies(GetType());
+            return Extensions.ExpressionExtensions.AssemblyLoader.GetAssemblies();
 #else
-            return AppDomain.CurrentDomain.GetAssemblies();
+            return System.AppDomain.CurrentDomain.GetAssemblies();
 #endif
         }
     }

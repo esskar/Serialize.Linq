@@ -4,14 +4,13 @@ using Serialize.Linq.Examples.NetStandardLibrary;
 using Serialize.Linq.Extensions;
 using Serialize.Linq.Serializers;
 
-namespace Serialize.Linq.Examples.NetCoreApp1
+namespace Serialize.Linq.Examples.NetCoreApp2
 {
     class Program
     {
         static void Main(string[] args)
         {
-            // This is needed for NETStandard 1.x and NETCoreApp 1.x
-            ExpressionExtensions.AssemblyLoader = new NetCoreAppAssemblyLoader();
+            // No need to do this : ExpressionExtensions.AssemblyLoader = new NetCoreAppAssemblyLoader();
 
             Expression expression = Expression.Parameter(typeof(Person), "x");
 

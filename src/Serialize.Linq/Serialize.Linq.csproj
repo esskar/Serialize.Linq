@@ -18,13 +18,18 @@
     <RepositoryUrl>https://github.com/esskar/Serialize.Linq</RepositoryUrl>
     <DefaultLanguage>en-us</DefaultLanguage>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Configurations>Debug;Release;Debug Optimize Size;Release Optimize Size</Configurations>
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>uap10.0;net40;net45;netstandard1.3;netcoreapp1.0;netcoreapp1.1;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>;net40;net45;netstandard1.3;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' or '$(TargetFramework)' == 'netcoreapp1.0' or '$(TargetFramework)' == 'netcoreapp1.1' ">
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug Optimize Size' or '$(Configuration)' == 'Release Optimize Size'">
+    <DefineConstants>$(DefineConstants);SERIALIZE_LINQ_OPTIMIZE_SIZE</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
     <DefineConstants>NETSTANDARD</DefineConstants>
   </PropertyGroup>
 
@@ -56,13 +61,6 @@
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' ">
     <PackageReference Include="System.Reflection.TypeExtensions" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Serialization.Xml" Version="4.3.0" />
-  </ItemGroup>
-  
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp1.0' or '$(TargetFramework)' == 'netcoreapp1.1' ">
-    <PackageReference Include="System.AppDomain.NetCoreApp" Version="1.1.2" />
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Xml" Version="4.3.0" />

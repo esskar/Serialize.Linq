@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Serialize.Linq.Extensions
+namespace Serialize.Linq.Internals
 {
-    public static class TypeExtensions
+    internal static class TypeExtensions
     {
 #if NET40 || PORTABLE || SILVERLIGHT || WPSL
         // This allows us to use the new reflection API which separates Type and TypeInfo

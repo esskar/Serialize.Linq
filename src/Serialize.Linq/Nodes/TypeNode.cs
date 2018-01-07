@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Serialize.Linq.Extensions;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
