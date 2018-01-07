@@ -15,7 +15,7 @@ namespace Serialize.Linq
     {
         protected override IEnumerable<Assembly> GetAssemblies()
         {
-#if NETSTANDARD1_3
+#if NETSTANDARD1_3 || UAP10_0
             return Extensions.ExpressionExtensions.AssemblyLoader.GetAssemblies();
 #else
             return System.AppDomain.CurrentDomain.GetAssemblies();
