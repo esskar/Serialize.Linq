@@ -1,2 +1,4 @@
 *.userprefs
 *.sln.GhostDoc.xml
+**.nuget.props
+project.lock.json
