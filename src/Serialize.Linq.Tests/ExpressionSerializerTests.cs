@@ -63,7 +63,7 @@ namespace Serialize.Linq.Tests
                 {
                     var text = serializer.SerializeText(expected);
 
-                    this.TestContext.WriteLine("{0} serializes to text with length {1}: {2}", expected, text.Length, text);
+                    TestContext.WriteLine("{0} serializes to text with length {1}: {2}", expected, text.Length, text);
 
                     var actual = serializer.DeserializeText(text);
 
@@ -88,7 +88,7 @@ namespace Serialize.Linq.Tests
                 {
                     var bytes = serializer.SerializeBinary(expected);
 
-                    this.TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
+                    TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
 
                     var actual = serializer.DeserializeBinary(bytes);
 
@@ -114,7 +114,7 @@ namespace Serialize.Linq.Tests
                 expected.Compile();
 
                 var bytes = serializer.SerializeBinary(expected);
-                this.TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
+                TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
 
                 var actual = (Expression<Func<Bar, bool>>)serializer.DeserializeBinary(bytes);
                 Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, binSerializer.GetType());
@@ -123,7 +123,7 @@ namespace Serialize.Linq.Tests
                 actual.Compile();
             }
         }
-        
+
         [TestMethod]
         public void NullableDecimalTest()
         {
@@ -134,14 +134,14 @@ namespace Serialize.Linq.Tests
 
                 var text = serializer.SerializeText(expected);
 
-                this.TestContext.WriteLine("{0} serializes to text with length {1}: {2}", expected, text.Length, text);
+                TestContext.WriteLine("{0} serializes to text with length {1}: {2}", expected, text.Length, text);
 
                 var actual = serializer.DeserializeText(text);
                 Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, textSerializer.GetType());
                 ExpressionAssert.AreEqual(expected, actual);
-            }                        
+            }
         }
-        
+
         [TestMethod]
         public void SerializeNewObjWithoutParameters()
         {
@@ -163,7 +163,7 @@ namespace Serialize.Linq.Tests
             var result = serializer.SerializeText(exp);
             Assert.IsNotNull(result);
         }
-        
+
         [TestMethod]
         public void SerializeDeserializeGuidValueAsJson()
         {
@@ -257,11 +257,11 @@ namespace Serialize.Linq.Tests
 
         private static IEnumerable<IBinarySerializer> CreateBinarySerializers()
         {
-#if NETCOREAPP1_1 || NETFX_CORE || WINDOWS_UWP 
+#if WINDOWS_UWP 
             return new IBinarySerializer[] { new BinarySerializer() };
 #else
             return new IBinarySerializer[] { new BinarySerializer(), new BinarayFormatterSerializer() };
 #endif
-        }        
+        }
     }
 }

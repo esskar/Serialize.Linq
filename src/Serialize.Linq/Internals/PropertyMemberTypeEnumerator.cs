@@ -32,7 +32,7 @@ namespace Serialize.Linq.Internals
         /// <param name="bindingFlags">The binding flags.</param>
         public PropertyMemberTypeEnumerator(HashSet<Type> seenTypes, Type type, BindingFlags bindingFlags)
             : base(seenTypes, type, bindingFlags
-#if !NETFX_CORE && !WINDOWS_UWP && !NETSTANDARD
+#if  !WINDOWS_UWP && !NETSTANDARD
                   | BindingFlags.SetProperty | BindingFlags.GetProperty
 #endif
                   ) { }

@@ -16,7 +16,7 @@ namespace Serialize.Linq.Serializers
 {
     public class XmlSerializer : TextSerializer, IXmlSerializer
     {
-#if !WINDOWS_PHONE && !NETSTANDARD && !NETFX_CORE && !WINDOWS_UWP
+#if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
             return new DataContractSerializer(type, this.GetKnownTypes());

@@ -9,7 +9,7 @@
 using System;
 using System.IO;
 using Serialize.Linq.Nodes;
-#if !WINDOWS_PHONE && !NETSTANDARD && !NETFX_CORE && !WINDOWS_UWP
+#if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
 using System.Runtime.Serialization;
 #endif
 using Serialize.Linq.Interfaces;
@@ -18,7 +18,7 @@ namespace Serialize.Linq.Serializers
 {
     public abstract class DataSerializer : SerializerBase, ISerializer
     {
-#if !WINDOWS_PHONE && !NETSTANDARD && !NETFX_CORE && !WINDOWS_UWP
+#if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
         public virtual void Serialize<T>(Stream stream, T obj) where T : Node
         {
             if (stream == null)

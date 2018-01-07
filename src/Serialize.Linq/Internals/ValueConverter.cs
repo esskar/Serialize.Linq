@@ -10,7 +10,7 @@ using System;
 #if !WINDOWS_PHONE
 using System.Collections.Concurrent;
 #endif
-#if NETSTANDARD || NETFX_CORE || WINDOWS_UWP
+#if NETSTANDARD || WINDOWS_UWP
 using System.Reflection;
 #endif
 using System.Text.RegularExpressions;
