@@ -165,3 +165,5 @@ pip-log.txt
 .DS_Store
 src/packages/
 src/target/
+
+src/\.vs/

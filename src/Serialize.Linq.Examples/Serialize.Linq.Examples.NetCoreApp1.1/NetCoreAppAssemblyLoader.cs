@@ -20,9 +20,9 @@ namespace Serialize.Linq.Examples.NetCoreApp1
                     Type type = GetType();
                     _assemblies = AppDomain.CurrentDomain.GetAssemblies(type);
                 }
+
+                return _assemblies;
             }
-            
-            return _assemblies;
         }
     }
 }
