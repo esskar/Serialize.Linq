@@ -36,5 +36,25 @@ namespace Serialize.Linq.Tests.Issues
             Assert.IsTrue(func(new Test { Code = "two" }), "two failed.");
             Assert.IsFalse(func(new Test { Code = "three" }), "three failed.");
         }
+
+        [TestMethod]
+        public void SerializeDeserializeListAsJson()
+        {
+            var list = new List<string> { "one", "two" };
+            Expression<Func<Test, bool>> expression = test => list.Contains(test.Code);
+
+            var serializer = new ExpressionSerializer(new JsonSerializer())
+            {
+                AutoAddKnownTypesAsListTypes = true
+            };
+            var value = serializer.SerializeText(expression);
+
+            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeText(value);
+            var func = actualExpression.Compile();
+
+            Assert.IsTrue(func(new Test { Code = "one" }), "one failed.");
+            Assert.IsTrue(func(new Test { Code = "two" }), "two failed.");
+            Assert.IsFalse(func(new Test { Code = "three" }), "three failed.");
+        }
     }
 }
