@@ -27,6 +27,7 @@
     <Compile Include="..\Serialize.Linq.Tests\Issues\Issue68.cs" Link="Issues\Issue68.cs" />
     <Compile Include="..\Serialize.Linq.Tests\Issues\Issue69.cs" Link="Issues\Issue69.cs" />
     <Compile Include="..\Serialize.Linq.Tests\Issues\Issue81.cs" Link="Issues\Issue81.cs" />
+    <Compile Include="..\Serialize.Linq.Tests\Issues\Issue96.cs" Link="Issues\Issue96.cs" />
     <Compile Include="..\Serialize.Linq.Tests\MemberInfoExtensionsTests.cs" Link="MemberInfoExtensionsTests.cs" />
   </ItemGroup>
 

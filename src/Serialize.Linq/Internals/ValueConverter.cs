@@ -7,6 +7,8 @@
 #endregion
 
 using System;
+using System.Collections;
+using System.Collections.Generic;
 #if !WINDOWS_PHONE
 using System.Collections.Concurrent;
 #endif
@@ -110,6 +112,8 @@ namespace Serialize.Linq.Internals
             if (convertTo.IsArray && value.GetType().IsArray())
             {
                 var elementType = convertTo.GetElementType();
+                if (elementType == null)
+                    throw new InvalidOperationException("Cannot build array with an unkown element type.");
 
                 var valArray = (Array)value;
                 var result = Array.CreateInstance(elementType, valArray.Length);
@@ -118,27 +122,44 @@ namespace Serialize.Linq.Internals
                 return result;
             }
 
-            // convert nullable types
-            if (convertTo.IsGenericType() && convertTo.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (convertTo.IsGenericType())
             {
-                var argumentTypes = convertTo.GetGenericArguments();
-                if (argumentTypes.Length == 1)                
-                    value = Convert(value, argumentTypes[0]);                
+                // convert nullable types
+                var genericTypeDefinition = convertTo.GetGenericTypeDefinition();
+                if (genericTypeDefinition == typeof(Nullable<>))
+                {
+                    var argumentTypes = convertTo.GetGenericArguments();
+                    if (argumentTypes.Length == 1)
+                        value = Convert(value, argumentTypes[0]);
+                }
+                else if (genericTypeDefinition == typeof(List<>) && value is IEnumerable)
+                {
+                    var result = (IList)Activator.CreateInstance(convertTo);
+                    foreach (var item in (IEnumerable) value)
+                        result.Add(item);
+                    return result;
+                }
             }
-            
-            // TODO: think about a better way; exception could may have an critical impact on performance
-            try
+
+            if (value is IConvertible)
             {
+                // TODO: think about a better way; exception could may have an critical impact on performance
+                try
+                {
 #if SILVERLIGHT
-                return System.Convert.ChangeType(value, convertTo, System.Threading.Thread.CurrentThread.CurrentCulture);
+                    return System.Convert.ChangeType(value, convertTo, System.Threading.Thread.CurrentThread.CurrentCulture);
 #else
-                return System.Convert.ChangeType(value, convertTo);
+                    return System.Convert.ChangeType(value, convertTo);
 #endif
+                }
+                catch (Exception)
+                {
+                    // empty on purpose, we fallback later
+                }
             }
-            catch (Exception)
-            {
-                return Activator.CreateInstance(convertTo, value);
-            }            
+
+            // fallback
+            return Activator.CreateInstance(convertTo, value);
         }
 
         /// <summary>

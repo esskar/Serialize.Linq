@@ -108,6 +108,7 @@ ClientBin
 stylecop.*
 ~$*
 *.dbmdl
+sqlite3
 Generated_Code #added for RIA/Silverlight projects
 
 # Backup & report files from converting an old project file to a newer
@@ -147,6 +148,12 @@ var
 sdist
 develop-eggs
 .installed.cfg
+*.userprefs
+*.sln.GhostDoc.xml
+**.nuget.props
+project.lock.json
+*.nupkg
+src/nuget/
 
 # Installer logs
 pip-log.txt
