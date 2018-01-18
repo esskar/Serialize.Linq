@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp1.1</TargetFramework>
     <RootNamespace>Serialize.Linq</RootNamespace>
-    <Version>1.5.0</Version>
+    <Version>1.6.0</Version>
     <Company />
     <Product>Serialize.Linq.NetCore11</Product>
     <Authors />

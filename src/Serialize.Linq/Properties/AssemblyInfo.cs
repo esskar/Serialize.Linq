@@ -12,7 +12,7 @@ using System.Reflection;
 [assembly: AssemblyTitle("Serialize.Linq")]
 [assembly: AssemblyProduct("Serialize.Linq")]
 [assembly: AssemblyCopyright("Copyright © 2012-2018")]
-[assembly: AssemblyVersion("1.5.0")]
-[assembly: AssemblyFileVersion("1.5.0")]
+[assembly: AssemblyVersion("1.6.0")]
+[assembly: AssemblyFileVersion("1.6.0")]
 
 [assembly: CLSCompliant(true)]
