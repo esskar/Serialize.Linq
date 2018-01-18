@@ -148,6 +148,11 @@ var
 sdist
 develop-eggs
 .installed.cfg
+*.userprefs
+*.sln.GhostDoc.xml
+**.nuget.props
+project.lock.json
+*.nupkg
 
 # Installer logs
 pip-log.txt
