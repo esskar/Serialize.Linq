@@ -153,6 +153,7 @@ develop-eggs
 **.nuget.props
 project.lock.json
 *.nupkg
+src/nuget/
 
 # Installer logs
 pip-log.txt
