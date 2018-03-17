@@ -1,27 +1,38 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-#region Copyright
+﻿#region Copyright
 //  Copyright, Sascha Kiefer (esskar)
 //  Released under LGPL License.
 //  
 //  License: https://raw.github.com/esskar/Serialize.Linq/master/LICENSE
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
-
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 using Serialize.Linq.Nodes;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Extensions
 {
     /// <summary>
-    /// Expression externsions methods.
+    /// Expression extension methods.
     /// </summary>
     public static class ExpressionExtensions
     {
+        /// <summary>
+        /// The AssemblyLoader which is used to retrieve assemblies that have been loaded into the execution context of this application domain.
+        /// For .NET 4.x and up and NETStandard 2.x, the DefaultAssemblyLoader will be used. For other frameworks provide a custom AssemblyLoader.
+        /// </summary>
+        public static IAssemblyLoader AssemblyLoader
+        {
+            get => _assemblyLoader;
+            set => _assemblyLoader = value ?? throw new ArgumentNullException(nameof(AssemblyLoader));
+        }
+        private static IAssemblyLoader _assemblyLoader = new DefaultAssemblyLoader();
+
         /// <summary>
         /// Converts an expression to an expression node.
         /// </summary>
@@ -34,7 +45,7 @@ namespace Serialize.Linq.Extensions
             return converter.Convert(expression, factorySettings);
         }
 
-#if !SILVERLIGHT && !NETCOREAPP1_1
+#if !SILVERLIGHT
         /// <summary>
         /// Converts an expression to an json encoded string.
         /// </summary>
@@ -45,7 +56,7 @@ namespace Serialize.Linq.Extensions
         {
             return expression.ToJson(expression.GetDefaultFactory(factorySettings));
         }
-        
+
         /// <summary>
         /// Converts an expression to an json encoded string using the given factory.
         /// </summary>
@@ -118,11 +129,11 @@ namespace Serialize.Linq.Extensions
         /// serializer
         /// </exception>
         public static string ToText(this Expression expression, INodeFactory factory, ITextSerializer serializer)
-        {            
-            if(factory == null)
-                throw new ArgumentNullException("factory");
-            if(serializer == null)
-                throw new ArgumentNullException("serializer");
+        {
+            if (factory == null)
+                throw new ArgumentNullException(nameof(factory));
+            if (serializer == null)
+                throw new ArgumentNullException(nameof(serializer));
 
             return serializer.Serialize(factory.Create(expression));
         }
@@ -136,8 +147,8 @@ namespace Serialize.Linq.Extensions
         internal static INodeFactory GetDefaultFactory(this Expression expression, FactorySettings factorySettings)
         {
             var lambda = expression as LambdaExpression;
-            if(lambda != null)
-                return  new DefaultNodeFactory(lambda.Parameters.Select(p => p.Type), factorySettings);
+            if (lambda != null)
+                return new DefaultNodeFactory(lambda.Parameters.Select(p => p.Type), factorySettings);
             return new NodeFactory(factorySettings);
         }
 
@@ -176,7 +187,7 @@ namespace Serialize.Linq.Extensions
                 var invocationExpression = (InvocationExpression)expression;
                 yield return invocationExpression.Expression;
                 foreach (var argument in invocationExpression.Arguments)
-                    yield return argument;                
+                    yield return argument;
             }
             else if (expression is ListInitExpression)
             {
@@ -195,8 +206,8 @@ namespace Serialize.Linq.Extensions
                 var methodCallExpression = (MethodCallExpression)expression;
                 foreach (var argument in methodCallExpression.Arguments)
                     yield return argument;
-                if (methodCallExpression.Object != null)                
-                    yield return methodCallExpression.Object;                
+                if (methodCallExpression.Object != null)
+                    yield return methodCallExpression.Object;
             }
             else if (expression is NewArrayExpression)
             {

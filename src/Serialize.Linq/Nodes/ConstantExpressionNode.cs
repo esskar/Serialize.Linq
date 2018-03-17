@@ -9,7 +9,7 @@
 using System;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
-#if NETCOREAPP1_1 || NETFX_CORE || WINDOWS_UWP
+#if NETSTANDARD || WINDOWS_UWP
 using System.Reflection;
 #endif
 using Serialize.Linq.Exceptions;
@@ -24,7 +24,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "C")]   
 #endif
-#if !SILVERLIGHT && !NETCOREAPP1_1 && !NETFX_CORE && !WINDOWS_UWP
+#if !SILVERLIGHT && !NETSTANDARD && !WINDOWS_UWP
     [Serializable]
 #endif
     #endregion

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using Serialize.Linq.Extensions;
+using Serialize.Linq.Internals;
 using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Factories

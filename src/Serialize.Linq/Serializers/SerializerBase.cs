@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Serialize.Linq.Extensions;
-
-#if WINDOWS_PHONE7
 using Serialize.Linq.Internals;
-#endif
 
 namespace Serialize.Linq.Serializers
 {
     public abstract class SerializerBase
     {
         private static readonly Type[] _knownTypes =
-        { 
+        {
             typeof(bool),
             typeof(decimal), typeof(double),
             typeof(float),
@@ -30,7 +26,7 @@ namespace Serialize.Linq.Serializers
         protected SerializerBase()
         {
             _customKnownTypes = new HashSet<Type>();
-            this.AutoAddKnownTypesAsArrayTypes = true;
+            AutoAddKnownTypesAsArrayTypes = true;
         }
 
         public bool AutoAddKnownTypesAsArrayTypes
@@ -58,7 +54,7 @@ namespace Serialize.Linq.Serializers
         public void AddKnownType(Type type)
         {
             if (type == null)
-                throw new ArgumentNullException("type");
+                throw new ArgumentNullException(nameof(type));
 
             _customKnownTypes.Add(type);
         }
@@ -66,15 +62,15 @@ namespace Serialize.Linq.Serializers
         public void AddKnownTypes(IEnumerable<Type> types)
         {
             if (types == null)
-                throw new ArgumentNullException("types");
+                throw new ArgumentNullException(nameof(types));
 
             foreach (var type in types)
-                this.AddKnownType(type);
+                AddKnownType(type);
         }
 
         protected virtual IEnumerable<Type> GetKnownTypes()
         {
-            return this.ExplodeKnownTypes(_knownTypes).Concat(this.ExplodeKnownTypes(_customKnownTypes));
+            return ExplodeKnownTypes(_knownTypes).Concat(ExplodeKnownTypes(_customKnownTypes));
         }
 
         private IEnumerable<Type> ExplodeKnownTypes(IEnumerable<Type> types)
@@ -82,19 +78,19 @@ namespace Serialize.Linq.Serializers
             foreach (var type in types)
             {
                 yield return type;
-                if (this.AutoAddKnownTypesAsArrayTypes)
+                if (AutoAddKnownTypesAsArrayTypes)
                     yield return type.MakeArrayType();
-                else if (this.AutoAddKnownTypesAsListTypes)
+                else if (AutoAddKnownTypesAsListTypes)
                     yield return typeof(List<>).MakeGenericType(type);
-                
-                if (type.IsClass()) 
+
+                if (type.IsClass())
                     continue;
 
-                var nullableType = typeof (Nullable<>).MakeGenericType(type);
+                var nullableType = typeof(Nullable<>).MakeGenericType(type);
                 yield return nullableType;
-                if (this.AutoAddKnownTypesAsArrayTypes)
+                if (AutoAddKnownTypesAsArrayTypes)
                     yield return nullableType.MakeArrayType();
-                else if (this.AutoAddKnownTypesAsListTypes)
+                else if (AutoAddKnownTypesAsListTypes)
                     yield return typeof(List<>).MakeGenericType(nullableType);
             }
         }

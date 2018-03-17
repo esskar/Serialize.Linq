@@ -3,17 +3,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>
-    </ProductVersion>
+    <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{9854CEA9-3EBA-414F-AFE9-A92CA24A52D1}</ProjectGuid>
+    <ProjectGuid>{94C52AD1-5D4A-4C9E-A1A3-68D3A36E6BF7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Serialize.Linq.Tests</RootNamespace>
-    <AssemblyName>Serialize.Linq.Tests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>Serialize.Linq</RootNamespace>
+    <AssemblyName>Serialize.Linq</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
@@ -43,7 +41,7 @@
     <DefineConstants>TRACE;DEBUG;SERIALIZE_LINQ_OPTIMIZE_SIZE</DefineConstants>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Debug\Serialize.Linq.Tests.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisLogFile>bin\Debug\Serialize.Linq.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
@@ -60,7 +58,7 @@
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <CodeAnalysisLogFile>bin\Release\Serialize.Linq.Tests.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisLogFile>bin\Release\Serialize.Linq.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
     <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
     <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
     <ErrorReport>prompt</ErrorReport>
@@ -78,60 +76,85 @@
     <AssemblyOriginatorKeyFile>Serialize.Linq Signing Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
-    <Reference Include="System.Core">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
+    <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <CodeAnalysisDependentAssemblyPaths Condition=" '$(VS100COMNTOOLS)' != '' " Include="$(VS100COMNTOOLS)..\IDE\PrivateAssemblies">
-      <Visible>False</Visible>
-    </CodeAnalysisDependentAssemblyPaths>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ExpressionSerializerTests.cs" />
-    <Compile Include="ExpressionNodeTests.cs" />
-    <Compile Include="Internals\BinarayFormatterSerializer.cs" />
-    <Compile Include="Internals\ExpressionAssert.cs" />
-    <Compile Include="Internals\ExpressionComparer.cs" />
-    <Compile Include="Internals\Objects.cs" />
-    <Compile Include="Internals\SerializerTestData.cs" />
-    <Compile Include="Issues\Issue35.cs" />
-    <Compile Include="Issues\Issue30.cs" />
-    <Compile Include="Issues\Issue31.cs" />
-    <Compile Include="Issues\Issue34.cs" />
-    <Compile Include="Issues\Issue37.cs" />
-    <Compile Include="Issues\Issue38.cs" />
-    <Compile Include="Issues\Issue39.cs" />
-    <Compile Include="Issues\Issue41.cs" />
-    <Compile Include="Issues\Issue43.cs" />
-    <Compile Include="Issues\Issue50.cs" />
-    <Compile Include="Issues\Issue54.cs" />
-    <Compile Include="Issues\Issue56.cs" />
-    <Compile Include="Issues\Issue68.cs" />
-    <Compile Include="Issues\Issue69.cs" />
-    <Compile Include="Issues\Issue81.cs" />
-    <Compile Include="Issues\Issue96.cs" />
-    <Compile Include="MemberInfoExtensionsTests.cs" />
+    <Compile Include="Exceptions\MemberNotFoundException.cs" />
+    <Compile Include="ExpressionContextBase.cs" />
+    <Compile Include="Extensions\MemberInfoExtensions.cs" />
+    <Compile Include="Extensions\TypeExtensions.cs" />
+    <Compile Include="Factories\DefaultNodeFactory.cs" />
+    <Compile Include="Factories\FactorySettings.cs" />
+    <Compile Include="Factories\TypeResolverNodeFactory.cs" />
+    <Compile Include="Interfaces\IBinarySerializer.cs" />
+    <Compile Include="Interfaces\IExpressionContext.cs" />
+    <Compile Include="Interfaces\IXmlSerializer.cs" />
+    <Compile Include="Interfaces\IJsonSerializer.cs" />
+    <Compile Include="Interfaces\ISerializer.cs" />
+    <Compile Include="Interfaces\ITextSerializer.cs" />
+    <Compile Include="Internals\ComplexPropertyMemberTypeEnumerator.cs" />
+    <Compile Include="Internals\ComplexPropertyMemberTypeFinder.cs" />
+    <Compile Include="ExpressionContext.cs" />
+    <Compile Include="Internals\MemberTypeEnumerator.cs" />
+    <Compile Include="Internals\PropertyMemberTypeEnumerator.cs" />
+    <Compile Include="Internals\ValueConverter.cs" />
+    <Compile Include="Nodes\ConstructorInfoNode.cs" />
+    <Compile Include="Nodes\TypeNode.cs" />
+    <Compile Include="Nodes\MemberInfoNode.cs" />
+    <Compile Include="Nodes\MethodInfoNode.cs" />
+    <Compile Include="Nodes\FieldInfoNode.cs" />
+    <Compile Include="Nodes\PropertyInfoNode.cs" />
+    <Compile Include="Nodes\MemberNode.cs" />
+    <Compile Include="Nodes\MemberInfoNodeList.cs" />
+    <Compile Include="Nodes\MemberInitExpressionNode.cs" />
+    <Compile Include="Nodes\MethodCallExpressionNode.cs" />
+    <Compile Include="Nodes\NewArrayExpressionNode.cs" />
+    <Compile Include="Nodes\NewExpressionNode.cs" />
+    <Compile Include="Exceptions\InvalidTypeException.cs" />
+    <Compile Include="Extensions\ExpressionExtensions.cs" />
+    <Compile Include="Nodes\BinaryExpressionNode.cs" />
+    <Compile Include="Nodes\ConditionalExpressionNode.cs" />
+    <Compile Include="Nodes\ConstantExpressionNode.cs" />
+    <Compile Include="Nodes\ElementInitNode.cs" />
+    <Compile Include="Nodes\ElementInitNodeList.cs" />
+    <Compile Include="Nodes\ExpressionNode.cs" />
+    <Compile Include="Factories\NodeFactory.cs" />
+    <Compile Include="Interfaces\INodeFactory.cs" />
+    <Compile Include="Nodes\ExpressionNodeList.cs" />
+    <Compile Include="Nodes\InvocationExpressionNode.cs" />
+    <Compile Include="Nodes\LambdaExpressionNode.cs" />
+    <Compile Include="Nodes\ListInitExpressionNode.cs" />
+    <Compile Include="Nodes\MemberAssignmentNode.cs" />
+    <Compile Include="Nodes\MemberBindingNode.cs" />
+    <Compile Include="Nodes\MemberBindingNodeList.cs" />
+    <Compile Include="Nodes\MemberExpressionNode.cs" />
+    <Compile Include="Nodes\MemberListBindingNode.cs" />
+    <Compile Include="Nodes\MemberMemberBindingNode.cs" />
+    <Compile Include="Nodes\Node.cs" />
+    <Compile Include="Nodes\ParameterExpressionNode.cs" />
+    <Compile Include="Nodes\TypeBinaryExpressionNode.cs" />
+    <Compile Include="Nodes\UnaryExpressionNode.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Serializers\BinarySerializer.cs" />
+    <Compile Include="Serializers\ExpressionConverter.cs" />
+    <Compile Include="Serializers\ExpressionSerializer.cs" />
+    <Compile Include="Serializers\SerializerBase.cs" />
+    <Compile Include="Serializers\TextSerializer.cs" />
+    <Compile Include="Serializers\XmlSerializer.cs" />
+    <Compile Include="Serializers\JsonSerializer.cs" />
+    <Compile Include="Serializers\DataSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Serialize.Linq.Tests.Container\Serialize.Linq.Tests.Container.csproj">
-      <Project>{439F88AF-F18C-4D27-B8D6-01D249BE647D}</Project>
-      <Name>Serialize.Linq.Tests.Container</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Serialize.Linq\Serialize.Linq.csproj">
-      <Project>{0004924b-c805-4d58-b448-9c71f45a62fa}</Project>
-      <Name>Serialize.Linq</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="..\..\README.md">
+      <Link>README.md</Link>
+    </None>
     <None Include="Serialize.Linq Signing Key.snk" />
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>

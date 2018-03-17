@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
 using Serialize.Linq.Extensions;
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq.Nodes
 {
@@ -22,7 +23,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "T")]
 #endif
-#if !SILVERLIGHT && !NETCOREAPP1_1 && !NETFX_CORE && !WINDOWS_UWP
+#if !SILVERLIGHT && !NETSTANDARD && !WINDOWS_UWP
     [Serializable]
 #endif
     #endregion

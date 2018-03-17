@@ -26,7 +26,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "MN")]
 #endif
-#if !SILVERLIGHT && !NETCOREAPP1_1 && !NETFX_CORE && !WINDOWS_UWP
+#if !SILVERLIGHT && !NETSTANDARD && !WINDOWS_UWP
     [Serializable]
 #endif
     #endregion

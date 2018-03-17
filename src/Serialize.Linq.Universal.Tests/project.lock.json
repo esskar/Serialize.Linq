@@ -18414,15 +18414,15 @@
       ]
     },
     "Microsoft.NETCore.Platforms/1.0.2": {
-      "sha512": "4MZgvJ6DVlYz1dQzZMzxD9zrj1vpSFLoQqtjFXBGVKRgVvleF4vJQhkVV3uzRME7/vibiSTBKj9YAICfhAgM+g==",
+      "sha512": "fRHBvQs9Z/ZSUAqaSotK1UPol/lwybTgdeTXR4eVw3rVDgzUnWGTUsK0A418oR7NrimNL1TQu/IM0RDa26s0qg==",
       "type": "package",
       "path": "microsoft.netcore.platforms/1.0.2",
       "files": [
+        "Microsoft.NETCore.Platforms.1.0.2.nupkg.sha512",
+        "Microsoft.NETCore.Platforms.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/netstandard1.0/_._",
-        "microsoft.netcore.platforms.1.0.2.nupkg.sha512",
-        "microsoft.netcore.platforms.nuspec",
         "runtime.json"
       ]
     },
@@ -20245,10 +20245,12 @@
       ]
     },
     "System.Data.Common/4.1.0": {
-      "sha512": "oBg04Bg0FLctwHllXoCI/SNGflWfYT7HgykfjWgnROG/4Rp7lUOiLuBQ3YHwWgZtD4RI6rgY+SMhzmEvRmpCDg==",
+      "sha512": "epU8jeTe7aE7RqGHq9rZ8b0Q4Ah7DgubzHQblgZMSqgW1saW868WmooSyC5ywf8upLBkcVLDu93W9GPWUYsU2Q==",
       "type": "package",
       "path": "system.data.common/4.1.0",
       "files": [
+        "System.Data.Common.4.1.0.nupkg.sha512",
+        "System.Data.Common.nuspec",
         "ThirdPartyNotices.txt",
         "dotnet_library_license.txt",
         "lib/MonoAndroid10/_._",
@@ -20288,9 +20290,7 @@
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
-        "ref/xamarinwatchos10/_._",
-        "system.data.common.4.1.0.nupkg.sha512",
-        "system.data.common.nuspec"
+        "ref/xamarinwatchos10/_._"
       ]
     },
     "System.Diagnostics.Contracts/4.0.1": {
@@ -24677,7 +24677,7 @@
   },
   "project": {
     "restore": {
-      "projectUniqueName": "C:\\Dev\\Esskar\\Serialize.Linq\\src\\Serialize.Linq.Universal.Tests\\Serialize.Linq.Universal.Tests.csproj",
+      "projectUniqueName": "C:\\Users\\azureuser\\Documents\\Github\\_forks\\Serialize.Linq\\src\\Serialize.Linq.Universal.Tests\\Serialize.Linq.Universal.Tests.csproj",
       "projectName": "Serialize.Linq.Universal.Tests",
       "projectPath": "C:\\Dev\\Esskar\\Serialize.Linq\\src\\Serialize.Linq.Universal.Tests\\Serialize.Linq.Universal.Tests.csproj",
       "projectJsonPath": "C:\\Dev\\Esskar\\Serialize.Linq\\src\\Serialize.Linq.Universal.Tests\\project.json",
@@ -24700,8 +24700,8 @@
       "frameworks": {
         "uap10.0.10240": {
           "projectReferences": {
-            "C:\\Dev\\Esskar\\Serialize.Linq\\src\\Serialize.Linq.Universal\\Serialize.Linq.Universal.csproj": {
-              "projectPath": "C:\\Dev\\Esskar\\Serialize.Linq\\src\\Serialize.Linq.Universal\\Serialize.Linq.Universal.csproj"
+            "C:\\Users\\azureuser\\Documents\\Github\\_forks\\Serialize.Linq\\src\\Serialize.Linq.Universal\\Serialize.Linq.Universal.csproj": {
+              "projectPath": "C:\\Users\\azureuser\\Documents\\Github\\_forks\\Serialize.Linq\\src\\Serialize.Linq.Universal\\Serialize.Linq.Universal.csproj"
             }
           }
         }

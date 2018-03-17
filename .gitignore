@@ -172,3 +172,6 @@ pip-log.txt
 .DS_Store
 src/packages/
 src/target/
+
+# Visual Studio 2015 cache/options directory
+.vs/
