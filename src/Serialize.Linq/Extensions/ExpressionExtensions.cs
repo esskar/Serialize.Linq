@@ -23,17 +23,6 @@ namespace Serialize.Linq.Extensions
     public static class ExpressionExtensions
     {
         /// <summary>
-        /// The AssemblyLoader which is used to retrieve assemblies that have been loaded into the execution context of this application domain.
-        /// For .NET 4.x and up and NETStandard 2.x, the DefaultAssemblyLoader will be used. For other frameworks provide a custom AssemblyLoader.
-        /// </summary>
-        public static IAssemblyLoader AssemblyLoader
-        {
-            get => _assemblyLoader;
-            set => _assemblyLoader = value ?? throw new ArgumentNullException(nameof(AssemblyLoader));
-        }
-        private static IAssemblyLoader _assemblyLoader = new DefaultAssemblyLoader();
-
-        /// <summary>
         /// Converts an expression to an expression node.
         /// </summary>
         /// <param name="expression">The expression.</param>
