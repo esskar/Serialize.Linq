@@ -11,7 +11,8 @@
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageTags>linq;serialize</PackageTags>
-    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageReleaseNotes>- remove WP8 and SL Versions
+- add .NET Standard Versions</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/esskar/Serialize.Linq</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/esskar/Serialize.Linq/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
@@ -23,6 +24,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>uap10.0;net40;net45;netstandard1.3;netstandard2.0</TargetFrameworks>
+    <Version>1.7.0</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug Optimize Size' or '$(Configuration)' == 'Release Optimize Size'">
