@@ -23,9 +23,10 @@ For bugs: make sure you create a unit test, so it is easier for me to reproduce 
 ## Supported Platforms (or known to work with)
 * .NET 4.0
 * .NET 4.5
-* Silverlight 5.0
-* .Net Core 1.1
-* Windows Phone 8
+* .Net Standard 1.3
+* .Net Standard 2.0
+* UAP 10.0
+
 
 [1]: http://nuget.org/packages/Serialize.Linq
 [2]: https://github.com/esskar
