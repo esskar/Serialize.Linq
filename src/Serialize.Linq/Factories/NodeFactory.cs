@@ -16,8 +16,6 @@ namespace Serialize.Linq.Factories
 {
     public class NodeFactory : INodeFactory
     {
-        private readonly FactorySettings _factorySettings;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="NodeFactory"/> class.
         /// </summary>
@@ -30,13 +28,10 @@ namespace Serialize.Linq.Factories
         /// <param name="factorySettings">The factory settings to use.</param>
         public NodeFactory(FactorySettings factorySettings)
         {
-            _factorySettings = factorySettings ?? new FactorySettings();
+            Settings = factorySettings ?? new FactorySettings();
         }
 
-        public FactorySettings Settings
-        {
-            get { return _factorySettings; }
-        }
+        public FactorySettings Settings { get; private set; }
 
         /// <summary>
         /// Creates an expression node from an expression.
