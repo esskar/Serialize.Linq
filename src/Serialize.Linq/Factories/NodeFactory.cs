@@ -44,20 +44,20 @@ namespace Serialize.Linq.Factories
             if (expression == null)
                 return null;
 
-            if (expression is BinaryExpression)        return new BinaryExpressionNode(this, expression as BinaryExpression);
-            if (expression is ConditionalExpression)   return new ConditionalExpressionNode(this, expression as ConditionalExpression);
-            if (expression is ConstantExpression)      return new ConstantExpressionNode(this, expression as ConstantExpression);
-            if (expression is InvocationExpression)    return new InvocationExpressionNode(this, expression as InvocationExpression);
-            if (expression is LambdaExpression)        return new LambdaExpressionNode(this, expression as LambdaExpression);
-            if (expression is ListInitExpression)      return new ListInitExpressionNode(this, expression as ListInitExpression);
-            if (expression is MemberExpression)        return new MemberExpressionNode(this, expression as MemberExpression);
-            if (expression is MemberInitExpression)    return new MemberInitExpressionNode(this, expression as MemberInitExpression);
-            if (expression is MethodCallExpression)    return new MethodCallExpressionNode(this, expression as MethodCallExpression);
-            if (expression is NewArrayExpression)      return new NewArrayExpressionNode(this, expression as NewArrayExpression);
-            if (expression is NewExpression)           return new NewExpressionNode(this, expression as NewExpression);
-            if (expression is ParameterExpression)     return new ParameterExpressionNode(this, expression as ParameterExpression);                        
-            if (expression is TypeBinaryExpression)    return new TypeBinaryExpressionNode(this, expression as TypeBinaryExpression);
-            if (expression is UnaryExpression)         return new UnaryExpressionNode(this, expression as UnaryExpression);                        
+            if (expression is BinaryExpression binaryExpression) return new BinaryExpressionNode(this, binaryExpression);
+            if (expression is ConditionalExpression conditionalExpression) return new ConditionalExpressionNode(this, conditionalExpression);
+            if (expression is ConstantExpression constantExpression) return new ConstantExpressionNode(this, constantExpression);
+            if (expression is InvocationExpression invocationExpression) return new InvocationExpressionNode(this, invocationExpression);
+            if (expression is LambdaExpression lambdaExpression) return new LambdaExpressionNode(this, lambdaExpression);
+            if (expression is ListInitExpression listInitExpression) return new ListInitExpressionNode(this, listInitExpression);
+            if (expression is MemberExpression memberExpression) return new MemberExpressionNode(this, memberExpression);
+            if (expression is MemberInitExpression memberInitExpression) return new MemberInitExpressionNode(this, memberInitExpression);
+            if (expression is MethodCallExpression methodCallExpression) return new MethodCallExpressionNode(this, methodCallExpression);
+            if (expression is NewArrayExpression newArrayExpression) return new NewArrayExpressionNode(this, newArrayExpression);
+            if (expression is NewExpression newExpression) return new NewExpressionNode(this, newExpression);
+            if (expression is ParameterExpression parameterExpression) return new ParameterExpressionNode(this, parameterExpression);                        
+            if (expression is TypeBinaryExpression typeBinaryExpression) return new TypeBinaryExpressionNode(this, typeBinaryExpression);
+            if (expression is UnaryExpression unaryExpression) return new UnaryExpressionNode(this, unaryExpression);                        
 
             throw new ArgumentException("Unknown expression of type " + expression.GetType());
         }
