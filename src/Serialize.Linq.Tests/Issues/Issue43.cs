@@ -23,7 +23,7 @@ namespace Serialize.Linq.Tests.Issues
             }
         }
 
-        [TestMethod, Ignore]
+        [TestMethod]
         public void ThrowsStackOverflowException()
         {
             var idCollection = new List<Guid>();
@@ -39,6 +39,9 @@ namespace Serialize.Linq.Tests.Issues
 
             composedExpression = idCollection.Select(t => Expression.MakeBinary(ExpressionType.Equal, propertyExpression, Expression.Constant(t))).Aggregate<Expression, Expression>(composedExpression, (current, equalExpression) => Expression.MakeBinary(ExpressionType.OrElse, equalExpression, current));
             var expressionNode = composedExpression.ToExpressionNode();
+
+            var result = expressionNode.ToExpression();
+            Assert.IsNotNull(result);
         }
     }
 }
