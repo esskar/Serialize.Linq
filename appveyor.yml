@@ -1,0 +1,15 @@
+version: 1.0.{build}
+configuration:
+  - Release
+image: Visual Studio 2017
+before_build:
+  - nuget restore src\Serialize.Linq.sln
+build:
+  project: src\Serialize.Linq.sln
+  publish_nuget: true
+  publish_nuget_symbols: true
+  include_nuget_references: true
+nuget:  
+  disable_publish_on_pr: true
+  account_feed: true
+  project_feed: true
