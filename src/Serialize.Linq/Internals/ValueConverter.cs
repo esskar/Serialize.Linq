@@ -135,8 +135,9 @@ namespace Serialize.Linq.Internals
                 else if (genericTypeDefinition == typeof(List<>) && value is IEnumerable)
                 {
                     var result = (IList)Activator.CreateInstance(convertTo);
+                    var itemType = convertTo.GetGenericArguments()[0];
                     foreach (var item in (IEnumerable) value)
-                        result.Add(item);
+                        result.Add(Convert(item, itemType));
                     return result;
                 }
             }
