@@ -16,7 +16,7 @@ namespace Serialize.Linq.Serializers
             typeof(short), typeof(ushort),
             typeof(long), typeof(ulong),
             typeof(string),
-            typeof(DateTime), typeof(TimeSpan), typeof(Guid), typeof(DayOfWeek)
+            typeof(DateTime), typeof(DateTimeOffset), typeof(TimeSpan), typeof(Guid), typeof(DayOfWeek), typeof(DateTimeKind)
         };
 
         private readonly HashSet<Type> _customKnownTypes;
