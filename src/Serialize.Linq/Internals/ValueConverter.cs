@@ -16,7 +16,6 @@ using System.Collections.Concurrent;
 using System.Reflection;
 #endif
 using System.Text.RegularExpressions;
-using Serialize.Linq.Extensions;
 
 namespace Serialize.Linq.Internals
 {
@@ -24,7 +23,7 @@ namespace Serialize.Linq.Internals
     {
         private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
         private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>-?\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/"
-#if !SILVERLIGHT && !NETSTANDARD
+#if !NETSTANDARD
             , RegexOptions.Compiled
 #endif
             );
@@ -147,11 +146,7 @@ namespace Serialize.Linq.Internals
                 // TODO: think about a better way; exception could may have an critical impact on performance
                 try
                 {
-#if SILVERLIGHT
-                    return System.Convert.ChangeType(value, convertTo, System.Threading.Thread.CurrentThread.CurrentCulture);
-#else
-                    return System.Convert.ChangeType(value, convertTo);
-#endif
+                    return Convert(value, convertTo);
                 }
                 catch (Exception)
                 {
