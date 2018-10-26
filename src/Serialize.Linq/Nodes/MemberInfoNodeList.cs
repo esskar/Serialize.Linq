@@ -21,7 +21,7 @@ namespace Serialize.Linq.Nodes
 #else
     [CollectionDataContract(Name = "MIL")]
 #endif
-#if !SILVERLIGHT && !NETSTANDARD && !WINDOWS_UWP
+#if !WINDOWS_UWP
     [Serializable]
 #endif
     #endregion

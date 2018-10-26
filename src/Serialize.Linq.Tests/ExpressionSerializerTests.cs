@@ -195,6 +195,24 @@ namespace Serialize.Linq.Tests
         }
 
         [TestMethod]
+        public void ExpressionWithConstantDateTimeOffsetAsBinary()
+        {
+            SerializeDeserializeExpressionAsBinary(CreateConstantDateTimeOffsetExpression(), new BinarySerializer());
+        }
+
+        [TestMethod]
+        public void ExpressionWithConstantDateTimeOffsetAsJson()
+        {
+            SerializeDeserializeExpressionAsText(CreateConstantDateTimeOffsetExpression(), new JsonSerializer());
+        }
+
+        [TestMethod]
+        public void ExpressionWithConstantDateTimeOffsetAsXml()
+        {
+            SerializeDeserializeExpressionAsText(CreateConstantDateTimeOffsetExpression(), new XmlSerializer());
+        }
+
+        [TestMethod]
         public void ExpressionWithConstantDateTimeAsBinary()
         {
             SerializeDeserializeExpressionAsBinary(CreateConstantDateTimeExpression(), new BinarySerializer());
@@ -221,6 +239,11 @@ namespace Serialize.Linq.Tests
         private static ConstantExpression CreateConstantDateTimeExpression()
         {
             return Expression.Constant(DateTime.Today);
+        }
+
+        private static ConstantExpression CreateConstantDateTimeOffsetExpression()
+        {
+            return Expression.Constant(DateTimeOffset.Now);
         }
 
         private static Expression<Func<Guid>> CreateGuidExpression()
