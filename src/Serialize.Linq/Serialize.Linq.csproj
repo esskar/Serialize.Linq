@@ -4,14 +4,13 @@
     <Description>C# library to serialize LINQ expressions</Description>
     <AssemblyTitle>Serialize.Linq</AssemblyTitle>
     <AssemblyName>Serialize.Linq</AssemblyName>
-    <VersionPrefix>1.0.5.1</VersionPrefix>
     <Authors>Sascha Kiefer</Authors>
     <Copyright>Copyright © 2012-2018</Copyright>
     <AssemblyOriginatorKeyFile>Serialize.Linq Signing Key.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageTags>linq;serialize</PackageTags>
-    <PackageReleaseNotes>- fix bug that could cause a stackoverflow exception</PackageReleaseNotes>
+    <PackageReleaseNotes>- minor bug fixes and improvements</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/esskar/Serialize.Linq</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/esskar/Serialize.Linq/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
@@ -23,7 +22,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>uap10.0;net40;net45;netstandard1.3;netstandard2.0</TargetFrameworks>
-    <Version>1.7.1</Version>
+    <Version>1.7.2</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug Optimize Size' or '$(Configuration)' == 'Release Optimize Size'">
@@ -56,6 +55,7 @@
     <PackageReference Include="System.Runtime.Serialization.Json" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Primitives" Version="4.3.0" />
     <PackageReference Include="System.Runtime.Serialization.Xml" Version="4.3.0" />
+    <PackageReference Include="System.Runtime.Serialization.Formatters" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'uap10.0' ">
