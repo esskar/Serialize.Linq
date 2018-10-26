@@ -146,7 +146,7 @@ namespace Serialize.Linq.Internals
                 // TODO: think about a better way; exception could may have an critical impact on performance
                 try
                 {
-                    return Convert(value, convertTo);
+                    return System.Convert.ChangeType(value, convertTo);
                 }
                 catch (Exception)
                 {
