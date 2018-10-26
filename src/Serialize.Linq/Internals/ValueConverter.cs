@@ -25,10 +25,10 @@ namespace Serialize.Linq.Internals
         private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
         private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>-?\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/"
 #if !SILVERLIGHT && !NETSTANDARD
-            ,RegexOptions.Compiled
+            , RegexOptions.Compiled
 #endif
             );
-        
+
         /// <summary>
         /// Initializes the <see cref="ValueConverter"/> class.
         /// </summary>
@@ -106,7 +106,7 @@ namespace Serialize.Linq.Internals
                 return retval;
 
             if (convertTo.IsEnum())
-                return Enum.ToObject(convertTo, value);            
+                return Enum.ToObject(convertTo, value);
 
             // convert array types
             if (convertTo.IsArray && value.GetType().IsArray())
@@ -135,8 +135,9 @@ namespace Serialize.Linq.Internals
                 else if (genericTypeDefinition == typeof(List<>) && value is IEnumerable)
                 {
                     var result = (IList)Activator.CreateInstance(convertTo);
-                    foreach (var item in (IEnumerable) value)
-                        result.Add(item);
+                    var itemType = convertTo.GetGenericArguments()[0];
+                    foreach (var item in (IEnumerable)value)
+                        result.Add(Convert(item, itemType));
                     return result;
                 }
             }
@@ -228,7 +229,7 @@ namespace Serialize.Linq.Internals
                     int hours;
                     if (!int.TryParse(offhours, out hours))
                         return false;
-                    dateTime = dateTime.AddHours(hours*sign);
+                    dateTime = dateTime.AddHours(hours * sign);
                 }
 
                 var offminutes = match.Groups["offminutes"].Value;
@@ -237,7 +238,7 @@ namespace Serialize.Linq.Internals
                     int minutes;
                     if (!int.TryParse(offminutes, out minutes))
                         return false;
-                    dateTime = dateTime.AddMinutes(minutes*sign);
+                    dateTime = dateTime.AddMinutes(minutes * sign);
                 }
             }
 
