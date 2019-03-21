@@ -42,6 +42,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq.Examples.Wcf
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "wcf", "wcf", "{977AF2A8-9E81-4521-8CA0-A0E3FCBA9D2D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq.Examples.AspNetCore", "Serialize.Linq.Examples\Serialize.Linq.Examples.AspNetCore\Serialize.Linq.Examples.AspNetCore.csproj", "{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug Optimize Size|Any CPU = Debug Optimize Size|Any CPU
@@ -146,6 +148,14 @@ Global
 		{358BA436-4A6E-4A15-9DA8-DE6188F3139E}.Release Optimize Size|Any CPU.Build.0 = Release|Any CPU
 		{358BA436-4A6E-4A15-9DA8-DE6188F3139E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{358BA436-4A6E-4A15-9DA8-DE6188F3139E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Debug Optimize Size|Any CPU.ActiveCfg = Debug|Any CPU
+		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Debug Optimize Size|Any CPU.Build.0 = Debug|Any CPU
+		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Release Optimize Size|Any CPU.ActiveCfg = Release|Any CPU
+		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Release Optimize Size|Any CPU.Build.0 = Release|Any CPU
+		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -165,6 +175,7 @@ Global
 		{5AD98B1C-6CC2-43FA-BFE0-4D4870C55FAE} = {977AF2A8-9E81-4521-8CA0-A0E3FCBA9D2D}
 		{358BA436-4A6E-4A15-9DA8-DE6188F3139E} = {977AF2A8-9E81-4521-8CA0-A0E3FCBA9D2D}
 		{977AF2A8-9E81-4521-8CA0-A0E3FCBA9D2D} = {7F113D5D-A188-4D3F-89F4-6736E9577543}
+		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B} = {41CC3212-8F3B-4527-B5DD-B0B87F0FE240}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A6E63BC7-9C53-43E1-9122-0C097407B5C8}
