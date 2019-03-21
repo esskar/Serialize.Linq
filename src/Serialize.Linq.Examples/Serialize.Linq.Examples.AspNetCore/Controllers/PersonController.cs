@@ -5,12 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Microsoft.AspNetCore.Mvc;
-using Serialize.Linq.Examples.AspNetCore.Entities;
+using Serialize.Linq.Examples.RestContracts.Entities;
 using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Examples.AspNetCore.Controllers
 {
-    [Route("api/persons")]
+    [Route("api/person")]
     [ApiController]
     public class PersonController : ControllerBase
     {

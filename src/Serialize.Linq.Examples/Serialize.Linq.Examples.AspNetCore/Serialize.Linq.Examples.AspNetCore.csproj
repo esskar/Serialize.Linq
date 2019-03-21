@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Serialize.Linq\Serialize.Linq.csproj" />
+    <ProjectReference Include="..\Serialize.Linq.Examples.RestContracts\Serialize.Linq.Examples.RestContracts.csproj" />
   </ItemGroup>
 
 </Project>

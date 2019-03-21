@@ -16,6 +16,8 @@ namespace Serialize.Linq.Examples.RestClient
     {
         private static readonly List<MediaTypeFormatter> _formatters;
         private static readonly MediaTypeWithQualityHeaderValue _mediaTypeJson;
+        private static readonly LoggingHandler _loggingHandler;
+        private static readonly HttpClient _httpClient;
 
         static Program()
         {
@@ -27,6 +29,13 @@ namespace Serialize.Linq.Examples.RestClient
                 }
             }};
             _mediaTypeJson = new MediaTypeWithQualityHeaderValue("application/json");
+
+            _loggingHandler = new LoggingHandler(new HttpClientHandler());
+
+            _httpClient = new HttpClient(_loggingHandler) { BaseAddress = new Uri("http://localhost:51052/") };
+            _httpClient.DefaultRequestHeaders.Accept.Clear();
+            _httpClient.DefaultRequestHeaders.Accept.Add(_mediaTypeJson);
+
         }
 
         static void Main()
@@ -38,11 +47,20 @@ namespace Serialize.Linq.Examples.RestClient
         {
             var cancellationToken = CancellationToken.None;
 
-            await RunAllPersonsAsync(cancellationToken);
-            await RunAllPersonsFromJapan(cancellationToken);
-            await RunAllPersonsOfAge100(cancellationToken);
-            await RunAllMalePersons(cancellationToken);
-            await RunAllLivingPersons(cancellationToken);
+            _loggingHandler.IsLoggingEnabled = true;
+            try
+            {
+                await RunAllPersonsAsync(cancellationToken);
+                await RunAllPersonsFromJapan(cancellationToken);
+                await RunAllPersonsOfAge100(cancellationToken);
+                await RunAllMalePersons(cancellationToken);
+                await RunAllLivingPersons(cancellationToken);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
         }
 
         private static async Task RunAllPersonsAsync(CancellationToken cancellationToken)
@@ -91,32 +109,17 @@ namespace Serialize.Linq.Examples.RestClient
 
         private static async Task<IEnumerable<Person>> GetAllPersons(CancellationToken cancellationToken)
         {
-            using (var client = PrepareHttpClient())
-            {
-                var response = await client.GetAsync("api/Person", cancellationToken);
-                response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsAsync<IEnumerable<Person>>(_formatters, cancellationToken);
-            }
+            var response = await _httpClient.GetAsync("api/Person", cancellationToken);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<IEnumerable<Person>>(_formatters, cancellationToken);
         }
 
         private static async Task<IEnumerable<Person>> QueryPersons(Expression<Func<Person, bool>> query, CancellationToken cancellationToken)
         {
             var queryNode = query.ToExpressionNode();
-            using (var client = PrepareHttpClient())
-            {
-                var response = await client.PostAsync("api/Person", queryNode, _formatters[0], _mediaTypeJson, cancellationToken);
-                response.EnsureSuccessStatusCode();
-                return await response.Content.ReadAsAsync<IEnumerable<Person>>(_formatters, cancellationToken);
-            }
-        }
-
-        private static HttpClient PrepareHttpClient()
-        {
-            var client = new HttpClient { BaseAddress = new Uri("http://localhost:60376/") };
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(_mediaTypeJson);
-
-            return client;
+            var response = await _httpClient.PostAsync("api/Person", queryNode, _formatters[0], _mediaTypeJson, cancellationToken);
+            response.EnsureSuccessStatusCode();
+            return await response.Content.ReadAsAsync<IEnumerable<Person>>(_formatters, cancellationToken);
         }
 
         private static void ShowPersons(IEnumerable<Person> persons)
