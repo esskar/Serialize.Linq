@@ -7,8 +7,6 @@ namespace Serialize.Linq.Serializers
 {
     public abstract class SerializerBase
     {
-        
-
         private readonly HashSet<Type> _customKnownTypes;
         private bool _autoAddKnownTypesAsArrayTypes;
         private bool _autoAddKnownTypesAsListTypes;

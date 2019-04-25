@@ -2,7 +2,7 @@
 
 namespace Serialize.Linq.Extensions
 {
-    public static class ObjectExtensions
+    internal static class ObjectExtensions
     {
         public static bool IsEqualToAny<T>(this T item, params T[] items)
         {

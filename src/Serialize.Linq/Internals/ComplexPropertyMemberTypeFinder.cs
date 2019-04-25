@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Serialize.Linq.Extensions;
 
 namespace Serialize.Linq.Internals
 {

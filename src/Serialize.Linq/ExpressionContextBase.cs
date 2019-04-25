@@ -44,7 +44,7 @@ namespace Serialize.Linq
         public virtual ParameterExpression GetParameterExpression(ParameterExpressionNode node)
         {
             if (node == null)
-                throw new ArgumentNullException("node");
+                throw new ArgumentNullException(nameof(node));
             var key = node.Type.Name + Environment.NewLine + node.Name;
             return _parameterExpressions.GetOrAdd(key, k => Expression.Parameter(node.Type.ToType(this), node.Name));
         }
@@ -52,7 +52,7 @@ namespace Serialize.Linq
         public virtual Type ResolveType(TypeNode node)
         {
             if (node == null)
-                throw new ArgumentNullException("node");
+                throw new ArgumentNullException(nameof(node));
 
             if (string.IsNullOrWhiteSpace(node.Name))
                 return null;

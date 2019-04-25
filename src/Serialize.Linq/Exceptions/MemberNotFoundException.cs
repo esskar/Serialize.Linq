@@ -11,9 +11,9 @@ namespace Serialize.Linq.Exceptions
             this.MemberSignature = memberSignature;
         }
 
-        public Type DeclaringType { get; private set; }
+        public Type DeclaringType { get; }
 
-        public string MemberSignature { get; private set; }
+        public string MemberSignature { get; }
 
         public override string ToString()
         {

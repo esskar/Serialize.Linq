@@ -27,7 +27,7 @@ namespace Serialize.Linq.Serializers
 
         protected virtual INodeFactory CreateFactory(Expression expression, FactorySettings factorySettings)
         {
-            if(expression is LambdaExpression lambda)
+            if (expression is LambdaExpression lambda)
                 return new DefaultNodeFactory(lambda.Parameters.Select(p => p.Type), factorySettings);
             return new NodeFactory(factorySettings);
         }
