@@ -69,10 +69,10 @@ namespace Serialize.Linq.Internals
         public static void AddCustomConverter(Type convertTo, Func<object, Type, object> converter)
         {
             if (convertTo == null)
-                throw new ArgumentNullException("convertTo");
+                throw new ArgumentNullException(nameof(convertTo));
 
             if (converter == null)
-                throw new ArgumentNullException("converter");
+                throw new ArgumentNullException(nameof(converter));
 
             if (!_userDefinedConverters.TryAdd(convertTo, converter))
                 throw new Exception("Failed to add converter.");
@@ -100,8 +100,7 @@ namespace Serialize.Linq.Internals
             if (convertTo.IsInstanceOfType(value))
                 return value;
 
-            object retval;
-            if (TryCustomConvert(value, convertTo, out retval))
+            if (TryCustomConvert(value, convertTo, out var retval))
                 return retval;
 
             if (convertTo.IsEnum())
@@ -131,11 +130,11 @@ namespace Serialize.Linq.Internals
                     if (argumentTypes.Length == 1)
                         value = Convert(value, argumentTypes[0]);
                 }
-                else if (genericTypeDefinition == typeof(List<>) && value is IEnumerable)
+                else if (genericTypeDefinition == typeof(List<>) && value is IEnumerable items)
                 {
                     var result = (IList)Activator.CreateInstance(convertTo);
                     var itemType = convertTo.GetGenericArguments()[0];
-                    foreach (var item in (IEnumerable)value)
+                    foreach (var item in items)
                         result.Add(Convert(item, itemType));
                     return result;
                 }
@@ -143,7 +142,6 @@ namespace Serialize.Linq.Internals
 
             if (value is IConvertible)
             {
-                // TODO: think about a better way; exception could may have an critical impact on performance
                 try
                 {
                     return System.Convert.ChangeType(value, convertTo);
@@ -167,8 +165,7 @@ namespace Serialize.Linq.Internals
         /// <returns></returns>
         private static bool TryCustomConvert(object value, Type convertTo, out object convertedValue)
         {
-            Func<object, Type, object> converter;
-            if (_userDefinedConverters.TryGetValue(convertTo, out converter) || _userDefinedConverters.TryGetValue(typeof(void), out converter))
+            if (_userDefinedConverters.TryGetValue(convertTo, out var converter) || _userDefinedConverters.TryGetValue(typeof(void), out converter))
             {
                 convertedValue = converter(value, convertTo);
                 return true;
@@ -176,8 +173,7 @@ namespace Serialize.Linq.Internals
 
             if (convertTo == typeof(DateTime))
             {
-                DateTime dateTime;
-                if (TryConvertToDateTime(value, out dateTime))
+                if (TryConvertToDateTime(value, out var dateTime))
                 {
                     convertedValue = dateTime;
                     return true;
@@ -205,8 +201,7 @@ namespace Serialize.Linq.Internals
                 return false;
 
             // try to parse the string into a long. then create a datetime.
-            long msFromEpoch;
-            if (!long.TryParse(match.Groups["date"].Value, out msFromEpoch))
+            if (!long.TryParse(match.Groups["date"].Value, out var msFromEpoch))
                 return false;
 
             var epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -221,8 +216,7 @@ namespace Serialize.Linq.Internals
                 var offhours = match.Groups["offhours"].Value;
                 if (offhours.Length > 0)
                 {
-                    int hours;
-                    if (!int.TryParse(offhours, out hours))
+                    if (!int.TryParse(offhours, out var hours))
                         return false;
                     dateTime = dateTime.AddHours(hours * sign);
                 }
@@ -230,8 +224,7 @@ namespace Serialize.Linq.Internals
                 var offminutes = match.Groups["offminutes"].Value;
                 if (match.Groups["offminutes"].Length > 0)
                 {
-                    int minutes;
-                    if (!int.TryParse(offminutes, out minutes))
+                    if (!int.TryParse(offminutes, out var minutes))
                         return false;
                     dateTime = dateTime.AddMinutes(minutes * sign);
                 }

@@ -31,7 +31,7 @@ namespace Serialize.Linq.Factories
             Settings = factorySettings ?? new FactorySettings();
         }
 
-        public FactorySettings Settings { get; private set; }
+        public FactorySettings Settings { get; }
 
         /// <summary>
         /// Creates an expression node from an expression.

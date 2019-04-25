@@ -34,7 +34,7 @@ namespace Serialize.Linq.Internals
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComplexPropertyMemberTypeEnumerator"/> class.
-        /// </summary>
+        /// </summary>C:\Dev\Esskar\Serialize.Linq\src\Serialize.Linq\Internals\MemberTypeEnumerator.cs
         /// <param name="type">The type.</param>
         /// <param name="bindingFlags">The binding flags.</param>
         public ComplexPropertyMemberTypeEnumerator(Type type, BindingFlags bindingFlags)

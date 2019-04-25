@@ -35,13 +35,8 @@ namespace Serialize.Linq.Internals
         /// </exception>
         public MemberTypeEnumerator(HashSet<Type> seenTypes, Type type, BindingFlags bindingFlags)
         {
-            if(seenTypes == null)
-                throw new ArgumentNullException("seenTypes");
-            if(type == null)
-                throw new ArgumentNullException("type");
-
-            _seenTypes = seenTypes;
-            _type = type;
+            _seenTypes = seenTypes ?? throw new ArgumentNullException(nameof(seenTypes));
+            _type = type ?? throw new ArgumentNullException(nameof(type));
             _bindingFlags = bindingFlags;
 
             _currentIndex = -1;
@@ -53,10 +48,7 @@ namespace Serialize.Linq.Internals
         /// <value>
         /// <c>true</c> if this instance is considered; otherwise, <c>false</c>.
         /// </value>
-        public bool IsConsidered 
-        {
-            get { return this.IsConsideredType(_type); }
-        }
+        public bool IsConsidered => this.IsConsideredType(_type);
 
         /// <summary>
         /// Determines whether [is considered type] [the specified type].
@@ -109,10 +101,7 @@ namespace Serialize.Linq.Internals
         /// <value>
         /// The current.
         /// </value>
-        public virtual Type Current
-        {
-            get { return _allTypes[_currentIndex]; }
-        }
+        public virtual Type Current => _allTypes[_currentIndex];
 
         /// <summary>
         /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
@@ -125,10 +114,7 @@ namespace Serialize.Linq.Internals
         /// <value>
         /// The current.
         /// </value>
-        object System.Collections.IEnumerator.Current
-        {
-            get { return this.Current; }
-        }
+        object System.Collections.IEnumerator.Current => this.Current;
 
         /// <summary>
         /// Gets the type of the types of.
