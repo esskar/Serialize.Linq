@@ -7,23 +7,12 @@ namespace Serialize.Linq.Serializers
 {
     public abstract class SerializerBase
     {
-        private static readonly Type[] _knownTypes =
-        {
-            typeof(bool),
-            typeof(decimal), typeof(double),
-            typeof(float),
-            typeof(int), typeof(uint),
-            typeof(short), typeof(ushort),
-            typeof(long), typeof(ulong),
-            typeof(string),
-            typeof(DateTime), typeof(DateTimeOffset),
-            typeof(TimeSpan), typeof(Guid),
-            typeof(DayOfWeek), typeof(DateTimeKind)
-        };
+        
 
         private readonly HashSet<Type> _customKnownTypes;
         private bool _autoAddKnownTypesAsArrayTypes;
         private bool _autoAddKnownTypesAsListTypes;
+        private IEnumerable<Type> _knownTypesExploded;
 
         protected SerializerBase()
         {
@@ -33,23 +22,25 @@ namespace Serialize.Linq.Serializers
 
         public bool AutoAddKnownTypesAsArrayTypes
         {
-            get { return _autoAddKnownTypesAsArrayTypes; }
+            get => _autoAddKnownTypesAsArrayTypes;
             set
             {
                 _autoAddKnownTypesAsArrayTypes = value;
                 if (value)
                     _autoAddKnownTypesAsListTypes = false;
+                _knownTypesExploded = null;
             }
         }
 
         public bool AutoAddKnownTypesAsListTypes
         {
-            get { return _autoAddKnownTypesAsListTypes; }
+            get => _autoAddKnownTypesAsListTypes;
             set
             {
                 _autoAddKnownTypesAsListTypes = value;
                 if (value)
                     _autoAddKnownTypesAsArrayTypes = false;
+                _knownTypesExploded = null;
             }
         }
 
@@ -59,6 +50,7 @@ namespace Serialize.Linq.Serializers
                 throw new ArgumentNullException(nameof(type));
 
             _customKnownTypes.Add(type);
+            _knownTypesExploded = null;
         }
 
         public void AddKnownTypes(IEnumerable<Type> types)
@@ -72,29 +64,18 @@ namespace Serialize.Linq.Serializers
 
         protected virtual IEnumerable<Type> GetKnownTypes()
         {
-            return ExplodeKnownTypes(_knownTypes).Concat(ExplodeKnownTypes(_customKnownTypes));
+            if (_knownTypesExploded != null)
+                return _knownTypesExploded;
+
+            _knownTypesExploded = ExplodeKnownTypes(KnownTypes.All)
+                .Concat(ExplodeKnownTypes(_customKnownTypes)).ToList();
+            return _knownTypesExploded;
         }
 
         private IEnumerable<Type> ExplodeKnownTypes(IEnumerable<Type> types)
         {
-            foreach (var type in types)
-            {
-                yield return type;
-                if (AutoAddKnownTypesAsArrayTypes)
-                    yield return type.MakeArrayType();
-                else if (AutoAddKnownTypesAsListTypes)
-                    yield return typeof(List<>).MakeGenericType(type);
-
-                if (type.IsClass())
-                    continue;
-
-                var nullableType = typeof(Nullable<>).MakeGenericType(type);
-                yield return nullableType;
-                if (AutoAddKnownTypesAsArrayTypes)
-                    yield return nullableType.MakeArrayType();
-                else if (AutoAddKnownTypesAsListTypes)
-                    yield return typeof(List<>).MakeGenericType(nullableType);
-            }
+            return KnownTypes.Explode(
+                types, this.AutoAddKnownTypesAsArrayTypes, this.AutoAddKnownTypesAsListTypes);
         }
     }
 }
