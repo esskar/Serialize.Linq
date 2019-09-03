@@ -30,6 +30,7 @@ namespace Serialize.Linq.Nodes
     [KnownType(typeof(ExpressionNode))]
     [KnownType(typeof(ExpressionNodeList))]
     [KnownType(typeof(FieldInfoNode))]
+    [KnownType(typeof(IndexExpressionNode))]
     [KnownType(typeof(InvocationExpressionNode))]
     [KnownType(typeof(LambdaExpressionNode))]
     [KnownType(typeof(ListInitExpressionNode))]
@@ -66,10 +67,7 @@ namespace Serialize.Linq.Nodes
         /// <exception cref="System.ArgumentNullException">factory</exception>
         protected Node(INodeFactory factory)
         {
-            if(factory == null)
-                throw new ArgumentNullException("factory");
-
-            this.Factory = factory;
+            this.Factory = factory ?? throw new ArgumentNullException("factory");
         }
 
         /// <summary>
