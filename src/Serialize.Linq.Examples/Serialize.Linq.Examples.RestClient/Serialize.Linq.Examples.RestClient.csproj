@@ -61,7 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Serialize.Linq\Serialize.Linq.csproj">
-      <Project>{94c52ad1-5d4a-4c9e-a1a3-68d3a36e6bf7}</Project>
+      <Project>{0004924b-c805-4d58-b448-9c71f45a62fa}</Project>
       <Name>Serialize.Linq</Name>
     </ProjectReference>
     <ProjectReference Include="..\Serialize.Linq.Examples.RestContracts\Serialize.Linq.Examples.RestContracts.csproj">

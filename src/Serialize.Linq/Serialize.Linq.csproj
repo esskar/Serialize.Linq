@@ -5,14 +5,14 @@
     <AssemblyTitle>Serialize.Linq</AssemblyTitle>
     <AssemblyName>Serialize.Linq</AssemblyName>
     <Authors>Sascha Kiefer</Authors>
-    <Copyright>Copyright © 2012-2019</Copyright>
+    <Copyright>Copyright © 2012-2020</Copyright>
     <AssemblyOriginatorKeyFile>Serialize.Linq Signing Key.snk</AssemblyOriginatorKeyFile>
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageTags>linq;serialize</PackageTags>
-    <PackageReleaseNotes>- minor bug fixes and improvements</PackageReleaseNotes>
+    <PackageReleaseNotes>- support for .NET 5.0</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/esskar/Serialize.Linq</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/esskar/Serialize.Linq/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/esskar/Serialize.Linq</RepositoryUrl>
     <DefaultLanguage>en-us</DefaultLanguage>
@@ -22,7 +22,10 @@
 
   <PropertyGroup>
     <TargetFrameworks>uap10.0;net40;net45;netstandard1.3;netstandard2.0;net5.0</TargetFrameworks>
-    <Version>1.8.1</Version>
+    <Version>2.0.0</Version>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)' == 'Debug Optimize Size' or '$(Configuration)' == 'Release Optimize Size'">
@@ -63,6 +66,13 @@
   </ItemGroup>
   
   <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\..\LICENSE.txt">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
