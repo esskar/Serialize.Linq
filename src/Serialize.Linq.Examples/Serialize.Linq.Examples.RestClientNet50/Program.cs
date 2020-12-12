@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 using Serialize.Linq.Examples.RestContracts.Entities;
 using Serialize.Linq.Extensions;
 
-namespace Serialize.Linq.Examples.RestClient
+namespace Serialize.Linq.Examples.RestClientNet50
 {
     internal class Program
     {
@@ -38,7 +38,7 @@ namespace Serialize.Linq.Examples.RestClient
 
         }
 
-        static void Main()
+        private static void Main()
         {
             RunAsync().Wait();
         }
@@ -111,7 +111,7 @@ namespace Serialize.Linq.Examples.RestClient
         {
             var response = await _httpClient.GetAsync("api/Person", cancellationToken);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsAsync<IEnumerable<Person>>(_formatters, cancellationToken);
+            return await response.Content.ReadAsAsync<IEnumerable<Person>>(_formatters);
         }
 
         private static async Task<IEnumerable<Person>> QueryPersons(Expression<Func<Person, bool>> query, CancellationToken cancellationToken)
@@ -119,7 +119,7 @@ namespace Serialize.Linq.Examples.RestClient
             var queryNode = query.ToExpressionNode();
             var response = await _httpClient.PostAsync("api/Person", queryNode, _formatters[0], _mediaTypeJson, cancellationToken);
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadAsAsync<IEnumerable<Person>>(_formatters, cancellationToken);
+            return await response.Content.ReadAsAsync<IEnumerable<Person>>(_formatters);
         }
 
         private static void ShowPersons(IEnumerable<Person> persons)
