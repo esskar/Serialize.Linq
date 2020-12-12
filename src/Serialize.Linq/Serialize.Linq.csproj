@@ -18,6 +18,10 @@
     <DefaultLanguage>en-us</DefaultLanguage>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Configurations>Debug;Release;Debug Optimize Size;Release Optimize Size</Configurations>
+	<PublishRepositoryUrl>true</PublishRepositoryUrl>
+	<EmbedUntrackedSources>true</EmbedUntrackedSources>
+	<IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -46,6 +50,10 @@
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <DefineConstants>$(DefineConstants);WINDOWS_UWP;UAP10_0</DefineConstants>
   </PropertyGroup>
+  
+  <ItemGroup>
+	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All"/>
+  </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
     <Reference Include="System" />
