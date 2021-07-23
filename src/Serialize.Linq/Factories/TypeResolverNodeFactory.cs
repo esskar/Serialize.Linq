@@ -67,8 +67,8 @@ namespace Serialize.Linq.Factories
         /// <returns></returns>
         /// <exception cref="System.NotSupportedException">MemberType ' + memberExpression.Member.MemberType + ' not yet supported.</exception>
         private bool TryGetConstantValueFromMemberExpression(
-            MemberExpression memberExpression, 
-            out object constantValue, 
+            MemberExpression memberExpression,
+            out object constantValue,
             out Type constantValueType)
         {
             constantValue = null;
@@ -91,59 +91,59 @@ namespace Serialize.Linq.Factories
                 switch (memberExpression.Member)
                 {
                     case FieldInfo field:
-                    {
-                        if (memberExpression.Expression != null)
                         {
-                            if (memberExpression.Expression.NodeType == ExpressionType.Constant)
+                            if (memberExpression.Expression != null)
                             {
-                                var constantExpression = (ConstantExpression) memberExpression.Expression;
-                                var flags = this.GetBindingFlags();
-
-                                constantValue = constantExpression.Value;
-                                constantValueType = constantExpression.Type;
-                                var match = false;
-                                do
+                                if (memberExpression.Expression.NodeType == ExpressionType.Constant)
                                 {
-                                    var fields = flags == null
-                                        ? constantValueType.GetFields()
-                                        : constantValueType.GetFields(flags.Value);
-                                    var memberField = fields.Length > 1
-                                        ? fields.SingleOrDefault(n => field.Name.Equals(n.Name))
-                                        : fields.FirstOrDefault();
-                                    if (memberField == null && parentField != null)
+                                    var constantExpression = (ConstantExpression)memberExpression.Expression;
+                                    var flags = this.GetBindingFlags();
+
+                                    constantValue = constantExpression.Value;
+                                    constantValueType = constantExpression.Type;
+                                    var match = false;
+                                    do
                                     {
-                                        memberField = fields.Length > 1
-                                            ? fields.SingleOrDefault(n => parentField.Name.Equals(n.Name))
+                                        var fields = flags == null
+                                            ? constantValueType.GetFields()
+                                            : constantValueType.GetFields(flags.Value);
+                                        var memberField = fields.Length > 1
+                                            ? fields.SingleOrDefault(n => field.Name.Equals(n.Name))
                                             : fields.FirstOrDefault();
+                                        if (memberField == null && parentField != null)
+                                        {
+                                            memberField = fields.Length > 1
+                                                ? fields.SingleOrDefault(n => parentField.Name.Equals(n.Name))
+                                                : fields.FirstOrDefault();
+                                        }
+                                        if (memberField == null)
+                                            break;
+
+                                        constantValueType = memberField.FieldType;
+                                        constantValue = memberField.GetValue(constantValue);
+                                        match = true;
                                     }
-                                    if (memberField == null)
-                                        break;
+                                    while (constantValue != null && !KnownTypes.Match(constantValueType));
 
-                                    constantValueType = memberField.FieldType;
-                                    constantValue = memberField.GetValue(constantValue);
-                                    match = true;
+                                    return match;
                                 }
-                                while (constantValue != null && !KnownTypes.Match(constantValueType));
 
-                                return match;
+                                if (memberExpression.Expression is MemberExpression subExpression)
+                                {
+                                    memberExpression = subExpression;
+                                    parentField = parentField ?? field;
+                                    continue;
+                                }
                             }
 
-                            if (memberExpression.Expression is MemberExpression subExpression)
+                            if (field.IsPrivate || field.IsFamilyAndAssembly)
                             {
-                                memberExpression = subExpression;
-                                parentField = parentField ?? field;
-                                continue;
+                                constantValue = field.GetValue(null);
+                                return true;
                             }
-                        }
 
-                        if (field.IsPrivate || field.IsFamilyAndAssembly)
-                        {
-                            constantValue = field.GetValue(null);
-                            return true;
+                            break;
                         }
-
-                        break;
-                    }
                     case PropertyInfo propertyInfo:
                         try
                         {
@@ -172,24 +172,42 @@ namespace Serialize.Linq.Factories
         /// <param name="inlineExpression">The inline expression.</param>
         /// <returns></returns>
         private bool TryToInlineExpression(MemberExpression memberExpression, out Expression inlineExpression)
-        {
+        {           
             inlineExpression = null;
-
-            if (!(memberExpression.Member is FieldInfo))
+            
+            if (!(memberExpression.Member is FieldInfo) && !(memberExpression.Member is System.Reflection.PropertyInfo))
+            {
                 return false;
+            }
 
             if (memberExpression.Expression == null || memberExpression.Expression.NodeType != ExpressionType.Constant)
+            {
                 return false;
+            }
 
             var constantExpression = (ConstantExpression)memberExpression.Expression;
             var flags = this.GetBindingFlags();
-            var fields = flags == null
-                ? constantExpression.Type.GetFields()
-                : constantExpression.Type.GetFields(flags.Value);
-            var memberField = fields.Single(n => memberExpression.Member.Name.Equals(n.Name));
-            var constantValue = memberField.GetValue(constantExpression.Value);
+
+
+            object constantValue = null;
+
+            if (memberExpression.Member is FieldInfo)
+            {
+                var fields = flags == null ? constantExpression.Type.GetFields() : constantExpression.Type.GetFields(flags.Value);
+                var memberField = fields.Single(n => memberExpression.Member.Name.Equals(n.Name));
+
+                constantValue = memberField.GetValue(constantExpression.Value);
+            }
+            else if (memberExpression.Member is PropertyInfo)
+            {
+                var properties = flags == null ? constantExpression.Type.GetProperties() : constantExpression.Type.GetProperties(flags.Value);
+                var memberProperty = properties.Single(n => memberExpression.Member.Name.Equals(n.Name));
+
+                constantValue = memberProperty.GetValue(constantExpression.Value);
+            }
 
             inlineExpression = constantValue as Expression;
+
             return inlineExpression != null;
         }
 
