@@ -203,7 +203,7 @@ namespace Serialize.Linq.Factories
                 var properties = flags == null ? constantExpression.Type.GetProperties() : constantExpression.Type.GetProperties(flags.Value);
                 var memberProperty = properties.Single(n => memberExpression.Member.Name.Equals(n.Name));
 
-                constantValue = memberProperty.GetValue(constantExpression.Value);
+                constantValue = memberProperty.GetValue(constantExpression.Value, null);
             }
 
             inlineExpression = constantValue as Expression;
