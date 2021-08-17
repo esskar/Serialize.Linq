@@ -180,6 +180,15 @@ namespace Serialize.Linq.Internals
                 }
             }
 
+            if (convertTo.IsAssignableFrom(typeof(Guid))) // Guid + Nullable<Guid>
+            {
+                if (TryConvertToGuid(value, out var guid))
+                {
+                    convertedValue = guid;
+                    return true;
+                }
+            }
+
             convertedValue = null;
             return false;
         }
@@ -231,6 +240,21 @@ namespace Serialize.Linq.Internals
             }
 
             return true;
+        }
+
+        /// <summary>
+        /// Tries the convert to Guid.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <param name="guid">The guid.</param>
+        /// <returns></returns>
+        private static bool TryConvertToGuid(object value, out Guid guid)
+        {
+            var stringValue = value.ToString();
+            if (Guid.TryParse(stringValue, out guid))
+                return true;
+
+            return false;
         }
     }
 }
