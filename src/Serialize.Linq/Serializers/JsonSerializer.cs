@@ -32,7 +32,7 @@ namespace Serialize.Linq.Serializers
         public override void Serialize<T>(Stream stream, T obj)
         {
             if (stream == null)
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
 
             var serializer = this.CreateDataContractJsonSerializer(typeof(T));
             serializer.WriteObject(stream, obj);
@@ -41,7 +41,7 @@ namespace Serialize.Linq.Serializers
         public override T Deserialize<T>(Stream stream)
         {
             if (stream == null)
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
 
             var serializer = this.CreateDataContractJsonSerializer(typeof(T));
             return (T)serializer.ReadObject(stream);

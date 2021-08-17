@@ -23,33 +23,25 @@ namespace Serialize.Linq.Serializers
 
         public ExpressionSerializer(ISerializer serializer, FactorySettings factorySettings = null)
         {
-            if (serializer == null)
-                throw new ArgumentNullException(nameof(serializer));
-            _serializer = serializer;
+            _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
             _factorySettings = factorySettings;
         }
 
         public bool AutoAddKnownTypesAsArrayTypes
         {
-            get { return _serializer.AutoAddKnownTypesAsArrayTypes; }
-            set { _serializer.AutoAddKnownTypesAsArrayTypes = value; }
+            get => _serializer.AutoAddKnownTypesAsArrayTypes;
+            set => _serializer.AutoAddKnownTypesAsArrayTypes = value;
         }
 
         public bool AutoAddKnownTypesAsListTypes
         {
-            get { return _serializer.AutoAddKnownTypesAsListTypes; }
-            set { _serializer.AutoAddKnownTypesAsListTypes = value; }
+            get => _serializer.AutoAddKnownTypesAsListTypes;
+            set => _serializer.AutoAddKnownTypesAsListTypes = value;
         }
 
-        public bool CanSerializeText
-        {
-            get { return _serializer is ITextSerializer; }
-        }
+        public bool CanSerializeText => _serializer is ITextSerializer;
 
-        public bool CanSerializeBinary
-        {
-            get { return _serializer is IBinarySerializer; }
-        }
+        public bool CanSerializeBinary => _serializer is IBinarySerializer;
 
         public void AddKnownType(Type type)
         {
@@ -74,7 +66,7 @@ namespace Serialize.Linq.Serializers
                 throw new ArgumentNullException(nameof(stream));
 
             var node = _serializer.Deserialize<ExpressionNode>(stream);
-            return node != null ? node.ToExpression() : null;
+            return node?.ToExpression();
         }
 
         public string SerializeText(Expression expression, FactorySettings factorySettings = null)
@@ -85,7 +77,7 @@ namespace Serialize.Linq.Serializers
         public Expression DeserializeText(string text)
         {
             var node = TextSerializer.Deserialize<ExpressionNode>(text);
-            return node == null ? null : node.ToExpression();
+            return node?.ToExpression();
         }
 
         public Expression DeserializeText(string text, IExpressionContext context)
@@ -94,7 +86,7 @@ namespace Serialize.Linq.Serializers
                 throw new ArgumentNullException(nameof(context));
 
             var node = TextSerializer.Deserialize<ExpressionNode>(text);
-            return node == null ? null : node.ToExpression(context);
+            return node?.ToExpression(context);
         }
 
         public byte[] SerializeBinary(Expression expression, FactorySettings factorySettings = null)
@@ -105,7 +97,7 @@ namespace Serialize.Linq.Serializers
         public Expression DeserializeBinary(byte[] bytes)
         {
             var node = BinarySerializer.Deserialize<ExpressionNode>(bytes);
-            return node == null ? null : node.ToExpression();
+            return node?.ToExpression();
         }
 
         public Expression DeserializeBinary(byte[] bytes, IExpressionContext context)
@@ -114,15 +106,14 @@ namespace Serialize.Linq.Serializers
                 throw new ArgumentNullException(nameof(context));
 
             var node = BinarySerializer.Deserialize<ExpressionNode>(bytes);
-            return node == null ? null : node.ToExpression(context);
+            return node?.ToExpression(context);
         }
 
         private ITextSerializer TextSerializer
         {
             get
             {
-                var textSerializer = _serializer as ITextSerializer;
-                if (textSerializer == null)
+                if (!(_serializer is ITextSerializer textSerializer))
                     throw new InvalidOperationException("Unable to serialize text.");
                 return textSerializer;
             }
@@ -132,8 +123,7 @@ namespace Serialize.Linq.Serializers
         {
             get
             {
-                var binarySerializer = _serializer as IBinarySerializer;
-                if (binarySerializer == null)
+                if (!(_serializer is IBinarySerializer binarySerializer))
                     throw new InvalidOperationException("Unable to serialize binary.");
                 return binarySerializer;
             }

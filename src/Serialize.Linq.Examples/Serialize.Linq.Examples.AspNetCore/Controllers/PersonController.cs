@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web.Http;
+using System.Text;
+using Microsoft.AspNetCore.Mvc;
 using Serialize.Linq.Examples.RestContracts.Entities;
 using Serialize.Linq.Nodes;
 
-namespace Serialize.Linq.Examples.RestApi.Controllers
+namespace Serialize.Linq.Examples.AspNetCore.Controllers
 {
-    public class PersonController : ApiController
+    [Route("api/person")]
+    [ApiController]
+    public class PersonController : ControllerBase
     {
         private readonly List<Person> _persons;
         private readonly Func<DateTime> _todayFunc;
@@ -18,7 +20,7 @@ namespace Serialize.Linq.Examples.RestApi.Controllers
         public PersonController()
             : this(() => DateTime.Today) { }
 
-        public PersonController(Func<DateTime> todayFunc)
+        internal PersonController(Func<DateTime> todayFunc)
         {
             _todayFunc = todayFunc ?? throw new ArgumentNullException(nameof(todayFunc));
 
@@ -108,12 +110,12 @@ namespace Serialize.Linq.Examples.RestApi.Controllers
         {
             var assembly = typeof(PersonController).Assembly;
 
-            var csvStream = assembly.GetManifestResourceStream("Serialize.Linq.Examples.RestApi.Persons.csv");
+            var csvStream = assembly.GetManifestResourceStream("Serialize.Linq.Examples.AspNetCore.Persons.csv");
             if (csvStream == null)
                 throw new InvalidProgramException("Failed to read Persons.");
             using (csvStream)
             {
-                using (var reader = new StreamReader(csvStream))
+                using (var reader = new StreamReader(csvStream, Encoding.GetEncoding("Windows-1252")))
                 {
                     var text = reader.ReadToEnd();
                     text = text.Replace("\r", "");

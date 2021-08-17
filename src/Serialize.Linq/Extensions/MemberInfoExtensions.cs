@@ -14,7 +14,7 @@ namespace Serialize.Linq.Extensions
     /// <summary>
     /// MemberInfo extensions methods.
     /// </summary>
-    public static class MemberInfoExtensions
+    internal static class MemberInfoExtensions
     {
         /// <summary>
         /// Gets the return type of an member.

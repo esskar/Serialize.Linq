@@ -31,7 +31,7 @@ namespace Serialize.Linq.Factories
             Settings = factorySettings ?? new FactorySettings();
         }
 
-        public FactorySettings Settings { get; private set; }
+        public FactorySettings Settings { get; }
 
         /// <summary>
         /// Creates an expression node from an expression.
@@ -48,6 +48,7 @@ namespace Serialize.Linq.Factories
             if (expression is ConditionalExpression conditionalExpression) return new ConditionalExpressionNode(this, conditionalExpression);
             if (expression is ConstantExpression constantExpression) return new ConstantExpressionNode(this, constantExpression);
             if (expression is InvocationExpression invocationExpression) return new InvocationExpressionNode(this, invocationExpression);
+            if (expression is IndexExpression indexExpression) return new IndexExpressionNode(this, indexExpression); 
             if (expression is LambdaExpression lambdaExpression) return new LambdaExpressionNode(this, lambdaExpression);
             if (expression is ListInitExpression listInitExpression) return new ListInitExpressionNode(this, listInitExpression);
             if (expression is MemberExpression memberExpression) return new MemberExpressionNode(this, memberExpression);

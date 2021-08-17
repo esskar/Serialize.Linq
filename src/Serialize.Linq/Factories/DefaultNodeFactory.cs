@@ -19,7 +19,6 @@ namespace Serialize.Linq.Factories
 {
     public class DefaultNodeFactory : INodeFactory
     {
-        private readonly FactorySettings _factorySettings;
         private readonly INodeFactory _innerFactory;
         private readonly Type[] _types;
 
@@ -41,19 +40,16 @@ namespace Serialize.Linq.Factories
         public DefaultNodeFactory(IEnumerable<Type> types, FactorySettings factorySettings = null)
         {
             if(types == null)
-                throw new ArgumentNullException("types");
+                throw new ArgumentNullException(nameof(types));
             
             _types = types.ToArray();
             if(_types.Any(t => t == null))
-                throw new ArgumentException("types");
-            _factorySettings = factorySettings ?? new FactorySettings();
+                throw new ArgumentException("All types must be non-null.", nameof(types));
+            Settings = factorySettings ?? new FactorySettings();
             _innerFactory = this.CreateFactory();
         }
 
-        public FactorySettings Settings
-        {
-            get { return _factorySettings; }
-        }
+        public FactorySettings Settings { get; }
 
         /// <summary>
         /// Creates the specified expression node an expression.

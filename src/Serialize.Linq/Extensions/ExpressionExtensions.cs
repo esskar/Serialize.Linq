@@ -11,7 +11,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Internals;
 using Serialize.Linq.Nodes;
 using Serialize.Linq.Serializers;
 
@@ -133,8 +132,7 @@ namespace Serialize.Linq.Extensions
         /// <returns></returns>
         internal static INodeFactory GetDefaultFactory(this Expression expression, FactorySettings factorySettings)
         {
-            var lambda = expression as LambdaExpression;
-            if (lambda != null)
+            if (expression is LambdaExpression lambda)
                 return new DefaultNodeFactory(lambda.Parameters.Select(p => p.Type), factorySettings);
             return new NodeFactory(factorySettings);
         }
@@ -146,73 +144,66 @@ namespace Serialize.Linq.Extensions
         /// <returns></returns>
         internal static IEnumerable<Expression> GetLinkNodes(this Expression expression)
         {
-            if (expression is LambdaExpression)
+            switch (expression)
             {
-                var lambdaExpression = (LambdaExpression)expression;
-
-                yield return lambdaExpression.Body;
-                foreach (var parameter in lambdaExpression.Parameters)
-                    yield return parameter;
-            }
-            else if (expression is BinaryExpression)
-            {
-                var binaryExpression = (BinaryExpression)expression;
-
-                yield return binaryExpression.Left;
-                yield return binaryExpression.Right;
-            }
-            else if (expression is ConditionalExpression)
-            {
-                var conditionalExpression = (ConditionalExpression)expression;
-
-                yield return conditionalExpression.IfTrue;
-                yield return conditionalExpression.IfFalse;
-                yield return conditionalExpression.Test;
-            }
-            else if (expression is InvocationExpression)
-            {
-                var invocationExpression = (InvocationExpression)expression;
-                yield return invocationExpression.Expression;
-                foreach (var argument in invocationExpression.Arguments)
-                    yield return argument;
-            }
-            else if (expression is ListInitExpression)
-            {
-                yield return (expression as ListInitExpression).NewExpression;
-            }
-            else if (expression is MemberExpression)
-            {
-                yield return (expression as MemberExpression).Expression;
-            }
-            else if (expression is MemberInitExpression)
-            {
-                yield return (expression as MemberInitExpression).NewExpression;
-            }
-            else if (expression is MethodCallExpression)
-            {
-                var methodCallExpression = (MethodCallExpression)expression;
-                foreach (var argument in methodCallExpression.Arguments)
-                    yield return argument;
-                if (methodCallExpression.Object != null)
-                    yield return methodCallExpression.Object;
-            }
-            else if (expression is NewArrayExpression)
-            {
-                foreach (var item in (expression as NewArrayExpression).Expressions)
-                    yield return item;
-            }
-            else if (expression is NewExpression)
-            {
-                foreach (var item in (expression as NewExpression).Arguments)
-                    yield return item;
-            }
-            else if (expression is TypeBinaryExpression)
-            {
-                yield return (expression as TypeBinaryExpression).Expression;
-            }
-            else if (expression is UnaryExpression)
-            {
-                yield return (expression as UnaryExpression).Operand;
+                case LambdaExpression lambdaExpression:
+                {
+                    yield return lambdaExpression.Body;
+                    foreach (var parameter in lambdaExpression.Parameters)
+                        yield return parameter;
+                    break;
+                }
+                case BinaryExpression binaryExpression:
+                    yield return binaryExpression.Left;
+                    yield return binaryExpression.Right;
+                    break;
+                case ConditionalExpression conditionalExpression:
+                    yield return conditionalExpression.IfTrue;
+                    yield return conditionalExpression.IfFalse;
+                    yield return conditionalExpression.Test;
+                    break;
+                case InvocationExpression invocationExpression:
+                {
+                    yield return invocationExpression.Expression;
+                    foreach (var argument in invocationExpression.Arguments)
+                        yield return argument;
+                    break;
+                }
+                case ListInitExpression listInitExpression:
+                    yield return listInitExpression.NewExpression;
+                    break;
+                case MemberExpression memberExpression:
+                    yield return memberExpression.Expression;
+                    break;
+                case MemberInitExpression memberInitExpression:
+                    yield return memberInitExpression.NewExpression;
+                    break;
+                case MethodCallExpression methodCallExpression:
+                {
+                    foreach (var argument in methodCallExpression.Arguments)
+                        yield return argument;
+                    if (methodCallExpression.Object != null)
+                        yield return methodCallExpression.Object;
+                    break;
+                }
+                case NewArrayExpression newArrayExpression:
+                {
+                    foreach (var item in newArrayExpression.Expressions)
+                        yield return item;
+                    break;
+                }
+                case NewExpression newExpression:
+                {
+                    foreach (var item in newExpression.Arguments)
+                        yield return item;
+                    break;
+                }
+                case TypeBinaryExpression typeBinaryExpression:
+                    yield return typeBinaryExpression.Expression;
+                    break;
+                case UnaryExpression unaryExpression:
+                    yield return unaryExpression.Operand;
+                    break;
             }
         }
 
