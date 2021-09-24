@@ -83,7 +83,6 @@ namespace Serialize.Linq.Internals
                    (type.Name.Contains("AnonymousType") || type.Name.Contains("AnonType")) &&
                    (type.Name.StartsWith("VB$", StringComparison.OrdinalIgnoreCase) || type.Name.StartsWith("<>", StringComparison.OrdinalIgnoreCase)) &&
                    !type.GetTypeAttributes().HasFlag(TypeAttributes.Public);
-
         }
     }
 }
