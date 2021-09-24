@@ -22,7 +22,7 @@ namespace Serialize.Linq.Serializers
         public virtual void Serialize<T>(Stream stream, T obj) where T : Node
         {
             if (stream == null)
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
 
             var serializer = this.CreateXmlObjectSerializer(typeof(T));
             serializer.WriteObject(stream, obj);
@@ -31,7 +31,7 @@ namespace Serialize.Linq.Serializers
         public virtual T Deserialize<T>(Stream stream) where T : Node
         {
             if (stream == null)
-                throw new ArgumentNullException("stream");
+                throw new ArgumentNullException(nameof(stream));
 
             var serializer = this.CreateXmlObjectSerializer(typeof(T));
             return (T)serializer.ReadObject(stream);

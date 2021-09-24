@@ -33,6 +33,21 @@ namespace Serialize.Linq
 
         public bool AllowPrivateFieldAccess { get; set; }
 
+        public virtual BindingFlags Binding 
+        { 
+            get
+            { 
+            if (AllowPrivateFieldAccess)
+                {
+                    return Constants.ALSO_NON_PUBLIC_BINDING;
+                } else
+                {
+                    return Constants.PUBLIC_ONLY_BINDING;
+                }
+            }
+        }
+
+        [Obsolete("Use ExpressionContext.Binding instead.", false)]
         public virtual BindingFlags? GetBindingFlags()
         {
             if (!this.AllowPrivateFieldAccess)

@@ -49,7 +49,7 @@ namespace Serialize.Linq.Nodes
         private void Initialize(ElementInit elementInit)
         {
             if (elementInit == null)
-                throw new ArgumentNullException("elementInit");
+                throw new ArgumentNullException(nameof(elementInit));
 
             this.AddMethod = new MethodInfoNode(this.Factory, elementInit.AddMethod);
             this.Arguments = new ExpressionNodeList(this.Factory, elementInit.Arguments);

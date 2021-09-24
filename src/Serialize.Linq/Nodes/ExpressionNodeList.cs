@@ -32,9 +32,9 @@ namespace Serialize.Linq.Nodes
         public ExpressionNodeList(INodeFactory factory, IEnumerable<Expression> items)
         {
             if (factory == null)
-                throw new ArgumentNullException("factory");
+                throw new ArgumentNullException(nameof(factory));
             if (items == null)
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException(nameof(items));
             this.AddRange(items.Select(factory.Create));
         }
 

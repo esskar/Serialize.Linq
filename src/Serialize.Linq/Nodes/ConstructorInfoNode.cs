@@ -39,7 +39,7 @@ namespace Serialize.Linq.Nodes
         /// <returns></returns>
         protected override IEnumerable<ConstructorInfo> GetMemberInfosForType(IExpressionContext context, Type type)
         {
-            return type.GetConstructors();
+            return type.GetConstructors(context?.Binding ?? Factory.Settings.Binding);
         }
     }
 }

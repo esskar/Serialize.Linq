@@ -41,7 +41,7 @@ namespace Serialize.Linq.Nodes
 
         protected override IEnumerable<PropertyInfo> GetMemberInfosForType(IExpressionContext context, Type type)
         {
-            return type.GetProperties();
+            return type.GetProperties(context?.Binding ?? Factory.Settings.Binding);
         }
     }
 }

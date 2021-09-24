@@ -97,16 +97,13 @@ namespace Serialize.Linq.Factories
                                 if (memberExpression.Expression.NodeType == ExpressionType.Constant)
                                 {
                                     var constantExpression = (ConstantExpression)memberExpression.Expression;
-                                    var flags = this.GetBindingFlags();
 
                                     constantValue = constantExpression.Value;
                                     constantValueType = constantExpression.Type;
                                     var match = false;
                                     do
                                     {
-                                        var fields = flags == null
-                                            ? constantValueType.GetFields()
-                                            : constantValueType.GetFields(flags.Value);
+                                        var fields = constantValueType.GetFields(this.Binding);
                                         var memberField = fields.Length > 1
                                             ? fields.SingleOrDefault(n => field.Name.Equals(n.Name))
                                             : fields.FirstOrDefault();
@@ -186,21 +183,19 @@ namespace Serialize.Linq.Factories
             }
 
             var constantExpression = (ConstantExpression)memberExpression.Expression;
-            var flags = this.GetBindingFlags();
-
 
             object constantValue = null;
 
             if (memberExpression.Member is FieldInfo)
             {
-                var fields = flags == null ? constantExpression.Type.GetFields() : constantExpression.Type.GetFields(flags.Value);
+                var fields = constantExpression.Type.GetFields(this.Binding);
                 var memberField = fields.Single(n => memberExpression.Member.Name.Equals(n.Name));
 
                 constantValue = memberField.GetValue(constantExpression.Value);
             }
             else if (memberExpression.Member is PropertyInfo)
             {
-                var properties = flags == null ? constantExpression.Type.GetProperties() : constantExpression.Type.GetProperties(flags.Value);
+                var properties = constantExpression.Type.GetProperties(this.Binding);
                 var memberProperty = properties.Single(n => memberExpression.Member.Name.Equals(n.Name));
 
                 constantValue = memberProperty.GetValue(constantExpression.Value, null);

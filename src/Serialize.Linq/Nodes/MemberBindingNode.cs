@@ -69,7 +69,7 @@ namespace Serialize.Linq.Nodes
             else if (memberBinding is MemberMemberBinding)
                 memberBindingNode = new MemberMemberBindingNode(factory, (MemberMemberBinding)memberBinding);
             else if (memberBinding != null)
-                throw new ArgumentException("Unknown member binding of type " + memberBinding.GetType(), "memberBinding");
+                throw new ArgumentException("Unknown member binding of type " + memberBinding.GetType(), nameof(memberBinding));
 
             return memberBindingNode;
         }

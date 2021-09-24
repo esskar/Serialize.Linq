@@ -67,7 +67,7 @@ namespace Serialize.Linq.Nodes
         /// <exception cref="System.ArgumentNullException">factory</exception>
         protected Node(INodeFactory factory)
         {
-            this.Factory = factory ?? throw new ArgumentNullException("factory");
+            this.Factory = factory ?? throw new ArgumentNullException(nameof(factory));
         }
 
         /// <summary>
