@@ -24,24 +24,24 @@ namespace Serialize.Linq.Internals
             typeof(sbyte), typeof(byte), typeof(byte)
         };
 
-        private static readonly IDictionary<Type, AutomaticAddKnownCollections> _allExploded = Explode(_All, InternalAutomaticAddKnownCollections.AsBoth);
+        private static readonly IDictionary<Type, AutoAddCollectionTypes> _allExploded = Explode(_All, InternalAutoAddCollectionTypes.AsBoth);
 
-        private static readonly IDictionary<Type, AutomaticAddKnownCollections> _assignables = new Dictionary<Type, AutomaticAddKnownCollections>();
+        private static readonly IDictionary<Type, AutoAddCollectionTypes> _assignables = new Dictionary<Type, AutoAddCollectionTypes>();
 
         [Obsolete("Use KnownTypes.GetKnown or KnownTypes.GetAssignables instead.", false)]
         public static readonly Type[] All = _All;
 
-        public static IEnumerable<Type> GetKnown(AutomaticAddKnownCollections valIncludeCollectionTypes)
+        public static IEnumerable<Type> GetKnown(AutoAddCollectionTypes includeCollectionTypes)
         {
             return from dlgPair in _allExploded
-                   where (dlgPair.Value & valIncludeCollectionTypes) > 0 || dlgPair.Value == AutomaticAddKnownCollections.None
+                   where (dlgPair.Value & includeCollectionTypes) > 0 || dlgPair.Value == AutoAddCollectionTypes.None
                    select dlgPair.Key;
         }
 
-        public static IEnumerable<Type> GetAssignables(AutomaticAddKnownCollections valIncludeCollectionTypes)
+        public static IEnumerable<Type> GetAssignables(AutoAddCollectionTypes includeCollectionTypes)
         {
             return from dlgPair in _assignables
-                   where (dlgPair.Value & valIncludeCollectionTypes) > 0 || dlgPair.Value == AutomaticAddKnownCollections.None
+                   where (dlgPair.Value & includeCollectionTypes) > 0 || dlgPair.Value == AutoAddCollectionTypes.None
                    select dlgPair.Key;
         }
 
@@ -52,7 +52,7 @@ namespace Serialize.Linq.Internals
             result = type != null && _allExploded.Concat(_assignables).Any(pair => pair.Key == type);
             if (!result)
             {
-                using (IEnumerator<KeyValuePair<Type, AutomaticAddKnownCollections>> tmpEnumerator = _allExploded.GetEnumerator())
+                using (IEnumerator<KeyValuePair<Type, AutoAddCollectionTypes>> tmpEnumerator = _allExploded.GetEnumerator())
                 {
                     while (tmpEnumerator.MoveNext() && !result)
                     {
@@ -72,52 +72,52 @@ namespace Serialize.Linq.Internals
         {
             if (includeArrayTypes && includeListTypes)
             {
-                return Explode(types, AutomaticAddKnownCollections.AsArray | AutomaticAddKnownCollections.AsList);
+                return Explode(types, AutoAddCollectionTypes.AsArray | AutoAddCollectionTypes.AsList);
             }
             else if (includeArrayTypes)
             {
-                return Explode(types, AutomaticAddKnownCollections.AsArray);
+                return Explode(types, AutoAddCollectionTypes.AsArray);
             }
             else if (includeListTypes)
             {
-                return Explode(types, AutomaticAddKnownCollections.AsList);
+                return Explode(types, AutoAddCollectionTypes.AsList);
             }
             else
             {
-                return Explode(types, AutomaticAddKnownCollections.None);
+                return Explode(types, AutoAddCollectionTypes.None);
             }
         }
 
-        public static IEnumerable<Type> Explode(IEnumerable<Type> valTypes, AutomaticAddKnownCollections valIncludeCollectionTypes)
+        public static IEnumerable<Type> Explode(IEnumerable<Type> valTypes, AutoAddCollectionTypes includeCollectionTypes)
         {
-            return Explode(valTypes, (InternalAutomaticAddKnownCollections)valIncludeCollectionTypes).Keys;
+            return Explode(valTypes, (InternalAutoAddCollectionTypes)includeCollectionTypes).Keys;
         }
 
-        private static IDictionary<Type, AutomaticAddKnownCollections> Explode(IEnumerable<Type> valTypes, InternalAutomaticAddKnownCollections valIncludeCollectionTypes)
+        private static IDictionary<Type, AutoAddCollectionTypes> Explode(IEnumerable<Type> vtypes, InternalAutoAddCollectionTypes includeCollectionTypes)
         {
             Type nullableType;
-            IDictionary<Type, AutomaticAddKnownCollections> types;
+            IDictionary<Type, AutoAddCollectionTypes> tempTypes;
 
-            types = new Dictionary<Type, AutomaticAddKnownCollections>();
-            foreach (Type tmpType in valTypes)
+            tempTypes = new Dictionary<Type, AutoAddCollectionTypes>();
+            foreach (Type tmpType in vtypes)
             {
-                types.Add(tmpType, AutomaticAddKnownCollections.None);
-                if (valIncludeCollectionTypes.HasFlag(InternalAutomaticAddKnownCollections.AsArray))
-                    types.Add(tmpType.MakeArrayType(), AutomaticAddKnownCollections.AsArray);
-                if (valIncludeCollectionTypes.HasFlag(InternalAutomaticAddKnownCollections.AsList))
-                    types.Add(typeof(List<>).MakeGenericType(tmpType), AutomaticAddKnownCollections.AsList);
+                tempTypes.Add(tmpType, AutoAddCollectionTypes.None);
+                if (includeCollectionTypes.HasFlag(InternalAutoAddCollectionTypes.AsArray))
+                    tempTypes.Add(tmpType.MakeArrayType(), AutoAddCollectionTypes.AsArray);
+                if (includeCollectionTypes.HasFlag(InternalAutoAddCollectionTypes.AsList))
+                    tempTypes.Add(typeof(List<>).MakeGenericType(tmpType), AutoAddCollectionTypes.AsList);
                 if (!tmpType.IsClass())
                 {
                     nullableType = typeof(Nullable<>).MakeGenericType(tmpType);
-                    types.Add(nullableType, AutomaticAddKnownCollections.None);
-                    if (valIncludeCollectionTypes.HasFlag(InternalAutomaticAddKnownCollections.AsArray))
-                        types.Add(nullableType.MakeArrayType(), AutomaticAddKnownCollections.AsArray);
-                    if (valIncludeCollectionTypes.HasFlag(InternalAutomaticAddKnownCollections.AsList))
-                        types.Add(typeof(List<>).MakeGenericType(nullableType), AutomaticAddKnownCollections.AsList);
+                    tempTypes.Add(nullableType, AutoAddCollectionTypes.None);
+                    if (includeCollectionTypes.HasFlag(InternalAutoAddCollectionTypes.AsArray))
+                        tempTypes.Add(nullableType.MakeArrayType(), AutoAddCollectionTypes.AsArray);
+                    if (includeCollectionTypes.HasFlag(InternalAutoAddCollectionTypes.AsList))
+                        tempTypes.Add(typeof(List<>).MakeGenericType(nullableType), AutoAddCollectionTypes.AsList);
                 }
             }
 
-            return types;
+            return tempTypes;
         }
 
     }

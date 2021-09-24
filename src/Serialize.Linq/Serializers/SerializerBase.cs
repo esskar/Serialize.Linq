@@ -10,13 +10,13 @@ namespace Serialize.Linq.Serializers
         private readonly HashSet<Type> _customKnownTypes;
         private bool _autoAddKnownTypesAsArrayTypes;
         private bool _autoAddKnownTypesAsListTypes;
-        private AutomaticAddKnownCollections _autoAddKnownTypesCollectionType;
+        private AutoAddCollectionTypes _autoAddKnownTypesCollectionType;
         private IEnumerable<Type> _knownTypesExploded;
 
         protected SerializerBase()
         {
             _customKnownTypes = new HashSet<Type>();
-            AutoAddKnownTypesCollectionType = AutomaticAddKnownCollections.AsArray;
+            AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsArray;
         }
 
         [Obsolete("Use SerializerBase.AutoAddKnownTypesCollectionType", false)]
@@ -29,11 +29,11 @@ namespace Serialize.Linq.Serializers
                 if (value)
                 {
                     _autoAddKnownTypesAsListTypes = false;
-                    _autoAddKnownTypesCollectionType = AutomaticAddKnownCollections.AsArray;
+                    _autoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsArray;
                 }
                 else
                 {
-                    _autoAddKnownTypesCollectionType = AutomaticAddKnownCollections.None;
+                    _autoAddKnownTypesCollectionType = AutoAddCollectionTypes.None;
                 }
                 _knownTypesExploded = null;
             }
@@ -49,24 +49,24 @@ namespace Serialize.Linq.Serializers
                 if (value)
                 {
                     _autoAddKnownTypesAsArrayTypes = false;
-                    _autoAddKnownTypesCollectionType = AutomaticAddKnownCollections.AsList;
+                    _autoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList;
                 }
                 else
                 {
-                    _autoAddKnownTypesCollectionType = AutomaticAddKnownCollections.None;
+                    _autoAddKnownTypesCollectionType = AutoAddCollectionTypes.None;
                 }
                 _knownTypesExploded = null;
             }
         }
 
-        public AutomaticAddKnownCollections AutoAddKnownTypesCollectionType
+        public AutoAddCollectionTypes AutoAddKnownTypesCollectionType
         {
             get => _autoAddKnownTypesCollectionType;
             set
             {
                 _autoAddKnownTypesCollectionType = value;
-                _autoAddKnownTypesAsArrayTypes = _autoAddKnownTypesCollectionType == AutomaticAddKnownCollections.AsArray;
-                _autoAddKnownTypesAsListTypes = _autoAddKnownTypesCollectionType == AutomaticAddKnownCollections.AsList;
+                _autoAddKnownTypesAsArrayTypes = _autoAddKnownTypesCollectionType == AutoAddCollectionTypes.AsArray;
+                _autoAddKnownTypesAsListTypes = _autoAddKnownTypesCollectionType == AutoAddCollectionTypes.AsList;
             }
         }
 

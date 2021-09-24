@@ -2,7 +2,7 @@
 
 namespace Serialize.Linq.Internals
 {
-    public enum AutomaticAddKnownCollections : int
+    public enum AutoAddCollectionTypes : int
     {
         None = 0,
         AsArray = 1,
@@ -10,7 +10,7 @@ namespace Serialize.Linq.Internals
     }
 
     [Flags]
-    internal enum InternalAutomaticAddKnownCollections : int
+    internal enum InternalAutoAddCollectionTypes : int
     {
         None = 0,
         AsArray = 1,
