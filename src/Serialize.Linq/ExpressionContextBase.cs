@@ -22,25 +22,23 @@ namespace Serialize.Linq
 {
     public abstract class ExpressionContextBase : IExpressionContext
     {
-        private readonly ConcurrentDictionary<string, ParameterExpression> _parameterExpressions;
-        private readonly ConcurrentDictionary<string, Type> _typeCache;
+        private readonly IDictionary<ParameterExpressionNode, ParameterExpression> _parameterExpressions =
+            new Dictionary<ParameterExpressionNode, ParameterExpression>(new ParameterExpressionNodeComparer());
+        private readonly IDictionary<string, Type> _typeCache = new Dictionary<string, Type>();
 
-        protected ExpressionContextBase()
-        {
-            _parameterExpressions = new ConcurrentDictionary<string, ParameterExpression>();
-            _typeCache = new ConcurrentDictionary<string, Type>();
-        }
+        protected ExpressionContextBase() { }
 
         public bool AllowPrivateFieldAccess { get; set; }
 
-        public virtual BindingFlags Binding 
-        { 
+        public virtual BindingFlags Binding
+        {
             get
-            { 
-            if (AllowPrivateFieldAccess)
+            {
+                if (AllowPrivateFieldAccess)
                 {
                     return Constants.ALSO_NON_PUBLIC_BINDING;
-                } else
+                }
+                else
                 {
                     return Constants.PUBLIC_ONLY_BINDING;
                 }
@@ -60,35 +58,40 @@ namespace Serialize.Linq
         {
             if (node == null)
                 throw new ArgumentNullException(nameof(node));
-            var key = node.Type.Name + Environment.NewLine + node.Name;
-            return _parameterExpressions.GetOrAdd(key, k => Expression.Parameter(node.Type.ToType(this), node.Name));
+
+            if (!_parameterExpressions.TryGetValue(node, out var nodeExpression))
+            {
+                nodeExpression = Expression.Parameter(node.Type.ToType(this), node.Name);
+                _parameterExpressions.Add(node, nodeExpression);
+            }
+
+            return nodeExpression;
         }
 
         public virtual Type ResolveType(TypeNode node)
         {
             if (node == null)
                 throw new ArgumentNullException(nameof(node));
-
             if (String.IsNullOrWhiteSpace(node.Name))
                 return null;
-
-            return _typeCache.GetOrAdd(node.Name, n =>
+            else
             {
-                var type = Type.GetType(n);
-                if (type == null)
+                if (!_typeCache.TryGetValue(node.Name, out var nodeType))
                 {
-                    foreach (var assembly in this.GetAssemblies())
+                    if ((nodeType = Type.GetType(node.Name)) == null)
                     {
-                        type = assembly.GetType(n);
-                        if (type != null)
-                            break;
+                        using (IEnumerator<Assembly> tmpEnumerator = this.GetAssemblies().GetEnumerator())
+                        {
+                            while (tmpEnumerator.MoveNext() && nodeType == null)
+                                nodeType = tmpEnumerator.Current.GetType(node.Name);
+                        }
                     }
-
+                    _typeCache.Add(node.Name, nodeType);
                 }
-                return type;
-            });
-        }
 
+                return nodeType;
+            }
+        }
         protected abstract IEnumerable<Assembly> GetAssemblies();
     }
 }
