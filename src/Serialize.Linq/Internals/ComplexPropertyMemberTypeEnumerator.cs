@@ -71,8 +71,7 @@ namespace Serialize.Linq.Internals
         /// </returns>
         protected override bool IsConsideredType(Type type)
         {
-            return !ComplexPropertyMemberTypeEnumerator.IsBuiltinType(type)
-                && base.IsConsideredType(type);
+            return !ComplexPropertyMemberTypeEnumerator.IsBuiltinType(type);
         }
     }
 }

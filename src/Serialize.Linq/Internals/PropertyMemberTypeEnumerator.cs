@@ -14,7 +14,7 @@ using System.Reflection;
 
 namespace Serialize.Linq.Internals
 {
-    internal class PropertyMemberTypeEnumerator : MemberTypeEnumerator
+    internal abstract class PropertyMemberTypeEnumerator : MemberTypeEnumerator
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="PropertyMemberTypeEnumerator"/> class.
@@ -38,7 +38,7 @@ namespace Serialize.Linq.Internals
         /// </returns>
         protected override bool IsConsideredMember(MemberInfo member)
         {
-            return member is PropertyInfo && base.IsConsideredMember(member);
+            return member is PropertyInfo;
         }
     }
 }

@@ -14,7 +14,7 @@ using Serialize.Linq.Extensions;
 
 namespace Serialize.Linq.Internals
 {
-    internal class MemberTypeEnumerator : IEnumerator<Type>
+    internal abstract class MemberTypeEnumerator : IEnumerator<Type>
     {
         private int _currentIndex;
         private readonly Type _type;
@@ -57,10 +57,7 @@ namespace Serialize.Linq.Internals
         /// <returns>
         ///   <c>true</c> if [is considered type] [the specified type]; otherwise, <c>false</c>.
         /// </returns>
-        protected virtual bool IsConsideredType(Type type)
-        {
-            return true;
-        }
+        protected abstract bool IsConsideredType(Type type);
 
         /// <summary>
         /// Determines whether [is considered member] [the specified member].
@@ -69,10 +66,7 @@ namespace Serialize.Linq.Internals
         /// <returns>
         ///   <c>true</c> if [is considered member] [the specified member]; otherwise, <c>false</c>.
         /// </returns>
-        protected virtual bool IsConsideredMember(MemberInfo member)
-        {
-            return true;
-        }
+        protected abstract bool IsConsideredMember(MemberInfo member);
 
         /// <summary>
         /// Determines whether [is seen type] [the specified type].
