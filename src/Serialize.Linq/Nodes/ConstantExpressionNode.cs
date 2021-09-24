@@ -91,7 +91,7 @@ namespace Serialize.Linq.Nodes
                         var context = new ExpressionContext();
                         if (!value.ToType(context).IsInstanceOfType(this.Value))
                             throw new InvalidTypeException(
-                                string.Format("Type '{0}' is not an instance of the current value type '{1}'.",
+                                String.Format("Type '{0}' is not an instance of the current value type '{1}'.",
                                     value.ToType(context), this.Value.GetType()));
                     }
                 }

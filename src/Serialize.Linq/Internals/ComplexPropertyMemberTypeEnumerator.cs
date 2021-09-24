@@ -29,7 +29,8 @@ namespace Serialize.Linq.Internals
         {
             _builtinTypes = new [] { typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal), typeof(double), typeof(float), 
                 typeof(int), typeof(uint), typeof(long), typeof(ulong), typeof(object), typeof(short), typeof(ushort), typeof(string),
-                typeof(Guid), typeof(Int16),typeof(Int32),typeof(Int64), typeof(UInt16), typeof(UInt32), typeof(UInt64), typeof(TimeSpan), typeof(DateTime) };
+                typeof(Guid), typeof(TimeSpan), typeof(DateTime),
+                typeof(DateTimeOffset)};
         }
 
         /// <summary>

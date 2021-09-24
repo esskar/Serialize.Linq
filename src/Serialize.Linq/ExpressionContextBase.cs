@@ -69,7 +69,7 @@ namespace Serialize.Linq
             if (node == null)
                 throw new ArgumentNullException(nameof(node));
 
-            if (string.IsNullOrWhiteSpace(node.Name))
+            if (String.IsNullOrWhiteSpace(node.Name))
                 return null;
 
             return _typeCache.GetOrAdd(node.Name, n =>
