@@ -28,7 +28,7 @@ namespace Serialize.Linq.Nodes
 #endif
     #endregion
     public class TypeNode : Node
-    {        
+    {
         public TypeNode() { }
 
         public TypeNode(INodeFactory factory, Type type)
@@ -39,38 +39,29 @@ namespace Serialize.Linq.Nodes
 
         private void Initialize(Type type)
         {
+            Type typeDefinition;
             if (type == null)
                 return;
-
-            var isAnonymousType = type.IsCustomAttributeDefined(typeof(CompilerGeneratedAttribute), false)
-                && type.IsGenericType() && type.Name.Contains("AnonymousType")
-                && (type.Name.StartsWith("<>") || type.Name.StartsWith("VB$"))
-                && (type.GetTypeAttributes() & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
-
             if (type.IsGenericType())
             {
                 this.GenericArguments = type.GetGenericArguments().Select(t => new TypeNode(this.Factory, t)).ToArray();
-
-                var typeDefinition = type.GetGenericTypeDefinition();
-                if (isAnonymousType || !this.Factory.Settings.UseRelaxedTypeNames)
-                    this.Name = typeDefinition.AssemblyQualifiedName;
-                else
-                    this.Name = typeDefinition.FullName;
+                typeDefinition = type.GetGenericTypeDefinition();
             }
             else
             {
-                if (isAnonymousType || !this.Factory.Settings.UseRelaxedTypeNames)
-                    this.Name = type.AssemblyQualifiedName;
-                else
-                    this.Name = type.FullName;
-            }            
+                typeDefinition = type;
+            }
+            if (!this.Factory.Settings.UseRelaxedTypeNames || type.IsAnonymous())
+                this.Name = typeDefinition.AssemblyQualifiedName;
+            else
+                this.Name = typeDefinition.FullName;
         }
 
         #region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(EmitDefaultValue = false, Name = "N")]        
+        [DataMember(EmitDefaultValue = false, Name = "N")]
 #endif
         #endregion
         public string Name { get; set; }
@@ -79,7 +70,7 @@ namespace Serialize.Linq.Nodes
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         [DataMember(EmitDefaultValue = false)]
 #else
-        [DataMember(EmitDefaultValue = false, Name = "G")]        
+        [DataMember(EmitDefaultValue = false, Name = "G")]
 #endif
         #endregion
         public TypeNode[] GenericArguments { get; set; }
@@ -89,14 +80,14 @@ namespace Serialize.Linq.Nodes
             var type = context.ResolveType(this);
             if (type == null)
             {
-                if (string.IsNullOrWhiteSpace(this.Name))
+                if (String.IsNullOrWhiteSpace(this.Name))
                     return null;
-                throw new SerializationException(string.Format("Failed to serialize '{0}' to a type object.", this.Name));
+                throw new SerializationException(String.Format("Failed to serialize '{0}' to a type object.", this.Name));
             }
 
-            if (this.GenericArguments != null)            
+            if (this.GenericArguments != null)
                 type = type.MakeGenericType(this.GenericArguments.Select(t => t.ToType(context)).ToArray());
-            
+
             return type;
         }
     }

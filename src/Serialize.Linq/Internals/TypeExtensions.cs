@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Serialize.Linq.Internals
 {
@@ -66,6 +67,23 @@ namespace Serialize.Linq.Internals
         public static TypeAttributes GetTypeAttributes(this Type type)
         {
             return type.GetTypeInfo().Attributes;
+        }
+
+        public static bool IsDefined(this Type type, Type attributeType, bool inherit)
+        {
+            return type.GetTypeInfo().IsDefined(attributeType, inherit);
+        }
+
+        public static bool IsAnonymous(this Type type)
+        {
+            // Improvement: valType.Attributes.HasFlag(TypeAttributes.NotPublic) is always true, since TypeAttributes.NotPublic value is 0. Therefor checked for TypeAttributes.Public. 
+            // See https://stackoverflow.com/questions/1650681/determining-whether-a-type-is-an-anonymous-type
+            return type.IsDefined(typeof(CompilerGeneratedAttribute), false) &&
+                   type.IsGenericType() &&
+                   (type.Name.Contains("AnonymousType") || type.Name.Contains("AnonType")) &&
+                   (type.Name.StartsWith("VB$", StringComparison.OrdinalIgnoreCase) || type.Name.StartsWith("<>", StringComparison.OrdinalIgnoreCase)) &&
+                   !type.GetTypeAttributes().HasFlag(TypeAttributes.Public);
+
         }
     }
 }
