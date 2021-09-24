@@ -121,7 +121,7 @@ namespace Serialize.Linq.Internals
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns></returns>
-        protected Type[] GetTypesOfType(Type type)
+        protected IEnumerable<Type> GetTypesOfType(Type type)
         {
             var types = new List<Type> { type };
             if (type.HasElementType)
@@ -132,7 +132,7 @@ namespace Serialize.Linq.Internals
                     types.AddRange(this.GetTypesOfType(genericType));
                 
             }
-            return types.ToArray();
+            return types;
         }
 
         /// <summary>

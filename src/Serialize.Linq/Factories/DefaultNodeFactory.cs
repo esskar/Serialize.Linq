@@ -20,7 +20,7 @@ namespace Serialize.Linq.Factories
     public class DefaultNodeFactory : INodeFactory
     {
         private readonly INodeFactory _innerFactory;
-        private readonly Type[] _types;
+        private readonly IEnumerable<Type> _types;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultNodeFactory"/> class.
@@ -42,7 +42,7 @@ namespace Serialize.Linq.Factories
             if(types == null)
                 throw new ArgumentNullException(nameof(types));
             
-            _types = types.ToArray();
+            _types = types;
             if(_types.Any(t => t == null))
                 throw new ArgumentException("All types must be non-null.", nameof(types));
             Settings = factorySettings ?? new FactorySettings();

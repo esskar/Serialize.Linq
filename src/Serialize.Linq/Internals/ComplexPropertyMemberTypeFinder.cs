@@ -66,9 +66,8 @@ namespace Serialize.Linq.Internals
         /// <returns></returns>
         private bool BuildTypes(Type baseType, ISet<Type> seen, ISet<Type> result)
         {            
-            if (seen.Contains(baseType))
+            if (!seen.Add(baseType))
                 return false;            
-            seen.Add(baseType);
             if (!this.AnalyseType(baseType, seen, result))
                 return false;
 

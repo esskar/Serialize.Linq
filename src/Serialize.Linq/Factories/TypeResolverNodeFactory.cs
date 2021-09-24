@@ -18,7 +18,7 @@ namespace Serialize.Linq.Factories
 {
     public class TypeResolverNodeFactory : NodeFactory
     {
-        private readonly Type[] _expectedTypes;
+        private readonly IEnumerable<Type> _expectedTypes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TypeResolverNodeFactory"/> class.
@@ -31,7 +31,7 @@ namespace Serialize.Linq.Factories
         {
             if (expectedTypes == null)
                 throw new ArgumentNullException(nameof(expectedTypes));
-            _expectedTypes = expectedTypes.ToArray();
+            _expectedTypes = expectedTypes;
         }
 
         /// <summary>
@@ -43,19 +43,9 @@ namespace Serialize.Linq.Factories
         /// </returns>
         private bool IsExpectedType(Type declaredType)
         {
-            foreach (var expectedType in _expectedTypes)
-            {
-                if (declaredType == expectedType || declaredType.IsSubclassOf(expectedType))
-                    return true;
-                if (expectedType.IsInterface())
-                {
-                    var resultTypes = declaredType.GetInterfaces();
-                    if (resultTypes.Contains(expectedType))
-                        return true;
-                }
-            }
-
-            return false;
+            return _expectedTypes.Any(type => declaredType == type ||
+                                      declaredType.IsSubclassOf(type) ||
+                                      (type.IsInterface() && declaredType.GetInterfaces().Contains(type)));
         }
 
         /// <summary>
@@ -169,9 +159,9 @@ namespace Serialize.Linq.Factories
         /// <param name="inlineExpression">The inline expression.</param>
         /// <returns></returns>
         private bool TryToInlineExpression(MemberExpression memberExpression, out Expression inlineExpression)
-        {           
+        {
             inlineExpression = null;
-            
+
             if (!(memberExpression.Member is FieldInfo) && !(memberExpression.Member is System.Reflection.PropertyInfo))
             {
                 return false;
