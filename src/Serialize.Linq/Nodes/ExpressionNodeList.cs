@@ -25,9 +25,14 @@ namespace Serialize.Linq.Nodes
     [Serializable]
 #endif
     #endregion
-    public class ExpressionNodeList : List<ExpressionNode>
+    public class ExpressionNodeList
     {
-        public ExpressionNodeList() { }
+        private readonly IEnumerable<ExpressionNode> _items;
+
+        public ExpressionNodeList() 
+        {
+            _items = new List<ExpressionNode>();
+        }
 
         public ExpressionNodeList(INodeFactory factory, IEnumerable<Expression> items)
         {
@@ -35,17 +40,17 @@ namespace Serialize.Linq.Nodes
                 throw new ArgumentNullException(nameof(factory));
             if (items == null)
                 throw new ArgumentNullException(nameof(items));
-            this.AddRange(items.Select(factory.Create));
+            _items = items.Select(factory.Create);
         }
 
         internal IEnumerable<Expression> GetExpressions(IExpressionContext context)
         {
-            return this.Select(e => e.ToExpression(context));
+            return _items.Select(e => e.ToExpression(context));
         }
 
         internal IEnumerable<ParameterExpression> GetParameterExpressions(IExpressionContext context)
         {
-            return this.OfType<ParameterExpressionNode>().Select(e => (ParameterExpression)e.ToExpression(context));
+            return _items.OfType<ParameterExpressionNode>().Select(e => (ParameterExpression)e.ToExpression(context));
         }
     }
 }
