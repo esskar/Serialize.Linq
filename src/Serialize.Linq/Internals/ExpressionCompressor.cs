@@ -4,19 +4,21 @@ using Serialize.Linq.Extensions;
 
 namespace Serialize.Linq.Internals
 {
-    internal class ExpressionCompressor
+    internal static class ExpressionCompressor
     {
-        public Expression Compress(Expression expression)
+        private static readonly ICollection<ExpressionType> _andOrExpressions = new HashSet<ExpressionType> { ExpressionType.Or, ExpressionType.And, ExpressionType.OrElse, ExpressionType.AndAlso };
+
+        public static Expression Compress(Expression expression)
         {
             if (expression == null)
                 return null;
 
-            if (!expression.NodeType.IsEqualToAny(ExpressionType.Or, ExpressionType.And, ExpressionType.OrElse,
-                ExpressionType.AndAlso)) return expression;
+            if (!_andOrExpressions.Contains(expression.NodeType)) 
+                return expression;
 
             var stack = new Stack<Expression>();
             var items = new List<Expression>();
-            var binary = (BinaryExpression) expression;
+            var binary = (BinaryExpression)expression;
 
             stack.Push(binary.Right);
             stack.Push(binary.Left);
@@ -25,7 +27,7 @@ namespace Serialize.Linq.Internals
                 var item = stack.Pop();
                 if (item.NodeType == expression.NodeType)
                 {
-                    binary = (BinaryExpression) item;
+                    binary = (BinaryExpression)item;
                     stack.Push(binary.Right);
                     stack.Push(binary.Left);
                 }
@@ -69,7 +71,7 @@ namespace Serialize.Linq.Internals
             // traverse list from left to right to preserve calculation order
             for (var i = 0; i < items.Count; i += 2)
             {
-                result.Add(i + 1 == items.Count 
+                result.Add(i + 1 == items.Count
                     ? items[i] : Expression.MakeBinary(nodeType, items[i], items[i + 1]));
             }
 

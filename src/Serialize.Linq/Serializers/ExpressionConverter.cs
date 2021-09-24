@@ -10,16 +10,11 @@ namespace Serialize.Linq.Serializers
 {
     public class ExpressionConverter
     {
-        private readonly ExpressionCompressor _expressionCompressor;
-
-        public ExpressionConverter()
-        {
-            _expressionCompressor = new ExpressionCompressor();
-        }
+        public ExpressionConverter() { }
 
         public ExpressionNode Convert(Expression expression, FactorySettings factorySettings = null)
         {
-            expression = _expressionCompressor.Compress(expression);
+            expression = ExpressionCompressor.Compress(expression);
 
             var factory = this.CreateFactory(expression, factorySettings);
             return factory.Create(expression);
