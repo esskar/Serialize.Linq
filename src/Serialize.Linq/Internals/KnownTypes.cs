@@ -19,7 +19,7 @@ namespace Serialize.Linq.Internals
             typeof(DateTime), typeof(DateTimeOffset),
             typeof(TimeSpan), typeof(Guid),
             typeof(Enum),
-            typeof(sbyte), typeof(byte), typeof(byte)
+            typeof(sbyte), typeof(byte), typeof(char)
         };
 
         private static readonly IDictionary<Type, AutoAddCollectionTypes> _allExploded = Explode(_All, InternalAutoAddCollectionTypes.AsBoth);
