@@ -10,7 +10,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 #if !WINDOWS_PHONE
-using System.Collections.Concurrent;
 using System.Globalization;
 using System.Xml;
 #endif
@@ -23,7 +22,7 @@ namespace Serialize.Linq.Internals
 {
     public static class ValueConverter
     {
-        private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
+        private static readonly IDictionary<Type, Func<object, Type, object>> _userDefinedConverters = new Dictionary<Type, Func<object, Type, object>>();
         private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>-?\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/"
 #if !NETSTANDARD
             , RegexOptions.Compiled | RegexOptions.ExplicitCapture
@@ -33,15 +32,6 @@ namespace Serialize.Linq.Internals
             );
         private static readonly DateTime _utcEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         private static readonly DateTime _localEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
-
-        // ToDo: statischen Konstruktor auflösen (https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors)
-        /// <summary>
-        /// Initializes the <see cref="ValueConverter"/> class.
-        /// </summary>
-        static ValueConverter()
-        {
-            _userDefinedConverters = new ConcurrentDictionary<Type, Func<object, Type, object>>();
-        }
 
         /// <summary>
         /// Adds the custom converter.
@@ -81,8 +71,7 @@ namespace Serialize.Linq.Internals
             if (converter == null)
                 throw new ArgumentNullException(nameof(converter));
 
-            if (!_userDefinedConverters.TryAdd(convertTo, converter))
-                throw new Exception("Failed to add converter.");
+            _userDefinedConverters.Add(convertTo, converter);
         }
 
         /// <summary>
@@ -183,19 +172,19 @@ namespace Serialize.Linq.Internals
                         var sign = match.Groups["offsign"].Value == "-" ? -1 : 1;
                         convertedValue = _localEpoch.AddMilliseconds(msFromEpoch).AddHours(hours * sign).AddMinutes(minutes * sign);
                         convertedValue = DateTime.Parse(String.Format(CultureInfo.InvariantCulture,
-                                                                  "{0:yyyy-MM-ddTHH:mm:ss.fff}{1}{2:00}:{3:00}",
-                                                                  convertedValue, match.Groups["offsign"], hours, minutes),
-                                                    CultureInfo.InvariantCulture,
-                                                    DateTimeStyles.AssumeLocal);
+                                                                      "{0:yyyy-MM-ddTHH:mm:ss.fff}{1}{2:00}:{3:00}",
+                                                                      convertedValue, match.Groups["offsign"], hours, minutes),
+                                                        CultureInfo.InvariantCulture,
+                                                        DateTimeStyles.AssumeLocal);
                     }
                     else
                     {
                         convertedValue = _utcEpoch.AddMilliseconds(msFromEpoch);
                         convertedValue = DateTime.Parse(String.Format(CultureInfo.InvariantCulture,
-                                                                  "{0:yyyy-MM-ddTHH:mm:ss.fff}Z",
-                                                                  convertedValue),
-                                                    CultureInfo.InvariantCulture,
-                                                    DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
+                                                                      "{0:yyyy-MM-ddTHH:mm:ss.fff}Z",
+                                                                      convertedValue),
+                                                        CultureInfo.InvariantCulture,
+                                                        DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
                         // without DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal is targetDate.Kind = DateTimeKind.Local,
                         // see https://stackoverflow.com/questions/1756639/why-cant-datetime-parse-parse-utc-date
                     }

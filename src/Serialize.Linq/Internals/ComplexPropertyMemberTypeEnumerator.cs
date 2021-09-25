@@ -20,19 +20,10 @@ namespace Serialize.Linq.Internals
     /// </summary>
     internal class ComplexPropertyMemberTypeEnumerator : PropertyMemberTypeEnumerator
     {
-        private static readonly Type[] _builtinTypes;
-
-        // ToDo: statischen Konstruktor auflösen (https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors)
-        /// <summary>
-        /// Initializes the <see cref="ComplexPropertyMemberTypeEnumerator"/> class.
-        /// </summary>
-        static ComplexPropertyMemberTypeEnumerator()
-        {
-            _builtinTypes = new [] { typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal), typeof(double), typeof(float), 
-                typeof(int), typeof(uint), typeof(long), typeof(ulong), typeof(object), typeof(short), typeof(ushort), typeof(string),
-                typeof(Guid), typeof(TimeSpan), typeof(DateTime),
-                typeof(DateTimeOffset)};
-        }
+        private static readonly ICollection<Type> _builtinTypes = new HashSet<Type> { typeof(bool), typeof(byte), typeof(sbyte), typeof(char), typeof(decimal),
+            typeof(double), typeof(float), typeof(int), typeof(uint), typeof(long),
+            typeof(ulong), typeof(object), typeof(short), typeof(ushort), typeof(string),
+            typeof(Guid), typeof(TimeSpan), typeof(DateTime), typeof(DateTimeOffset)};
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComplexPropertyMemberTypeEnumerator"/> class.
