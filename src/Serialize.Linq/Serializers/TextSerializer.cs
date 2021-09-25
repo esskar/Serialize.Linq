@@ -11,20 +11,23 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Serializers
 {
-    public abstract class TextSerializer : DataSerializer, ITextSerializer
+    public abstract class TextSerializer : GenericSerializerBase<string>, ITextSerializer
     {
-        public string Serialize<T>(T obj) where T : Node
+
+        public override bool CanSerializeText => false;
+
+        public override bool CanSerializeBinary => true;
+
+        public override string Serialize<TNode>(TNode obj)
         {
             try
             {
                 using (var ms = new MemoryStream())
                 {
                     this.Serialize(ms, obj);
-
                     ms.Position = 0;
                     using (var reader = new StreamReader(ms, Encoding.UTF8))
                         return reader.ReadToEnd();
@@ -36,7 +39,7 @@ namespace Serialize.Linq.Serializers
             }
         }
 
-        public T Deserialize<T>(string text) where T : Node
+        public override TNode Deserialize<TNode>(string text)
         {
             using (var ms = new MemoryStream())
             {
@@ -44,9 +47,8 @@ namespace Serialize.Linq.Serializers
                 {
                     writer.Write(text);
                     writer.Flush();
-
                     ms.Position = 0;
-                    return this.Deserialize<T>(ms);
+                    return this.Deserialize<TNode>(ms);
                 }
             }
         }

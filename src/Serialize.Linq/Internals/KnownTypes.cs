@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Serialize.Linq.Internals
 {
@@ -47,18 +45,16 @@ namespace Serialize.Linq.Internals
 
         public static bool Match(Type type)
         {
-            bool result;
-
-            result = type != null && _allExploded.Concat(_assignables).Any(pair => pair.Key == type);
+            var result = type != null && _allExploded.Concat(_assignables).Any(pair => pair.Key == type);
             if (!result)
             {
-                using (IEnumerator<KeyValuePair<Type, AutoAddCollectionTypes>> tmpEnumerator = _allExploded.GetEnumerator())
+                using (IEnumerator<KeyValuePair<Type, AutoAddCollectionTypes>> enumerator = _allExploded.GetEnumerator())
                 {
-                    while (tmpEnumerator.MoveNext() && !result)
+                    while (enumerator.MoveNext() && !result)
                     {
-                        if (tmpEnumerator.Current.Key.IsAssignableFrom(type))
+                        if (enumerator.Current.Key.IsAssignableFrom(type))
                         {
-                            _assignables.Add(type, tmpEnumerator.Current.Value);
+                            _assignables.Add(type, enumerator.Current.Value);
                             result = true;
                         }
                     }
@@ -88,36 +84,33 @@ namespace Serialize.Linq.Internals
             }
         }
 
-        public static IEnumerable<Type> Explode(IEnumerable<Type> valTypes, AutoAddCollectionTypes includeCollectionTypes)
+        public static IEnumerable<Type> Explode(IEnumerable<Type> types, AutoAddCollectionTypes includeCollectionTypes)
         {
-            return Explode(valTypes, (InternalAutoAddCollectionTypes)includeCollectionTypes).Keys;
+            return Explode(types, (InternalAutoAddCollectionTypes)includeCollectionTypes).Keys;
         }
 
-        private static IDictionary<Type, AutoAddCollectionTypes> Explode(IEnumerable<Type> vtypes, InternalAutoAddCollectionTypes includeCollectionTypes)
+        private static IDictionary<Type, AutoAddCollectionTypes> Explode(IEnumerable<Type> types, InternalAutoAddCollectionTypes includeCollectionTypes)
         {
-            Type nullableType;
-            IDictionary<Type, AutoAddCollectionTypes> tempTypes;
-
-            tempTypes = new Dictionary<Type, AutoAddCollectionTypes>();
-            foreach (Type tmpType in vtypes)
+            var result = new Dictionary<Type, AutoAddCollectionTypes>();
+            foreach (var type in types)
             {
-                tempTypes.Add(tmpType, AutoAddCollectionTypes.None);
+                result.Add(type, AutoAddCollectionTypes.None);
                 if (includeCollectionTypes.HasFlag(InternalAutoAddCollectionTypes.AsArray))
-                    tempTypes.Add(tmpType.MakeArrayType(), AutoAddCollectionTypes.AsArray);
+                    result.Add(type.MakeArrayType(), AutoAddCollectionTypes.AsArray);
                 if (includeCollectionTypes.HasFlag(InternalAutoAddCollectionTypes.AsList))
-                    tempTypes.Add(typeof(List<>).MakeGenericType(tmpType), AutoAddCollectionTypes.AsList);
-                if (!tmpType.IsClass())
+                    result.Add(typeof(List<>).MakeGenericType(type), AutoAddCollectionTypes.AsList);
+                if (!type.IsClass())
                 {
-                    nullableType = typeof(Nullable<>).MakeGenericType(tmpType);
-                    tempTypes.Add(nullableType, AutoAddCollectionTypes.None);
+                    var nullableType = typeof(Nullable<>).MakeGenericType(type);
+                    result.Add(nullableType, AutoAddCollectionTypes.None);
                     if (includeCollectionTypes.HasFlag(InternalAutoAddCollectionTypes.AsArray))
-                        tempTypes.Add(nullableType.MakeArrayType(), AutoAddCollectionTypes.AsArray);
+                        result.Add(nullableType.MakeArrayType(), AutoAddCollectionTypes.AsArray);
                     if (includeCollectionTypes.HasFlag(InternalAutoAddCollectionTypes.AsList))
-                        tempTypes.Add(typeof(List<>).MakeGenericType(nullableType), AutoAddCollectionTypes.AsList);
+                        result.Add(typeof(List<>).MakeGenericType(nullableType), AutoAddCollectionTypes.AsList);
                 }
             }
 
-            return tempTypes;
+            return result;
         }
 
     }

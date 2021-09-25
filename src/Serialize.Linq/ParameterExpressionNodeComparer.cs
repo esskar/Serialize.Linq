@@ -1,5 +1,4 @@
 ﻿using Serialize.Linq.Nodes;
-using System;
 using System.Collections.Generic;
 
 namespace Serialize.Linq

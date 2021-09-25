@@ -38,8 +38,7 @@ namespace Serialize.Linq.Nodes
         {
             if (factory == null)
                 throw new ArgumentNullException(nameof(factory));
-            if(items != null)
-               _items = items.Select(m => new MemberInfoNode(factory, m));
+            _items = items != null ? items.Select(m => new MemberInfoNode(factory, m)) : new List<MemberInfoNode>();
         }
 
         public IEnumerable<MemberInfo> GetMembers(IExpressionContext context)

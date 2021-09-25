@@ -48,17 +48,17 @@ namespace Serialize.Linq.Interfaces
         /// <summary>
         /// Serializes the specified object to the specified stream.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TNode"></typeparam>
         /// <param name="stream">The stream.</param>
         /// <param name="obj">The obj.</param>
-        void Serialize<T>(Stream stream, T obj) where T : Node;
+        void Serialize<TNode>(Stream stream, TNode obj) where TNode : Node;
 
         /// <summary>
-        /// Deserializes an object of type T from the specified stream.
+        /// Deserializes an object of type <typeparamref name="TNode"/> from the specified stream.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TNode"></typeparam>
         /// <param name="stream">The stream.</param>
         /// <returns></returns>
-        T Deserialize<T>(Stream stream) where T : Node;
+        TNode Deserialize<TNode>(Stream stream) where TNode : Node;
     }
 }

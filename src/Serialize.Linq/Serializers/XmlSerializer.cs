@@ -10,7 +10,6 @@ using System;
 using System.IO;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Serializers
 {
@@ -27,22 +26,22 @@ namespace Serialize.Linq.Serializers
             return new DataContractSerializer(type, this.GetKnownTypes());
         }
 
-        public override void Serialize<T>(Stream stream, T obj)
+        public override void Serialize<TNode>(Stream stream, TNode obj)
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
 
-            var serializer = this.CreateDataContractSerializer(typeof(T));
+            var serializer = this.CreateDataContractSerializer(typeof(TNode));
             serializer.WriteObject(stream, obj);
         }
 
-        public override T Deserialize<T>(Stream stream)
+        public override TNode Deserialize<TNode>(Stream stream)
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
 
-            var serializer = this.CreateDataContractSerializer(typeof(T));
-            return (T)serializer.ReadObject(stream);
+            var serializer = this.CreateDataContractSerializer(typeof(TNode));
+            return (TNode)serializer.ReadObject(stream);
         }
 #endif
     }

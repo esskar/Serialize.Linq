@@ -76,7 +76,8 @@ namespace Serialize.Linq.Internals
 
         public static bool IsAnonymous(this Type type)
         {
-            // Improvement: valType.Attributes.HasFlag(TypeAttributes.NotPublic) is always true, since TypeAttributes.NotPublic value is 0. Therefor checked for TypeAttributes.Public. 
+            // Improvement: type.Attributes.HasFlag(TypeAttributes.NotPublic) is always true, since TypeAttributes.NotPublic's value is 0.
+            // Therefor now is checked for not TypeAttributes.Public. 
             // See https://stackoverflow.com/questions/1650681/determining-whether-a-type-is-an-anonymous-type
             return type.IsDefined(typeof(CompilerGeneratedAttribute), false) &&
                    type.IsGenericType() &&

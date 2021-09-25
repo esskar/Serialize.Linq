@@ -93,15 +93,19 @@ namespace Serialize.Linq.Factories
                                     var match = false;
                                     do
                                     {
-                                        var fields = constantValueType.GetFields(this.Binding);
-                                        var memberField = fields.Length > 1
-                                            ? fields.SingleOrDefault(n => field.Name.Equals(n.Name))
-                                            : fields.FirstOrDefault();
-                                        if (memberField == null && parentField != null)
+                                        var fields = constantValueType.GetFields(this.BindingFlags);
+                                        FieldInfo memberField = null;
+                                        if (fields.Length > 1)
                                         {
-                                            memberField = fields.Length > 1
-                                                ? fields.SingleOrDefault(n => parentField.Name.Equals(n.Name))
-                                                : fields.FirstOrDefault();
+                                            memberField = fields.SingleOrDefault(n => field.Name.Equals(n.Name));
+                                        }
+                                        if (memberField == null && fields.Length >= 1)
+                                        {
+                                            memberField = fields.FirstOrDefault();
+                                        }
+                                        if (memberField == null && parentField != null &&  fields.Length >= 1)
+                                        {
+                                            memberField = fields.SingleOrDefault(n => parentField.Name.Equals(n.Name));
                                         }
                                         if (memberField == null)
                                             break;
@@ -178,14 +182,14 @@ namespace Serialize.Linq.Factories
 
             if (memberExpression.Member is FieldInfo)
             {
-                var fields = constantExpression.Type.GetFields(this.Binding);
+                var fields = constantExpression.Type.GetFields(this.BindingFlags);
                 var memberField = fields.Single(n => memberExpression.Member.Name.Equals(n.Name));
 
                 constantValue = memberField.GetValue(constantExpression.Value);
             }
             else if (memberExpression.Member is PropertyInfo)
             {
-                var properties = constantExpression.Type.GetProperties(this.Binding);
+                var properties = constantExpression.Type.GetProperties(this.BindingFlags);
                 var memberProperty = properties.Single(n => memberExpression.Member.Name.Equals(n.Name));
 
                 constantValue = memberProperty.GetValue(constantExpression.Value, null);

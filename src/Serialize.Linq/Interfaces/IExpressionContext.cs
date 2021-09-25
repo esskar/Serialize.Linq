@@ -7,7 +7,7 @@ namespace Serialize.Linq.Interfaces
 {
     public interface IExpressionContext
     {
-        BindingFlags Binding { get; }
+        BindingFlags BindingFlags { get; }
 
         [Obsolete("Use IExpressionContext.Binding instead.", false)]
         BindingFlags? GetBindingFlags();

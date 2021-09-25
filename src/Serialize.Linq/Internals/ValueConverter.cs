@@ -34,6 +34,7 @@ namespace Serialize.Linq.Internals
         private static readonly DateTime _utcEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         private static readonly DateTime _localEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
 
+        // ToDo: statischen Konstruktor auflösen (https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors)
         /// <summary>
         /// Initializes the <see cref="ValueConverter"/> class.
         /// </summary>
@@ -124,7 +125,6 @@ namespace Serialize.Linq.Internals
             if (convertTo.IsGenericType())
             {
                 // convert nullable types
-                var genericTypeDefinition = convertTo.GetGenericTypeDefinition();
                 if (TryConvertToNullable(value, convertTo, out var retNullable))
                     return retNullable;
 
@@ -155,7 +155,6 @@ namespace Serialize.Linq.Internals
                 convertedValue = converter(value, convertTo);
                 return true;
             }
-
             convertedValue = null;
             return false;
         }
@@ -166,44 +165,36 @@ namespace Serialize.Linq.Internals
         /// <param name="value">The value.</param>
         /// <param name="dateTime">The date time.</param>
         /// <returns></returns>
-        private static bool TryConvertToDateTime(object sourceDate, Type targetType, out DateTime targetDate)
+        private static bool TryConvertToDateTime(object value, Type convertTo, out DateTime convertedValue)
         {
-            string sourceString;
-            Match sourceMatch;
-            long fromEpochMSec;
-            int offHours;
-            int offMinutes;
-            int offSign;
-            DateTime tempDate;
-
-            if (targetType == typeof(DateTime))
+            if (convertTo == typeof(DateTime))
             {
-                sourceString = sourceDate.ToString();
-                sourceMatch = _dateRegex.Match(sourceString);
-                if (DateTime.TryParse(sourceString, CultureInfo.InvariantCulture, DateTimeStyles.None, out targetDate) || DateTime.TryParse(sourceString, CultureInfo.CurrentCulture, DateTimeStyles.None, out targetDate))
+                var stringValue = value.ToString();
+                var match = _dateRegex.Match(stringValue);
+                if (DateTime.TryParse(stringValue, CultureInfo.InvariantCulture, DateTimeStyles.None, out convertedValue) || DateTime.TryParse(stringValue, CultureInfo.CurrentCulture, DateTimeStyles.None, out convertedValue))
                     return true;
-                else if (sourceMatch.Success && Int64.TryParse(sourceMatch.Groups["date"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out fromEpochMSec))
+                else if (match.Success && Int64.TryParse(match.Groups["date"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var msFromEpoch))
                 {
                     // Improvement: conversion takes account of local and UTC time
-                    if (sourceMatch.Groups["offsign"].Success)
+                    if (match.Groups["offsign"].Success)
                     {
-                        offHours = Int32.Parse(sourceMatch.Groups["offhours"].Value, NumberStyles.None, CultureInfo.InvariantCulture);
-                        offMinutes = Int32.Parse(sourceMatch.Groups["offminutes"].Value, NumberStyles.None, CultureInfo.InvariantCulture);
-                        offSign = sourceMatch.Groups["offsign"].Value == "-" ? -1 : 1;
-                        tempDate = _localEpoch.AddMilliseconds(fromEpochMSec).AddHours(offHours * offSign).AddMinutes(offMinutes * offSign);
-                        targetDate = DateTime.Parse(String.Format(CultureInfo.InvariantCulture,
-                                                                  "{0:yyyy-MM-ddTHH:mm:ss.fff}{1}{2:00}:{3:00}", 
-                                                                  tempDate, sourceMatch.Groups["offsign"], offHours, offMinutes), 
-                                                    CultureInfo.InvariantCulture, 
+                        var hours = Int32.Parse(match.Groups["offhours"].Value, NumberStyles.None, CultureInfo.InvariantCulture);
+                        var minutes = Int32.Parse(match.Groups["offminutes"].Value, NumberStyles.None, CultureInfo.InvariantCulture);
+                        var sign = match.Groups["offsign"].Value == "-" ? -1 : 1;
+                        convertedValue = _localEpoch.AddMilliseconds(msFromEpoch).AddHours(hours * sign).AddMinutes(minutes * sign);
+                        convertedValue = DateTime.Parse(String.Format(CultureInfo.InvariantCulture,
+                                                                  "{0:yyyy-MM-ddTHH:mm:ss.fff}{1}{2:00}:{3:00}",
+                                                                  convertedValue, match.Groups["offsign"], hours, minutes),
+                                                    CultureInfo.InvariantCulture,
                                                     DateTimeStyles.AssumeLocal);
                     }
                     else
                     {
-                        tempDate = _utcEpoch.AddMilliseconds(fromEpochMSec);
-                        targetDate = DateTime.Parse(String.Format(CultureInfo.InvariantCulture, 
-                                                                  "{0:yyyy-MM-ddTHH:mm:ss.fff}Z", 
-                                                                  tempDate), 
-                                                    CultureInfo.InvariantCulture, 
+                        convertedValue = _utcEpoch.AddMilliseconds(msFromEpoch);
+                        convertedValue = DateTime.Parse(String.Format(CultureInfo.InvariantCulture,
+                                                                  "{0:yyyy-MM-ddTHH:mm:ss.fff}Z",
+                                                                  convertedValue),
+                                                    CultureInfo.InvariantCulture,
                                                     DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
                         // without DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal is targetDate.Kind = DateTimeKind.Local,
                         // see https://stackoverflow.com/questions/1756639/why-cant-datetime-parse-parse-utc-date
@@ -212,156 +203,141 @@ namespace Serialize.Linq.Internals
                 }
                 else
                 {
-                    targetDate = DateTime.MinValue;
+                    convertedValue = DateTime.MinValue;
                     return false;
                 }
             }
             else
             {
-                targetDate = DateTime.MinValue;
+                convertedValue = DateTime.MinValue;
                 return false;
             }
         }
 
-        private static bool TryConvertToTimeSpan(object sourceSpan, Type targetType, out TimeSpan targetSpan)
+        private static bool TryConvertToTimeSpan(object value, Type convertTo, out TimeSpan convertedValue)
         {
-            string sourceSpanString;
-
-            if (targetType == typeof(TimeSpan))
+            if (convertTo == typeof(TimeSpan))
             {
-                sourceSpanString = sourceSpan.ToString();
+                var sourceSpanString = value.ToString();
                 if (String.IsNullOrEmpty(sourceSpanString))
                 {
-                    targetSpan = TimeSpan.Zero;
-
+                    convertedValue = TimeSpan.Zero;
                     return true;
                 }
-                else if (TimeSpan.TryParse(sourceSpanString, CultureInfo.InvariantCulture, out targetSpan))
+                else if (TimeSpan.TryParse(sourceSpanString, CultureInfo.InvariantCulture, out convertedValue))
                     return true;
                 else
                     try
                     {
-                        targetSpan = XmlConvert.ToTimeSpan(sourceSpanString);
-
+                        convertedValue = XmlConvert.ToTimeSpan(sourceSpanString);
                         return true;
                     }
                     catch
                     {
-                        targetSpan = TimeSpan.MinValue;
+                        convertedValue = TimeSpan.MinValue;
                         return false;
                     }
             }
             else
             {
-                targetSpan = TimeSpan.MinValue;
+                convertedValue = TimeSpan.MinValue;
                 return false;
             }
         }
 
-        private static bool TryConvertToEnum(object sourceEnum, Type targetType, out object targetEnum)
+        private static bool TryConvertToEnum(object value, Type convertTo, out object convertedValue)
         {
-            if (targetType.IsEnum())
+            if (convertTo.IsEnum())
             {
                 try
                 {
-                    targetEnum = Enum.ToObject(targetType, sourceEnum);
-
+                    convertedValue = Enum.ToObject(convertTo, value);
                     return true;
                 }
                 catch
                 {
-                    targetEnum = null;
+                    convertedValue = null;
                     return false;
                 }
             }
             else
             {
-                targetEnum = null;
+                convertedValue = null;
                 return false;
             }
         }
 
-        private static bool TryConvertToArray(object sourceArray, Type targetType, out Array targetArray)
+        private static bool TryConvertToArray(object value, Type convertTo, out Array convertedValue)
         {
-            Type targetItemType;
-            Array tempSourceArray;
-
-            if (targetType.IsArray && sourceArray.GetType().IsArray)
+            if (convertTo.IsArray && value.GetType().IsArray)
             {
-                targetItemType = targetType.GetElementType();
-                if (targetItemType == null)
+                var elementType = convertTo.GetElementType();
+                if (elementType == null)
                     throw new InvalidOperationException("Cannot build array with an unkown element type.");
-                tempSourceArray = (Array)sourceArray;
-                targetArray = Array.CreateInstance(targetItemType, tempSourceArray.Length);
-
-                for (int tmpCtr = 0; tmpCtr <= tempSourceArray.Length - 1; tmpCtr++)
-                    targetArray.SetValue(Convert(tempSourceArray.GetValue(tmpCtr), targetItemType), tmpCtr);
-
+                var valArray = (Array)value;
+                convertedValue = Array.CreateInstance(elementType, valArray.Length);
+                for (var i = 0; i < valArray.Length; i++)
+                {
+                    convertedValue.SetValue(Convert(valArray.GetValue(i), elementType), i);
+                }
                 return true;
             }
             else
             {
-                targetArray = null;
+                convertedValue = null;
                 return false;
             }
         }
 
-        private static bool TryConvertToList(object sourceList, Type targetType, out IList targetList)
+        private static bool TryConvertToList(object value, Type convertTo, out IList convertedValue)
         {
-            Type targetItemType;
-            IEnumerable tempSourceList;
-
-            tempSourceList = sourceList as IEnumerable;
-            if (tempSourceList != null && targetType.GetGenericTypeDefinition() == typeof(List<>))
+            if (value is IEnumerable items && convertTo.GetGenericTypeDefinition() == typeof(List<>))
             {
-                targetList = (IList)Activator.CreateInstance(targetType);
-                targetItemType = targetType.GetGenericArguments()[0];
-
-                foreach (object tmpSourceItem in tempSourceList)
-                    targetList.Add(Convert(tmpSourceItem, targetItemType));
-
+                convertedValue = (IList)Activator.CreateInstance(convertTo);
+                var argumentType = convertTo.GetGenericArguments()[0];
+                foreach (var item in items)
+                {
+                    convertedValue.Add(Convert(item, argumentType));
+                }
                 return true;
             }
             else
             {
-                targetList = null;
+                convertedValue = null;
                 return false;
             }
         }
 
-        private static bool TryConvertToNullable(object sourceNullable, Type targetType, out object targetNullable)
+        private static bool TryConvertToNullable(object value, Type convertTo, out object convertedValue)
         {
-            Type[] argumentTypes;
-
-            if (targetType.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (convertTo.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
-                argumentTypes = targetType.GetGenericArguments();
+                var argumentTypes = convertTo.GetGenericArguments();
                 if (argumentTypes.Length == 1)
                 {
-                    targetNullable = Convert(sourceNullable, argumentTypes[0]);
-
+                    convertedValue = Convert(value, argumentTypes[0]);
                     return true;
                 }
             }
-            targetNullable = null;
+            convertedValue = null;
             return false;
         }
 
-        private static bool TryConvertibleConversion(object sourceConvertible, Type targetType, out IConvertible targetConvertible)
+        private static bool TryConvertibleConversion(object value, Type convertTo, out IConvertible convertedValue)
         {
-            if (sourceConvertible is IConvertible)
+            if (value is IConvertible)
             {
                 try
                 {
-                    targetConvertible = (IConvertible)System.Convert.ChangeType(sourceConvertible, targetType, CultureInfo.InvariantCulture);
-
+                    convertedValue = (IConvertible)System.Convert.ChangeType(value, convertTo, CultureInfo.InvariantCulture);
                     return true;
                 }
                 catch
                 {
+                    // empty on purpose, we fallback later
                 }
             }
-            targetConvertible = null;
+            convertedValue = null;
             return false;
         }
     }

@@ -7,18 +7,25 @@
 #endregion
 
 using System.IO;
+using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
+using Serialize.Linq.Extensions;
+using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Nodes;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Internals
 {
-    internal class BinarayFormatterSerializer : SerializerBase, IBinarySerializer
+    internal class BinaryFormatterSerializer : SerializerBase, IBinarySerializer
     {
         private readonly BinaryFormatter _formatter;
 
-        public BinarayFormatterSerializer()
+        public bool CanSerializeText => false;
+
+        public bool CanSerializeBinary => true;
+
+        public BinaryFormatterSerializer()
         {
             _formatter = new BinaryFormatter();
         }
@@ -40,7 +47,7 @@ namespace Serialize.Linq.Tests.Internals
 
         public void Serialize<T>(Stream stream, T obj) where T : Node
         {
-            if(!ReferenceEquals(obj, null))
+            if (!ReferenceEquals(obj, null))
                 _formatter.Serialize(stream, obj);
         }
 
@@ -49,6 +56,21 @@ namespace Serialize.Linq.Tests.Internals
             if (stream.Length == 0)
                 return default(T);
             return (T)_formatter.Deserialize(stream);
-        }        
+        }
+
+        public byte[] SerializeGeneric(Expression expression, FactorySettings settings)
+        {
+            return Serialize(expression.ToExpressionNode(settings));
+        }
+
+        public Expression DeserializeGeneric(byte[] data)
+        {
+            return DeserializeGeneric(data, null);
+        }
+
+        public Expression DeserializeGeneric(byte[] data, IExpressionContext context)
+        {
+            return Deserialize<ExpressionNode>(data)?.ToExpression(context ?? new ExpressionContext(false));
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace Serialize.Linq.Internals
     {
         private static readonly Type[] _builtinTypes;
 
+        // ToDo: statischen Konstruktor auflösen (https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/static-constructors)
         /// <summary>
         /// Initializes the <see cref="ComplexPropertyMemberTypeEnumerator"/> class.
         /// </summary>

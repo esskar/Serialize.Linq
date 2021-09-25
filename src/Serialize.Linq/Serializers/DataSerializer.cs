@@ -19,31 +19,31 @@ namespace Serialize.Linq.Serializers
     public abstract class DataSerializer : SerializerBase, ISerializer
     {
 #if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
-        public virtual void Serialize<T>(Stream stream, T obj) where T : Node
+        public virtual void Serialize<TNode>(Stream stream, TNode obj) where TNode : Node
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
 
-            var serializer = this.CreateXmlObjectSerializer(typeof(T));
+            var serializer = this.CreateXmlObjectSerializer(typeof(TNode));
             serializer.WriteObject(stream, obj);
         }
 
-        public virtual T Deserialize<T>(Stream stream) where T : Node
+        public virtual TNode Deserialize<TNode>(Stream stream) where TNode : Node
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
 
-            var serializer = this.CreateXmlObjectSerializer(typeof(T));
-            return (T)serializer.ReadObject(stream);
+            var serializer = this.CreateXmlObjectSerializer(typeof(TNode));
+            return (TNode)serializer.ReadObject(stream);
         }
 
         protected abstract XmlObjectSerializer CreateXmlObjectSerializer(Type type);
 
 #else
 
-        public abstract void Serialize<T>(Stream stream, T obj) where T : Node;
+        public abstract void Serialize<TNode>(Stream stream, TNode obj) where TNode : Node;
 
-        public abstract T Deserialize<T>(Stream stream) where T : Node;
+        public abstract TNode Deserialize<TNode>(Stream stream) where TNode : Node;
 
 #endif
     }

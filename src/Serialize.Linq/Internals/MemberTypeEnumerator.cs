@@ -7,6 +7,7 @@
 #endregion
 
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -108,7 +109,7 @@ namespace Serialize.Linq.Internals
         /// <value>
         /// The current.
         /// </value>
-        object System.Collections.IEnumerator.Current => this.Current;
+        object IEnumerator.Current => this.Current;
 
         /// <summary>
         /// Gets the type of the types of.

@@ -33,7 +33,7 @@ namespace Serialize.Linq.Nodes
 
         protected override IEnumerable<FieldInfo> GetMemberInfosForType(IExpressionContext context, Type type)
         {
-            return type.GetFields(context?.Binding ?? Factory.Settings.Binding);
+            return type.GetFields(context?.BindingFlags ?? Factory.Settings.BindingFlags);
         }
     }
 }

@@ -38,7 +38,7 @@ namespace Serialize.Linq.Interfaces
         /// <summary>
         /// Gets binding flags to be used when accessing type members.
         /// </summary>
-        BindingFlags Binding { get; }
+        BindingFlags BindingFlags { get; }
 
         /// <summary>
         /// Gets binding flags to be used when accessing type members.

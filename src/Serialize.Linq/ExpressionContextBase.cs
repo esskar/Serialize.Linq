@@ -9,9 +9,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-#if !WINDOWS_PHONE
-using System.Collections.Concurrent;
-#else
+#if WINDOWS_PHONE
 using Serialize.Linq.Internals;
 #endif
 using System.Linq.Expressions;
@@ -28,22 +26,14 @@ namespace Serialize.Linq
 
         protected ExpressionContextBase() { }
 
+        protected ExpressionContextBase(bool allowPrivateFieldAccess)
+        {
+            AllowPrivateFieldAccess = allowPrivateFieldAccess;
+        }
+
         public bool AllowPrivateFieldAccess { get; set; }
 
-        public virtual BindingFlags Binding
-        {
-            get
-            {
-                if (AllowPrivateFieldAccess)
-                {
-                    return Constants.ALSO_NON_PUBLIC_BINDING;
-                }
-                else
-                {
-                    return Constants.PUBLIC_ONLY_BINDING;
-                }
-            }
-        }
+        public virtual BindingFlags BindingFlags => AllowPrivateFieldAccess ? Constants.ALSO_NON_PUBLIC_BINDING : Constants.PUBLIC_ONLY_BINDING;
 
         [Obsolete("Use ExpressionContext.Binding instead.", false)]
         public virtual BindingFlags? GetBindingFlags()
@@ -80,10 +70,10 @@ namespace Serialize.Linq
                 {
                     if ((nodeType = Type.GetType(node.Name)) == null)
                     {
-                        using (IEnumerator<Assembly> tmpEnumerator = this.GetAssemblies().GetEnumerator())
+                        using (IEnumerator<Assembly> enumerator = this.GetAssemblies().GetEnumerator())
                         {
-                            while (tmpEnumerator.MoveNext() && nodeType == null)
-                                nodeType = tmpEnumerator.Current.GetType(node.Name);
+                            while (enumerator.MoveNext() && nodeType == null)
+                                nodeType = enumerator.Current.GetType(node.Name);
                         }
                     }
                     _typeCache.Add(node.Name, nodeType);

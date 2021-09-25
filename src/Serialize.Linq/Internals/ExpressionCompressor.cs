@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq.Expressions;
-using Serialize.Linq.Extensions;
 
 namespace Serialize.Linq.Internals
 {
