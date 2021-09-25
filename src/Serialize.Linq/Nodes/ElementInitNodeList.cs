@@ -25,14 +25,9 @@ namespace Serialize.Linq.Nodes
     [Serializable]
 #endif
     #endregion
-    public class ElementInitNodeList
+    public class ElementInitNodeList : List<ElementInitNode>
     {
-        private readonly IEnumerable<ElementInitNode> _items;
-
-        public ElementInitNodeList()
-        {
-            _items = new List<ElementInitNode>();
-        }
+        public ElementInitNodeList() { }
 
         public ElementInitNodeList(INodeFactory factory, IEnumerable<ElementInit> items)
         {
@@ -40,12 +35,12 @@ namespace Serialize.Linq.Nodes
                 throw new ArgumentNullException(nameof(factory));
             if (items == null)
                 throw new ArgumentNullException(nameof(items));
-            _items = items.Select(item => new ElementInitNode(factory, item));
+            this.AddRange(items.Select(item => new ElementInitNode(factory, item)));
         }
 
         internal IEnumerable<ElementInit> GetElementInits(IExpressionContext context)
         {
-            return _items.Select(item => item.ToElementInit(context));
+            return this.Select(item => item.ToElementInit(context));
         }
     }
 }

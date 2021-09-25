@@ -25,14 +25,9 @@ namespace Serialize.Linq.Nodes
     [Serializable]
 #endif
     #endregion
-    public class MemberBindingNodeList
+    public class MemberBindingNodeList : List<MemberBindingNode>
     {
-        private readonly IEnumerable<MemberBindingNode> _items;
-
-        public MemberBindingNodeList() 
-        {
-            _items = new List<MemberBindingNode>();
-        }
+        public MemberBindingNodeList() { }
 
         public MemberBindingNodeList(INodeFactory factory, IEnumerable<MemberBinding> items)
         {
@@ -40,12 +35,12 @@ namespace Serialize.Linq.Nodes
                 throw new ArgumentNullException(nameof(factory));
             if (items == null)
                 throw new ArgumentNullException(nameof(items));
-            _items = items.Select(m => MemberBindingNode.Create(factory, m));
+            this.AddRange(items.Select(m => MemberBindingNode.Create(factory, m)));
         }
 
         internal IEnumerable<MemberBinding> GetMemberBindings(IExpressionContext context)
         {
-            return _items.Select(memberBindingEntity => memberBindingEntity.ToMemberBinding(context));
+            return this.Select(memberBindingEntity => memberBindingEntity.ToMemberBinding(context));
         }
     }
 }

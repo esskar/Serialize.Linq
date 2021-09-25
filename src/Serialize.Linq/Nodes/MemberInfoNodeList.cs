@@ -25,25 +25,21 @@ namespace Serialize.Linq.Nodes
     [Serializable]
 #endif
     #endregion
-    public class MemberInfoNodeList
+    public class MemberInfoNodeList : List<MemberInfoNode>
     {
-        private readonly IEnumerable<MemberInfoNode> _items;
-
-        public MemberInfoNodeList() 
-        {
-            _items = new List<MemberInfoNode>();
-        }
+        public MemberInfoNodeList() { }
 
         public MemberInfoNodeList(INodeFactory factory, IEnumerable<MemberInfo> items = null)
         {
             if (factory == null)
                 throw new ArgumentNullException(nameof(factory));
-            _items = items != null ? items.Select(m => new MemberInfoNode(factory, m)) : new List<MemberInfoNode>();
+            if(items != null)
+                this.AddRange(items.Select(m => new MemberInfoNode(factory, m)));
         }
 
         public IEnumerable<MemberInfo> GetMembers(IExpressionContext context)
         {
-            return _items.Select(m => m.ToMemberInfo(context));
+            return this.Select(m => m.ToMemberInfo(context));
         }
     }
 }
