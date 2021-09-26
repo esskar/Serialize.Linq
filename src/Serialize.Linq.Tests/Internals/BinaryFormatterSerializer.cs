@@ -24,9 +24,21 @@ namespace Serialize.Linq.Tests.Internals
 
         private readonly BinaryFormatter _formatter;
 
-        public bool CanSerializeText => false;
+        public bool CanSerializeText
+        {
+            get
+            {
+                return false;
+            }
+        }
 
-        public bool CanSerializeBinary => true;
+        public bool CanSerializeBinary
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         public BinaryFormatterSerializer()
         {

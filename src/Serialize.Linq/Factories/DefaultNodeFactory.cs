@@ -74,13 +74,22 @@ namespace Serialize.Linq.Factories
         /// <summary>
         /// Gets binding flags to be used when accessing type members.
         /// </summary>
-        public BindingFlags BindingFlags => _innerFactory.BindingFlags;
+        public BindingFlags BindingFlags
+        {
+            get
+            {
+                return _innerFactory.BindingFlags;
+            }
+        }
 
         /// <summary>
         /// Gets binding flags to be used when accessing type members.
         /// </summary>
         [Obsolete("Use DefaultNodeFactory.Binding instead.", false)]
-        public BindingFlags? GetBindingFlags() => _innerFactory.GetBindingFlags();
+        public BindingFlags? GetBindingFlags()
+        {
+            return _innerFactory.GetBindingFlags();
+        }
 
         /// <summary>
         /// Creates the factory.

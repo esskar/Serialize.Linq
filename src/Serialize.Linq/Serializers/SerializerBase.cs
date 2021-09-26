@@ -22,7 +22,11 @@ namespace Serialize.Linq.Serializers
         [Obsolete("Use SerializerBase.AutoAddKnownTypesCollectionType", false)]
         public bool AutoAddKnownTypesAsArrayTypes
         {
-            get => _autoAddKnownTypesAsArrayTypes;
+            get
+            {
+                return _autoAddKnownTypesAsArrayTypes;
+            }
+
             set
             {
                 _autoAddKnownTypesAsArrayTypes = value;
@@ -42,7 +46,11 @@ namespace Serialize.Linq.Serializers
         [Obsolete("Use SerializerBase.AutoAddKnownTypesCollectionType", false)]
         public bool AutoAddKnownTypesAsListTypes
         {
-            get => _autoAddKnownTypesAsListTypes;
+            get
+            {
+                return _autoAddKnownTypesAsListTypes;
+            }
+
             set
             {
                 _autoAddKnownTypesAsListTypes = value;
@@ -61,7 +69,11 @@ namespace Serialize.Linq.Serializers
 
         public AutoAddCollectionTypes AutoAddKnownTypesCollectionType
         {
-            get => _autoAddKnownTypesCollectionType;
+            get
+            {
+                return _autoAddKnownTypesCollectionType;
+            }
+
             set
             {
                 _autoAddKnownTypesCollectionType = value;

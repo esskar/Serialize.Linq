@@ -49,7 +49,13 @@ namespace Serialize.Linq.Internals
         /// <value>
         /// <c>true</c> if this instance is considered; otherwise, <c>false</c>.
         /// </value>
-        public bool IsConsidered => this.IsConsideredType(_type);
+        public bool IsConsidered
+        {
+            get
+            {
+                return this.IsConsideredType(_type);
+            }
+        }
 
         /// <summary>
         /// Determines whether [is considered type] [the specified type].

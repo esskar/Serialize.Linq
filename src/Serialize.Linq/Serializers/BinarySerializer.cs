@@ -24,9 +24,21 @@ namespace Serialize.Linq.Serializers
         public BinarySerializer(FactorySettings factorySettings)
             : base(factorySettings) { }
 
-        public override bool CanSerializeText => false;
+        public override bool CanSerializeText
+        {
+            get
+            {
+                return false;
+            }
+        }
 
-        public override bool CanSerializeBinary => true;
+        public override bool CanSerializeBinary
+        {
+            get
+            {
+                return true;
+            }
+        }
 
         public override byte[] Serialize<TNode>(TNode obj)
         {

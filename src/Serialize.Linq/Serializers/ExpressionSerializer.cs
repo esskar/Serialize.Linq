@@ -31,23 +31,55 @@ namespace Serialize.Linq.Serializers
 
         public bool AutoAddKnownTypesAsArrayTypes
         {
-            get => _serializer.AutoAddKnownTypesAsArrayTypes;
-            set => _serializer.AutoAddKnownTypesAsArrayTypes = value;
+            get
+            {
+                return _serializer.AutoAddKnownTypesAsArrayTypes;
+            }
+
+            set
+            {
+                _serializer.AutoAddKnownTypesAsArrayTypes = value;
+            }
         }
 
         public bool AutoAddKnownTypesAsListTypes
         {
-            get => _serializer.AutoAddKnownTypesAsListTypes;
-            set => _serializer.AutoAddKnownTypesAsListTypes = value;
+            get
+            {
+                return _serializer.AutoAddKnownTypesAsListTypes;
+            }
+
+            set
+            {
+                _serializer.AutoAddKnownTypesAsListTypes = value;
+            }
         }
 
-        public bool CanSerializeText => _serializer is ITextSerializer;
+        public bool CanSerializeText
+        {
+            get
+            {
+                return _serializer is ITextSerializer;
+            }
+        }
 
-        public bool CanSerializeBinary => _serializer is IBinarySerializer;
+        public bool CanSerializeBinary
+        {
+            get
+            {
+                return _serializer is IBinarySerializer;
+            }
+        }
 
-        public void AddKnownType(Type type) => _serializer.AddKnownType(type);
+        public void AddKnownType(Type type)
+        {
+            _serializer.AddKnownType(type);
+        }
 
-        public void AddKnownTypes(IEnumerable<Type> types) => _serializer.AddKnownTypes(types);
+        public void AddKnownTypes(IEnumerable<Type> types)
+        {
+            _serializer.AddKnownTypes(types);
+        }
 
         public void Serialize(Stream stream, Expression expression, FactorySettings factorySettings = null)
         {

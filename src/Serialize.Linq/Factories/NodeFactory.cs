@@ -76,7 +76,13 @@ namespace Serialize.Linq.Factories
         /// <summary>
         /// Gets binding flags to be used when accessing type members.
         /// </summary>
-        public BindingFlags BindingFlags => this.Settings.AllowPrivateFieldAccess ? Constants.ALSO_NON_PUBLIC_BINDING : Constants.PUBLIC_ONLY_BINDING;
+        public BindingFlags BindingFlags
+        {
+            get
+            {
+                return this.Settings.AllowPrivateFieldAccess ? Constants.ALSO_NON_PUBLIC_BINDING : Constants.PUBLIC_ONLY_BINDING;
+            }
+        }
 
         /// <summary>
         /// Gets binding flags to be used when accessing type members.

@@ -8,6 +8,12 @@ namespace Serialize.Linq.Factories
 
         public bool AllowPrivateFieldAccess { get; set; }
 
-        public BindingFlags BindingFlags => this.AllowPrivateFieldAccess ? Constants.ALSO_NON_PUBLIC_BINDING : Constants.PUBLIC_ONLY_BINDING;
+        public BindingFlags BindingFlags
+        {
+            get
+            {
+                return this.AllowPrivateFieldAccess ? Constants.ALSO_NON_PUBLIC_BINDING : Constants.PUBLIC_ONLY_BINDING;
+            }
+        }
     }
 }
