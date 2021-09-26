@@ -77,12 +77,10 @@ namespace Serialize.Linq.Internals
             result.Add(baseType);
 
             var retval = false;
-            while (enumerator.MoveNext())
+            foreach (var type in enumerator.ReferedTypes)
             {
-                var type = enumerator.Current;
                 retval = this.BuildTypes(type, seen, result) || retval;
             }
-
             return retval;
         }
 

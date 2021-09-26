@@ -31,7 +31,7 @@ namespace Serialize.Linq.Internals
         /// <param name="type">The type.</param>
         /// <param name="bindingFlags">The binding flags.</param>
         public ComplexPropertyMemberTypeEnumerator(Type type, BindingFlags bindingFlags)
-            : this(new HashSet<Type>(), type, bindingFlags) { }
+            : this(new List<Type>(), type, bindingFlags) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ComplexPropertyMemberTypeEnumerator"/> class.
@@ -39,7 +39,7 @@ namespace Serialize.Linq.Internals
         /// <param name="seenTypes">The seen types.</param>
         /// <param name="type">The type.</param>
         /// <param name="bindingFlags">The binding flags.</param>
-        public ComplexPropertyMemberTypeEnumerator(HashSet<Type> seenTypes, Type type, BindingFlags bindingFlags)
+        public ComplexPropertyMemberTypeEnumerator(IEnumerable<Type> seenTypes, Type type, BindingFlags bindingFlags)
             : base(seenTypes, type, bindingFlags) { }
 
         /// <summary>

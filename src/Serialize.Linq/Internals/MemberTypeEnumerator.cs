@@ -15,13 +15,14 @@ using Serialize.Linq.Extensions;
 
 namespace Serialize.Linq.Internals
 {
-    internal abstract class MemberTypeEnumerator : IEnumerator<Type>
+    internal abstract class MemberTypeEnumerator
     {
-        private int _currentIndex;
+        private readonly int _currentIndex;
         private readonly Type _type;
         private readonly BindingFlags _bindingFlags;
-        private readonly HashSet<Type> _seenTypes;
+        private readonly ISet<Type> _seenTypes;
         private Type[] _allTypes;
+        private ISet<Type> _referedTypes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemberTypeEnumerator"/> class.
@@ -34,9 +35,11 @@ namespace Serialize.Linq.Internals
         /// or
         /// type
         /// </exception>
-        public MemberTypeEnumerator(HashSet<Type> seenTypes, Type type, BindingFlags bindingFlags)
+        public MemberTypeEnumerator(IEnumerable<Type> seenTypes, Type type, BindingFlags bindingFlags)
         {
-            _seenTypes = seenTypes ?? throw new ArgumentNullException(nameof(seenTypes));
+            if (seenTypes == null)
+                throw new ArgumentNullException(nameof(seenTypes));
+            _seenTypes = new HashSet<Type>(seenTypes);
             _type = type ?? throw new ArgumentNullException(nameof(type));
             _bindingFlags = bindingFlags;
 
@@ -88,28 +91,21 @@ namespace Serialize.Linq.Internals
         protected void AddSeenType(Type type)
         {
             _seenTypes.Add(type);
+            _referedTypes = null;
         }
 
-        /// <summary>
-        /// Gets the current.
-        /// </summary>
-        /// <value>
-        /// The current.
-        /// </value>
-        public virtual Type Current => _allTypes[_currentIndex];
-
-        /// <summary>
-        /// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
-        public void Dispose() { }
-
-        /// <summary>
-        /// Gets the current.
-        /// </summary>
-        /// <value>
-        /// The current.
-        /// </value>
-        object IEnumerator.Current => this.Current;
+        public IEnumerable<Type> ReferedTypes
+        {
+            get
+            {
+                if (_referedTypes == null)
+                {
+                    _referedTypes = new HashSet<Type>();
+                    AddTypes();
+                }
+                return _referedTypes;
+            }
+        }
 
         /// <summary>
         /// Gets the type of the types of.
@@ -125,7 +121,7 @@ namespace Serialize.Linq.Internals
             {
                 foreach (var genericType in type.GetGenericArguments())
                     types.AddRange(this.GetTypesOfType(genericType));
-                
+
             }
             return types;
         }
@@ -143,36 +139,24 @@ namespace Serialize.Linq.Internals
             return types.ToArray();
         }
 
-        /// <summary>
-        /// Advances the enumerator to the next element of the collection.
-        /// </summary>
-        /// <returns>
-        /// true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.
-        /// </returns>
-        public virtual bool MoveNext()
+        public virtual void AddTypes()
         {
-            if (!this.IsConsidered)
-                return false;
-
-            if (_allTypes == null)
-                _allTypes = this.BuildTypes();
-
-            while (++_currentIndex < _allTypes.Length)
-            {                
-                if (this.IsSeenType(this.Current)) continue;
-                this.AddSeenType(this.Current);
-                if (this.IsConsideredType(this.Current)) break;
+            if (this.IsConsidered)
+            {
+                if (_allTypes == null)
+                    _allTypes = this.BuildTypes();
+                foreach (var type in _allTypes)
+                {
+                    if (!this.IsSeenType(type))
+                    {
+                        _seenTypes.Add(type);
+                        if (this.IsConsideredType(type))
+                        {
+                            _referedTypes.Add(type);
+                        }
+                    }
+                }
             }
-
-            return _currentIndex < _allTypes.Length;
         }
-
-        /// <summary>
-        /// Sets the enumerator to its initial position, which is before the first element in the collection.
-        /// </summary>
-        public void Reset()
-        {
-            _currentIndex = -1;
-        }        
     }
 }
