@@ -93,10 +93,7 @@ namespace Serialize.Linq.Tests.Issues
             SetFields(initialValue);
 
             // Serialize expression
-            var settings = new FactorySettings
-            {
-                AllowPrivateFieldAccess = true
-            };
+            var settings = new FactorySettings(true);
             var serializer = new JsonSerializer();
             var value = serializer.SerializeGeneric(expression, settings);
 
