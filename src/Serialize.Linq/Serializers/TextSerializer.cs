@@ -19,9 +19,9 @@ namespace Serialize.Linq.Serializers
     public abstract class TextSerializer : GenericSerializerBase<string>, ITextSerializer
     {
 
-        public override bool CanSerializeText => false;
+        public override bool CanSerializeText => true;
 
-        public override bool CanSerializeBinary => true;
+        public override bool CanSerializeBinary => false;
 
         public override string Serialize<TNode>(TNode obj)
         {
