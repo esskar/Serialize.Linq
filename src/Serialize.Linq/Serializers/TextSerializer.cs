@@ -8,8 +8,10 @@
 
 using System;
 using System.IO;
+using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using System.Text;
+using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
@@ -51,6 +53,18 @@ namespace Serialize.Linq.Serializers
                     return this.Deserialize<TNode>(ms);
                 }
             }
+        }
+
+        [Obsolete("This function is just for compatibility. Please use SerializeGeneric(Expression, FactorySettings) instead", false)]
+        public string SerializeText(Expression expression, FactorySettings factorySettings = null)
+        {
+            return  SerializeGeneric(expression,factorySettings);
+        }
+
+        [Obsolete("This function is just for compatibility. Please use DeserializeGeneric(byte[], IExpressionContext) instead", false)]
+        public Expression DeserializeText(string data, IExpressionContext context = null)
+        {
+            return DeserializeGeneric(data, context);
         }
     }
 }

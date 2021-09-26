@@ -58,17 +58,12 @@ namespace Serialize.Linq.Tests.Internals
             return (T)_formatter.Deserialize(stream);
         }
 
-        public byte[] SerializeGeneric(Expression expression, FactorySettings settings)
+        public byte[] SerializeGeneric(Expression expression, FactorySettings settings = null)
         {
             return Serialize(expression.ToExpressionNode(settings));
         }
 
-        public Expression DeserializeGeneric(byte[] data)
-        {
-            return DeserializeGeneric(data, null);
-        }
-
-        public Expression DeserializeGeneric(byte[] data, IExpressionContext context)
+        public Expression DeserializeGeneric(byte[] data, IExpressionContext context = null)
         {
             return Deserialize<ExpressionNode>(data)?.ToExpression(context ?? new ExpressionContext(false));
         }
