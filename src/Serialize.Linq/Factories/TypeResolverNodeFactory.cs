@@ -95,17 +95,20 @@ namespace Serialize.Linq.Factories
                                     {
                                         var fields = constantValueType.GetFields(this.BindingFlags);
                                         FieldInfo memberField = null;
-                                        if (fields.Length > 1)
+                                        if (fields.Length > 0)
                                         {
-                                            memberField = fields.SingleOrDefault(n => field.Name.Equals(n.Name));
-                                        }
-                                        if (memberField == null && fields.Length >= 1)
-                                        {
-                                            memberField = fields.FirstOrDefault();
-                                        }
-                                        if (memberField == null && parentField != null &&  fields.Length >= 1)
-                                        {
-                                            memberField = fields.SingleOrDefault(n => parentField.Name.Equals(n.Name));
+                                            if (fields.Length == 1)
+                                            {
+                                                memberField = fields[0];
+                                            }
+                                            else
+                                            {
+                                                memberField = fields.SingleOrDefault(n => field.Name.Equals(n.Name));
+                                            }
+                                            if (memberField == null && parentField != null && fields.Length > 1)
+                                            {
+                                                memberField = fields.SingleOrDefault(n => parentField.Name.Equals(n.Name));
+                                            }
                                         }
                                         if (memberField == null)
                                             break;
