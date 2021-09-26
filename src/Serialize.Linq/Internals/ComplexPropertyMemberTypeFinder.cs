@@ -13,8 +13,20 @@ using System.Reflection;
 
 namespace Serialize.Linq.Internals
 {
-    internal class ComplexPropertyMemberTypeFinder
+    internal static class ComplexPropertyMemberTypeFinder
     {
+        /// <summary>
+        /// Finds the types.
+        /// </summary>
+        /// <param name="baseType">Type of the base.</param>
+        /// <returns></returns>
+        public static IEnumerable<Type> FindTypes(Type baseType)
+        {
+            var retval = new HashSet<Type>();
+            BuildTypes(baseType, new HashSet<Type>(), retval);
+            return retval;
+        }
+
         /// <summary>
         /// Analyses the types.
         /// </summary>
@@ -22,10 +34,10 @@ namespace Serialize.Linq.Internals
         /// <param name="seen">The seen.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        private bool AnalyseTypes(IEnumerable<Type> types, ISet<Type> seen, ISet<Type> result)
+        private static bool AnalyseTypes(IEnumerable<Type> types, ISet<Type> seen, ISet<Type> result)
         {
             return types != null 
-                && types.Aggregate(false, (current, type) => this.BuildTypes(type, seen, result) || current);
+                && types.Aggregate(false, (current, type) => BuildTypes(type, seen, result) || current);
         }
 
         /// <summary>
@@ -35,12 +47,12 @@ namespace Serialize.Linq.Internals
         /// <param name="seen">The seen.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        private bool AnalyseType(Type baseType, ISet<Type> seen, ISet<Type> result)
+        private static bool AnalyseType(Type baseType, ISet<Type> seen, ISet<Type> result)
         {
             bool retval;
             if (baseType.HasElementType)
             {
-                if (!(retval = this.BuildTypes(baseType.GetElementType(), seen, result)))
+                if (!(retval = BuildTypes(baseType.GetElementType(), seen, result)))
                     retval = seen.Contains(baseType.GetElementType());
             }
             else
@@ -49,11 +61,11 @@ namespace Serialize.Linq.Internals
             }
 
             if (baseType.IsGenericType())
-                retval = this.AnalyseTypes(baseType.GetGenericArguments(), seen, result) || retval;
-            retval = this.AnalyseTypes(baseType.GetInterfaces(), seen, result) || retval;
+                retval = AnalyseTypes(baseType.GetGenericArguments(), seen, result) || retval;
+            retval = AnalyseTypes(baseType.GetInterfaces(), seen, result) || retval;
             var subBaseType = baseType.GetBaseType();
             if (subBaseType != null && subBaseType != typeof(object))
-                retval = this.BuildTypes(subBaseType, seen, result) || retval;
+                retval = BuildTypes(subBaseType, seen, result) || retval;
             return retval;
         }
 
@@ -64,11 +76,11 @@ namespace Serialize.Linq.Internals
         /// <param name="seen">The seen.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        private bool BuildTypes(Type baseType, ISet<Type> seen, ISet<Type> result)
+        private static bool BuildTypes(Type baseType, ISet<Type> seen, ISet<Type> result)
         {            
             if (!seen.Add(baseType))
                 return false;            
-            if (!this.AnalyseType(baseType, seen, result))
+            if (!AnalyseType(baseType, seen, result))
                 return false;
 
             var enumerator = new ComplexPropertyMemberTypeEnumerator(baseType, BindingFlags.Instance | BindingFlags.Public);
@@ -79,21 +91,9 @@ namespace Serialize.Linq.Internals
             var retval = false;
             foreach (var type in enumerator.ReferedTypes)
             {
-                retval = this.BuildTypes(type, seen, result) || retval;
+                retval = BuildTypes(type, seen, result) || retval;
             }
             return retval;
-        }
-
-        /// <summary>
-        /// Finds the types.
-        /// </summary>
-        /// <param name="baseType">Type of the base.</param>
-        /// <returns></returns>
-        public IEnumerable<Type> FindTypes(Type baseType)
-        {
-            var retval = new HashSet<Type>();
-            this.BuildTypes(baseType, new HashSet<Type>(), retval);
-            return retval;            
         }
     }
 }
