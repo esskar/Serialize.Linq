@@ -31,6 +31,8 @@ namespace Serialize.Linq.Factories
         {
             if (expectedTypes == null)
                 throw new ArgumentNullException(nameof(expectedTypes));
+            if (expectedTypes.Any(t => t == null))
+                throw new ArgumentException("All types must be non-null.", nameof(expectedTypes));
             _expectedTypes = expectedTypes;
         }
 
@@ -93,7 +95,7 @@ namespace Serialize.Linq.Factories
                                     var match = false;
                                     do
                                     {
-                                        var fields = constantValueType.GetFields(this.BindingFlags);
+                                        var fields = constantValueType.GetFields(this.Settings.BindingFlags);
                                         FieldInfo memberField = null;
                                         if (fields.Length > 0)
                                         {
@@ -185,14 +187,14 @@ namespace Serialize.Linq.Factories
 
             if (memberExpression.Member is FieldInfo)
             {
-                var fields = constantExpression.Type.GetFields(this.BindingFlags);
+                var fields = constantExpression.Type.GetFields(this.Settings.BindingFlags);
                 var memberField = fields.Single(n => memberExpression.Member.Name.Equals(n.Name));
 
                 constantValue = memberField.GetValue(constantExpression.Value);
             }
             else if (memberExpression.Member is PropertyInfo)
             {
-                var properties = constantExpression.Type.GetProperties(this.BindingFlags);
+                var properties = constantExpression.Type.GetProperties(this.Settings.BindingFlags);
                 var memberProperty = properties.Single(n => memberExpression.Member.Name.Equals(n.Name));
 
                 constantValue = memberProperty.GetValue(constantExpression.Value, null);

@@ -19,9 +19,9 @@ namespace Serialize.Linq.Internals
     {
         private readonly Type _type;
         private readonly BindingFlags _bindingFlags;
-        private readonly ISet<Type> _seenTypes;
+        private readonly ICollection<Type> _seenTypes;
         private IEnumerable<Type> _allTypes;
-        private ISet<Type> _referedTypes;
+        private ICollection<Type> _referedTypes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemberTypeEnumerator"/> class.

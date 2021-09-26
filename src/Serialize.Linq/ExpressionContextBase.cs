@@ -22,6 +22,7 @@ namespace Serialize.Linq
     {
         private readonly IDictionary<ParameterExpressionNode, ParameterExpression> _parameterExpressions =
             new Dictionary<ParameterExpressionNode, ParameterExpression>(new ParameterExpressionNodeComparer());
+
         private readonly IDictionary<string, Type> _typeCache = new Dictionary<string, Type>();
 
         protected ExpressionContextBase() { }
@@ -88,6 +89,7 @@ namespace Serialize.Linq
                 return nodeType;
             }
         }
+
         protected abstract IEnumerable<Assembly> GetAssemblies();
     }
 }

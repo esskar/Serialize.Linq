@@ -28,10 +28,9 @@ namespace Serialize.Linq
             : this(false, assemblyLoader) { }
 
         public ExpressionContext(bool allowPrivateFieldAccess, IAssemblyLoader assemblyLoader)
-            : base(allowPrivateFieldAccess) 
+            : base(allowPrivateFieldAccess)
         {
-            _assemblyLoader = assemblyLoader
-              ?? throw new ArgumentNullException(nameof(assemblyLoader));
+            _assemblyLoader = assemblyLoader ?? throw new ArgumentNullException(nameof(assemblyLoader));
         }
 
         protected override IEnumerable<Assembly> GetAssemblies()

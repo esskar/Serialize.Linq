@@ -123,7 +123,7 @@ namespace Serialize.Linq.Nodes
         /// <returns></returns>
         public virtual TMemberInfo ToMemberInfo(IExpressionContext context)
         {
-            if (string.IsNullOrWhiteSpace(this.Signature))
+            if (String.IsNullOrWhiteSpace(this.Signature))
                 return null;
 
             var declaringType = this.GetDeclaringType(context);

@@ -15,7 +15,7 @@ namespace Serialize.Linq.Interfaces
         /// </summary>
         /// 
         /// <returns>
-        /// An array of assemblies in this application domain.
+        /// An IEnumerable of assemblies in this application domain.
         /// </returns>
         IEnumerable<Assembly> GetAssemblies();
     }

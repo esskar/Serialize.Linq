@@ -55,6 +55,12 @@ namespace Serialize.Linq.Nodes
     #endregion
     public abstract class Node
     {
+        [IgnoreDataMember]
+#if !WINDOWS_UWP
+        [NonSerialized]
+#endif
+        private readonly INodeFactory _factory;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Node"/> class.
         /// </summary>
@@ -67,7 +73,7 @@ namespace Serialize.Linq.Nodes
         /// <exception cref="System.ArgumentNullException">factory</exception>
         protected Node(INodeFactory factory)
         {
-            this.Factory = factory ?? throw new ArgumentNullException(nameof(factory));
+            _factory = factory ?? throw new ArgumentNullException(nameof(factory));
         }
 
         /// <summary>
@@ -76,10 +82,12 @@ namespace Serialize.Linq.Nodes
         /// <value>
         /// The factory.
         /// </value>
-        [IgnoreDataMember]
-#if !WINDOWS_UWP
-        [NonSerialized]
-#endif
-        public readonly INodeFactory Factory;        
+        public INodeFactory Factory
+        { 
+            get
+            {
+                return _factory;
+            }
+        }
     }
 }

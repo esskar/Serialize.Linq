@@ -3,8 +3,7 @@ using System.Collections.Generic;
 
 namespace Serialize.Linq
 {
-
-    internal sealed class ParameterExpressionNodeComparer : EqualityComparer<ParameterExpressionNode>
+    public sealed class ParameterExpressionNodeComparer : EqualityComparer<ParameterExpressionNode>
     {
         public override bool Equals(ParameterExpressionNode x, ParameterExpressionNode y)
         {

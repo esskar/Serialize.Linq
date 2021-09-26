@@ -34,7 +34,7 @@ namespace Serialize.Linq.Internals
         /// <param name="seen">The seen.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        private static bool AnalyseTypes(IEnumerable<Type> types, ISet<Type> seen, ISet<Type> result)
+        private static bool AnalyseTypes(IEnumerable<Type> types, ISet<Type> seen, ICollection<Type> result)
         {
             return types != null 
                 && types.Aggregate(false, (current, type) => BuildTypes(type, seen, result) || current);
@@ -47,7 +47,7 @@ namespace Serialize.Linq.Internals
         /// <param name="seen">The seen.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        private static bool AnalyseType(Type baseType, ISet<Type> seen, ISet<Type> result)
+        private static bool AnalyseType(Type baseType, ISet<Type> seen, ICollection<Type> result)
         {
             bool retval;
             if (baseType.HasElementType)
@@ -76,7 +76,7 @@ namespace Serialize.Linq.Internals
         /// <param name="seen">The seen.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        private static bool BuildTypes(Type baseType, ISet<Type> seen, ISet<Type> result)
+        private static bool BuildTypes(Type baseType, ISet<Type> seen, ICollection<Type> result)
         {            
             if (!seen.Add(baseType))
                 return false;            
