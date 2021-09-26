@@ -11,7 +11,7 @@ namespace Serialize.Linq.Tests.Issues
 {
     // https://github.com/esskar/Serialize.Linq/issues/35
     [TestClass]
-    public class Issue35
+    public class Issue35Generic
     {
         [TestMethod]
         public void LetExpressionTests()
@@ -34,13 +34,11 @@ namespace Serialize.Linq.Tests.Issues
 
             foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(textSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = textSerializer;
                 foreach (var expected in expressions)
                 {
-                    var serialized = serializer.SerializeText(expected);
-                    var actual = serializer.DeserializeText(serialized);
+                    var serialized = serializer.SerializeGeneric(expected);
+                    var actual = serializer.DeserializeGeneric(serialized);
 
                     ExpressionAssert.AreEqual(expected, actual);
                 }

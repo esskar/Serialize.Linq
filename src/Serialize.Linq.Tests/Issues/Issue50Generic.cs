@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Serialize.Linq.Internals;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Issues
@@ -11,7 +12,7 @@ namespace Serialize.Linq.Tests.Issues
     /// https://github.com/esskar/Serialize.Linq/issues/50
     /// </summary>
     [TestClass]
-    public class Issue50
+    public class Issue50Generic
     {
         [TestMethod]
         public void SerializeArrayAsJson()
@@ -19,10 +20,8 @@ namespace Serialize.Linq.Tests.Issues
             var list = new [] { "one", "two" };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Code);
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-#pragma warning restore CS0618 // type or member is obsolete
-            var value = serializer.SerializeText(expression);
+            var serializer = new JsonSerializer();
+            var value = serializer.SerializeGeneric(expression);
 
             Assert.IsNotNull(value);
         }
@@ -33,10 +32,8 @@ namespace Serialize.Linq.Tests.Issues
             var list = new[] { "one", "two" };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Code);
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new BinarySerializer());
-#pragma warning restore CS0618 // type or member is obsolete
-            var value = serializer.SerializeBinary(expression);
+            var serializer = new BinarySerializer();
+            var value = serializer.SerializeGeneric(expression);
 
             Assert.IsNotNull(value);
         }
@@ -47,13 +44,11 @@ namespace Serialize.Linq.Tests.Issues
             var list = new List<string> { "one", "two" };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Code);
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new JsonSerializer())
-#pragma warning restore CS0618 // type or member is obsolete
+            var serializer = new JsonSerializer()
             {
-                AutoAddKnownTypesAsListTypes = true
+                AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             };
-            var value = serializer.SerializeText(expression);
+            var value = serializer.SerializeGeneric(expression);
 
             Assert.IsNotNull(value);
         }
@@ -64,13 +59,11 @@ namespace Serialize.Linq.Tests.Issues
             var list = new List<string> { "one", "two" };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Code);
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new BinarySerializer())
-#pragma warning restore CS0618 // type or member is obsolete
+            var serializer = new BinarySerializer()
             {
-                AutoAddKnownTypesAsListTypes = true
+                AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             };
-            var value = serializer.SerializeBinary(expression);
+            var value = serializer.SerializeGeneric(expression);
 
             Assert.IsNotNull(value);
         }
@@ -81,12 +74,10 @@ namespace Serialize.Linq.Tests.Issues
             var list = new[] { "one", "two" };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Code);
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-#pragma warning restore CS0618 // type or member is obsolete
-            var value = serializer.SerializeText(expression);
+            var serializer = new JsonSerializer();
+            var value = serializer.SerializeGeneric(expression);
 
-            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeText(value);
+            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeGeneric(value);
             var func = actualExpression.Compile();
 
 
@@ -101,12 +92,10 @@ namespace Serialize.Linq.Tests.Issues
             var list = new[] { "one", "two" };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Code);
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new BinarySerializer());
-#pragma warning restore CS0618 // type or member is obsolete
-            var value = serializer.SerializeBinary(expression);
+            var serializer = new BinarySerializer();
+            var value = serializer.SerializeGeneric(expression);
 
-            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeBinary(value);
+            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeGeneric(value);
             var func = actualExpression.Compile();
 
             Assert.IsTrue(func(new Test { Code = "one" }), "one failed.");

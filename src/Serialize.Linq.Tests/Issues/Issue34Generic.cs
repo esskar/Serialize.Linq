@@ -9,16 +9,14 @@ namespace Serialize.Linq.Tests.Issues
 {
     // https://github.com/esskar/Serialize.Linq/issues/34
     [TestClass]
-    public class Issue34
+    public class Issue34Generic
     {
         [TestMethod]
         public void SerializeWithDateTimeUtcTest()
         {
             foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(textSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = textSerializer;
                 var yarrs = new[]
                 {
                     new Yarr {Date = new DateTime(3000,1,1)},
@@ -30,8 +28,8 @@ namespace Serialize.Linq.Tests.Issues
                 Expression<Func<Yarr, bool>> expectedExpression = f => f.Date > date;
                 var expected = yarrs.Where(expectedExpression.Compile()).Count();
 
-                var serialized = serializer.SerializeText(expectedExpression);
-                var actualExpression = (Expression<Func<Yarr, bool>>)serializer.DeserializeText(serialized);
+                var serialized = serializer.SerializeGeneric(expectedExpression);
+                var actualExpression = (Expression<Func<Yarr, bool>>)serializer.DeserializeGeneric(serialized);
                 var actual = yarrs.Where(actualExpression.Compile()).Count();
 
                 Assert.AreEqual(expected, actual);
@@ -43,9 +41,7 @@ namespace Serialize.Linq.Tests.Issues
         {
             foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(textSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = textSerializer;
                 var yarrs = new[]
                 {
                     new Yarr {Date = new DateTime(3000,1,1)},
@@ -57,8 +53,8 @@ namespace Serialize.Linq.Tests.Issues
                 Expression<Func<Yarr, bool>> expectedExpression = f => f.Date > date;
                 var expected = yarrs.Where(expectedExpression.Compile()).Count();
 
-                var serialized = serializer.SerializeText(expectedExpression);
-                var actualExpression = (Expression<Func<Yarr, bool>>)serializer.DeserializeText(serialized);
+                var serialized = serializer.SerializeGeneric(expectedExpression);
+                var actualExpression = (Expression<Func<Yarr, bool>>)serializer.DeserializeGeneric(serialized);
                 var actual = yarrs.Where(actualExpression.Compile()).Count();
 
                 Assert.AreEqual(expected, actual);

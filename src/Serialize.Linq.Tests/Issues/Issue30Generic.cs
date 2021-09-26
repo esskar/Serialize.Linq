@@ -10,7 +10,7 @@ namespace Serialize.Linq.Tests.Issues
 {
     // https://github.com/esskar/Serialize.Linq/issues/30
     [TestClass]
-    public class Issue30
+    public class Issue30Generic
     {
         /*
         [TestMethod]
@@ -43,9 +43,7 @@ namespace Serialize.Linq.Tests.Issues
         {
             foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(textSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = textSerializer;
                 var fish = new[]
                 {
                     new Fish {Count = 0},
@@ -57,8 +55,8 @@ namespace Serialize.Linq.Tests.Issues
                 Expression<Func<Fish, bool>> expectedExpression = f => f.Count == count;
                 var expected = fish.Where(expectedExpression.Compile()).Count();
 
-                var serialized = serializer.SerializeText(expectedExpression);
-                var actualExpression = (Expression<Func<Fish, bool>>)serializer.DeserializeText(serialized);
+                var serialized = serializer.SerializeGeneric(expectedExpression);
+                var actualExpression = (Expression<Func<Fish, bool>>)serializer.DeserializeGeneric(serialized);
                 var actual = fish.Where(actualExpression.Compile()).Count();
 
                 Assert.AreEqual(expected, actual);

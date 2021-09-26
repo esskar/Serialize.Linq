@@ -9,7 +9,7 @@ using Serialize.Linq.Tests.Internals;
 namespace Serialize.Linq.Tests.Issues
 {
     [TestClass]
-    public class Issue37
+    public class Issue37Generic
     {
         [TestMethod]
         public void DynamicsTests()
@@ -24,13 +24,11 @@ namespace Serialize.Linq.Tests.Issues
 
             foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(textSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = textSerializer;
                 foreach (var expected in expressions)
                 {
-                    var serialized = serializer.SerializeText(expected);
-                    var actual = serializer.DeserializeText(serialized);
+                    var serialized = serializer.SerializeGeneric(expected);
+                    var actual = serializer.DeserializeGeneric(serialized);
 
                     ExpressionAssert.AreEqual(expected, actual);
                 }

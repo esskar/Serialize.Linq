@@ -11,11 +11,9 @@ namespace Serialize.Linq.Tests.Issues
 {
     // https://github.com/esskar/Serialize.Linq/issues/119
     [TestClass]
-    public class Issue119
+    public class Issue119Generic
     {
-#pragma warning disable CS0618 // type or member is obsolete
-        private ExpressionSerializer _expressionSerializer;
-#pragma warning restore CS0618 // type or member is obsolete
+        private JsonSerializer _expressionSerializer;
         private Expression<Func<IDictionary<string, string>, bool>> _filterExpression;
 
         [TestInitialize]
@@ -25,9 +23,7 @@ namespace Serialize.Linq.Tests.Issues
             var visitor = new ReplaceToDictionaryVisitor(typeof(MyEntity).Name);
             var newExpression = (Expression<Func<IDictionary<string, string>, bool>>)visitor.Visit(originalExpression);
 
-#pragma warning disable CS0618 // type or member is obsolete
-            _expressionSerializer = new ExpressionSerializer(new JsonSerializer());
-#pragma warning restore CS0618 // type or member is obsolete
+            _expressionSerializer = new JsonSerializer();
 
             _filterExpression = newExpression;
         }
@@ -74,13 +70,13 @@ namespace Serialize.Linq.Tests.Issues
 
         private string Serialize<T>(Expression<Func<T, bool>> predicate)
         {
-            var text = _expressionSerializer.SerializeText(predicate);
+            var text = _expressionSerializer.SerializeGeneric(predicate);
             return text;
         }
 
         private Expression<Func<T, bool>> Deserialize<T>(string text)
         {
-            var expression = _expressionSerializer.DeserializeText(text);
+            var expression = _expressionSerializer.DeserializeGeneric(text);
             return (Expression<Func<T, bool>>)expression;
         }
 

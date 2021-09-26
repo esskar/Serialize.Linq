@@ -9,7 +9,7 @@ namespace Serialize.Linq.Tests.Issues
 {
     // https://github.com/esskar/Serialize.Linq/issues/124
     [TestClass]
-    public class Issue124
+    public class Issue124Generic
     {
         [TestMethod]
         public void DeserializeExpressionsWithCollectionInterface()
@@ -23,11 +23,9 @@ namespace Serialize.Linq.Tests.Issues
 
         private static void DoSerializeThenDeserialize<T>(Expression<Func<T, bool>> predicate)
         {
-#pragma warning disable CS0618 // type or member is obsolete
-            var expressionSerializer = new ExpressionSerializer(new JsonSerializer());
-#pragma warning restore CS0618 // type or member is obsolete
-            var serialized = expressionSerializer.SerializeText(predicate);
-            expressionSerializer.DeserializeText(serialized);
+            var expressionSerializer = new JsonSerializer();
+            var serialized = expressionSerializer.SerializeGeneric(predicate);
+            expressionSerializer.DeserializeGeneric(serialized);
         }
 
         public class Thing

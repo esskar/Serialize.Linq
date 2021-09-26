@@ -9,7 +9,7 @@ namespace Serialize.Linq.Tests.Issues
 {
     // https://github.com/esskar/Serialize.Linq/issues/31
     [TestClass]
-    public class Issue31
+    public class Issue31Generic
     {
         [TestMethod]
         public void SerializeLambdaWithEnumTest()
@@ -18,9 +18,7 @@ namespace Serialize.Linq.Tests.Issues
             {
                 serializer.AddKnownType(typeof(Gender));
 
-#pragma warning disable CS0618 // type or member is obsolete
-                var expressionSerializer = new ExpressionSerializer(serializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var expressionSerializer = serializer;                
                 var fish = new[]
                 {
                     new ItemWithEnum {Gender = Gender.Male},
@@ -32,8 +30,8 @@ namespace Serialize.Linq.Tests.Issues
                 Expression<Func<ItemWithEnum, bool>> expectedExpression = f => f.Gender == some;
                 var expected = fish.Where(expectedExpression.Compile()).Count();
 
-                var serialized = expressionSerializer.SerializeText(expectedExpression); // throws SerializationException
-                var actualExpression = (Expression<Func<ItemWithEnum, bool>>)expressionSerializer.DeserializeText(serialized);
+                var serialized = expressionSerializer.SerializeGeneric(expectedExpression); // throws SerializationException
+                var actualExpression = (Expression<Func<ItemWithEnum, bool>>)expressionSerializer.DeserializeGeneric(serialized);
                 var actual = fish.Where(actualExpression.Compile()).Count();
 
                 Assert.AreEqual(expected, actual);

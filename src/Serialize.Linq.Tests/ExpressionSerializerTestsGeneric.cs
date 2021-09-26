@@ -17,7 +17,7 @@ using Serialize.Linq.Tests.Internals;
 namespace Serialize.Linq.Tests
 {
     [TestClass]
-    public class ExpressionSerializerTests
+    public class ExpressionSerializerTestsGeneric
     {
         public TestContext TestContext { get; set; }
 
@@ -26,17 +26,13 @@ namespace Serialize.Linq.Tests
         {
             foreach (var textSerializer in CreateTextSerializers())
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(textSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = textSerializer;
                 Assert.IsTrue(serializer.CanSerializeText, "'{0}' was expected to serialize text.", textSerializer.GetType());
             }
 
             foreach (var binSerializer in CreateBinarySerializers())
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(binSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = binSerializer;
                 Assert.IsFalse(serializer.CanSerializeText, "'{0}' was not expected to serialize text.", serializer.GetType());
             }
         }
@@ -46,17 +42,13 @@ namespace Serialize.Linq.Tests
         {
             foreach (var textSerializer in CreateTextSerializers())
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(textSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = textSerializer;
                 Assert.IsFalse(serializer.CanSerializeBinary, "'{0}' was not expected to serialize binary.", textSerializer.GetType());
             }
 
             foreach (var binSerializer in CreateBinarySerializers())
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(binSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = binSerializer;
                 Assert.IsTrue(serializer.CanSerializeBinary, "'{0}' was expected to serialize binary.", serializer.GetType());
             }
         }
@@ -66,16 +58,14 @@ namespace Serialize.Linq.Tests
         {
             foreach (var textSerializer in CreateTextSerializers())
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(textSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = textSerializer;
                 foreach (var expected in SerializerTestData.TestExpressions)
                 {
-                    var text = serializer.SerializeText(expected);
+                    var text = serializer.SerializeGeneric(expected);
 
                     TestContext.WriteLine("{0} serializes to text with length {1}: {2}", expected, text.Length, text);
 
-                    var actual = serializer.DeserializeText(text);
+                    var actual = serializer.DeserializeGeneric(text);
 
                     if (expected == null)
                     {
@@ -93,16 +83,14 @@ namespace Serialize.Linq.Tests
         {
             foreach (var binSerializer in CreateBinarySerializers())
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(binSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = binSerializer;
                 foreach (var expected in SerializerTestData.TestExpressions)
                 {
-                    var bytes = serializer.SerializeBinary(expected);
+                    var bytes = serializer.SerializeGeneric(expected);
 
                     TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
 
-                    var actual = serializer.DeserializeBinary(bytes);
+                    var actual = serializer.DeserializeGeneric(bytes);
 
                     if (expected == null)
                     {
@@ -120,17 +108,15 @@ namespace Serialize.Linq.Tests
         {
             foreach (var binSerializer in CreateBinarySerializers())
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(binSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = binSerializer;
 
                 var expected = (Expression<Func<Bar, bool>>)(p => p.LastName == "Miller" && p.FirstName.StartsWith("M"));
                 expected.Compile();
 
-                var bytes = serializer.SerializeBinary(expected);
+                var bytes = serializer.SerializeGeneric(expected);
                 TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
 
-                var actual = (Expression<Func<Bar, bool>>)serializer.DeserializeBinary(bytes);
+                var actual = (Expression<Func<Bar, bool>>)serializer.DeserializeGeneric(bytes);
                 Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, binSerializer.GetType());
                 ExpressionAssert.AreEqual(expected, actual);
 
@@ -143,16 +129,14 @@ namespace Serialize.Linq.Tests
         {
             foreach (var textSerializer in CreateTextSerializers())
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var serializer = new ExpressionSerializer(textSerializer);
-#pragma warning restore CS0618 // type or member is obsolete
+                var serializer = textSerializer;
                 var expected = Expression.Constant(0m, typeof(Decimal?));
 
-                var text = serializer.SerializeText(expected);
+                var text = serializer.SerializeGeneric(expected);
 
                 TestContext.WriteLine("{0} serializes to text with length {1}: {2}", expected, text.Length, text);
 
-                var actual = serializer.DeserializeText(text);
+                var actual = serializer.DeserializeGeneric(text);
                 Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, textSerializer.GetType());
                 ExpressionAssert.AreEqual(expected, actual);
             }
@@ -161,26 +145,22 @@ namespace Serialize.Linq.Tests
         [TestMethod]
         public void SerializeNewObjWithoutParameters()
         {
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-#pragma warning restore CS0618 // type or member is obsolete
+            var serializer = new JsonSerializer();
 
             Expression<Func<List<int>, List<int>>> exp = l => new List<int>();
 
-            var result = serializer.SerializeText(exp);
+            var result = serializer.SerializeGeneric(exp);
             Assert.IsNotNull(result);
         }
 
         [TestMethod]
         public void SerializeFuncExpressionsWithoutParameters()
         {
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-#pragma warning restore CS0618 // type or member is obsolete
+            var serializer = new JsonSerializer();
 
             Expression<Func<bool>> exp = () => false;
 
-            var result = serializer.SerializeText(exp);
+            var result = serializer.SerializeGeneric(exp);
             Assert.IsNotNull(result);
         }
 
@@ -277,24 +257,20 @@ namespace Serialize.Linq.Tests
             return Expression.Constant(typeof(string));
         }
 
-        private static Expression SerializeDeserializeExpressionAsText(Expression expression, ISerializer serializer)
+        private static Expression SerializeDeserializeExpressionAsText(Expression expression, IGenericSerializer<string> serializer)
         {
-#pragma warning disable CS0618 // type or member is obsolete
-            var expressionSerializer = new ExpressionSerializer(serializer);
-#pragma warning restore CS0618 // type or member is obsolete
-            var serialized = expressionSerializer.SerializeText(expression);
+            var expressionSerializer = serializer;
+            var serialized = expressionSerializer.SerializeGeneric(expression);
 
-            return expressionSerializer.DeserializeText(serialized);
+            return expressionSerializer.DeserializeGeneric(serialized);
         }
 
-        private static Expression SerializeDeserializeExpressionAsBinary(Expression expression, ISerializer serializer)
+        private static Expression SerializeDeserializeExpressionAsBinary(Expression expression, IGenericSerializer<byte[]> serializer)
         {
-#pragma warning disable CS0618 // type or member is obsolete
-            var expressionSerializer = new ExpressionSerializer(serializer);
-#pragma warning restore CS0618 // type or member is obsolete
-            var serialized = expressionSerializer.SerializeBinary(expression);
+            var expressionSerializer = serializer;
+            var serialized = expressionSerializer.SerializeGeneric(expression);
 
-            return expressionSerializer.DeserializeBinary(serialized);
+            return expressionSerializer.DeserializeGeneric(serialized);
         }
 
         private static IEnumerable<ITextSerializer> CreateTextSerializers()

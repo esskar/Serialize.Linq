@@ -11,18 +11,14 @@ namespace Serialize.Linq.Tests.Issues
     /// https://github.com/esskar/Serialize.Linq/issues/69
     /// </summary>
     [TestClass]
-    public class Issue69
+    public class Issue69Generic
     {
-#pragma warning disable CS0618 // type or member is obsolete
-        private ExpressionSerializer _jsonExpressionSerializer;
-#pragma warning restore CS0618 // type or member is obsolete
+        private JsonSerializer _jsonExpressionSerializer;
 
         [TestInitialize]
         public void Initialize()
         {
-#pragma warning disable CS0618 // type or member is obsolete
-            _jsonExpressionSerializer = new ExpressionSerializer(new JsonSerializer());
-#pragma warning restore CS0618 // type or member is obsolete
+            _jsonExpressionSerializer = new JsonSerializer();
         }
 
         [TestMethod]
@@ -66,8 +62,8 @@ namespace Serialize.Linq.Tests.Issues
             Expression<Func<DateTime>> actual = () => dt;
             actual = actual.Update(Expression.Constant(dt), new List<ParameterExpression>());
 
-            var serialized = _jsonExpressionSerializer.SerializeText(actual);
-            var expected = _jsonExpressionSerializer.DeserializeText(serialized);
+            var serialized = _jsonExpressionSerializer.SerializeGeneric(actual);
+            var expected = _jsonExpressionSerializer.DeserializeGeneric(serialized);
             ExpressionAssert.AreEqual(expected, actual);
         }
     }

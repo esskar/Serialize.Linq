@@ -8,7 +8,7 @@ namespace Serialize.Linq.Tests.Issues
 {
     // https://github.com/esskar/Serialize.Linq/issues/113
     [TestClass]
-    public class Issue113
+    public class Issue113Generic
     {
         [TestMethod]
         public void AllowVariableInsideTryCatch()
@@ -98,10 +98,8 @@ namespace Serialize.Linq.Tests.Issues
 
             private static void DoSerialization<T>(Expression<Func<T, bool>> predicate)
             {
-#pragma warning disable CS0618 // type or member is obsolete
-                var expressionSerializer = new ExpressionSerializer(new JsonSerializer());
-#pragma warning restore CS0618 // type or member is obsolete
-                expressionSerializer.SerializeText(predicate);
+                var expressionSerializer = new JsonSerializer();
+                expressionSerializer.SerializeGeneric(predicate);
             }
         }
 

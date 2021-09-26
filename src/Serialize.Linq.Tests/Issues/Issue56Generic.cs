@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Serialize.Linq.Internals;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Issues
@@ -10,7 +11,7 @@ namespace Serialize.Linq.Tests.Issues
     /// https://github.com/esskar/Serialize.Linq/issues/56
     /// </summary>
     [TestClass]
-    public class Issue56
+    public class Issue56Generic
     {
         [TestMethod]
         public void SerializeContainsWithNullablesAndWithoutNullableKey()
@@ -22,13 +23,11 @@ namespace Serialize.Linq.Tests.Issues
                     (groupType =>
                         enterpriseKeys.Contains(groupType.GroupEnterpriseKey));
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializeTo = new ExpressionSerializer(new XmlSerializer())
-#pragma warning restore CS0618 // type or member is obsolete
+            var serializeTo = new XmlSerializer()
             {
-                AutoAddKnownTypesAsListTypes = true
+                AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             };
-            var predicatePartSerializedToString = serializeTo.SerializeText(predicatePart);
+            var predicatePartSerializedToString = serializeTo.SerializeGeneric(predicatePart);
 
             Assert.IsNotNull(predicatePartSerializedToString);
         }
@@ -43,13 +42,11 @@ namespace Serialize.Linq.Tests.Issues
                     (groupType =>
                         enterpriseKeys.Contains(groupType.GroupEnterpriseKey));
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializeTo = new ExpressionSerializer(new XmlSerializer())
-#pragma warning restore CS0618 // type or member is obsolete
+            var serializeTo = new XmlSerializer()
             {
-                AutoAddKnownTypesAsListTypes = true
+                AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             };
-            var predicatePartSerializedToString = serializeTo.SerializeText(predicatePart);
+            var predicatePartSerializedToString = serializeTo.SerializeGeneric(predicatePart);
 
             Assert.IsNotNull(predicatePartSerializedToString);
         }

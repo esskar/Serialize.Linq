@@ -8,7 +8,7 @@ using Serialize.Linq.Serializers;
 namespace Serialize.Linq.Tests.Issues
 {
     [TestClass]
-    public class Issue38
+    public class Issue38Generic
     {
         [TestMethod]
         public void SerializeAsQueryableWithPredicateTest()
@@ -17,10 +17,8 @@ namespace Serialize.Linq.Tests.Issues
 
             Expression<Func<Document, bool>> pred = x => x.Orders.AsQueryable().Any(predicate);
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new BinarySerializer());
-#pragma warning restore CS0618 // type or member is obsolete
-            var value = serializer.SerializeBinary(pred);
+            var serializer = new BinarySerializer();
+            var value = serializer.SerializeGeneric(pred);
 
             Assert.IsNotNull(value);
         }
@@ -32,12 +30,10 @@ namespace Serialize.Linq.Tests.Issues
 
             Expression<Func<Document, bool>> pred = x => x.Orders.AsQueryable().Any(predicate);
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new BinarySerializer());
-#pragma warning restore CS0618 // type or member is obsolete
-            var value = serializer.SerializeBinary(pred);
+            var serializer = new BinarySerializer();
+            var value = serializer.SerializeGeneric(pred);
 
-            var expression = serializer.DeserializeBinary(value);
+            var expression = serializer.DeserializeGeneric(value);
             Assert.IsNotNull(expression);
         }
 

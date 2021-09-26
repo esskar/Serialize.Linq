@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Serialize.Linq.Internals;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Issues
@@ -11,7 +12,7 @@ namespace Serialize.Linq.Tests.Issues
     /// Test and fix provided by https://github.com/OlegNadymov THX!!!
     /// </summary>
     [TestClass]
-    public class Issue105
+    public class Issue105Generic
     {
         public class Test
         {
@@ -27,15 +28,13 @@ namespace Serialize.Linq.Tests.Issues
             var list = new List<Guid> { guid1, guid2 };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Id);
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new BinarySerializer())
+            var serializer = new BinarySerializer()
             {
-                AutoAddKnownTypesAsListTypes = true
+                AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             };
-#pragma warning restore CS0618 // type or member is obsolete
-            var value = serializer.SerializeBinary(expression);
+            var value = serializer.SerializeGeneric(expression);
 
-            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeBinary(value);
+            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeGeneric(value);
             var func = actualExpression.Compile();
 
             Assert.IsTrue(func(new Test { Id = guid1 }), "one failed.");
@@ -52,15 +51,13 @@ namespace Serialize.Linq.Tests.Issues
             var list = new List<Guid> { guid1, guid2 };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Id);
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new JsonSerializer())
+            var serializer = new JsonSerializer()
             {
-                AutoAddKnownTypesAsListTypes = true
+                AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             };
-#pragma warning restore CS0618 // type or member is obsolete
-            var value = serializer.SerializeText(expression);
+            var value = serializer.SerializeGeneric(expression);
 
-            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeText(value);
+            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeGeneric(value);
             var func = actualExpression.Compile();
 
             Assert.IsTrue(func(new Test { Id = guid1 }), "one failed.");
@@ -78,15 +75,13 @@ namespace Serialize.Linq.Tests.Issues
             var list = new List<Guid> { guid1, guid2 };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Id);
 
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new XmlSerializer())
+            var serializer = new XmlSerializer()
             {
-                AutoAddKnownTypesAsListTypes = true
+                AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             };
-#pragma warning restore CS0618 // type or member is obsolete
-            var value = serializer.SerializeText(expression);
+            var value = serializer.SerializeGeneric(expression);
 
-            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeText(value);
+            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeGeneric(value);
             var func = actualExpression.Compile();
 
             Assert.IsTrue(func(new Test { Id = guid1 }), "one failed.");

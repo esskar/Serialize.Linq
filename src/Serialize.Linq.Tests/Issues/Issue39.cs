@@ -14,8 +14,10 @@ namespace Serialize.Linq.Tests.Issues
     {
         private class DataPoint
         {
+#pragma warning disable CS0649 // field 'field' is never assigned to
             public DateTime Timestamp;
             public int AcctId;
+#pragma warning restore CS0649 // field 'field' is never assigned to
         }
 
         [TestMethod]

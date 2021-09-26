@@ -10,7 +10,7 @@ namespace Serialize.Linq.Tests.Issues
     /// https://github.com/esskar/Serialize.Linq/issues/54
     /// </summary>
     [TestClass]
-    public class Issue54
+    public class Issue54Generic
     {
         public int PublicField;
         private int _privateField;
@@ -97,16 +97,14 @@ namespace Serialize.Linq.Tests.Issues
             {
                 AllowPrivateFieldAccess = true
             };
-#pragma warning disable CS0618 // type or member is obsolete
-            var serializer = new ExpressionSerializer(new JsonSerializer());
-#pragma warning restore CS0618 // type or member is obsolete
-            var value = serializer.SerializeText(expression, settings);
+            var serializer = new JsonSerializer();
+            var value = serializer.SerializeGeneric(expression, settings);
 
             // Modify fields
             SetFields(actualValue);
 
             // Deserialize expression
-            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeText(value, new ExpressionContext { AllowPrivateFieldAccess = true });
+            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeGeneric(value, new ExpressionContext { AllowPrivateFieldAccess = true });
             var func = actualExpression.Compile();
 
             // Set expected value.
