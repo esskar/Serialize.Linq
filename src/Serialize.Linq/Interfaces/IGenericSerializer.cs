@@ -10,11 +10,9 @@ namespace Serialize.Linq.Interfaces
 
         bool CanSerializeText { get; }
 
-        TSerialize SerializeGeneric(Expression expression, FactorySettings factorySettings);
+        TSerialize SerializeGeneric(Expression expression, FactorySettings factorySettings = null);
 
-        Expression DeserializeGeneric(TSerialize data);
-
-        Expression DeserializeGeneric(TSerialize data, IExpressionContext context);
+        Expression DeserializeGeneric(TSerialize data, IExpressionContext context = null);
 
         /// <summary>
         /// Serializes the specified object inheriting from <see cref="Node"/> to an array of bytes or to a string depending on <typeparamref name="TSerialize"/>.
