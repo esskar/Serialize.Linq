@@ -17,7 +17,7 @@ namespace Serialize.Linq.Exceptions
 
         public override string ToString()
         {
-            return string.Format("{1}.{0}Declaring Type: '{2}'{0}Member Signature: '{3}'",
+            return String.Format("{1}.{0}Declaring Type: '{2}'{0}Member Signature: '{3}'",
                 Environment.NewLine,
                 this.Message, this.DeclaringType, this.MemberSignature);
         }

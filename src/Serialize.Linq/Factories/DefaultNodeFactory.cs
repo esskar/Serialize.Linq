@@ -20,7 +20,7 @@ namespace Serialize.Linq.Factories
         /// <param name="type">The type.</param>
         /// <param name="factorySettings">The factory settings to use.</param>
         public DefaultNodeFactory(Type type, FactorySettings factorySettings = null)
-            : this(new [] { type }, factorySettings) { }
+            : this(new List<Type> { type }, factorySettings) { }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultNodeFactory"/> class.

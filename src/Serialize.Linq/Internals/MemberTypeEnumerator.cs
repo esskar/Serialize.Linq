@@ -20,7 +20,7 @@ namespace Serialize.Linq.Internals
         private readonly Type _type;
         private readonly BindingFlags _bindingFlags;
         private readonly ISet<Type> _seenTypes;
-        private Type[] _allTypes;
+        private IEnumerable<Type> _allTypes;
         private ISet<Type> _referedTypes;
 
         /// <summary>
@@ -133,16 +133,16 @@ namespace Serialize.Linq.Internals
         /// Builds the types.
         /// </summary>
         /// <returns></returns>
-        protected virtual Type[] BuildTypes()
+        protected virtual IEnumerable<Type> BuildTypes()
         {
             var types = new List<Type>();
             var members = _type.GetMembers(_bindingFlags);
             foreach (var memberInfo in members.Where(this.IsConsideredMember))
                 types.AddRange(this.GetTypesOfType(memberInfo.GetReturnType()));
-            return types.ToArray();
+            return types;
         }
 
-        public virtual void AddTypes()
+        protected virtual void AddTypes()
         {
             if (this.IsConsidered)
             {

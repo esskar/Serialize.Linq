@@ -7,7 +7,7 @@ namespace Serialize.Linq.Internals
 {
     internal static class KnownTypes
     {
-        private static readonly Type[] _All =
+        private static readonly IEnumerable<Type> _All = new List<Type>
         {
             typeof(bool),
             typeof(decimal), typeof(double),
@@ -27,7 +27,7 @@ namespace Serialize.Linq.Internals
         private static readonly IDictionary<Type, AutoAddCollectionTypes> _assignables = new Dictionary<Type, AutoAddCollectionTypes>();
 
         [Obsolete("Use KnownTypes.GetKnown or KnownTypes.GetAssignables instead.", false)]
-        public static readonly Type[] All = _All;
+        public static readonly IEnumerable<Type> All = _All;
 
         public static IEnumerable<Type> GetKnown(AutoAddCollectionTypes includeCollectionTypes)
         {
