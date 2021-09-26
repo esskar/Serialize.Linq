@@ -339,7 +339,7 @@ namespace Serialize.Linq.Examples.RestApi.Areas.HelpPage
 
         private static object GenerateComplexObject(Type type, Dictionary<Type, object> createdObjectReferences)
         {
-            object result = null;
+            object result;
 
             if (createdObjectReferences.TryGetValue(type, out result))
             {

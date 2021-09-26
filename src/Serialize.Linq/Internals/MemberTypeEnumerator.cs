@@ -17,7 +17,6 @@ namespace Serialize.Linq.Internals
 {
     internal abstract class MemberTypeEnumerator
     {
-        private readonly int _currentIndex;
         private readonly Type _type;
         private readonly BindingFlags _bindingFlags;
         private readonly ISet<Type> _seenTypes;
@@ -42,8 +41,6 @@ namespace Serialize.Linq.Internals
             _seenTypes = new HashSet<Type>(seenTypes);
             _type = type ?? throw new ArgumentNullException(nameof(type));
             _bindingFlags = bindingFlags;
-
-            _currentIndex = -1;
         }
 
         /// <summary>

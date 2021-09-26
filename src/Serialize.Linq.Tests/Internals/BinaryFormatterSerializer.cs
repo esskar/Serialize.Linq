@@ -6,6 +6,7 @@
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
 
+using System;
 using System.IO;
 using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -19,6 +20,8 @@ namespace Serialize.Linq.Tests.Internals
 {
     internal class BinaryFormatterSerializer : SerializerBase, IBinarySerializer
     {
+        private readonly ExpressionConverter _converter = new ExpressionConverter();
+
         private readonly BinaryFormatter _formatter;
 
         public bool CanSerializeText => false;
@@ -48,14 +51,18 @@ namespace Serialize.Linq.Tests.Internals
         public void Serialize<T>(Stream stream, T obj) where T : Node
         {
             if (!ReferenceEquals(obj, null))
+#pragma warning disable SYSLIB0011 // type or element is obsolete
                 _formatter.Serialize(stream, obj);
+#pragma warning restore SYSLIB0011 // type or element is obsolete
         }
 
         public T Deserialize<T>(Stream stream) where T : Node
         {
             if (stream.Length == 0)
                 return default(T);
+#pragma warning disable SYSLIB0011 // type or element is obsolete
             return (T)_formatter.Deserialize(stream);
+#pragma warning restore SYSLIB0011 // type or element is obsolete
         }
 
         public byte[] SerializeGeneric(Expression expression, FactorySettings settings = null)
@@ -66,6 +73,13 @@ namespace Serialize.Linq.Tests.Internals
         public Expression DeserializeGeneric(byte[] data, IExpressionContext context = null)
         {
             return Deserialize<ExpressionNode>(data)?.ToExpression(context ?? new ExpressionContext(false));
+        }
+
+        public void Serialize(Stream stream, Expression expression, FactorySettings factorySettings = null)
+        {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+            Serialize(stream, _converter.Convert(expression, factorySettings));
         }
     }
 }

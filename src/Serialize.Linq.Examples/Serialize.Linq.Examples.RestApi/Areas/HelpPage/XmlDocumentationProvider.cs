@@ -13,7 +13,7 @@ namespace Serialize.Linq.Examples.RestApi.Areas.HelpPage
     /// </summary>
     public class XmlDocumentationProvider : IDocumentationProvider
     {
-        private XPathNavigator _documentNavigator;
+        private readonly XPathNavigator _documentNavigator;
         private const string MethodExpression = "/doc/members/member[@name='M:{0}']";
         private const string ParameterExpression = "param[@name='{0}']";
 

@@ -1,5 +1,6 @@
 ﻿using Serialize.Linq.Factories;
 using Serialize.Linq.Nodes;
+using System.IO;
 using System.Linq.Expressions;
 
 namespace Serialize.Linq.Interfaces
@@ -31,6 +32,8 @@ namespace Serialize.Linq.Interfaces
         /// <param name="obj">The object inheriting from <see cref="Node"/> to be serialized.</param>
         /// <returns>Depending on <typeparamref name="TSerialize"/>: an array of bytes or a string with the serialized <paramref name="obj"/>.</returns>
         TSerialize Serialize<TNode>(TNode obj) where TNode : Node;
+
+        void Serialize(Stream stream, Expression expression, FactorySettings factorySettings = null);
 
         /// <summary>
         /// Deserializes the specified array of bytes or the specified string, depending on <typeparamref name="TSerialize"/>, to a <see cref="Node"/> object.
