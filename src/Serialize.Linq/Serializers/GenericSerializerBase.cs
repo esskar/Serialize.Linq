@@ -20,7 +20,7 @@ namespace Serialize.Linq.Serializers
         
         public FactorySettings FactorySettings { get; }
 
-        public TSerialize SerializeGeneric(Expression expression, FactorySettings factorySettings = null)
+        public TSerialize SerializeGeneric(Expression expression, FactorySettings factorySettings)
         {
             if (expression == null)
                 throw new ArgumentNullException(nameof(expression));
@@ -28,7 +28,12 @@ namespace Serialize.Linq.Serializers
             return Serialize(expression.ToExpressionNode(factorySettings ?? this.FactorySettings));
         }
 
-        public Expression DeserializeGeneric(TSerialize data, IExpressionContext context = null)
+        public Expression DeserializeGeneric(TSerialize data)
+        {
+            return DeserializeGeneric(data, null);
+        }
+
+        public Expression DeserializeGeneric(TSerialize data, IExpressionContext context)
         {
             return Deserialize<ExpressionNode>(data)?.ToExpression(context ?? new ExpressionContext(false));
         }
