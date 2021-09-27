@@ -26,9 +26,6 @@ namespace Serialize.Linq.Internals
 
         private static readonly IDictionary<Type, AutoAddCollectionTypes> _assignables = new Dictionary<Type, AutoAddCollectionTypes>();
 
-        [Obsolete("Use KnownTypes.GetKnown or KnownTypes.GetAssignables instead.", false)]
-        public static readonly IEnumerable<Type> All = _All;
-
         public static IEnumerable<Type> GetKnown(AutoAddCollectionTypes includeCollectionTypes)
         {
             return from dlgPair in _allExploded
@@ -61,27 +58,6 @@ namespace Serialize.Linq.Internals
                 }
             }
             return result;
-        }
-
-        [Obsolete("Use Explode(IEnumerable<Type>, AutomaticAddKnownCollections) instead.", false)]
-        public static IEnumerable<Type> Explode(IEnumerable<Type> types, bool includeArrayTypes, bool includeListTypes)
-        {
-            if (includeArrayTypes && includeListTypes)
-            {
-                return Explode(types, AutoAddCollectionTypes.AsArray | AutoAddCollectionTypes.AsList);
-            }
-            else if (includeArrayTypes)
-            {
-                return Explode(types, AutoAddCollectionTypes.AsArray);
-            }
-            else if (includeListTypes)
-            {
-                return Explode(types, AutoAddCollectionTypes.AsList);
-            }
-            else
-            {
-                return Explode(types, AutoAddCollectionTypes.None);
-            }
         }
 
         public static IEnumerable<Type> Explode(IEnumerable<Type> types, AutoAddCollectionTypes includeCollectionTypes)
