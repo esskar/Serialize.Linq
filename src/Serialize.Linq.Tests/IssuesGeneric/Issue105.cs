@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Serialize.Linq.Interfaces;
 using Serialize.Linq.Internals;
 using Serialize.Linq.Serializers;
 
@@ -20,30 +21,23 @@ namespace Serialize.Linq.Tests.IssuesGeneric
         }
 
         [TestMethod]
-        public void SerializeDeserializeListAsBinary()
+        public void SerializeDeserializeList()
         {
-            var guid1 = Guid.NewGuid();
-            var guid2 = Guid.NewGuid();
-            var guid3 = Guid.NewGuid();
-            var list = new List<Guid> { guid1, guid2 };
-            Expression<Func<Test, bool>> expression = test => list.Contains(test.Id);
-
-            var serializer = new BinarySerializer()
+            SerializeDeserializeListInternal( new BinarySerializer()
             {
                 AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
-            };
-            var value = serializer.SerializeGeneric(expression);
-
-            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeGeneric(value);
-            var func = actualExpression.Compile();
-
-            Assert.IsTrue(func(new Test { Id = guid1 }), "one failed.");
-            Assert.IsTrue(func(new Test { Id = guid2 }), "two failed.");
-            Assert.IsFalse(func(new Test { Id = guid3 }), "three failed.");
+            });
+            SerializeDeserializeListInternal(new XmlSerializer()
+            {
+                AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
+            });
+            SerializeDeserializeListInternal(new JsonSerializer()
+            {
+                AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
+            });
         }
 
-        [TestMethod]
-        public void SerializeDeserializeListAsJson()
+        private void SerializeDeserializeListInternal<T>(IGenericSerializer<T> serializer)
         {
             var guid1 = Guid.NewGuid();
             var guid2 = Guid.NewGuid();
@@ -51,34 +45,6 @@ namespace Serialize.Linq.Tests.IssuesGeneric
             var list = new List<Guid> { guid1, guid2 };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Id);
 
-            var serializer = new JsonSerializer()
-            {
-                AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
-            };
-            var value = serializer.SerializeGeneric(expression);
-
-            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeGeneric(value);
-            var func = actualExpression.Compile();
-
-            Assert.IsTrue(func(new Test { Id = guid1 }), "one failed.");
-            Assert.IsTrue(func(new Test { Id = guid2 }), "two failed.");
-            Assert.IsFalse(func(new Test { Id = guid3 }), "three failed.");
-        }
-
-
-        [TestMethod]
-        public void SerializeDeserializeListAsXml()
-        {
-            var guid1 = Guid.NewGuid();
-            var guid2 = Guid.NewGuid();
-            var guid3 = Guid.NewGuid();
-            var list = new List<Guid> { guid1, guid2 };
-            Expression<Func<Test, bool>> expression = test => list.Contains(test.Id);
-
-            var serializer = new XmlSerializer()
-            {
-                AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
-            };
             var value = serializer.SerializeGeneric(expression);
 
             var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeGeneric(value);
