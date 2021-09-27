@@ -9,12 +9,19 @@
 using System;
 using System.IO;
 using System.Runtime.Serialization;
+using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
 {
     public class XmlSerializer : TextSerializer, IXmlSerializer
     {
+        public XmlSerializer()
+            : base() { }
+
+        public XmlSerializer(FactorySettings factorySettings)
+            : base(factorySettings) { }
+
 #if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {

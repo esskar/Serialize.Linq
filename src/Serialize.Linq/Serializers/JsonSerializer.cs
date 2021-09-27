@@ -12,12 +12,19 @@ using System.IO;
 using System.Runtime.Serialization;
 #endif
 using System.Runtime.Serialization.Json;
+using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
 {
     public class JsonSerializer : TextSerializer, IJsonSerializer
     {
+        public JsonSerializer()
+            : base() { }
+
+        public JsonSerializer(FactorySettings factorySettings)
+            : base(factorySettings) { }
+
 #if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {

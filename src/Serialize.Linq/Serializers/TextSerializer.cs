@@ -18,6 +18,11 @@ namespace Serialize.Linq.Serializers
 {
     public abstract class TextSerializer : GenericSerializerBase<string>, ITextSerializer
     {
+        protected TextSerializer()
+            : base() { }
+
+        protected TextSerializer(FactorySettings factorySettings)
+            : base(factorySettings) { }
 
         public override bool CanSerializeText
         {
