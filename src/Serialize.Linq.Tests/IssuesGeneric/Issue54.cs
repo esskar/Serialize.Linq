@@ -4,13 +4,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Serializers;
 
-namespace Serialize.Linq.Tests.Issues
+namespace Serialize.Linq.Tests.IssuesGeneric
 {
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/54
     /// </summary>
     [TestClass]
-    public class Issue54Generic
+    public class Issue54
     {
         public int PublicField;
         private int _privateField;

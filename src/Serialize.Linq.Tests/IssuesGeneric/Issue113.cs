@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Serializers;
 
-namespace Serialize.Linq.Tests.Issues
+namespace Serialize.Linq.Tests.IssuesGeneric
 {
     // https://github.com/esskar/Serialize.Linq/issues/113
     [TestClass]
-    public class Issue113Generic
+    public class Issue113
     {
         [TestMethod]
         public void AllowVariableInsideTryCatch()

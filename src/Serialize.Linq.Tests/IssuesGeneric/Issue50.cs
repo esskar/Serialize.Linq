@@ -6,13 +6,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Internals;
 using Serialize.Linq.Serializers;
 
-namespace Serialize.Linq.Tests.Issues
+namespace Serialize.Linq.Tests.IssuesGeneric
 {
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/50
     /// </summary>
     [TestClass]
-    public class Issue50Generic
+    public class Issue50
     {
         [TestMethod]
         public void SerializeArrayAsJson()

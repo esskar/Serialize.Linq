@@ -5,11 +5,11 @@ using System.Text;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Serializers;
 
-namespace Serialize.Linq.Tests.Issues
+namespace Serialize.Linq.Tests.IssuesGeneric
 {
     // https://github.com/esskar/Serialize.Linq/issues/124
     [TestClass]
-    public class Issue124Generic
+    public class Issue124
     {
         [TestMethod]
         public void DeserializeExpressionsWithCollectionInterface()

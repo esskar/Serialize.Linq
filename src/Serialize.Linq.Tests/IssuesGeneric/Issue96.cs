@@ -5,13 +5,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Internals;
 using Serialize.Linq.Serializers;
 
-namespace Serialize.Linq.Tests.Issues
+namespace Serialize.Linq.Tests.IssuesGeneric
 {
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/96
     /// </summary>
     [TestClass]
-    public class Issue96Generic
+    public class Issue96
     {
         public class Test
         {

@@ -5,10 +5,10 @@ using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Serializers;
 
-namespace Serialize.Linq.Tests.Issues
+namespace Serialize.Linq.Tests.IssuesGeneric
 {
     [TestClass]
-    public class Issue38Generic
+    public class Issue38
     {
         [TestMethod]
         public void SerializeAsQueryableWithPredicateTest()

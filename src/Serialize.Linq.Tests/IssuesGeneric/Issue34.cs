@@ -5,11 +5,11 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Serializers;
 
-namespace Serialize.Linq.Tests.Issues
+namespace Serialize.Linq.Tests.IssuesGeneric
 {
     // https://github.com/esskar/Serialize.Linq/issues/34
     [TestClass]
-    public class Issue34Generic
+    public class Issue34
     {
         [TestMethod]
         public void SerializeWithDateTimeUtcTest()

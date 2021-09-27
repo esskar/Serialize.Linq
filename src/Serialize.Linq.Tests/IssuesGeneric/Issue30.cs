@@ -6,11 +6,11 @@ using Serialize.Linq.Interfaces;
 using Serialize.Linq.Serializers;
 using Serialize.Linq.Tests.Internals;
 
-namespace Serialize.Linq.Tests.Issues
+namespace Serialize.Linq.Tests.IssuesGeneric
 {
     // https://github.com/esskar/Serialize.Linq/issues/30
     [TestClass]
-    public class Issue30Generic
+    public class Issue30
     {
         /*
         [TestMethod]

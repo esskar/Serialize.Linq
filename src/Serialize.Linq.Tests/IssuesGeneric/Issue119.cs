@@ -7,11 +7,11 @@ using System.Reflection;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Serializers;
 
-namespace Serialize.Linq.Tests.Issues
+namespace Serialize.Linq.Tests.IssuesGeneric
 {
     // https://github.com/esskar/Serialize.Linq/issues/119
     [TestClass]
-    public class Issue119Generic
+    public class Issue119
     {
         private JsonSerializer _expressionSerializer;
         private Expression<Func<IDictionary<string, string>, bool>> _filterExpression;

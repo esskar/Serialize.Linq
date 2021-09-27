@@ -5,13 +5,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Serializers;
 using Serialize.Linq.Tests.Internals;
 
-namespace Serialize.Linq.Tests.Issues
+namespace Serialize.Linq.Tests.IssuesGeneric
 {
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/69
     /// </summary>
     [TestClass]
-    public class Issue69Generic
+    public class Issue69
     {
         private JsonSerializer _jsonExpressionSerializer;
 
