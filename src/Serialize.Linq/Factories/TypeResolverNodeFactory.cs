@@ -135,6 +135,7 @@ namespace Serialize.Linq.Factories
                             if (field.IsPrivate || field.IsFamilyAndAssembly)
                             {
                                 constantValue = field.GetValue(null);
+                                KnownTypes.Match(constantValueType);
                                 return true;
                             }
 
@@ -144,8 +145,8 @@ namespace Serialize.Linq.Factories
                         try
                         {
                             constantValue = Expression.Lambda(memberExpression).Compile().DynamicInvoke();
-
                             constantValueType = propertyInfo.PropertyType;
+                            KnownTypes.Match(constantValueType);
                             return true;
                         }
                         catch (InvalidOperationException)
