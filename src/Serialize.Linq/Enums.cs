@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Serialize.Linq.Internals
+namespace Serialize.Linq
 {
     public enum AutoAddCollectionTypes : int
     {
