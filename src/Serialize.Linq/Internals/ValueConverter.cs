@@ -99,6 +99,16 @@ namespace Serialize.Linq.Internals
             if (TryCustomConvert(value, convertTo, out var retval))
                 return retval;
 
+            // "general" checks should run first
+            if (TryConvertToArray(value, convertTo, out var retArray))
+                return retArray;
+
+            if (TryConvertToList(value, convertTo, out var retList))
+                return retList;
+
+            if (TryConvertToNullable(value, convertTo, out var retNullable))
+                return retNullable;
+
             if (TryConvertToDateTime(value, convertTo, out var retDateTime))
                 return retDateTime;
 
@@ -108,23 +118,11 @@ namespace Serialize.Linq.Internals
             if (TryConvertToEnum(value, convertTo, out var retEnum))
                 return Enum.ToObject(convertTo, retEnum);
 
-            if (TryConvertToArray(value, convertTo, out var retArray))
-                return retArray;
-
-            if (convertTo.IsGenericType())
-            {
-                // convert nullable types
-                if (TryConvertToNullable(value, convertTo, out var retNullable))
-                    return retNullable;
-
-                if (TryConvertToList(value, convertTo, out var retList))
-                    return retList;
-            }
+            if (TryConvertToGuid(value, convertTo, out var retGuid))
+                return retGuid;
 
             if (TryConvertibleConversion(value, convertTo, out var retConvertible))
-            {
                 return retConvertible;
-            }
 
             // fallback
             return Activator.CreateInstance(convertTo, value);
@@ -159,48 +157,44 @@ namespace Serialize.Linq.Internals
             if (convertTo == typeof(DateTime))
             {
                 var stringValue = value.ToString();
-                var match = _dateRegex.Match(stringValue);
-                if (DateTime.TryParse(stringValue, CultureInfo.InvariantCulture, DateTimeStyles.None, out convertedValue) || DateTime.TryParse(stringValue, CultureInfo.CurrentCulture, DateTimeStyles.None, out convertedValue))
+                if (DateTime.TryParse(stringValue, CultureInfo.InvariantCulture, DateTimeStyles.None, out convertedValue) ||
+                    DateTime.TryParse(stringValue, CultureInfo.CurrentCulture, DateTimeStyles.None, out convertedValue))
                     return true;
-                else if (match.Success && Int64.TryParse(match.Groups["date"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var msFromEpoch))
-                {
-                    // Improvement: conversion takes account of local and UTC time
-                    if (match.Groups["offsign"].Success)
-                    {
-                        var hours = Int32.Parse(match.Groups["offhours"].Value, NumberStyles.None, CultureInfo.InvariantCulture);
-                        var minutes = Int32.Parse(match.Groups["offminutes"].Value, NumberStyles.None, CultureInfo.InvariantCulture);
-                        var sign = match.Groups["offsign"].Value == "-" ? -1 : 1;
-                        convertedValue = _localEpoch.AddMilliseconds(msFromEpoch).AddHours(hours * sign).AddMinutes(minutes * sign);
-                        convertedValue = DateTime.Parse(String.Format(CultureInfo.InvariantCulture,
-                                                                      "{0:yyyy-MM-ddTHH:mm:ss.fff}{1}{2:00}:{3:00}",
-                                                                      convertedValue, match.Groups["offsign"], hours, minutes),
-                                                        CultureInfo.InvariantCulture,
-                                                        DateTimeStyles.AssumeLocal);
-                    }
-                    else
-                    {
-                        convertedValue = _utcEpoch.AddMilliseconds(msFromEpoch);
-                        convertedValue = DateTime.Parse(String.Format(CultureInfo.InvariantCulture,
-                                                                      "{0:yyyy-MM-ddTHH:mm:ss.fff}Z",
-                                                                      convertedValue),
-                                                        CultureInfo.InvariantCulture,
-                                                        DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
-                        // without DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal is targetDate.Kind = DateTimeKind.Local,
-                        // see https://stackoverflow.com/questions/1756639/why-cant-datetime-parse-parse-utc-date
-                    }
-                    return true;
-                }
                 else
                 {
-                    convertedValue = DateTime.MinValue;
-                    return false;
+                    var match = _dateRegex.Match(stringValue);
+                    if (match.Success && Int64.TryParse(match.Groups["date"].Value, NumberStyles.Integer, CultureInfo.InvariantCulture, out var msFromEpoch))
+                    {
+                        // Improvement: conversion takes account of local and UTC time
+                        if (match.Groups["offsign"].Success)
+                        {
+                            var hours = Int32.Parse(match.Groups["offhours"].Value, NumberStyles.None, CultureInfo.InvariantCulture);
+                            var minutes = Int32.Parse(match.Groups["offminutes"].Value, NumberStyles.None, CultureInfo.InvariantCulture);
+                            var sign = match.Groups["offsign"].Value == "-" ? -1 : 1;
+                            convertedValue = _localEpoch.AddMilliseconds(msFromEpoch).AddHours(hours * sign).AddMinutes(minutes * sign);
+                            convertedValue = DateTime.Parse(String.Format(CultureInfo.InvariantCulture,
+                                                                          "{0:yyyy-MM-ddTHH:mm:ss.fff}{1}{2:00}:{3:00}",
+                                                                          convertedValue, match.Groups["offsign"], hours, minutes),
+                                                            CultureInfo.InvariantCulture,
+                                                            DateTimeStyles.AssumeLocal);
+                        }
+                        else
+                        {
+                            convertedValue = _utcEpoch.AddMilliseconds(msFromEpoch);
+                            convertedValue = DateTime.Parse(String.Format(CultureInfo.InvariantCulture,
+                                                                          "{0:yyyy-MM-ddTHH:mm:ss.fff}Z",
+                                                                          convertedValue),
+                                                            CultureInfo.InvariantCulture,
+                                                            DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
+                            // without DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal is targetDate.Kind = DateTimeKind.Local,
+                            // see https://stackoverflow.com/questions/1756639/why-cant-datetime-parse-parse-utc-date
+                        }
+                        return true;
+                    }
                 }
             }
-            else
-            {
-                convertedValue = DateTime.MinValue;
-                return false;
-            }
+            convertedValue = DateTime.MinValue;
+            return false;
         }
 
         private static bool TryConvertToTimeSpan(object value, Type convertTo, out TimeSpan convertedValue)
@@ -280,7 +274,7 @@ namespace Serialize.Linq.Internals
 
         private static bool TryConvertToList(object value, Type convertTo, out IList convertedValue)
         {
-            if (value is IEnumerable items && convertTo.GetGenericTypeDefinition() == typeof(List<>))
+            if (convertTo.IsGenericType() && value is IEnumerable items && convertTo.GetGenericTypeDefinition() == typeof(List<>))
             {
                 convertedValue = (IList)Activator.CreateInstance(convertTo);
                 var argumentType = convertTo.GetGenericArguments()[0];
@@ -299,12 +293,27 @@ namespace Serialize.Linq.Internals
 
         private static bool TryConvertToNullable(object value, Type convertTo, out object convertedValue)
         {
-            if (convertTo.GetGenericTypeDefinition() == typeof(Nullable<>))
+            if (convertTo.IsGenericType() && convertTo.GetGenericTypeDefinition() == typeof(Nullable<>))
             {
                 var argumentTypes = convertTo.GetGenericArguments();
                 if (argumentTypes.Length == 1)
                 {
                     convertedValue = Convert(value, argumentTypes[0]);
+                    return true;
+                }
+            }
+            convertedValue = null;
+            return false;
+        }
+
+        // handels issue #138, thanks to Oleg Nadymov
+        private static bool TryConvertToGuid(object value, Type convertTo, out object convertedValue)
+        {
+            if (convertTo.IsAssignableFrom(typeof(Guid))) // Guid + Nullable<Guid>
+            {
+                if (Guid.TryParse(value.ToString(),  out var guid))
+                { 
+                    convertedValue = guid;
                     return true;
                 }
             }
