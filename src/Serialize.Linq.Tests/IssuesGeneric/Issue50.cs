@@ -18,18 +18,18 @@ namespace Serialize.Linq.Tests.IssuesGeneric
         [TestMethod]
         public void Serialize()
         {
-            SerializeInternal(new BinarySerializer());
-            SerializeInternal(new XmlSerializer());
-            SerializeInternal(new JsonSerializer());
-            SerializeInternal(new BinarySerializer()
+            SerializeArrayInternal(new BinarySerializer());
+            SerializeArrayInternal(new XmlSerializer());
+            SerializeArrayInternal(new JsonSerializer());
+            SerializeListInternal(new BinarySerializer()
             {
                 AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             });
-            SerializeInternal(new XmlSerializer()
+            SerializeListInternal(new XmlSerializer()
             {
                 AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             });
-            SerializeInternal(new JsonSerializer()
+            SerializeListInternal(new JsonSerializer()
             {
                 AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             });
@@ -38,24 +38,24 @@ namespace Serialize.Linq.Tests.IssuesGeneric
         [TestMethod]
         public void SerializeDeserialize()
         {
-            SerializeDeserializeInternal(new BinarySerializer());
-            SerializeDeserializeInternal(new XmlSerializer());
-            SerializeDeserializeInternal(new JsonSerializer());
-            SerializeDeserializeInternal(new BinarySerializer()
+            SerializeDeserializeArrayInternal(new BinarySerializer());
+            SerializeDeserializeArrayInternal(new XmlSerializer());
+            SerializeDeserializeArrayInternal(new JsonSerializer());
+            SerializeDeserializeListInternal(new BinarySerializer()
             {
                 AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             });
-            SerializeDeserializeInternal(new XmlSerializer()
+            SerializeDeserializeListInternal(new XmlSerializer()
             {
                 AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             });
-            SerializeDeserializeInternal(new JsonSerializer()
+            SerializeDeserializeListInternal(new JsonSerializer()
             {
                 AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsList
             });
         }
 
-        private static void SerializeInternal<T>(IGenericSerializer<T> serializer)
+        private static void SerializeArrayInternal<T>(IGenericSerializer<T> serializer)
         {
             var list = new [] { "one", "two" };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Code);
@@ -65,9 +65,33 @@ namespace Serialize.Linq.Tests.IssuesGeneric
             Assert.IsNotNull(value);
         }
 
-        private static void SerializeDeserializeInternal<T>(IGenericSerializer<T> serializer)
+        private static void SerializeListInternal<T>(IGenericSerializer<T> serializer)
+        {
+            var list = new List<string> { "one", "two" };
+            Expression<Func<Test, bool>> expression = test => list.Contains(test.Code);
+            var value = serializer.SerializeGeneric(expression);
+
+            Assert.IsNotNull(value);
+        }
+
+        private static void SerializeDeserializeArrayInternal<T>(IGenericSerializer<T> serializer)
         {
             var list = new[] { "one", "two" };
+            Expression<Func<Test, bool>> expression = test => list.Contains(test.Code);
+
+            var value = serializer.SerializeGeneric(expression);
+
+            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeGeneric(value);
+            var func = actualExpression.Compile();
+
+            Assert.IsTrue(func(new Test { Code = "one" }), "one failed.");
+            Assert.IsTrue(func(new Test { Code = "two" }), "two failed.");
+            Assert.IsFalse(func(new Test { Code = "three" }), "three failed.");
+        }
+
+        private static void SerializeDeserializeListInternal<T>(IGenericSerializer<T> serializer)
+        {
+            var list = new List<string> { "one", "two" };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Code);
 
             var value = serializer.SerializeGeneric(expression);
