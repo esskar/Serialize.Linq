@@ -6,13 +6,15 @@
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
 
+#if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
 using System;
+#endif
 using System.IO;
-using Serialize.Linq.Nodes;
 #if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
 using System.Runtime.Serialization;
 #endif
 using Serialize.Linq.Interfaces;
+using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Serializers
 {

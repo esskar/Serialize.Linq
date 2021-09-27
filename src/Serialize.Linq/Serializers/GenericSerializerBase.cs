@@ -1,10 +1,9 @@
-﻿using Serialize.Linq.Extensions;
+﻿using System;
+using System.IO;
+using System.Linq.Expressions;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Nodes;
-using System;
-using System.IO;
-using System.Linq.Expressions;
 
 namespace Serialize.Linq.Serializers
 {

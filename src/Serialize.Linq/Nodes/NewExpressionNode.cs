@@ -6,7 +6,9 @@
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
 
+#if !WINDOWS_UWP
 using System;
+#endif
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;

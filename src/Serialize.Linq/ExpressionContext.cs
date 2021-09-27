@@ -6,11 +6,11 @@
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
 
-using Serialize.Linq.Interfaces;
-using Serialize.Linq.Internals;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Serialize.Linq.Interfaces;
+using Serialize.Linq.Internals;
 
 namespace Serialize.Linq
 {

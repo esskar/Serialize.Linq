@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Xml;
 #endif
-#if NETSTANDARD || WINDOWS_UWP
+#if NETSTANDARD1_3 || WINDOWS_UWP
 using System.Reflection;
 #endif
 using System.Text.RegularExpressions;
@@ -193,7 +193,7 @@ namespace Serialize.Linq.Internals
                     }
                 }
             }
-            convertedValue = DateTime.MinValue;
+            convertedValue = default(DateTime);
             return false;
         }
 
@@ -215,17 +215,10 @@ namespace Serialize.Linq.Internals
                         convertedValue = XmlConvert.ToTimeSpan(sourceSpanString);
                         return true;
                     }
-                    catch
-                    {
-                        convertedValue = TimeSpan.MinValue;
-                        return false;
-                    }
+                    catch { }
             }
-            else
-            {
-                convertedValue = TimeSpan.MinValue;
-                return false;
-            }
+            convertedValue = default(TimeSpan);
+            return false;
         }
 
         private static bool TryConvertToEnum(object value, Type convertTo, out object convertedValue)
@@ -237,17 +230,10 @@ namespace Serialize.Linq.Internals
                     convertedValue = Enum.ToObject(convertTo, value);
                     return true;
                 }
-                catch
-                {
-                    convertedValue = null;
-                    return false;
-                }
+                catch { }
             }
-            else
-            {
-                convertedValue = null;
-                return false;
-            }
+            convertedValue = null;
+            return false;
         }
 
         private static bool TryConvertToArray(object value, Type convertTo, out Array convertedValue)
@@ -265,11 +251,8 @@ namespace Serialize.Linq.Internals
                 }
                 return true;
             }
-            else
-            {
-                convertedValue = null;
-                return false;
-            }
+            convertedValue = null;
+            return false;
         }
 
         private static bool TryConvertToList(object value, Type convertTo, out IList convertedValue)
@@ -284,11 +267,8 @@ namespace Serialize.Linq.Internals
                 }
                 return true;
             }
-            else
-            {
-                convertedValue = null;
-                return false;
-            }
+            convertedValue = null;
+            return false;
         }
 
         private static bool TryConvertToNullable(object value, Type convertTo, out object convertedValue)
@@ -307,17 +287,14 @@ namespace Serialize.Linq.Internals
         }
 
         // handels issue #138, thanks to Oleg Nadymov
-        private static bool TryConvertToGuid(object value, Type convertTo, out object convertedValue)
+        private static bool TryConvertToGuid(object value, Type convertTo, out Guid convertedValue)
         {
-            if (convertTo.IsAssignableFrom(typeof(Guid))) // Guid + Nullable<Guid>
+            if (convertTo.IsAssignableFrom(typeof(Guid)) && Guid.TryParse(value.ToString(), out Guid guid))
             {
-                if (Guid.TryParse(value.ToString(),  out var guid))
-                { 
-                    convertedValue = guid;
-                    return true;
-                }
+                convertedValue = guid;
+                return true;
             }
-            convertedValue = null;
+            convertedValue = default(Guid);
             return false;
         }
 
@@ -330,10 +307,7 @@ namespace Serialize.Linq.Internals
                     convertedValue = (IConvertible)System.Convert.ChangeType(value, convertTo, CultureInfo.InvariantCulture);
                     return true;
                 }
-                catch
-                {
-                    // empty on purpose, we fallback later
-                }
+                catch { }
             }
             convertedValue = null;
             return false;

@@ -7,7 +7,9 @@
 #endregion
 
 using System;
+#if WINDOWS_PHONE || NETSTANDARD || WINDOWS_UWP
 using System.IO;
+#endif
 using System.Runtime.Serialization;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;

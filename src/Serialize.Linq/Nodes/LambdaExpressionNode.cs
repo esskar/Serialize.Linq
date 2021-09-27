@@ -6,7 +6,7 @@
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
 
-#if !WINDOWS_PHONE7
+#if !WINDOWS_PHONE7 && !UAP10_0
 using System;
 #endif
 using System.Linq;

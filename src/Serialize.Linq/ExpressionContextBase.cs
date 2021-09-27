@@ -8,11 +8,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.Reflection;
-#if WINDOWS_PHONE
-using Serialize.Linq.Internals;
-#endif
 using System.Linq.Expressions;
+using System.Reflection;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Nodes;
 

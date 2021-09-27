@@ -22,7 +22,7 @@ namespace Serialize.Linq.Tests.NewTests
             SerializeDeserializeDateInternal(new JsonSerializer());
         }
 
-        private void SerializeDeserializeDateInternal<T>(Interfaces.IGenericSerializer<T> serializer)
+        private static void SerializeDeserializeDateInternal<T>(Interfaces.IGenericSerializer<T> serializer)
         {
             var localDate = DateTime.Now;
             if (serializer is JsonSerializer)

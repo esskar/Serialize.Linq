@@ -1,7 +1,6 @@
-﻿using Serialize.Linq.Nodes;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace Serialize.Linq
+namespace Serialize.Linq.Nodes
 {
     public sealed class ParameterExpressionNodeComparer : EqualityComparer<ParameterExpressionNode>
     {

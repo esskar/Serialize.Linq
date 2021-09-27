@@ -6,14 +6,16 @@
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
 
+#if !WINDOWS_UWP
 using System;
+#endif
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Nodes
 {
-    #region DataContract
+#region DataContract
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
     [DataContract]
 #else
@@ -22,7 +24,7 @@ namespace Serialize.Linq.Nodes
 #if !WINDOWS_UWP
     [Serializable]
 #endif
-    #endregion
+#endregion
     public class BinaryExpressionNode : ExpressionNode<BinaryExpression>
     {
         /// <summary>
@@ -38,7 +40,7 @@ namespace Serialize.Linq.Nodes
         public BinaryExpressionNode(INodeFactory factory, BinaryExpression expression)
             : base(factory, expression) { }
 
-        #region DataMember
+#region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         /// <summary>
         /// Gets or sets the conversion.
@@ -50,10 +52,10 @@ namespace Serialize.Linq.Nodes
 #else
         [DataMember(EmitDefaultValue = false, Name = "C")]
 #endif
-        #endregion
+#endregion
         public ExpressionNode Conversion { get; set; }
 
-        #region DataMember
+#region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         /// <summary>
         /// Gets or sets a value indicating whether this instance is lifted to null.
@@ -65,10 +67,10 @@ namespace Serialize.Linq.Nodes
 #else
         [DataMember(EmitDefaultValue = false, Name = "I")]
 #endif
-        #endregion
+#endregion
         public bool IsLiftedToNull { get; set; }
 
-        #region DataMember
+#region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         /// <summary>
         /// Gets or sets the left.
@@ -80,10 +82,10 @@ namespace Serialize.Linq.Nodes
 #else
         [DataMember(EmitDefaultValue = false, Name = "L")]
 #endif
-        #endregion
+#endregion
         public ExpressionNode Left { get; set; }
 
-        #region DataMember
+#region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         /// <summary>
         /// Gets or sets the method.
@@ -95,10 +97,10 @@ namespace Serialize.Linq.Nodes
 #else
         [DataMember(EmitDefaultValue = false, Name = "M")]
 #endif
-        #endregion
+#endregion
         public MethodInfoNode Method { get; set; }
 
-        #region DataMember
+#region DataMember
 #if !SERIALIZE_LINQ_OPTIMIZE_SIZE
         /// <summary>
         /// Gets or sets the right.
@@ -110,7 +112,7 @@ namespace Serialize.Linq.Nodes
 #else
         [DataMember(EmitDefaultValue = false, Name = "R")]
 #endif
-        #endregion
+#endregion
         public ExpressionNode Right { get; set; }
 
         /// <summary>

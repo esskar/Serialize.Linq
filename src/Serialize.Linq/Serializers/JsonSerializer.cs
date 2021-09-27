@@ -7,8 +7,10 @@
 #endregion
 
 using System;
+#if WINDOWS_PHONE || NETSTANDARD || WINDOWS_UWP
 using System.IO;
-#if !WINDOWS_PHONE && !NETSTANDARD
+#endif
+#if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
 using System.Runtime.Serialization;
 #endif
 using System.Runtime.Serialization.Json;
