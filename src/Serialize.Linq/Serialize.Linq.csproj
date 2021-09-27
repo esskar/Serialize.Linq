@@ -51,10 +51,6 @@
     <TargetFrameworkVersion>v5.0</TargetFrameworkVersion>
     <DefineConstants>TRACE;SERIALIZE_LINQ_OPTIMIZE_SIZE;WINDOWS_UWP;UAP10_0</DefineConstants>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|uap10.0|AnyCPU'">
-    <WarningLevel>5</WarningLevel>
-  </PropertyGroup>
   
   <ItemGroup>
 	<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" PrivateAssets="All" />
