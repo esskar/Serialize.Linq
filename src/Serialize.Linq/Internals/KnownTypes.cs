@@ -48,14 +48,17 @@ namespace Serialize.Linq.Internals
         public static bool TryAddAsAssignable(Type type)
         {
             bool result = false;
-            using (IEnumerator<KeyValuePair<Type, AutoAddCollectionTypes>> enumerator = _allExploded.GetEnumerator())
+            if (type != null)
             {
-                while (enumerator.MoveNext() && !result)
+                using (IEnumerator<KeyValuePair<Type, AutoAddCollectionTypes>> enumerator = _allExploded.GetEnumerator())
                 {
-                    if (enumerator.Current.Key.IsAssignableFrom(type))
+                    while (enumerator.MoveNext() && !result)
                     {
-                        _assignables.Add(type, enumerator.Current.Value);
-                        result = true;
+                        if (enumerator.Current.Key.IsAssignableFrom(type))
+                        {
+                            _assignables.Add(type, enumerator.Current.Value);
+                            result = true;
+                        }
                     }
                 }
             }

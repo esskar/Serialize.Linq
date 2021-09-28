@@ -119,7 +119,7 @@ namespace Serialize.Linq.Factories
                                         constantValue = memberField.GetValue(constantValue);
                                         match = true;
                                     }
-                                    while (constantValue != null && !(KnownTypes.Match(constantValueType) || KnownTypes.TryAddAsAssignable(constantValueType)));
+                                    while (!(constantValue == null  || KnownTypes.Match(constantValueType) || KnownTypes.TryAddAsAssignable(constantValueType)));
 
                                     return match;
                                 }
@@ -178,7 +178,7 @@ namespace Serialize.Linq.Factories
         {
             inlineExpression = null;
 
-            if (!(memberExpression.Member is FieldInfo) && !(memberExpression.Member is System.Reflection.PropertyInfo))
+            if (!(memberExpression.Member is FieldInfo) && !(memberExpression.Member is PropertyInfo))
             {
                 return false;
             }

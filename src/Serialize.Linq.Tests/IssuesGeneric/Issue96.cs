@@ -32,7 +32,7 @@ namespace Serialize.Linq.Tests.IssuesGeneric
             });
         }
 
-        private void SerializeDeserializeListInternal<T>(IGenericSerializer<T> serializer)
+        private static void SerializeDeserializeListInternal<T>(IGenericSerializer<T> serializer)
         {
             var list = new List<string> { "one", "two" };
             Expression<Func<Test, bool>> expression = test => list.Contains(test.Code);

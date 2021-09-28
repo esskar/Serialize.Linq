@@ -37,7 +37,7 @@ namespace Serialize.Linq.Tests.IssuesGeneric
             });
         }
 
-        private void SerializeDeserializeListInternal<T>(IGenericSerializer<T> serializer)
+        private static void SerializeDeserializeListInternal<T>(IGenericSerializer<T> serializer)
         {
             var guid1 = Guid.NewGuid();
             var guid2 = Guid.NewGuid();

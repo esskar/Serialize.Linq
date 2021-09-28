@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Serialize.Linq.Internals
@@ -65,7 +66,7 @@ namespace Serialize.Linq.Internals
 
         private static List<Expression> CompressTree(IList<Expression> items, ExpressionType nodeType)
         {
-            var result = new List<Expression>();
+            var result = new List<Expression>(System.Convert.ToInt32(Math.Ceiling((double)items.Count / 2)));
 
             // traverse list from left to right to preserve calculation order
             for (var i = 0; i < items.Count; i += 2)

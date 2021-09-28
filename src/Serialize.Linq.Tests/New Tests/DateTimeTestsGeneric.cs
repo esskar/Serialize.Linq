@@ -31,45 +31,27 @@ namespace Serialize.Linq.Tests.NewTests
             }
             var utcDate = DateTime.SpecifyKind(localDate, DateTimeKind.Utc);
 
-            Expression<Func<DateTime, bool>> localExpression = date => localDate == date && localDate.Kind == date.Kind && localDate.ToUniversalTime() == date.ToUniversalTime() && localDate.ToUniversalTime().Kind == date.ToUniversalTime().Kind;
-            Expression<Func<DateTime, bool>> utcExpression = date => utcDate == date && utcDate.Kind == date.Kind && utcDate.ToUniversalTime() == date.ToUniversalTime() && utcDate.ToUniversalTime().Kind == date.ToUniversalTime().Kind;
-            Expression<Func<DateTimeKind>> utcKindExpression = () => utcDate.Kind;
-            Expression<Func<DateTimeKind>> localKindExpression = () => localDate.Kind;
             Expression<Func<DateTime>> localDateExpression = () => localDate;
             Expression<Func<DateTime>> utcDateExpression = () => utcDate;
 
-            var localValue = serializer.SerializeGeneric(localExpression);
-            var utcValue = serializer.SerializeGeneric(utcExpression);
-            var utcKindValue = serializer.SerializeGeneric(utcKindExpression);
-            var localKindValue = serializer.SerializeGeneric(localKindExpression);
             var localDateValue = serializer.SerializeGeneric(localDateExpression);
             var utcDateValue = serializer.SerializeGeneric(utcDateExpression);
 
-            var actualLocalExpression = (Expression<Func<DateTime, bool>>)serializer.DeserializeGeneric(localValue);
-            var actualUtcExpression = (Expression<Func<DateTime, bool>>)serializer.DeserializeGeneric(utcValue);
-            var actualLocalKindExpression = (Expression<Func<DateTimeKind>>)serializer.DeserializeGeneric(localKindValue);
-            var actualUtcKindExpression = (Expression<Func<DateTimeKind>>)serializer.DeserializeGeneric(utcKindValue);
             var actualLocalDateExpression = (Expression<Func<DateTime>>)serializer.DeserializeGeneric(localDateValue);
             var actualUtcDateExpression = (Expression<Func<DateTime>>)serializer.DeserializeGeneric(utcDateValue);
 
-            var localFunc = actualLocalExpression.Compile();
-            var utcFunc = actualUtcExpression.Compile();
-            var localKindFunc = actualLocalKindExpression.Compile();
-            var utcKindFunc = actualUtcKindExpression.Compile();
             var localDateFunc = actualLocalDateExpression.Compile();
             var utcDateFunc = actualUtcDateExpression.Compile();
 
             Assert.IsFalse(localDate.ToUniversalTime() == utcDate.ToUniversalTime());
-            Assert.IsTrue(localFunc(localDate), "internal comparison of local date failed.");
-            Assert.IsTrue(utcFunc(utcDate), "internal comparison of UTC date failed.");
-            Assert.IsFalse(localFunc(utcDate), "internal comparison of local vs UTC date failed.");
-            Assert.IsFalse(utcFunc(localDate), "internal comparison of UTC vs local date failed.");
-            Assert.IsTrue(localKindFunc() == localDate.Kind, "internal comparison of local date kind failed.");
-            Assert.IsTrue(utcKindFunc() == utcDate.Kind, "internal comparison of utc date kind failed.");
             Assert.IsTrue(localDateFunc() == localDate, "return value of local date failed.");
+            // the next assert fails for JsonSerializer of version 2.0.0.0, all DateTime values are giving back with Kind 'UTC'
             Assert.IsTrue(localDateFunc().Kind == localDate.Kind, "return value of local date kind failed.");
             Assert.IsTrue(utcDateFunc() == utcDate, "return value of UTC date failed.");
             Assert.IsTrue(utcDateFunc().Kind == utcDate.Kind, "return value of UTC date kind failed.");
+            Assert.IsTrue(localDateFunc() == utcDate, "return value of local vs UTC date failed.");
+            // the next assert fails for JsonSerializer of version 2.0.0.0, all DateTime values are giving back with Kind 'UTC'
+            Assert.IsFalse(localDateFunc().Kind == utcDate.Kind, "return value of local vs UTC date kind failed.");
         }
     }
 }
