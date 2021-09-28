@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Serialize.Linq.Factories;
+using Serialize.Linq.Internals;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.NewTests
@@ -14,27 +17,54 @@ namespace Serialize.Linq.Tests.NewTests
     {
 
         [TestMethod]
-        public void SerializeDeserializeTimeSpan()
-        {
-            SerializeDeserializeTimeSpanInternal(new BinarySerializer());
-            SerializeDeserializeTimeSpanInternal(new XmlSerializer());
-            SerializeDeserializeTimeSpanInternal(new JsonSerializer());
-        }
-
-        private static void SerializeDeserializeTimeSpanInternal<T>(Interfaces.IGenericSerializer<T> serializer)
+        public void SerializeDeserializeTimeSpanBinary()
         {
             var now = DateTime.Now;
             var span = TimeSpan.FromSeconds(1);
-
             Expression<Func<DateTime, bool>> expression = date => date + span > now;
-
-            var value = serializer.SerializeGeneric(expression);
-
-            var actualExpression = (Expression<Func<DateTime, bool>>)serializer.DeserializeGeneric(value);
-
+#pragma warning disable CS0618 // type or member is obsolete
+            var serializer = new ExpressionSerializer(new BinarySerializer());
+#pragma warning restore CS0618 // type or member is obsolete
+            var value = serializer.SerializeBinary(expression);
+            var actualExpression = (Expression<Func<DateTime, bool>>)serializer.DeserializeBinary(value);
             var func = actualExpression.Compile();
 
-            Assert.IsTrue(func(now), "TimeSpan failed."); // fails in previous version for JsonSerializer
+            Assert.IsTrue(func(now), "TimeSpan failed.");
+        }
+
+        [TestMethod]
+        public void SerializeDeserializeTimeSpanXml()
+        {
+            var now = DateTime.Now;
+            var span = TimeSpan.FromSeconds(1);
+            Expression<Func<DateTime, bool>> expression = date => date + span > now;
+#pragma warning disable CS0618 // type or member is obsolete
+            var serializer = new ExpressionSerializer(new XmlSerializer());
+#pragma warning restore CS0618 // type or member is obsolete
+            var value = serializer.SerializeText(expression);
+            var actualExpression = (Expression<Func<DateTime, bool>>)serializer.DeserializeText(value);
+            var func = actualExpression.Compile();
+
+            Assert.IsTrue(func(now), "TimeSpan failed.");
+        }
+
+        [TestMethod]
+        public void SerializeDeserializeTimeSpanJson()
+        {
+            var now = DateTime.Now;
+            var span = TimeSpan.FromSeconds(1);
+            Expression<Func<DateTime, bool>> expression = date => date + span > now;
+#pragma warning disable CS0618 // type or member is obsolete
+            var serializer = new ExpressionSerializer(new JsonSerializer());
+#pragma warning restore CS0618 // type or member is obsolete
+            // prevents MissingMethodException in version 2.0.0.0; no longer needed in the new version:
+            // ValueConverter.AddCustomConverter(typeof(TimeSpan), (object inSpan, Type type) => XmlConvert.ToTimeSpan((string)inSpan));
+            var value = serializer.SerializeText(expression);
+            var actualExpression = (Expression<Func<DateTime, bool>>)serializer.DeserializeText(value);
+            var func = actualExpression.Compile();
+
+            // the next line throws a MissingMethodException for version 2.0.0.0 if 'prevents' line is commented out
+            Assert.IsTrue(func(now), "TimeSpan failed.");
         }
     }
 }
