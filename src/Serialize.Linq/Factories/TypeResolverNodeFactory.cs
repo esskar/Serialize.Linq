@@ -119,7 +119,7 @@ namespace Serialize.Linq.Factories
                                         constantValue = memberField.GetValue(constantValue);
                                         match = true;
                                     }
-                                    while (constantValue != null && !KnownTypes.Match(constantValueType));
+                                    while (constantValue != null && !(KnownTypes.Match(constantValueType) || KnownTypes.TryAddAsAssignable(constantValueType)));
 
                                     return match;
                                 }
@@ -135,7 +135,10 @@ namespace Serialize.Linq.Factories
                             if (field.IsPrivate || field.IsFamilyAndAssembly)
                             {
                                 constantValue = field.GetValue(null);
-                                KnownTypes.Match(constantValueType);
+                                if (!KnownTypes.Match(constantValueType))
+                                {
+                                    KnownTypes.TryAddAsAssignable(constantValueType);
+                                }
                                 return true;
                             }
 
@@ -146,7 +149,10 @@ namespace Serialize.Linq.Factories
                         {
                             constantValue = Expression.Lambda(memberExpression).Compile().DynamicInvoke();
                             constantValueType = propertyInfo.PropertyType;
-                            KnownTypes.Match(constantValueType);
+                            if (!KnownTypes.Match(constantValueType))
+                            {
+                                KnownTypes.TryAddAsAssignable(constantValueType);
+                            }
                             return true;
                         }
                         catch (InvalidOperationException)

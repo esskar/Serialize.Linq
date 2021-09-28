@@ -42,18 +42,20 @@ namespace Serialize.Linq.Internals
 
         public static bool Match(Type type)
         {
-            var result = type != null && _allExploded.Concat(_assignables).Any(pair => pair.Key == type);
-            if (!result)
+            return type != null && _allExploded.Concat(_assignables).Any(pair => pair.Key == type);
+        }
+
+        public static bool TryAddAsAssignable(Type type)
+        {
+            bool result = false;
+            using (IEnumerator<KeyValuePair<Type, AutoAddCollectionTypes>> enumerator = _allExploded.GetEnumerator())
             {
-                using (IEnumerator<KeyValuePair<Type, AutoAddCollectionTypes>> enumerator = _allExploded.GetEnumerator())
+                while (enumerator.MoveNext() && !result)
                 {
-                    while (enumerator.MoveNext() && !result)
+                    if (enumerator.Current.Key.IsAssignableFrom(type))
                     {
-                        if (enumerator.Current.Key.IsAssignableFrom(type))
-                        {
-                            _assignables.Add(type, enumerator.Current.Value);
-                            result = true;
-                        }
+                        _assignables.Add(type, enumerator.Current.Value);
+                        result = true;
                     }
                 }
             }
