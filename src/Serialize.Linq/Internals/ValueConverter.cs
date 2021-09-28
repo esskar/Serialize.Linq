@@ -30,8 +30,7 @@ namespace Serialize.Linq.Internals
             , RegexOptions.ExplicitCapture
 #endif
             );
-        private static readonly DateTime _utcEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        private static readonly DateTime _localEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local);
+        private static readonly DateTime _epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Unspecified);
 
         /// <summary>
         /// Adds the custom converter.
@@ -171,23 +170,17 @@ namespace Serialize.Linq.Internals
                             var hours = Int32.Parse(match.Groups["offhours"].Value, NumberStyles.None, CultureInfo.InvariantCulture);
                             var minutes = Int32.Parse(match.Groups["offminutes"].Value, NumberStyles.None, CultureInfo.InvariantCulture);
                             var sign = match.Groups["offsign"].Value == "-" ? -1 : 1;
-                            convertedValue = _localEpoch.AddMilliseconds(msFromEpoch).AddHours(hours * sign).AddMinutes(minutes * sign);
-                            convertedValue = DateTime.Parse(String.Format(CultureInfo.InvariantCulture,
-                                                                          "{0:yyyy-MM-ddTHH:mm:ss.fff}{1}{2:00}:{3:00}",
-                                                                          convertedValue, match.Groups["offsign"], hours, minutes),
-                                                            CultureInfo.InvariantCulture,
-                                                            DateTimeStyles.AssumeLocal);
+                            convertedValue = _epoch.AddMilliseconds(msFromEpoch).AddHours(hours * sign).AddMinutes(minutes * sign);
+                            convertedValue = DateTime.SpecifyKind(new DateTimeOffset(convertedValue,
+                                                                                     new TimeSpan(sign * hours, sign * minutes, 0)).DateTime,
+                                                                  DateTimeKind.Local);
                         }
                         else
                         {
-                            convertedValue = _utcEpoch.AddMilliseconds(msFromEpoch);
-                            convertedValue = DateTime.Parse(String.Format(CultureInfo.InvariantCulture,
-                                                                          "{0:yyyy-MM-ddTHH:mm:ss.fff}Z",
-                                                                          convertedValue),
-                                                            CultureInfo.InvariantCulture,
-                                                            DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
-                            // without DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal is targetDate.Kind = DateTimeKind.Local,
-                            // see https://stackoverflow.com/questions/1756639/why-cant-datetime-parse-parse-utc-date
+                            convertedValue = _epoch.AddMilliseconds(msFromEpoch);
+                            convertedValue = DateTime.SpecifyKind(new DateTimeOffset(convertedValue,
+                                                                                     TimeSpan.Zero).DateTime, 
+                                                                  DateTimeKind.Utc);
                         }
                         return true;
                     }
