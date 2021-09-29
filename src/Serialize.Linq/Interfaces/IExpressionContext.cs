@@ -9,7 +9,7 @@ namespace Serialize.Linq.Interfaces
     {
         BindingFlags BindingFlags { get; }
 
-        [Obsolete("Use IExpressionContext.Binding instead.", false)]
+        [Obsolete("Use IExpressionContext.BindingFlags instead.", false)]
         BindingFlags? GetBindingFlags();
 
         ParameterExpression GetParameterExpression(ParameterExpressionNode node);
