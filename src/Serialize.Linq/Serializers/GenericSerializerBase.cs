@@ -32,14 +32,14 @@ namespace Serialize.Linq.Serializers
             return Deserialize<ExpressionNode>(data)?.ToExpression(context ?? GetNewContext());
         }
 
-        public void Serialize(Stream stream, Expression expression, FactorySettings factorySettings = null)
+        public override void Serialize(Stream stream, Expression expression, FactorySettings factorySettings = null)
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
             Serialize(stream, _converter.Convert(expression, factorySettings ?? FactorySettings));
         }
 
-        public Expression Deserialize(Stream stream, IExpressionContext context = null)
+        public override Expression Deserialize(Stream stream, IExpressionContext context = null)
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));

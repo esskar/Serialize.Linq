@@ -9,6 +9,8 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
+using Serialize.Linq.Factories;
 using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Interfaces
@@ -60,5 +62,9 @@ namespace Serialize.Linq.Interfaces
         /// <param name="stream">The stream.</param>
         /// <returns></returns>
         TNode Deserialize<TNode>(Stream stream) where TNode : Node;
+
+        void Serialize(Stream stream, Expression expression, FactorySettings factorySettings = null);
+
+        Expression Deserialize(Stream stream, IExpressionContext context = null);
     }
 }

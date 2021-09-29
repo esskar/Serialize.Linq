@@ -1,11 +1,10 @@
-﻿using System.IO;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 using Serialize.Linq.Factories;
 using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Interfaces
 {
-    public interface IGenericSerializer<TSerialize>
+    public interface IGenericSerializer<TSerialize> : ISerializer
     {
         bool CanSerializeBinary { get; }
 
@@ -40,9 +39,5 @@ namespace Serialize.Linq.Interfaces
         /// <param name="data">Depending on <typeparamref name="TSerialize"/>: an array of bytes or a string with the serialized <see cref="Node"/> object.</param>
         /// <returns>The deserialized object, inheriting from <see cref="Node"/></returns>
         TNode Deserialize<TNode>(TSerialize data) where TNode : Node;
-
-        void Serialize(Stream stream, Expression expression, FactorySettings factorySettings = null);
-
-        Expression Deserialize(Stream stream, IExpressionContext context = null);
     }
 }

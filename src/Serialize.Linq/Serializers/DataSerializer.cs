@@ -10,6 +10,8 @@
 using System;
 #endif
 using System.IO;
+using System.Linq.Expressions;
+using Serialize.Linq.Factories;
 #if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
 using System.Runtime.Serialization;
 #endif
@@ -48,5 +50,9 @@ namespace Serialize.Linq.Serializers
         public abstract TNode Deserialize<TNode>(Stream stream) where TNode : Node;
 
 #endif
+
+        public abstract void Serialize(Stream stream, Expression expression, FactorySettings factorySettings);
+
+        public abstract Expression Deserialize(Stream stream, IExpressionContext context);
     }
 }

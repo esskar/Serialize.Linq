@@ -8,5 +8,5 @@
 
 namespace Serialize.Linq.Interfaces
 {
-    public interface IBinarySerializer : ISerializer, IGenericSerializer<byte[]> { }
+    public interface IBinarySerializer : IGenericSerializer<byte[]> { }
 }
