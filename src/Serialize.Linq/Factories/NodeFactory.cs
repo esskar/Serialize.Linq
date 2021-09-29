@@ -76,7 +76,7 @@ namespace Serialize.Linq.Factories
         /// <summary>
         /// Gets binding flags to be used when accessing type members.
         /// </summary>
-        [Obsolete("Use NodeFactory.Settings.Binding instead.", false)]
+        [Obsolete("Use NodeFactory.Settings.BindingFlags instead.", false)]
         public BindingFlags? GetBindingFlags()
         {
             if (!this.Settings.AllowPrivateFieldAccess)
