@@ -8,7 +8,7 @@ namespace Serialize.Linq.Tests.NewTests
 {
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/105
-    /// Test and fix provided by https://github.com/OlegNadymov THX!!!
+    /// Test and fix provided by https://github.com/oahrens
     /// </summary>
     [TestClass]
     public class TimeSpanTestsGeneric
@@ -36,7 +36,8 @@ namespace Serialize.Linq.Tests.NewTests
             var actualExpression = (Expression<Func<DateTime, bool>>)serializer.DeserializeGeneric(value);
             var func = actualExpression.Compile();
 
-            Assert.IsTrue(func(now), "TimeSpan failed."); // fails in previous version for JsonSerializer
+            // in case of JsonSerializer the next line throws a MissingMethodException for version 2.0.0.0 if 'prevents' line is commented out
+            Assert.IsTrue(func(now), "TimeSpan failed.");
         }
     }
 }

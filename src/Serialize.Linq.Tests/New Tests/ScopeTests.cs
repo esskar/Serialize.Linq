@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -9,6 +7,10 @@ using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.NewTests
 {
+    /// <summary>
+    /// https://github.com/esskar/Serialize.Linq/issues/105
+    /// Test and fix provided by https://github.com/oahrens
+    /// </summary>
     [TestClass]
     public class ScopeTests
     {
@@ -28,6 +30,12 @@ namespace Serialize.Linq.Tests.NewTests
             Expression<Func<ScopeClass, bool>> intFuncExpression = scope => scope.IntFunc() == testClass.IntFunc();
             Expression<Func<ScopeClass, bool>> intPropExpression = scope => scope.IntProp == testClass.IntProp;
             Expression<Func<ScopeClass, bool>> intFieldExpression = scope => scope.IntField == testClass.IntField;
+            Expression<Func<int>> pubStaticFuncExpression = () => ScopeClass.PubStaticFunc();
+            Expression<Func<int>> pubStaticPropExpression = () => ScopeClass.PubStaticProp;
+            Expression<Func<int>> pubStaticFieldExpression = () => ScopeClass.PubStaticField;
+            Expression<Func<int>> intStaticFuncExpression = () => ScopeClass.IntStaticFunc();
+            Expression<Func<int>> intStaticPropExpression = () => ScopeClass.IntStaticProp;
+            Expression<Func<int>> intStaticFieldExpression = () => ScopeClass.IntStaticField;
 
             var pubFuncValue = serializer.SerializeBinary(pubFuncExpression);
             var pubPropValue = serializer.SerializeBinary(pubPropExpression);
@@ -35,6 +43,12 @@ namespace Serialize.Linq.Tests.NewTests
             var intFuncValue = serializer.SerializeBinary(intFuncExpression);
             var intPropValue = serializer.SerializeBinary(intPropExpression);
             var intFieldValue = serializer.SerializeBinary(intFieldExpression);
+            var pubStaticFuncValue = serializer.SerializeBinary(pubStaticFuncExpression);
+            var pubStaticPropValue = serializer.SerializeBinary(pubStaticPropExpression);
+            var pubStaticFieldValue = serializer.SerializeBinary(pubStaticFieldExpression);
+            var intStaticFuncValue = serializer.SerializeBinary(intStaticFuncExpression);
+            var intStaticPropValue = serializer.SerializeBinary(intStaticPropExpression);
+            var intStaticFieldValue = serializer.SerializeBinary(intStaticFieldExpression);
 
             var actualPubFuncExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeBinary(pubFuncValue);
             var actualPubPropExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeBinary(pubPropValue);
@@ -43,6 +57,13 @@ namespace Serialize.Linq.Tests.NewTests
             var actualIntFuncExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeBinary(intFuncValue, context);
             var actualIntPropExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeBinary(intPropValue, context);
             var actualIntFieldExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeBinary(intFieldValue, context);
+            var actualPubStaticFuncExpression = (Expression<Func<int>>)serializer.DeserializeBinary(pubStaticFuncValue);
+            var actualPubStaticPropExpression = (Expression<Func<int>>)serializer.DeserializeBinary(pubStaticPropValue);
+            var actualPubStaticFieldExpression = (Expression<Func<int>>)serializer.DeserializeBinary(pubStaticFieldValue);
+            // the next line throws a MemberNotFoundException in version 2.0.0.0, since 'context' is not used
+            var actualIntStaticFuncExpression = (Expression<Func<int>>)serializer.DeserializeBinary(intStaticFuncValue, context);
+            var actualIntStaticPropExpression = (Expression<Func<int>>)serializer.DeserializeBinary(intStaticPropValue, context);
+            var actualIntStaticFieldExpression = (Expression<Func<int>>)serializer.DeserializeBinary(intStaticFieldValue, context);
 
             Assert.IsTrue(actualPubFuncExpression.Compile().Invoke(testClass), "public function failed.");
             Assert.IsTrue(actualPubPropExpression.Compile().Invoke(testClass), "public property failed.");
@@ -50,6 +71,12 @@ namespace Serialize.Linq.Tests.NewTests
             Assert.IsTrue(actualIntFuncExpression.Compile().Invoke(testClass), "internal function failed.");
             Assert.IsTrue(actualIntPropExpression.Compile().Invoke(testClass), "internal property failed.");
             Assert.IsTrue(actualIntFieldExpression.Compile().Invoke(testClass), "internal field failed.");
+            Assert.IsTrue(actualPubStaticFuncExpression.Compile().Invoke() == ScopeClass.PubStaticFunc(), "public function failed.");
+            Assert.IsTrue(actualPubStaticPropExpression.Compile().Invoke() == ScopeClass.PubStaticProp, "public property failed.");
+            Assert.IsTrue(actualPubStaticFieldExpression.Compile().Invoke() == ScopeClass.PubStaticField, "public field failed.");
+            Assert.IsTrue(actualIntStaticFuncExpression.Compile().Invoke() == ScopeClass.IntStaticFunc(), "internal function failed.");
+            Assert.IsTrue(actualIntStaticPropExpression.Compile().Invoke() == ScopeClass.IntStaticProp, "internal property failed.");
+            Assert.IsTrue(actualIntStaticFieldExpression.Compile().Invoke() == ScopeClass.IntStaticField, "internal field failed.");
         }
 
         [TestMethod]
@@ -68,6 +95,12 @@ namespace Serialize.Linq.Tests.NewTests
             Expression<Func<ScopeClass, bool>> intFuncExpression = scope => scope.IntFunc() == testClass.IntFunc();
             Expression<Func<ScopeClass, bool>> intPropExpression = scope => scope.IntProp == testClass.IntProp;
             Expression<Func<ScopeClass, bool>> intFieldExpression = scope => scope.IntField == testClass.IntField;
+            Expression<Func<int>> pubStaticFuncExpression = () => ScopeClass.PubStaticFunc();
+            Expression<Func<int>> pubStaticPropExpression = () => ScopeClass.PubStaticProp;
+            Expression<Func<int>> pubStaticFieldExpression = () => ScopeClass.PubStaticField;
+            Expression<Func<int>> intStaticFuncExpression = () => ScopeClass.IntStaticFunc();
+            Expression<Func<int>> intStaticPropExpression = () => ScopeClass.IntStaticProp;
+            Expression<Func<int>> intStaticFieldExpression = () => ScopeClass.IntStaticField;
 
             var pubFuncValue = serializer.SerializeText(pubFuncExpression);
             var pubPropValue = serializer.SerializeText(pubPropExpression);
@@ -75,6 +108,12 @@ namespace Serialize.Linq.Tests.NewTests
             var intFuncValue = serializer.SerializeText(intFuncExpression);
             var intPropValue = serializer.SerializeText(intPropExpression);
             var intFieldValue = serializer.SerializeText(intFieldExpression);
+            var pubStaticFuncValue = serializer.SerializeText(pubStaticFuncExpression);
+            var pubStaticPropValue = serializer.SerializeText(pubStaticPropExpression);
+            var pubStaticFieldValue = serializer.SerializeText(pubStaticFieldExpression);
+            var intStaticFuncValue = serializer.SerializeText(intStaticFuncExpression);
+            var intStaticPropValue = serializer.SerializeText(intStaticPropExpression);
+            var intStaticFieldValue = serializer.SerializeText(intStaticFieldExpression);
 
             var actualPubFuncExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeText(pubFuncValue);
             var actualPubPropExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeText(pubPropValue);
@@ -83,6 +122,13 @@ namespace Serialize.Linq.Tests.NewTests
             var actualIntFuncExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeText(intFuncValue, context);
             var actualIntPropExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeText(intPropValue, context);
             var actualIntFieldExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeText(intFieldValue, context);
+            var actualPubStaticFuncExpression = (Expression<Func<int>>)serializer.DeserializeText(pubStaticFuncValue);
+            var actualPubStaticPropExpression = (Expression<Func<int>>)serializer.DeserializeText(pubStaticPropValue);
+            var actualPubStaticFieldExpression = (Expression<Func<int>>)serializer.DeserializeText(pubStaticFieldValue);
+            // the next line throws a MemberNotFoundException in version 2.0.0.0, since 'context' is not used
+            var actualIntStaticFuncExpression = (Expression<Func<int>>)serializer.DeserializeText(intStaticFuncValue, context);
+            var actualIntStaticPropExpression = (Expression<Func<int>>)serializer.DeserializeText(intStaticPropValue, context);
+            var actualIntStaticFieldExpression = (Expression<Func<int>>)serializer.DeserializeText(intStaticFieldValue, context);
 
             Assert.IsTrue(actualPubFuncExpression.Compile().Invoke(testClass), "public function failed.");
             Assert.IsTrue(actualPubPropExpression.Compile().Invoke(testClass), "public property failed.");
@@ -90,6 +136,12 @@ namespace Serialize.Linq.Tests.NewTests
             Assert.IsTrue(actualIntFuncExpression.Compile().Invoke(testClass), "internal function failed.");
             Assert.IsTrue(actualIntPropExpression.Compile().Invoke(testClass), "internal property failed.");
             Assert.IsTrue(actualIntFieldExpression.Compile().Invoke(testClass), "internal field failed.");
+            Assert.IsTrue(actualPubStaticFuncExpression.Compile().Invoke() == ScopeClass.PubStaticFunc(), "public function failed.");
+            Assert.IsTrue(actualPubStaticPropExpression.Compile().Invoke() == ScopeClass.PubStaticProp, "public property failed.");
+            Assert.IsTrue(actualPubStaticFieldExpression.Compile().Invoke() == ScopeClass.PubStaticField, "public field failed.");
+            Assert.IsTrue(actualIntStaticFuncExpression.Compile().Invoke() == ScopeClass.IntStaticFunc(), "internal function failed.");
+            Assert.IsTrue(actualIntStaticPropExpression.Compile().Invoke() == ScopeClass.IntStaticProp, "internal property failed.");
+            Assert.IsTrue(actualIntStaticFieldExpression.Compile().Invoke() == ScopeClass.IntStaticField, "internal field failed.");
         }
 
         [TestMethod]
@@ -108,6 +160,12 @@ namespace Serialize.Linq.Tests.NewTests
             Expression<Func<ScopeClass, bool>> intFuncExpression = scope => scope.IntFunc() == testClass.IntFunc();
             Expression<Func<ScopeClass, bool>> intPropExpression = scope => scope.IntProp == testClass.IntProp;
             Expression<Func<ScopeClass, bool>> intFieldExpression = scope => scope.IntField == testClass.IntField;
+            Expression<Func<int>> pubStaticFuncExpression = () => ScopeClass.PubStaticFunc();
+            Expression<Func<int>> pubStaticPropExpression = () => ScopeClass.PubStaticProp;
+            Expression<Func<int>> pubStaticFieldExpression = () => ScopeClass.PubStaticField;
+            Expression<Func<int>> intStaticFuncExpression = () => ScopeClass.IntStaticFunc();
+            Expression<Func<int>> intStaticPropExpression = () => ScopeClass.IntStaticProp;
+            Expression<Func<int>> intStaticFieldExpression = () => ScopeClass.IntStaticField;
 
             var pubFuncValue = serializer.SerializeText(pubFuncExpression);
             var pubPropValue = serializer.SerializeText(pubPropExpression);
@@ -115,6 +173,12 @@ namespace Serialize.Linq.Tests.NewTests
             var intFuncValue = serializer.SerializeText(intFuncExpression);
             var intPropValue = serializer.SerializeText(intPropExpression);
             var intFieldValue = serializer.SerializeText(intFieldExpression);
+            var pubStaticFuncValue = serializer.SerializeText(pubStaticFuncExpression);
+            var pubStaticPropValue = serializer.SerializeText(pubStaticPropExpression);
+            var pubStaticFieldValue = serializer.SerializeText(pubStaticFieldExpression);
+            var intStaticFuncValue = serializer.SerializeText(intStaticFuncExpression);
+            var intStaticPropValue = serializer.SerializeText(intStaticPropExpression);
+            var intStaticFieldValue = serializer.SerializeText(intStaticFieldExpression);
 
             var actualPubFuncExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeText(pubFuncValue);
             var actualPubPropExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeText(pubPropValue);
@@ -123,6 +187,13 @@ namespace Serialize.Linq.Tests.NewTests
             var actualIntFuncExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeText(intFuncValue, context);
             var actualIntPropExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeText(intPropValue, context);
             var actualIntFieldExpression = (Expression<Func<ScopeClass, bool>>)serializer.DeserializeText(intFieldValue, context);
+            var actualPubStaticFuncExpression = (Expression<Func<int>>)serializer.DeserializeText(pubStaticFuncValue);
+            var actualPubStaticPropExpression = (Expression<Func<int>>)serializer.DeserializeText(pubStaticPropValue);
+            var actualPubStaticFieldExpression = (Expression<Func<int>>)serializer.DeserializeText(pubStaticFieldValue);
+            // the next line throws a MemberNotFoundException in version 2.0.0.0, since 'context' is not used
+            var actualIntStaticFuncExpression = (Expression<Func<int>>)serializer.DeserializeText(intStaticFuncValue, context);
+            var actualIntStaticPropExpression = (Expression<Func<int>>)serializer.DeserializeText(intStaticPropValue, context);
+            var actualIntStaticFieldExpression = (Expression<Func<int>>)serializer.DeserializeText(intStaticFieldValue, context);
 
             Assert.IsTrue(actualPubFuncExpression.Compile().Invoke(testClass), "public function failed.");
             Assert.IsTrue(actualPubPropExpression.Compile().Invoke(testClass), "public property failed.");
@@ -130,6 +201,12 @@ namespace Serialize.Linq.Tests.NewTests
             Assert.IsTrue(actualIntFuncExpression.Compile().Invoke(testClass), "internal function failed.");
             Assert.IsTrue(actualIntPropExpression.Compile().Invoke(testClass), "internal property failed.");
             Assert.IsTrue(actualIntFieldExpression.Compile().Invoke(testClass), "internal field failed.");
+            Assert.IsTrue(actualPubStaticFuncExpression.Compile().Invoke() == ScopeClass.PubStaticFunc(), "public function failed.");
+            Assert.IsTrue(actualPubStaticPropExpression.Compile().Invoke() == ScopeClass.PubStaticProp, "public property failed.");
+            Assert.IsTrue(actualPubStaticFieldExpression.Compile().Invoke() == ScopeClass.PubStaticField, "public field failed.");
+            Assert.IsTrue(actualIntStaticFuncExpression.Compile().Invoke() == ScopeClass.IntStaticFunc(), "internal function failed.");
+            Assert.IsTrue(actualIntStaticPropExpression.Compile().Invoke() == ScopeClass.IntStaticProp, "internal property failed.");
+            Assert.IsTrue(actualIntStaticFieldExpression.Compile().Invoke() == ScopeClass.IntStaticField, "internal field failed.");
         }
 
         [TestMethod]
@@ -147,6 +224,12 @@ namespace Serialize.Linq.Tests.NewTests
             Expression<Func<ScopeClass, bool>> intFuncExpression = scope => scope.IntFunc() == testClass.IntFunc();
             Expression<Func<ScopeClass, bool>> intPropExpression = scope => scope.IntProp == testClass.IntProp;
             Expression<Func<ScopeClass, bool>> intFieldExpression = scope => scope.IntField == testClass.IntField;
+            Expression<Func<int>> pubStaticFuncExpression = () => ScopeClass.PubStaticFunc();
+            Expression<Func<int>> pubStaticPropExpression = () => ScopeClass.PubStaticProp;
+            Expression<Func<int>> pubStaticFieldExpression = () => ScopeClass.PubStaticField;
+            Expression<Func<int>> intStaticFuncExpression = () => ScopeClass.IntStaticFunc();
+            Expression<Func<int>> intStaticPropExpression = () => ScopeClass.IntStaticProp;
+            Expression<Func<int>> intStaticFieldExpression = () => ScopeClass.IntStaticField;
 
             Expression<Func<ScopeClass, bool>> actualPubFuncExpression;
             using (var stream = new MemoryStream())
@@ -202,6 +285,60 @@ namespace Serialize.Linq.Tests.NewTests
                 // because BindingContext can neither be specified directly nor is it derived from the serializer's FactorySettings
                 actualIntFieldExpression = (Expression<Func<ScopeClass, bool>>)serializer.Deserialize(stream);
             }
+            Expression<Func<int>> actualPubStaticFuncExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, pubStaticFuncExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                actualPubStaticFuncExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualPubStaticPropExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, pubStaticPropExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                actualPubStaticPropExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualPubStaticFieldExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, pubStaticFieldExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                actualPubStaticFieldExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualIntStaticFuncExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, intStaticFuncExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                // the next line throws a MemberNotFoundException in version 2.0.0.0,
+                // because BindingContext can neither be specified directly nor is it derived from the serializer's FactorySettings
+                actualIntStaticFuncExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualIntStaticPropExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, intStaticPropExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                // the next line throws a MemberNotFoundException in version 2.0.0.0,
+                // because BindingContext can neither be specified directly nor is it derived from the serializer's FactorySettings
+                actualIntStaticPropExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualIntStaticFieldExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, intStaticFieldExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                // the next line throws a MemberNotFoundException in version 2.0.0.0,
+                // because BindingContext can neither be specified directly nor is it derived from the serializer's FactorySettings
+                actualIntStaticFieldExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
 
             Assert.IsTrue(actualPubFuncExpression.Compile().Invoke(testClass), "public function failed.");
             Assert.IsTrue(actualPubPropExpression.Compile().Invoke(testClass), "public property failed.");
@@ -209,6 +346,12 @@ namespace Serialize.Linq.Tests.NewTests
             Assert.IsTrue(actualIntFuncExpression.Compile().Invoke(testClass), "internal function failed.");
             Assert.IsTrue(actualIntPropExpression.Compile().Invoke(testClass), "internal property failed.");
             Assert.IsTrue(actualIntFieldExpression.Compile().Invoke(testClass), "internal field failed.");
+            Assert.IsTrue(actualPubStaticFuncExpression.Compile().Invoke() == ScopeClass.PubStaticFunc(), "public function failed.");
+            Assert.IsTrue(actualPubStaticPropExpression.Compile().Invoke() == ScopeClass.PubStaticProp, "public property failed.");
+            Assert.IsTrue(actualPubStaticFieldExpression.Compile().Invoke() == ScopeClass.PubStaticField, "public field failed.");
+            Assert.IsTrue(actualIntStaticFuncExpression.Compile().Invoke() == ScopeClass.IntStaticFunc(), "internal function failed.");
+            Assert.IsTrue(actualIntStaticPropExpression.Compile().Invoke() == ScopeClass.IntStaticProp, "internal property failed.");
+            Assert.IsTrue(actualIntStaticFieldExpression.Compile().Invoke() == ScopeClass.IntStaticField, "internal field failed.");
         }
 
         [TestMethod]
@@ -227,6 +370,12 @@ namespace Serialize.Linq.Tests.NewTests
             Expression<Func<ScopeClass, bool>> intFuncExpression = scope => scope.IntFunc() == testClass.IntFunc();
             Expression<Func<ScopeClass, bool>> intPropExpression = scope => scope.IntProp == testClass.IntProp;
             Expression<Func<ScopeClass, bool>> intFieldExpression = scope => scope.IntField == testClass.IntField;
+            Expression<Func<int>> pubStaticFuncExpression = () => ScopeClass.PubStaticFunc();
+            Expression<Func<int>> pubStaticPropExpression = () => ScopeClass.PubStaticProp;
+            Expression<Func<int>> pubStaticFieldExpression = () => ScopeClass.PubStaticField;
+            Expression<Func<int>> intStaticFuncExpression = () => ScopeClass.IntStaticFunc();
+            Expression<Func<int>> intStaticPropExpression = () => ScopeClass.IntStaticProp;
+            Expression<Func<int>> intStaticFieldExpression = () => ScopeClass.IntStaticField;
 
             Expression<Func<ScopeClass, bool>> actualPubFuncExpression;
             using (var stream = new MemoryStream())
@@ -279,6 +428,60 @@ namespace Serialize.Linq.Tests.NewTests
                 // the next line throws a MemberNotFoundException in version 2.0.0.0, because 'context' can neither be specified directly nor is it derived from 'factorySettings'
                 actualIntFieldExpression = (Expression<Func<ScopeClass, bool>>)serializer.Deserialize(stream);
             }
+            Expression<Func<int>> actualPubStaticFuncExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, pubStaticFuncExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                actualPubStaticFuncExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualPubStaticPropExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, pubStaticPropExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                actualPubStaticPropExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualPubStaticFieldExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, pubStaticFieldExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                actualPubStaticFieldExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualIntStaticFuncExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, intStaticFuncExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                // the next line throws a MemberNotFoundException in version 2.0.0.0,
+                // because BindingContext can neither be specified directly nor is it derived from the serializer's FactorySettings
+                actualIntStaticFuncExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualIntStaticPropExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, intStaticPropExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                // the next line throws a MemberNotFoundException in version 2.0.0.0,
+                // because BindingContext can neither be specified directly nor is it derived from the serializer's FactorySettings
+                actualIntStaticPropExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualIntStaticFieldExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, intStaticFieldExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                // the next line throws a MemberNotFoundException in version 2.0.0.0,
+                // because BindingContext can neither be specified directly nor is it derived from the serializer's FactorySettings
+                actualIntStaticFieldExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
 
             Assert.IsTrue(actualPubFuncExpression.Compile().Invoke(testClass), "public function failed.");
             Assert.IsTrue(actualPubPropExpression.Compile().Invoke(testClass), "public property failed.");
@@ -286,6 +489,12 @@ namespace Serialize.Linq.Tests.NewTests
             Assert.IsTrue(actualIntFuncExpression.Compile().Invoke(testClass), "internal function failed.");
             Assert.IsTrue(actualIntPropExpression.Compile().Invoke(testClass), "internal property failed.");
             Assert.IsTrue(actualIntFieldExpression.Compile().Invoke(testClass), "internal field failed.");
+            Assert.IsTrue(actualPubStaticFuncExpression.Compile().Invoke() == ScopeClass.PubStaticFunc(), "public function failed.");
+            Assert.IsTrue(actualPubStaticPropExpression.Compile().Invoke() == ScopeClass.PubStaticProp, "public property failed.");
+            Assert.IsTrue(actualPubStaticFieldExpression.Compile().Invoke() == ScopeClass.PubStaticField, "public field failed.");
+            Assert.IsTrue(actualIntStaticFuncExpression.Compile().Invoke() == ScopeClass.IntStaticFunc(), "internal function failed.");
+            Assert.IsTrue(actualIntStaticPropExpression.Compile().Invoke() == ScopeClass.IntStaticProp, "internal property failed.");
+            Assert.IsTrue(actualIntStaticFieldExpression.Compile().Invoke() == ScopeClass.IntStaticField, "internal field failed.");
         }
 
         [TestMethod]
@@ -304,6 +513,12 @@ namespace Serialize.Linq.Tests.NewTests
             Expression<Func<ScopeClass, bool>> intFuncExpression = scope => scope.IntFunc() == testClass.IntFunc();
             Expression<Func<ScopeClass, bool>> intPropExpression = scope => scope.IntProp == testClass.IntProp;
             Expression<Func<ScopeClass, bool>> intFieldExpression = scope => scope.IntField == testClass.IntField;
+            Expression<Func<int>> pubStaticFuncExpression = () => ScopeClass.PubStaticFunc();
+            Expression<Func<int>> pubStaticPropExpression = () => ScopeClass.PubStaticProp;
+            Expression<Func<int>> pubStaticFieldExpression = () => ScopeClass.PubStaticField;
+            Expression<Func<int>> intStaticFuncExpression = () => ScopeClass.IntStaticFunc();
+            Expression<Func<int>> intStaticPropExpression = () => ScopeClass.IntStaticProp;
+            Expression<Func<int>> intStaticFieldExpression = () => ScopeClass.IntStaticField;
 
             Expression<Func<ScopeClass, bool>> actualPubFuncExpression;
             using (var stream = new MemoryStream())
@@ -356,6 +571,60 @@ namespace Serialize.Linq.Tests.NewTests
                 // the next line throws a MemberNotFoundException in version 2.0.0.0, because 'context' can neither be specified directly nor is it derived from 'factorySettings'
                 actualIntFieldExpression = (Expression<Func<ScopeClass, bool>>)serializer.Deserialize(stream);
             }
+            Expression<Func<int>> actualPubStaticFuncExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, pubStaticFuncExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                actualPubStaticFuncExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualPubStaticPropExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, pubStaticPropExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                actualPubStaticPropExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualPubStaticFieldExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, pubStaticFieldExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                actualPubStaticFieldExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualIntStaticFuncExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, intStaticFuncExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                // the next line throws a MemberNotFoundException in version 2.0.0.0,
+                // because BindingContext can neither be specified directly nor is it derived from the serializer's FactorySettings
+                actualIntStaticFuncExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualIntStaticPropExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, intStaticPropExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                // the next line throws a MemberNotFoundException in version 2.0.0.0,
+                // because BindingContext can neither be specified directly nor is it derived from the serializer's FactorySettings
+                actualIntStaticPropExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
+            Expression<Func<int>> actualIntStaticFieldExpression;
+            using (var stream = new MemoryStream())
+            {
+                serializer.Serialize(stream, intStaticFieldExpression);
+                // System.ObjectDisposedException: "Cannot access a closed Stream." is thrown in version 2.0.0.0
+                stream.Position = 0;
+                // the next line throws a MemberNotFoundException in version 2.0.0.0,
+                // because BindingContext can neither be specified directly nor is it derived from the serializer's FactorySettings
+                actualIntStaticFieldExpression = (Expression<Func<int>>)serializer.Deserialize(stream);
+            }
 
             Assert.IsTrue(actualPubFuncExpression.Compile().Invoke(testClass), "public function failed.");
             Assert.IsTrue(actualPubPropExpression.Compile().Invoke(testClass), "public property failed.");
@@ -363,26 +632,47 @@ namespace Serialize.Linq.Tests.NewTests
             Assert.IsTrue(actualIntFuncExpression.Compile().Invoke(testClass), "internal function failed.");
             Assert.IsTrue(actualIntPropExpression.Compile().Invoke(testClass), "internal property failed.");
             Assert.IsTrue(actualIntFieldExpression.Compile().Invoke(testClass), "internal field failed.");
+            Assert.IsTrue(actualPubStaticFuncExpression.Compile().Invoke() == ScopeClass.PubStaticFunc(), "public function failed.");
+            Assert.IsTrue(actualPubStaticPropExpression.Compile().Invoke() == ScopeClass.PubStaticProp, "public property failed.");
+            Assert.IsTrue(actualPubStaticFieldExpression.Compile().Invoke() == ScopeClass.PubStaticField, "public field failed.");
+            Assert.IsTrue(actualIntStaticFuncExpression.Compile().Invoke() == ScopeClass.IntStaticFunc(), "internal function failed.");
+            Assert.IsTrue(actualIntStaticPropExpression.Compile().Invoke() == ScopeClass.IntStaticProp, "internal property failed.");
+            Assert.IsTrue(actualIntStaticFieldExpression.Compile().Invoke() == ScopeClass.IntStaticField, "internal field failed.");
         }
 
         private class ScopeClass
         {
             public ScopeClass()
             {
-                IntField = true;
+                PubField = 3;
+                IntField = 6;
+                PubStaticField = 9;
+                IntStaticField = 12;
             }
 
-            public bool PubFunc() => true;
+            public int PubFunc() => 1;
 
-            internal bool IntFunc() => true;
+            public int PubProp => 2;
 
-            public bool PubProp => true;
+            public int PubField;
 
-            internal bool IntProp => true;
+            internal int IntFunc() => 4;
 
-            public bool PubField;
+            internal int IntProp => 5;
 
-            internal bool IntField;
+            internal int IntField;
+
+            public static int PubStaticFunc() => 7;
+
+            public static int PubStaticProp => 8;
+
+            public static int PubStaticField;
+
+            internal static int IntStaticFunc() => 10;
+
+            internal static int IntStaticProp => 11;
+
+            internal static int IntStaticField;
         }
     }
 }

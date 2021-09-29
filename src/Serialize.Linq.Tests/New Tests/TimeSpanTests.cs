@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Linq.Expressions;
-using System.Xml;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Serialize.Linq.Factories;
-using Serialize.Linq.Internals;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.NewTests
 {
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/105
-    /// Test and fix provided by https://github.com/OlegNadymov THX!!!
+    /// Test and fix provided by https://github.com/oahrens
     /// </summary>
     [TestClass]
     public class TimeSpanTests
