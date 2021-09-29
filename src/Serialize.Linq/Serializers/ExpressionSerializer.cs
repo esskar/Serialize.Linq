@@ -16,19 +16,17 @@ using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Serializers
 {
-    [Obsolete("You can now get all of the functionality from the serializers themselves. " +
-              "Instead of SerializeText, SerializeBinary, DeserializeText and DeserializeBinary use SerializeGeneric and DeserializeGeneric.", false)]
+   [Obsolete("You can now get all of the functionality from the serializers themselves. " +
+             "Instead of SerializeText, SerializeBinary, DeserializeText and DeserializeBinary use SerializeGeneric and DeserializeGeneric.", false)]
     public class ExpressionSerializer : ExpressionConverter
     {
         private readonly ISerializer _serializer;
         private readonly FactorySettings _factorySettings;
-        private readonly ExpressionContext _context;
 
         public ExpressionSerializer(ISerializer serializer, FactorySettings factorySettings = null)
         {
             _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
             _factorySettings = factorySettings;
-            _context = new ExpressionContext(_factorySettings != null ? _factorySettings.AllowPrivateFieldAccess : false);
         }
 
         public bool AutoAddKnownTypesAsArrayTypes
@@ -92,18 +90,11 @@ namespace Serialize.Linq.Serializers
 
         public Expression Deserialize(Stream stream)
         {
-            return this.Deserialize(stream, _context);
-        }
-
-        public Expression Deserialize(Stream stream, IExpressionContext context)
-        {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
-            if (context == null)
-                throw new ArgumentNullException(nameof(context));
 
             var node = _serializer.Deserialize<ExpressionNode>(stream);
-            return node?.ToExpression(context);
+            return node?.ToExpression();
         }
 
         public string SerializeText(Expression expression, FactorySettings factorySettings = null)
@@ -113,7 +104,8 @@ namespace Serialize.Linq.Serializers
 
         public Expression DeserializeText(string text)
         {
-            return this.DeserializeText(text, _context);
+            var node = TextSerializer.Deserialize<ExpressionNode>(text);
+            return node?.ToExpression();
         }
 
         public Expression DeserializeText(string text, IExpressionContext context)
@@ -132,7 +124,8 @@ namespace Serialize.Linq.Serializers
 
         public Expression DeserializeBinary(byte[] bytes)
         {
-            return this.DeserializeBinary(bytes, _context);
+            var node = BinarySerializer.Deserialize<ExpressionNode>(bytes);
+            return node?.ToExpression();
         }
 
         public Expression DeserializeBinary(byte[] bytes, IExpressionContext context)

@@ -61,7 +61,7 @@ namespace Serialize.Linq.Serializers
                 throw new ArgumentNullException(nameof(stream));
 
             var serializer = this.CreateXmlObjectSerializer(typeof(TNode));
-            using (var writer = XmlDictionaryWriter.CreateBinaryWriter(stream, null, null, false))
+            using (var writer = XmlDictionaryWriter.CreateBinaryWriter(stream))
             {
                 serializer.WriteObject(writer, obj);
                 writer.Flush();

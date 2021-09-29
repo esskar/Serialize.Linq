@@ -93,14 +93,5 @@ namespace Serialize.Linq.Tests.Internals
                 throw new ArgumentNullException(nameof(stream));
             Serialize(stream, _converter.Convert(expression, factorySettings));
         }
-
-        public Expression Deserialize(Stream stream, IExpressionContext context = null)
-        {
-            if (stream == null)
-                throw new ArgumentNullException(nameof(stream));
-
-            var node = Deserialize<ExpressionNode>(stream);
-            return node?.ToExpression(context);
-        }
     }
 }
