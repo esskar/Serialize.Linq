@@ -34,7 +34,7 @@ namespace Serialize.Linq.Nodes
 
         protected override IEnumerable<MethodInfo> GetMemberInfosForType(IExpressionContext context, Type type)
         {
-            return type.GetMethods();
+            return type.GetMethods(context?.BindingFlags ?? Factory.Settings.BindingFlags);
         }
 
         #region DataMember
