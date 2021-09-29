@@ -81,10 +81,7 @@ namespace Serialize.Linq.Nodes
         /// </summary>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public virtual Expression ToExpression(IExpressionContext context)
-        {
-            return null;
-        }
+        public abstract Expression ToExpression(IExpressionContext context);
 
         public Expression ToExpression()
         {

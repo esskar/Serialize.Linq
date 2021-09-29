@@ -90,7 +90,7 @@ namespace Serialize.Linq.Serializers
 
         public Expression Deserialize(Stream stream)
         {
-            return this.Deserialize(stream, new ExpressionContext(_factorySettings != null ? _factorySettings.AllowPrivateFieldAccess : false));
+            return this.Deserialize(stream, new ExpressionContext(_factorySettings != null && _factorySettings.AllowPrivateFieldAccess));
         }
 
         public Expression Deserialize(Stream stream, IExpressionContext context)
@@ -111,7 +111,7 @@ namespace Serialize.Linq.Serializers
 
         public Expression DeserializeText(string text)
         {
-            return this.DeserializeText(text, new ExpressionContext(_factorySettings != null ? _factorySettings.AllowPrivateFieldAccess : false));
+            return this.DeserializeText(text, GetNewContext());
         }
 
         public Expression DeserializeText(string text, IExpressionContext context)
@@ -130,7 +130,7 @@ namespace Serialize.Linq.Serializers
 
         public Expression DeserializeBinary(byte[] bytes)
         {
-            return this.DeserializeBinary(bytes, new ExpressionContext(_factorySettings != null ? _factorySettings.AllowPrivateFieldAccess : false));
+            return this.DeserializeBinary(bytes, GetNewContext());
         }
 
         public Expression DeserializeBinary(byte[] bytes, IExpressionContext context)
@@ -160,6 +160,11 @@ namespace Serialize.Linq.Serializers
                     throw new InvalidOperationException("Unable to serialize binary.");
                 return binarySerializer;
             }
+        }
+
+        private ExpressionContext GetNewContext()
+        {
+            return new ExpressionContext(_factorySettings != null && _factorySettings.AllowPrivateFieldAccess);
         }
     }
 }

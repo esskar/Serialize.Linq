@@ -19,17 +19,17 @@ namespace Serialize.Linq.Serializers
         public abstract bool CanSerializeBinary { get; }
 
         public abstract bool CanSerializeText { get; }
-        
+
         public FactorySettings FactorySettings { get; }
 
         public TSerialize SerializeGeneric(Expression expression, FactorySettings factorySettings = null)
         {
-            return Serialize(_converter.Convert(expression, factorySettings));
+            return Serialize(_converter.Convert(expression, factorySettings ?? FactorySettings));
         }
 
         public Expression DeserializeGeneric(TSerialize data, IExpressionContext context = null)
         {
-            return Deserialize<ExpressionNode>(data)?.ToExpression(context ?? new ExpressionContext(FactorySettings != null ? FactorySettings.AllowPrivateFieldAccess : false));
+            return Deserialize<ExpressionNode>(data)?.ToExpression(context ?? GetNewContext());
         }
 
         public void Serialize(Stream stream, Expression expression, FactorySettings factorySettings = null)
@@ -45,11 +45,16 @@ namespace Serialize.Linq.Serializers
                 throw new ArgumentNullException(nameof(stream));
 
             var node = Deserialize<ExpressionNode>(stream);
-            return node?.ToExpression(context ?? new ExpressionContext(FactorySettings != null ? FactorySettings.AllowPrivateFieldAccess : false));
+            return node?.ToExpression(context ?? GetNewContext());
         }
 
         public abstract TSerialize Serialize<TNode>(TNode obj) where TNode : Node;
 
         public abstract TNode Deserialize<TNode>(TSerialize data) where TNode : Node;
+
+        private ExpressionContext GetNewContext()
+        {
+            return new ExpressionContext(FactorySettings != null && FactorySettings.AllowPrivateFieldAccess);
+        }
     }
 }

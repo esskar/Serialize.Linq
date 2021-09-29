@@ -100,7 +100,7 @@ namespace Serialize.Linq.Tests.Internals
                 throw new ArgumentNullException(nameof(stream));
 
             var node = Deserialize<ExpressionNode>(stream);
-            return node?.ToExpression(context);
+            return node?.ToExpression(context ?? new ExpressionContext(false));
         }
     }
 }
