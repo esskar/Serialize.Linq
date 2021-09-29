@@ -39,7 +39,7 @@ namespace Serialize.Linq
             }
         }
 
-        [Obsolete("Use ExpressionContext.Binding instead.", false)]
+        [Obsolete("Use ExpressionContext.BindingFlags instead.", false)]
         public virtual BindingFlags? GetBindingFlags()
         {
             if (!this.AllowPrivateFieldAccess)
