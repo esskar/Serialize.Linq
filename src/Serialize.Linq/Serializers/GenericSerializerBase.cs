@@ -10,10 +10,12 @@ namespace Serialize.Linq.Serializers
     public abstract class GenericSerializerBase<TSerialize> : DataSerializer, IGenericSerializer<TSerialize>
     {
         private readonly ExpressionConverter _converter = new ExpressionConverter();
+        private readonly ExpressionContext _context;
 
         protected GenericSerializerBase(FactorySettings factorySettings = null)
         {
             FactorySettings = factorySettings;
+            _context = new ExpressionContext(FactorySettings != null ? FactorySettings.AllowPrivateFieldAccess : false);
         }
 
         public abstract bool CanSerializeBinary { get; }
@@ -29,7 +31,7 @@ namespace Serialize.Linq.Serializers
 
         public Expression DeserializeGeneric(TSerialize data, IExpressionContext context = null)
         {
-            return Deserialize<ExpressionNode>(data)?.ToExpression(context ?? new ExpressionContext(false));
+            return Deserialize<ExpressionNode>(data)?.ToExpression(context ?? _context);
         }
 
         public void Serialize(Stream stream, Expression expression, FactorySettings factorySettings = null)
@@ -37,6 +39,15 @@ namespace Serialize.Linq.Serializers
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
             Serialize(stream, _converter.Convert(expression, factorySettings ?? FactorySettings));
+        }
+
+        public Expression Deserialize(Stream stream, IExpressionContext context = null)
+        {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+
+            var node = Deserialize<ExpressionNode>(stream);
+            return node?.ToExpression(context ?? _context);
         }
 
         public abstract TSerialize Serialize<TNode>(TNode obj) where TNode : Node;
