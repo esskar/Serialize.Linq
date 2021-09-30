@@ -64,20 +64,20 @@ namespace Serialize.Linq
                 return null;
             else
             {
-                if (!_typeCache.TryGetValue(node.Name, out var nodeType))
+                if (!_typeCache.TryGetValue(node.Name, out var type))
                 {
-                    if ((nodeType = Type.GetType(node.Name)) == null)
+                    if ((type = Type.GetType(node.Name)) == null)
                     {
                         using (IEnumerator<Assembly> enumerator = this.GetAssemblies().GetEnumerator())
                         {
-                            while (enumerator.MoveNext() && nodeType == null)
-                                nodeType = enumerator.Current.GetType(node.Name);
+                            while (enumerator.MoveNext() && type == null)
+                                type = enumerator.Current.GetType(node.Name);
                         }
                     }
-                    _typeCache.Add(node.Name, nodeType);
+                    _typeCache.Add(node.Name, type);
                 }
 
-                return nodeType;
+                return type;
             }
         }
 
