@@ -41,7 +41,7 @@ namespace Serialize.Linq.Tests.IssuesGeneric
         [TestMethod]
         public void SerializeLambdaWithNullableTest()
         {
-            foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
+            foreach (var textSerializer in new ITextTypeSerializer[] { new JsonSerializer(), new XmlSerializer() })
             {
                 var serializer = textSerializer;
                 var fish = new[]
@@ -55,8 +55,8 @@ namespace Serialize.Linq.Tests.IssuesGeneric
                 Expression<Func<Fish, bool>> expectedExpression = f => f.Count == count;
                 var expected = fish.Where(expectedExpression.Compile()).Count();
 
-                var serialized = serializer.SerializeGeneric(expectedExpression);
-                var actualExpression = (Expression<Func<Fish, bool>>)serializer.DeserializeGeneric(serialized);
+                var serialized = serializer.SerializeText(expectedExpression);
+                var actualExpression = (Expression<Func<Fish, bool>>)serializer.DeserializeText(serialized);
                 var actual = fish.Where(actualExpression.Compile()).Count();
 
                 Assert.AreEqual(expected, actual);

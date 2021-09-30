@@ -6,19 +6,24 @@
 //  Contributing: https://github.com/esskar/Serialize.Linq
 #endregion
 
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq.Expressions;
 using System.Runtime.Serialization.Formatters.Binary;
+using Serialize.Linq.Extensions;
+using Serialize.Linq.Factories;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Nodes;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Internals
 {
-    internal class BinaryFormatterSerializer : SerializerBase, IBinarySerializer
+    internal class BinaryFormatterSerializerGeneric : SerializerBase, IBinaryTypeSerializer
     {
         private readonly BinaryFormatter _formatter;
 
-        public BinaryFormatterSerializer()
+        public BinaryFormatterSerializerGeneric()
         {
             _formatter = new BinaryFormatter();
         }
@@ -53,6 +58,30 @@ namespace Serialize.Linq.Tests.Internals
 #pragma warning disable SYSLIB0011 // type or element is obsolete
             return (T)_formatter.Deserialize(stream);
 #pragma warning restore SYSLIB0011 // type or element is obsolete
+        }
+
+        public bool CanSerializeText => false;
+
+        public bool CanSerializeBinary => true;
+
+        public byte[] SerializeBinary(Expression expression, FactorySettings factorySettings = null)
+        {
+            return Serialize(expression.ToExpressionNode(factorySettings));
+        }
+
+        public Expression DeserializeBinary(byte[] bytes, IExpressionContext context = null)
+        {
+            return Deserialize<ExpressionNode>(bytes)?.ToExpression(context ?? new ExpressionContext(false));
+        }
+
+        public string SerializeText(Expression expression, FactorySettings factorySettings = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Expression DeserializeText(string text, IExpressionContext context = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }

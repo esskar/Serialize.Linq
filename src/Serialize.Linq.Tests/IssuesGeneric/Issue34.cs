@@ -14,7 +14,7 @@ namespace Serialize.Linq.Tests.IssuesGeneric
         [TestMethod]
         public void SerializeWithDateTimeUtcTest()
         {
-            foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
+            foreach (var textSerializer in new ITextTypeSerializer[] { new JsonSerializer(), new XmlSerializer() })
             {
                 var serializer = textSerializer;
                 var yarrs = new[]
@@ -28,8 +28,8 @@ namespace Serialize.Linq.Tests.IssuesGeneric
                 Expression<Func<Yarr, bool>> expectedExpression = f => f.Date > date;
                 var expected = yarrs.Where(expectedExpression.Compile()).Count();
 
-                var serialized = serializer.SerializeGeneric(expectedExpression);
-                var actualExpression = (Expression<Func<Yarr, bool>>)serializer.DeserializeGeneric(serialized);
+                var serialized = serializer.SerializeText(expectedExpression);
+                var actualExpression = (Expression<Func<Yarr, bool>>)serializer.DeserializeText(serialized);
                 var actual = yarrs.Where(actualExpression.Compile()).Count();
 
                 Assert.AreEqual(expected, actual);
@@ -39,7 +39,7 @@ namespace Serialize.Linq.Tests.IssuesGeneric
         [TestMethod]
         public void SerializeWithDateTimeLocalTest()
         {
-            foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
+            foreach (var textSerializer in new ITextTypeSerializer[] { new JsonSerializer(), new XmlSerializer() })
             {
                 var serializer = textSerializer;
                 var yarrs = new[]
@@ -53,8 +53,8 @@ namespace Serialize.Linq.Tests.IssuesGeneric
                 Expression<Func<Yarr, bool>> expectedExpression = f => f.Date > date;
                 var expected = yarrs.Where(expectedExpression.Compile()).Count();
 
-                var serialized = serializer.SerializeGeneric(expectedExpression);
-                var actualExpression = (Expression<Func<Yarr, bool>>)serializer.DeserializeGeneric(serialized);
+                var serialized = serializer.SerializeText(expectedExpression);
+                var actualExpression = (Expression<Func<Yarr, bool>>)serializer.DeserializeText(serialized);
                 var actual = yarrs.Where(actualExpression.Compile()).Count();
 
                 Assert.AreEqual(expected, actual);

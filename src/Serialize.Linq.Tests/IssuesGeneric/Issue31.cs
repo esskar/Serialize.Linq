@@ -14,7 +14,7 @@ namespace Serialize.Linq.Tests.IssuesGeneric
         [TestMethod]
         public void SerializeLambdaWithEnumTest()
         {
-            foreach (var serializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
+            foreach (var serializer in new ITextTypeSerializer[] { new JsonSerializer(), new XmlSerializer() })
             {
                 serializer.AddKnownType(typeof(Gender));
 
@@ -30,8 +30,8 @@ namespace Serialize.Linq.Tests.IssuesGeneric
                 Expression<Func<ItemWithEnum, bool>> expectedExpression = f => f.Gender == some;
                 var expected = fish.Where(expectedExpression.Compile()).Count();
 
-                var serialized = expressionSerializer.SerializeGeneric(expectedExpression); // throws SerializationException
-                var actualExpression = (Expression<Func<ItemWithEnum, bool>>)expressionSerializer.DeserializeGeneric(serialized);
+                var serialized = expressionSerializer.SerializeText(expectedExpression); // throws SerializationException
+                var actualExpression = (Expression<Func<ItemWithEnum, bool>>)expressionSerializer.DeserializeText(serialized);
                 var actual = fish.Where(actualExpression.Compile()).Count();
 
                 Assert.AreEqual(expected, actual);

@@ -32,13 +32,13 @@ namespace Serialize.Linq.Tests.IssuesGeneric
                 select x;
             expressions.Add(strExpr);            
 
-            foreach (var textSerializer in new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() })
+            foreach (var textSerializer in new ITextTypeSerializer[] { new JsonSerializer(), new XmlSerializer() })
             {
                 var serializer = textSerializer;
                 foreach (var expected in expressions)
                 {
-                    var serialized = serializer.SerializeGeneric(expected);
-                    var actual = serializer.DeserializeGeneric(serialized);
+                    var serialized = serializer.SerializeText(expected);
+                    var actual = serializer.DeserializeText(serialized);
 
                     ExpressionAssert.AreEqual(expected, actual);
                 }

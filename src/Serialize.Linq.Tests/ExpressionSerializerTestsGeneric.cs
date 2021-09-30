@@ -61,11 +61,11 @@ namespace Serialize.Linq.Tests
                 var serializer = textSerializer;
                 foreach (var expected in SerializerTestData.TestExpressions)
                 {
-                    var text = serializer.SerializeGeneric(expected);
+                    var text = serializer.SerializeText(expected);
 
                     TestContext.WriteLine("{0} serializes to text with length {1}: {2}", expected, text.Length, text);
 
-                    var actual = serializer.DeserializeGeneric(text);
+                    var actual = serializer.DeserializeText(text);
 
                     if (expected == null)
                     {
@@ -86,11 +86,11 @@ namespace Serialize.Linq.Tests
                 var serializer = binSerializer;
                 foreach (var expected in SerializerTestData.TestExpressions)
                 {
-                    var bytes = serializer.SerializeGeneric(expected);
+                    var bytes = serializer.SerializeBinary(expected);
 
                     TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
 
-                    var actual = serializer.DeserializeGeneric(bytes);
+                    var actual = serializer.DeserializeBinary(bytes);
 
                     if (expected == null)
                     {
@@ -113,10 +113,10 @@ namespace Serialize.Linq.Tests
                 var expected = (Expression<Func<Bar, bool>>)(p => p.LastName == "Miller" && p.FirstName.StartsWith("M"));
                 expected.Compile();
 
-                var bytes = serializer.SerializeGeneric(expected);
+                var bytes = serializer.SerializeBinary(expected);
                 TestContext.WriteLine("{0} serializes to bytes with length {1}", expected, bytes.Length);
 
-                var actual = (Expression<Func<Bar, bool>>)serializer.DeserializeGeneric(bytes);
+                var actual = (Expression<Func<Bar, bool>>)serializer.DeserializeBinary(bytes);
                 Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, binSerializer.GetType());
                 ExpressionAssert.AreEqual(expected, actual);
 
@@ -130,13 +130,13 @@ namespace Serialize.Linq.Tests
             foreach (var textSerializer in CreateTextSerializers())
             {
                 var serializer = textSerializer;
-                var expected = Expression.Constant(0m, typeof(Decimal?));
+                var expected = Expression.Constant(0m, typeof(decimal?));
 
-                var text = serializer.SerializeGeneric(expected);
+                var text = serializer.SerializeText(expected);
 
                 TestContext.WriteLine("{0} serializes to text with length {1}: {2}", expected, text.Length, text);
 
-                var actual = serializer.DeserializeGeneric(text);
+                var actual = serializer.DeserializeText(text);
                 Assert.IsNotNull(actual, "Input expression was {0}, but output is null for '{1}'", expected, textSerializer.GetType());
                 ExpressionAssert.AreEqual(expected, actual);
             }
@@ -273,17 +273,17 @@ namespace Serialize.Linq.Tests
             return expressionSerializer.DeserializeGeneric(serialized);
         }
 
-        private static IEnumerable<ITextSerializer> CreateTextSerializers()
+        private static IEnumerable<ITextTypeSerializer> CreateTextSerializers()
         {
-            return new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() };
+            return new ITextTypeSerializer[] { new JsonSerializer(), new XmlSerializer() };
         }
 
-        private static IEnumerable<IBinarySerializer> CreateBinarySerializers()
+        private static IEnumerable<IBinaryTypeSerializer> CreateBinarySerializers()
         {
 #if WINDOWS_UWP 
-            return new IBinarySerializer[] { new BinarySerializer() };
+            return new IBinaryTypeSerializer[] { new BinarySerializer() };
 #else
-            return new IBinarySerializer[] { new BinarySerializer(), new BinaryFormatterSerializer() };
+            return new IBinaryTypeSerializer[] { new BinarySerializer(), new BinaryFormatterSerializerGeneric() };
 #endif
         }
     }
