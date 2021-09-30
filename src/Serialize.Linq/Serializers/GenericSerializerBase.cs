@@ -16,10 +16,6 @@ namespace Serialize.Linq.Serializers
             FactorySettings = factorySettings;
         }
 
-        public abstract bool CanSerializeBinary { get; }
-
-        public abstract bool CanSerializeText { get; }
-
         public FactorySettings FactorySettings { get; }
 
         public TSerialize SerializeGeneric(Expression expression, FactorySettings factorySettings = null)

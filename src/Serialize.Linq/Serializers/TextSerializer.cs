@@ -16,7 +16,7 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
 {
-    public abstract class TextSerializer : GenericSerializerBase<string>, ITextSerializer
+    public abstract class TextSerializer : GenericSerializerBase<string>, ITextTypeSerializer, IExpressionSerializer
     {
         protected TextSerializer()
             : base() { }
@@ -24,21 +24,9 @@ namespace Serialize.Linq.Serializers
         protected TextSerializer(FactorySettings factorySettings)
             : base(factorySettings) { }
 
-        public override bool CanSerializeText
-        {
-            get
-            {
-                return true;
-            }
-        }
+        public bool CanSerializeText => true;
 
-        public override bool CanSerializeBinary
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool CanSerializeBinary => false;
 
         public override string Serialize<TNode>(TNode obj)
         {
@@ -82,6 +70,16 @@ namespace Serialize.Linq.Serializers
         public Expression DeserializeText(string data, IExpressionContext context = null)
         {
             return DeserializeGeneric(data, context);
+        }
+
+        public byte[] SerializeBinary(Expression expression, FactorySettings factorySettings = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Expression DeserializeBinary(byte[] bytes, IExpressionContext context = null)
+        {
+            throw new NotImplementedException();
         }
     }
 }

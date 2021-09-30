@@ -11,5 +11,5 @@ namespace Serialize.Linq.Interfaces
     /// <summary>
     /// A text serializer interface.
     /// </summary>
-    public interface ITextSerializer : IGenericSerializer<string> { }
+    public interface ITextSerializer : IGenericNodeSerializer<string> { }
 }
