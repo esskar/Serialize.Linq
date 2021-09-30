@@ -38,7 +38,6 @@ namespace Serialize.Linq.Interfaces
         /// <summary>
         /// Gets binding flags to be used when accessing type members.
         /// </summary>
-        [Obsolete("Use INodeFactory.Settings.BindingFlags instead.", false)]
         BindingFlags? GetBindingFlags();
     }    
 }

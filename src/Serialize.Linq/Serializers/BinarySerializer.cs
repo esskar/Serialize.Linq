@@ -66,17 +66,19 @@ namespace Serialize.Linq.Serializers
                 return (TNode)serializer.ReadObject(reader);
         }
 
-        [Obsolete("This function is just for compatibility. Please use SerializeGeneric(Expression, FactorySettings) instead", false)]
+        [Obsolete("This function is just for compatibility. Please use SerializeGeneric(Expression, FactorySettings) instead.", false)]
         public byte[] SerializeBinary(Expression expression, FactorySettings factorySettings = null)
         {
             return SerializeGeneric(expression, factorySettings);
         }
 
+        [Obsolete("This function is just for compatibility. It throws a NotImplementedException.", true)]
         public string SerializeText(Expression expression, FactorySettings factorySettings = null)
         {
             throw new NotImplementedException();
         }
 
+        [Obsolete("This function is just for compatibility. It throws a NotImplementedException.", true)]
         public Expression DeserializeText(string text, IExpressionContext context = null)
         {
             throw new NotImplementedException();

@@ -19,7 +19,7 @@ namespace Serialize.Linq.Serializers
             AutoAddKnownTypesCollectionType = AutoAddCollectionTypes.AsArray;
         }
 
-        [Obsolete("Use SerializerBase.AutoAddKnownTypesCollectionType", false)]
+        [Obsolete("This function is just for compatibility. Please use SerializerBase.AutoAddKnownTypesCollectionType instead.", false)]
         public bool AutoAddKnownTypesAsArrayTypes
         {
             get => _autoAddKnownTypesAsArrayTypes;
@@ -40,7 +40,7 @@ namespace Serialize.Linq.Serializers
             }
         }
 
-        [Obsolete("Use SerializerBase.AutoAddKnownTypesCollectionType", false)]
+        [Obsolete("This function is just for compatibility. Please use SerializerBase.AutoAddKnownTypesCollectionType instead.", false)]
         public bool AutoAddKnownTypesAsListTypes
         {
             get => _autoAddKnownTypesAsListTypes;

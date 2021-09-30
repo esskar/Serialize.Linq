@@ -17,7 +17,7 @@ using Serialize.Linq.Nodes;
 namespace Serialize.Linq.Serializers
 {
     [Obsolete("You can now get all of the functionality from the serializers themselves. " +
-              "Instead of SerializeText, SerializeBinary, DeserializeText and DeserializeBinary use SerializeGeneric and DeserializeGeneric.", false)]
+              "Instead of SerializeText, SerializeBinary, DeserializeText and DeserializeBinary use [Binary|Xml|Json]Serializer.SerializeGeneric and [Binary|Xml|Json]Serializer.DeserializeGeneric.", false)]
     public class ExpressionSerializer : ExpressionConverter, IExpressionSerializer, ITypeSerializer
     {
         private readonly ISerializer _serializer;

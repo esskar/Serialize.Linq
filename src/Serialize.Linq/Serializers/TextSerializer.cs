@@ -60,23 +60,25 @@ namespace Serialize.Linq.Serializers
             }
         }
 
-        [Obsolete("This function is just for compatibility. Please use SerializeGeneric(Expression, FactorySettings) instead", false)]
+        [Obsolete("This function is just for compatibility. Please use SerializeGeneric(Expression, FactorySettings) instead.", false)]
         public string SerializeText(Expression expression, FactorySettings factorySettings = null)
         {
             return  SerializeGeneric(expression,factorySettings);
         }
 
-        [Obsolete("This function is just for compatibility. Please use DeserializeGeneric(byte[], IExpressionContext) instead", false)]
+        [Obsolete("This function is just for compatibility. Please use DeserializeGeneric(byte[], IExpressionContext) instead.", false)]
         public Expression DeserializeText(string data, IExpressionContext context = null)
         {
             return DeserializeGeneric(data, context);
         }
 
+        [Obsolete("This function is just for compatibility. It throws a NotImplementedException.", true)]
         public byte[] SerializeBinary(Expression expression, FactorySettings factorySettings = null)
         {
             throw new NotImplementedException();
         }
 
+        [Obsolete("This function is just for compatibility. It throws a NotImplementedException.", true)]
         public Expression DeserializeBinary(byte[] bytes, IExpressionContext context = null)
         {
             throw new NotImplementedException();
