@@ -6,7 +6,7 @@ using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Issues
 {
-#pragma warning disable CA2211 // Nicht konstante Felder dürfen nicht sichtbar sein
+#pragma warning disable CA2211 // non-constant fields should not be visible
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/54
     /// </summary>
@@ -144,5 +144,5 @@ namespace Serialize.Linq.Tests.Issues
             Execution
         }
     }
-#pragma warning restore CA2211 // Nicht konstante Felder dürfen nicht sichtbar sein
+#pragma warning restore CA2211 // non-constant fields should not be visible
 }

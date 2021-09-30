@@ -8,7 +8,7 @@ using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.NewTests
 {
-#pragma warning disable CA1822 // Member als statisch markieren
+#pragma warning disable CA1822 // mark members as static
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/105
     /// Test and fix provided by https://github.com/oahrens
@@ -282,5 +282,5 @@ namespace Serialize.Linq.Tests.NewTests
             internal static int IntStaticField;
         }
     }
-#pragma warning restore CA1822 // Member als statisch markieren
+#pragma warning restore CA1822 // mark members as static
 }
