@@ -20,7 +20,7 @@ namespace Serialize.Linq.Internals
         private readonly BindingFlags _bindingFlags;
         private readonly ICollection<Type> _seenTypes;
         private IEnumerable<Type> _allTypes;
-        private ICollection<Type> _referedTypes;
+        private ICollection<Type> _referredTypes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemberTypeEnumerator"/> class.
@@ -87,19 +87,19 @@ namespace Serialize.Linq.Internals
         protected void AddSeenType(Type type)
         {
             _seenTypes.Add(type);
-            _referedTypes = null;
+            _referredTypes = null;
         }
 
-        public IEnumerable<Type> ReferedTypes
+        public IEnumerable<Type> ReferredTypes
         {
             get
             {
-                if (_referedTypes == null)
+                if (_referredTypes == null)
                 {
-                    _referedTypes = new HashSet<Type>();
+                    _referredTypes = new HashSet<Type>();
                     AddTypes();
                 }
-                return _referedTypes;
+                return _referredTypes;
             }
         }
 
@@ -148,7 +148,7 @@ namespace Serialize.Linq.Internals
                         _seenTypes.Add(type);
                         if (this.IsConsideredType(type))
                         {
-                            _referedTypes.Add(type);
+                            _referredTypes.Add(type);
                         }
                     }
                 }

@@ -88,7 +88,7 @@ namespace Serialize.Linq.Internals
             result.Add(baseType);
             var enumerator = new ComplexPropertyMemberTypeEnumerator(baseType, BindingFlags.Instance | BindingFlags.Public);
             var retval = false;
-            foreach (var type in enumerator.ReferedTypes)
+            foreach (var type in enumerator.ReferredTypes)
             {
                 retval = BuildTypes(type, seen, result) || retval;
             }
