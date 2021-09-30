@@ -146,7 +146,7 @@ namespace Serialize.Linq.Tests
 #pragma warning disable CS0618 // type or member is obsolete
                 var serializer = new ExpressionSerializer(textSerializer);
 #pragma warning restore CS0618 // type or member is obsolete
-                var expected = Expression.Constant(0m, typeof(Decimal?));
+                var expected = Expression.Constant(0m, typeof(decimal?));
 
                 var text = serializer.SerializeText(expected);
 

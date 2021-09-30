@@ -77,7 +77,7 @@ namespace Serialize.Linq.Nodes
         /// <exception cref="InvalidTypeException"></exception>
         public override TypeNode Type
         {
-            get { return base.Type; }
+            get => base.Type;
             set
             {
                 if (this.Value != null)
@@ -115,7 +115,7 @@ namespace Serialize.Linq.Nodes
         #endregion
         public object Value
         {
-            get { return _value; }
+            get => _value;
             set
             {
                 if (value is Expression)
@@ -124,7 +124,7 @@ namespace Serialize.Linq.Nodes
                 var valueType = value as Type;
                 _value = valueType != null ? this.Factory.Create(valueType) : value;
 
-                if (_value == null || _value is TypeNode) 
+                if (_value == null || _value is TypeNode)
                     return;
 
                 var type = base.Type != null ? base.Type.ToType(new ExpressionContext()) : null;

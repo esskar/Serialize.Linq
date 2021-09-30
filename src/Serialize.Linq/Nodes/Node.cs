@@ -82,12 +82,6 @@ namespace Serialize.Linq.Nodes
         /// <value>
         /// The factory.
         /// </value>
-        public INodeFactory Factory
-        { 
-            get
-            {
-                return _factory;
-            }
-        }
+        public INodeFactory Factory => _factory;
     }
 }

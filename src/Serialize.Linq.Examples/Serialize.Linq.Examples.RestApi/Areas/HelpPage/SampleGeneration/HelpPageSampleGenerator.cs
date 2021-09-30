@@ -80,8 +80,7 @@ namespace Serialize.Linq.Examples.RestApi.Areas.HelpPage
             string controllerName = api.ActionDescriptor.ControllerDescriptor.ControllerName;
             string actionName = api.ActionDescriptor.ActionName;
             IEnumerable<string> parameterNames = api.ParameterDescriptions.Select(p => p.Name);
-            Collection<MediaTypeFormatter> formatters;
-            Type type = ResolveType(api, controllerName, actionName, parameterNames, sampleDirection, out formatters);
+            Type type = ResolveType(api, controllerName, actionName, parameterNames, sampleDirection, out var formatters);
             var samples = new Dictionary<MediaTypeHeaderValue, object>();
 
             // Use the samples provided directly for actions
@@ -155,9 +154,8 @@ namespace Serialize.Linq.Examples.RestApi.Areas.HelpPage
         /// <returns>The sample object.</returns>
         public virtual object GetSampleObject(Type type)
         {
-            object sampleObject;
 
-            if (!SampleObjects.TryGetValue(type, out sampleObject))
+            if (!SampleObjects.TryGetValue(type, out var sampleObject))
             {
                 // Try create a default sample object
                 ObjectGenerator objectGenerator = new ObjectGenerator();

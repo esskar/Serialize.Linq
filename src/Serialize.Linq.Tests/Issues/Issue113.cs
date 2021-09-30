@@ -6,6 +6,7 @@ using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Issues
 {
+#pragma warning disable CA1822 // Member als statisch markieren
     // https://github.com/esskar/Serialize.Linq/issues/113
     [TestClass]
     public class Issue113
@@ -118,4 +119,5 @@ namespace Serialize.Linq.Tests.Issues
             public string UserId { get; set; }
         }
     }
+#pragma warning restore CA1822 // Member als statisch markieren
 }

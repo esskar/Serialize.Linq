@@ -7,6 +7,7 @@ using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.NewTests
 {
+#pragma warning disable CA1822 // Member als statisch markieren
     /// <summary>
     /// https://github.com/esskar/Serialize.Linq/issues/105
     /// Test and fix provided by https://github.com/oahrens
@@ -650,29 +651,42 @@ namespace Serialize.Linq.Tests.NewTests
                 IntStaticField = 12;
             }
 
-            public int PubFunc() => 1;
+            public int PubFunc()
+            {
+                return 1;
+            }
 
             public int PubProp => 2;
 
             public int PubField;
 
-            internal int IntFunc() => 4;
+            internal int IntFunc()
+            {
+                return 4;
+            }
 
             internal int IntProp => 5;
 
             internal int IntField;
 
-            public static int PubStaticFunc() => 7;
+            public static int PubStaticFunc()
+            {
+                return 7;
+            }
 
             public static int PubStaticProp => 8;
 
             public static int PubStaticField;
 
-            internal static int IntStaticFunc() => 10;
+            internal static int IntStaticFunc()
+            {
+                return 10;
+            }
 
             internal static int IntStaticProp => 11;
 
             internal static int IntStaticField;
         }
     }
+#pragma warning restore CA1822 // Member als statisch markieren
 }
