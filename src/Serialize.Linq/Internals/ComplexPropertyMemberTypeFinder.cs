@@ -79,15 +79,14 @@ namespace Serialize.Linq.Internals
         private static bool BuildTypes(Type baseType, ISet<Type> seen, ICollection<Type> result)
         {            
             if (!seen.Add(baseType))
-                return false;            
+                return false;  
             if (!AnalyseType(baseType, seen, result))
                 return false;
-
-            var enumerator = new ComplexPropertyMemberTypeEnumerator(baseType, BindingFlags.Instance | BindingFlags.Public);
-            if (!enumerator.IsConsidered)
+            if (ComplexPropertyMemberTypeEnumerator.IsBuiltinType(baseType))
                 return false;
-            result.Add(baseType);
 
+            result.Add(baseType);
+            var enumerator = new ComplexPropertyMemberTypeEnumerator(baseType, BindingFlags.Instance | BindingFlags.Public);
             var retval = false;
             foreach (var type in enumerator.ReferedTypes)
             {

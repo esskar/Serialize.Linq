@@ -48,7 +48,7 @@ namespace Serialize.Linq.Internals
         /// <returns>
         ///   <c>true</c> if [is builtin type] [the specified type]; otherwise, <c>false</c>.
         /// </returns>
-        private static bool IsBuiltinType(Type type)
+        public static bool IsBuiltinType(Type type)
         {
             return _builtinTypes.Contains(type);
         }
@@ -62,7 +62,7 @@ namespace Serialize.Linq.Internals
         /// </returns>
         protected override bool IsConsideredType(Type type)
         {
-            return !ComplexPropertyMemberTypeEnumerator.IsBuiltinType(type);
+            return !IsBuiltinType(type);
         }
     }
 }
