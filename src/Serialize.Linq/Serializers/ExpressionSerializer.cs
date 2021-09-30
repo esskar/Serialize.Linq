@@ -32,14 +32,12 @@ namespace Serialize.Linq.Serializers
         public bool AutoAddKnownTypesAsArrayTypes
         {
             get => _serializer.AutoAddKnownTypesAsArrayTypes;
-
             set => _serializer.AutoAddKnownTypesAsArrayTypes = value;
         }
 
         public bool AutoAddKnownTypesAsListTypes
         {
             get => _serializer.AutoAddKnownTypesAsListTypes;
-
             set => _serializer.AutoAddKnownTypesAsListTypes = value;
         }
 

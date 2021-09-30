@@ -23,7 +23,6 @@ namespace Serialize.Linq.Serializers
         public bool AutoAddKnownTypesAsArrayTypes
         {
             get => _autoAddKnownTypesAsArrayTypes;
-
             set
             {
                 _autoAddKnownTypesAsArrayTypes = value;
@@ -44,7 +43,6 @@ namespace Serialize.Linq.Serializers
         public bool AutoAddKnownTypesAsListTypes
         {
             get => _autoAddKnownTypesAsListTypes;
-
             set
             {
                 _autoAddKnownTypesAsListTypes = value;
@@ -64,7 +62,6 @@ namespace Serialize.Linq.Serializers
         public AutoAddCollectionTypes AutoAddKnownTypesCollectionType
         {
             get => _autoAddKnownTypesCollectionType;
-
             set
             {
                 _autoAddKnownTypesCollectionType = value;
