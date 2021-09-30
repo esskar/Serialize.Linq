@@ -31,8 +31,6 @@ namespace Serialize.Linq.Factories
         {
             if (expectedTypes == null)
                 throw new ArgumentNullException(nameof(expectedTypes));
-            if (expectedTypes.Any(t => t == null))
-                throw new ArgumentException("All types must be non-null.", nameof(expectedTypes));
             _expectedTypes = expectedTypes;
         }
 

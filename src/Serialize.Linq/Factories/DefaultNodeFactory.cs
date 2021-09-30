@@ -38,9 +38,13 @@ namespace Serialize.Linq.Factories
         /// <returns></returns>
         private static IEnumerable<Type> GetExpectedTypes(IEnumerable<Type> types)
         {
+            if (types == null)
+                throw new ArgumentNullException(nameof(types));
             var expectedTypes = new HashSet<Type>();
             foreach (var type in types)
             {
+                if (type == null)
+                    throw new ArgumentException("All types must be non-null.", nameof(types));
                 expectedTypes.UnionWith(ComplexPropertyMemberTypeFinder.FindTypes(type));
             }
             return expectedTypes;
