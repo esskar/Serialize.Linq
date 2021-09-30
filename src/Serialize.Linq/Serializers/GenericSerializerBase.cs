@@ -7,7 +7,7 @@ using Serialize.Linq.Nodes;
 
 namespace Serialize.Linq.Serializers
 {
-    public abstract class GenericSerializerBase<TSerialize> : DataSerializer, IGenericSerializer<TSerialize>
+    public abstract class GenericSerializerBase<TSerialize> : DataSerializer, IGenericSerializer<TSerialize>, IExpressionSerializer
     {
         private readonly ExpressionConverter _converter = new ExpressionConverter();
 
@@ -28,14 +28,14 @@ namespace Serialize.Linq.Serializers
             return Deserialize<ExpressionNode>(data)?.ToExpression(context ?? GetNewContext());
         }
 
-        public override void Serialize(Stream stream, Expression expression, FactorySettings factorySettings = null)
+        public void Serialize(Stream stream, Expression expression, FactorySettings factorySettings = null)
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
             Serialize(stream, _converter.Convert(expression, factorySettings ?? FactorySettings));
         }
 
-        public override Expression Deserialize(Stream stream, IExpressionContext context = null)
+        public Expression Deserialize(Stream stream, IExpressionContext context = null)
         {
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));

@@ -18,7 +18,7 @@ namespace Serialize.Linq.Serializers
 {
     [Obsolete("You can now get all of the functionality from the serializers themselves. " +
               "Instead of SerializeText, SerializeBinary, DeserializeText and DeserializeBinary use SerializeGeneric and DeserializeGeneric.", false)]
-    public class ExpressionSerializer : ExpressionConverter
+    public class ExpressionSerializer : ExpressionConverter, IExpressionSerializer, ITypeSerializer
     {
         private readonly ISerializer _serializer;
         private readonly FactorySettings _factorySettings;
@@ -66,7 +66,7 @@ namespace Serialize.Linq.Serializers
 
         public Expression Deserialize(Stream stream)
         {
-            return this.Deserialize(stream, new ExpressionContext(_factorySettings != null && _factorySettings.AllowPrivateFieldAccess));
+            return this.Deserialize(stream, GetNewContext());
         }
 
         public Expression Deserialize(Stream stream, IExpressionContext context)

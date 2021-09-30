@@ -16,7 +16,7 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
 {
-    public abstract class TextSerializer : GenericSerializerBase<string>, ITextTypeSerializer, IExpressionSerializer
+    public abstract class TextSerializer : GenericSerializerBase<string>, ITextTypeSerializer
     {
         protected TextSerializer()
             : base() { }

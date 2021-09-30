@@ -16,7 +16,7 @@ using Serialize.Linq.Interfaces;
 
 namespace Serialize.Linq.Serializers
 {
-    public class BinarySerializer : GenericSerializerBase<byte[]>, IBinaryTypeSerializer, IExpressionSerializer
+    public class BinarySerializer : GenericSerializerBase<byte[]>, IBinaryTypeSerializer
     {
         public BinarySerializer()
             : base() { }

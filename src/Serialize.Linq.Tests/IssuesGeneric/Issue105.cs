@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Interfaces;
-using Serialize.Linq.Internals;
 using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.IssuesGeneric

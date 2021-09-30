@@ -1,5 +1,5 @@
-﻿using Serialize.Linq.Factories;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
+using Serialize.Linq.Factories;
 
 namespace Serialize.Linq.Interfaces
 {

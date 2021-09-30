@@ -9,8 +9,7 @@
 using System;
 #if WINDOWS_PHONE || NETSTANDARD || WINDOWS_UWP
 using System.IO;
-#endif
-#if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
+#else
 using System.Runtime.Serialization;
 #endif
 using System.Runtime.Serialization.Json;
