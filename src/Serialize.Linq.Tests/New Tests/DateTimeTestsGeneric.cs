@@ -42,7 +42,7 @@ namespace Serialize.Linq.Tests.NewTests
             var localDateFunc = actualLocalDateExpression.Compile();
             var utcDateFunc = actualUtcDateExpression.Compile();
 
-            Assert.IsFalse(localDate.ToUniversalTime() == utcDate.ToUniversalTime());
+            Assert.IsFalse(localDate.ToUniversalTime() == utcDate.ToUniversalTime() && TimeZoneInfo.Local.GetUtcOffset(localDate) != TimeZoneInfo.Utc.GetUtcOffset(utcDate));
             Assert.IsTrue(localDateFunc() == localDate, "return value of local date failed.");
             // the next assert fails for JsonSerializer of version 2.0.0.0, all DateTime values are giving back with Kind 'UTC'
             Assert.IsTrue(localDateFunc().Kind == localDate.Kind, "return value of local date kind failed.");
