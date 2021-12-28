@@ -20,6 +20,8 @@ There is an working WCF and REST API example included in the [examples folder][5
 If you have a feature request, a bug or any other question, just create an [issue][4].
 For bugs: make sure you create a unit test, so it is easier for me to reproduce and fix it.
 
+You can always [buy me a coffee :coffee:][6].
+
 ## Supported Platforms (or known to work with)
 * .NET 5.0
 * .NET 4.5
@@ -32,3 +34,4 @@ For bugs: make sure you create a unit test, so it is easier for me to reproduce 
 [2]: https://github.com/esskar
 [4]: https://github.com/esskar/Serialize.Linq/issues
 [5]: https://github.com/esskar/Serialize.Linq/tree/master/src/Serialize.Linq.Examples
+[6]: https://www.buymeacoffee.com/esskar
