@@ -41,14 +41,14 @@ namespace Serialize.Linq.Nodes
 
         protected override void Initialize(UnaryExpression expression)
         {
-            this.Operand = this.Factory.Create(expression.Operand);
+            Operand = Factory.Create(expression.Operand);
         }
 
         public override Expression ToExpression(IExpressionContext context)
         {
-            return this.NodeType == ExpressionType.UnaryPlus
-                ? Expression.UnaryPlus(this.Operand.ToExpression(context))
-                : Expression.MakeUnary(this.NodeType, this.Operand.ToExpression(context), this.Type.ToType(context));
+            return NodeType == ExpressionType.UnaryPlus
+                ? Expression.UnaryPlus(Operand.ToExpression(context))
+                : Expression.MakeUnary(NodeType, Operand.ToExpression(context), Type.ToType(context));
         }
     }
 }

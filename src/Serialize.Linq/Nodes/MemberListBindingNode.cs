@@ -30,7 +30,7 @@ namespace Serialize.Linq.Nodes
         public MemberListBindingNode(INodeFactory factory, MemberListBinding memberListBinding)
             : base(factory, memberListBinding.BindingType, memberListBinding.Member)
         {
-            this.Initializers = new ElementInitNodeList(this.Factory, memberListBinding.Initializers);
+            Initializers = new ElementInitNodeList(Factory, memberListBinding.Initializers);
         }
 
         #region DataMember
@@ -44,7 +44,7 @@ namespace Serialize.Linq.Nodes
 
         internal override MemberBinding ToMemberBinding(IExpressionContext context)
         {
-            return Expression.ListBind(this.Member.ToMemberInfo(context), this.Initializers.GetElementInits(context));
+            return Expression.ListBind(Member.ToMemberInfo(context), Initializers.GetElementInits(context));
         }
     }
 }

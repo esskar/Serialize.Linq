@@ -48,7 +48,7 @@ namespace Serialize.Linq.Internals
         /// <value>
         /// <c>true</c> if this instance is considered; otherwise, <c>false</c>.
         /// </value>
-        public bool IsConsidered => this.IsConsideredType(_type);
+        public bool IsConsidered => IsConsideredType(_type);
 
         /// <summary>
         /// Determines whether [is considered type] [the specified type].
@@ -114,7 +114,7 @@ namespace Serialize.Linq.Internals
         /// <value>
         /// The current.
         /// </value>
-        object System.Collections.IEnumerator.Current => this.Current;
+        object System.Collections.IEnumerator.Current => Current;
 
         /// <summary>
         /// Gets the type of the types of.
@@ -125,11 +125,11 @@ namespace Serialize.Linq.Internals
         {
             var types = new List<Type> { type };
             if (type.HasElementType)
-                types.AddRange(this.GetTypesOfType(type.GetElementType()));
+                types.AddRange(GetTypesOfType(type.GetElementType()));
             if (type.IsGenericType())
             {
                 foreach (var genericType in type.GetGenericArguments())
-                    types.AddRange(this.GetTypesOfType(genericType));
+                    types.AddRange(GetTypesOfType(genericType));
                 
             }
             return types.ToArray();
@@ -143,8 +143,8 @@ namespace Serialize.Linq.Internals
         {
             var types = new List<Type>();
             var members = _type.GetMembers(_bindingFlags);
-            foreach (var memberInfo in members.Where(this.IsConsideredMember))
-                types.AddRange(this.GetTypesOfType(memberInfo.GetReturnType()));
+            foreach (var memberInfo in members.Where(IsConsideredMember))
+                types.AddRange(GetTypesOfType(memberInfo.GetReturnType()));
             return types.ToArray();
         }
 
@@ -156,17 +156,17 @@ namespace Serialize.Linq.Internals
         /// </returns>
         public virtual bool MoveNext()
         {
-            if (!this.IsConsidered)
+            if (!IsConsidered)
                 return false;
 
             if (_allTypes == null)
-                _allTypes = this.BuildTypes();
+                _allTypes = BuildTypes();
 
             while (++_currentIndex < _allTypes.Length)
             {                
-                if (this.IsSeenType(this.Current)) continue;
-                this.AddSeenType(this.Current);
-                if (this.IsConsideredType(this.Current)) break;
+                if (IsSeenType(Current)) continue;
+                AddSeenType(Current);
+                if (IsConsideredType(Current)) break;
             }
 
             return _currentIndex < _allTypes.Length;

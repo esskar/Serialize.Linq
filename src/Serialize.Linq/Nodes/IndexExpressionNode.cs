@@ -59,9 +59,9 @@ namespace Serialize.Linq.Nodes
 
         protected override void Initialize(IndexExpression expression)
         {
-            this.Arguments = new ExpressionNodeList(this.Factory, expression.Arguments);
-            this.Indexer = new PropertyInfoNode(this.Factory, expression.Indexer);
-            this.Object = this.Factory.Create(expression.Object);
+            Arguments = new ExpressionNodeList(Factory, expression.Arguments);
+            Indexer = new PropertyInfoNode(Factory, expression.Indexer);
+            Object = Factory.Create(expression.Object);
         }
 
         public override Expression ToExpression(IExpressionContext context)

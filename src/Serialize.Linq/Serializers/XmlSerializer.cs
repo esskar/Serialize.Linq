@@ -19,12 +19,12 @@ namespace Serialize.Linq.Serializers
 #if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
-            return new DataContractSerializer(type, this.GetKnownTypes());
+            return new DataContractSerializer(type, GetKnownTypes());
         }
 #else
         private DataContractSerializer CreateDataContractSerializer(Type type)
         {
-            return new DataContractSerializer(type, this.GetKnownTypes());
+            return new DataContractSerializer(type, GetKnownTypes());
         }
 
         public override void Serialize<T>(Stream stream, T obj)
@@ -32,7 +32,7 @@ namespace Serialize.Linq.Serializers
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
 
-            var serializer = this.CreateDataContractSerializer(typeof(T));
+            var serializer = CreateDataContractSerializer(typeof(T));
             serializer.WriteObject(stream, obj);
         }
 
@@ -41,7 +41,7 @@ namespace Serialize.Linq.Serializers
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
 
-            var serializer = this.CreateDataContractSerializer(typeof(T));
+            var serializer = CreateDataContractSerializer(typeof(T));
             return (T)serializer.ReadObject(stream);
         }
 #endif

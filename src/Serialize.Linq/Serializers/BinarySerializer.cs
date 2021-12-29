@@ -21,7 +21,7 @@ namespace Serialize.Linq.Serializers
         {
             using (var ms = new MemoryStream())
             {
-                this.Serialize(ms, obj);
+                Serialize(ms, obj);
                 return ms.ToArray();
             }
         }
@@ -29,7 +29,7 @@ namespace Serialize.Linq.Serializers
         public T Deserialize<T>(byte[] bytes) where T : Node
         {
             using (var ms = new MemoryStream(bytes))
-                return this.Deserialize<T>(ms);
+                return Deserialize<T>(ms);
         }
 
         public override void Serialize<T>(Stream stream, T obj)
@@ -37,7 +37,7 @@ namespace Serialize.Linq.Serializers
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
 
-            var serializer = this.CreateXmlObjectSerializer(typeof(T));
+            var serializer = CreateXmlObjectSerializer(typeof(T));
             using (var writer = XmlDictionaryWriter.CreateBinaryWriter(stream))
             {
                 serializer.WriteObject(writer, obj);
@@ -50,7 +50,7 @@ namespace Serialize.Linq.Serializers
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
 
-            var serializer = this.CreateXmlObjectSerializer(typeof(T));
+            var serializer = CreateXmlObjectSerializer(typeof(T));
             using (var reader = XmlDictionaryReader.CreateBinaryReader(stream, XmlDictionaryReaderQuotas.Max))
                 return (T)serializer.ReadObject(reader);
         }
@@ -59,14 +59,14 @@ namespace Serialize.Linq.Serializers
 
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
-            return new DataContractSerializer(type, this.GetKnownTypes());
+            return new DataContractSerializer(type, GetKnownTypes());
         }        
 
 #else
 
         private XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
-            return new DataContractSerializer(type, this.GetKnownTypes());
+            return new DataContractSerializer(type, GetKnownTypes());
         }
 
 #endif

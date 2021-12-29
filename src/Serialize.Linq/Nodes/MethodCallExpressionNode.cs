@@ -60,18 +60,18 @@ namespace Serialize.Linq.Nodes
 
         protected override void Initialize(MethodCallExpression expression)
         {
-            this.Arguments = new ExpressionNodeList(this.Factory, expression.Arguments);
-            this.Method = new MethodInfoNode(this.Factory, expression.Method);
-            this.Object = this.Factory.Create(expression.Object);
+            Arguments = new ExpressionNodeList(Factory, expression.Arguments);
+            Method = new MethodInfoNode(Factory, expression.Method);
+            Object = Factory.Create(expression.Object);
         }
 
         public override Expression ToExpression(IExpressionContext context)
         {
             Expression objectExpression = null;
-            if (this.Object != null)
-                objectExpression = this.Object.ToExpression(context);
+            if (Object != null)
+                objectExpression = Object.ToExpression(context);
 
-            return Expression.Call(objectExpression, this.Method.ToMemberInfo(context), this.Arguments.GetExpressions(context).ToArray());
+            return Expression.Call(objectExpression, Method.ToMemberInfo(context), Arguments.GetExpressions(context).ToArray());
         }
     }
 }

@@ -98,16 +98,16 @@ namespace Serialize.Linq.Tests.Issues
 
             protected override Expression VisitLambda<T>(Expression<T> node)
             {
-                var body = this.Visit(node.Body);
+                var body = Visit(node.Body);
                 Debug.Assert(body != null, nameof(body) + " != null");
 
-                var parameters = node.Parameters.Select(this.Visit).Cast<ParameterExpression>();
+                var parameters = node.Parameters.Select(Visit).Cast<ParameterExpression>();
                 return Expression.Lambda(body, parameters);
             }
 
             protected override Expression VisitParameter(ParameterExpression node)
             {
-                return node.Type.Name.Equals(_messageTypeName) ? this._targetParameter : node;
+                return node.Type.Name.Equals(_messageTypeName) ? _targetParameter : node;
             }
 
             protected override Expression VisitMember(MemberExpression node)
@@ -119,7 +119,7 @@ namespace Serialize.Linq.Tests.Issues
 
                 var memberName = node.Member.Name;
                 var dicValue = Expression.Property(
-                    this.Visit(node.Expression),
+                    Visit(node.Expression),
                     _itemProperty,
                     Expression.Constant(memberName)
                 );

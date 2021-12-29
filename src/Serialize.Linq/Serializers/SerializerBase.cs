@@ -73,7 +73,7 @@ namespace Serialize.Linq.Serializers
         private IEnumerable<Type> ExplodeKnownTypes(IEnumerable<Type> types)
         {
             return KnownTypes.Explode(
-                types, this.AutoAddKnownTypesAsArrayTypes, this.AutoAddKnownTypesAsListTypes);
+                types, AutoAddKnownTypesAsArrayTypes, AutoAddKnownTypesAsListTypes);
         }
     }
 }

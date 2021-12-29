@@ -27,7 +27,7 @@ namespace Serialize.Linq.Tests.Issues
             var expression1 = (Expression<Func<Guid, bool>>)(x => property1 != null && x != property1);
             var expressionNode = expression1.ToExpressionNode();
 
-            this.TestContext.WriteLine("'{0}' == '{1}'", expression1.ToString(), expressionNode.ToString());
+            TestContext.WriteLine("'{0}' == '{1}'", expression1.ToString(), expressionNode.ToString());
 
             var expression2 = expressionNode.ToBooleanExpression<Guid>();
             Assert.IsNotNull(expression2);
@@ -40,7 +40,7 @@ namespace Serialize.Linq.Tests.Issues
             var expression1 = (Expression<Func<Guid, bool>>)(x => pc1.Property1 != null && x != pc1.Property1);
             var expressionNode = expression1.ToExpressionNode();
 
-            this.TestContext.WriteLine("'{0}' == '{1}'", expression1.ToString(), expressionNode.ToString());
+            TestContext.WriteLine("'{0}' == '{1}'", expression1.ToString(), expressionNode.ToString());
 
             var expression2 = expressionNode.ToBooleanExpression<Guid>();
             Assert.IsNotNull(expression2);
@@ -53,7 +53,7 @@ namespace Serialize.Linq.Tests.Issues
             var expression1 = (Expression<Func<Guid, bool>>)(x => pc1.Property1 != null);
             var expressionNode = expression1.ToExpressionNode();
 
-            this.TestContext.WriteLine("'{0}' == '{1}'", expression1.ToString(), expressionNode.ToString());
+            TestContext.WriteLine("'{0}' == '{1}'", expression1.ToString(), expressionNode.ToString());
 
             var expression2 = expressionNode.ToBooleanExpression<Guid>();
             Assert.IsNotNull(expression2);

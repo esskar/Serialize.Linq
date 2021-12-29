@@ -26,22 +26,22 @@ namespace Serialize.Linq.Tests
         [TestMethod]
         public void SimpleBinaryExpressionTest()
         {
-            this.AssertExpression(Expression.Add(Expression.Constant(5), Expression.Constant(10)));
-            this.AssertExpression(Expression.Subtract(Expression.Constant(5), Expression.Constant(10)));
-            this.AssertExpression(Expression.Multiply(Expression.Constant(5), Expression.Constant(10)));
-            this.AssertExpression(Expression.Divide(Expression.Constant(5), Expression.Constant(10)));
+            AssertExpression(Expression.Add(Expression.Constant(5), Expression.Constant(10)));
+            AssertExpression(Expression.Subtract(Expression.Constant(5), Expression.Constant(10)));
+            AssertExpression(Expression.Multiply(Expression.Constant(5), Expression.Constant(10)));
+            AssertExpression(Expression.Divide(Expression.Constant(5), Expression.Constant(10)));
 
-            this.AssertExpression(Expression.AddAssign(Expression.Variable(typeof(int), "x"), Expression.Constant(10)));
-            this.AssertExpression(Expression.SubtractAssign(Expression.Variable(typeof(int), "x"), Expression.Constant(10)));
-            this.AssertExpression(Expression.MultiplyAssign(Expression.Variable(typeof(int), "x"), Expression.Constant(10)));
-            this.AssertExpression(Expression.DivideAssign(Expression.Variable(typeof(int), "x"), Expression.Constant(10)));
+            AssertExpression(Expression.AddAssign(Expression.Variable(typeof(int), "x"), Expression.Constant(10)));
+            AssertExpression(Expression.SubtractAssign(Expression.Variable(typeof(int), "x"), Expression.Constant(10)));
+            AssertExpression(Expression.MultiplyAssign(Expression.Variable(typeof(int), "x"), Expression.Constant(10)));
+            AssertExpression(Expression.DivideAssign(Expression.Variable(typeof(int), "x"), Expression.Constant(10)));
         }
 
         [TestMethod]
         public void SimpleConditionalTest()
         {
-            this.AssertExpression(Expression.Condition(Expression.Constant(true), Expression.Constant(5), Expression.Constant(10)));
-            this.AssertExpression(Expression.Condition(Expression.Constant(false), Expression.Constant(5), Expression.Constant(10)));
+            AssertExpression(Expression.Condition(Expression.Constant(true), Expression.Constant(5), Expression.Constant(10)));
+            AssertExpression(Expression.Condition(Expression.Constant(false), Expression.Constant(5), Expression.Constant(10)));
         }
 
         [TestMethod]
@@ -50,44 +50,44 @@ namespace Serialize.Linq.Tests
             var argParam = Expression.Parameter(typeof(Type), "type");
             var stringProperty = Expression.Property(argParam, "AssemblyQualifiedName");
 
-            this.AssertExpression(Expression.Condition(Expression.Constant(true), stringProperty, Expression.Constant(null, typeof(string))));
+            AssertExpression(Expression.Condition(Expression.Constant(true), stringProperty, Expression.Constant(null, typeof(string))));
         }
 
         [TestMethod]
         public void SimpleUnaryTest()
         {
-            this.AssertExpression(Expression.UnaryPlus(Expression.Constant(43)));
+            AssertExpression(Expression.UnaryPlus(Expression.Constant(43)));
         }
 
         [TestMethod]
         public void SimpleTypedNullConstantTest()
         {
-            this.AssertExpression(Expression.Constant(null, typeof(string)));
+            AssertExpression(Expression.Constant(null, typeof(string)));
         }
 
         [TestMethod]
         public void SimpleLambdaTest()
         {
-            this.AssertExpression(Expression.Lambda(Expression.Constant("body"), Expression.Parameter(typeof(string))));
+            AssertExpression(Expression.Lambda(Expression.Constant("body"), Expression.Parameter(typeof(string))));
         }
 
         [TestMethod]
         public void SimpleTypeBinaryTest()
         {
-            this.AssertExpression(Expression.TypeIs(Expression.Variable(this.GetType()), typeof(object)));
-            this.AssertExpression(Expression.TypeEqual(Expression.Variable(this.GetType()), typeof(object)));
+            AssertExpression(Expression.TypeIs(Expression.Variable(GetType()), typeof(object)));
+            AssertExpression(Expression.TypeEqual(Expression.Variable(GetType()), typeof(object)));
         }        
 
         [TestMethod]
         public void SimpleMemberTest()
         {
-            var type = this.GetType();
+            var type = GetType();
             var property = type.GetProperty("TestContext");
 
             var parameter = Expression.Parameter(type, "p");
             var propertyAccess = Expression.MakeMemberAccess(parameter, property);
 
-            this.AssertExpression(propertyAccess);
+            AssertExpression(propertyAccess);
         }
 
         [TestMethod]
@@ -120,7 +120,7 @@ namespace Serialize.Linq.Tests
 
         private void AssertExpression(Expression expression, string message = null)
         {
-            this.AssertExpression<NodeFactory>(expression, message);
+            AssertExpression<NodeFactory>(expression, message);
         }
 
         private void AssertExpression<TFactory>(Expression expression, string message = null)
@@ -135,7 +135,7 @@ namespace Serialize.Linq.Tests
             //PublicInstancePropertiesAssert.AreEqual(expression, createdExpression, message);
             //Assert.AreEqual(expression.ToString(), createdExpression.ToString(), message);
 
-            this.TestContext.WriteLine("'{0}' == '{1}'", expression.ToString(), createdExpression.ToString());
+            TestContext.WriteLine("'{0}' == '{1}'", expression.ToString(), createdExpression.ToString());
         }
     }
 }

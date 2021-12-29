@@ -16,7 +16,7 @@ namespace Serialize.Linq.Tests.Internals
     {
         public virtual bool AreEqual(Expression x, Expression y)
         {
-            if (object.ReferenceEquals(x, y))
+            if (ReferenceEquals(x, y))
                 return true;
             if (x.NodeType != y.NodeType)
                 return false;
@@ -32,7 +32,7 @@ namespace Serialize.Linq.Tests.Internals
                 case ExpressionType.Quote:
                 case ExpressionType.TypeAs:
                 case ExpressionType.UnaryPlus:
-                    return this.AreEqualUnary((UnaryExpression)x, (UnaryExpression)y);
+                    return AreEqualUnary((UnaryExpression)x, (UnaryExpression)y);
                 case ExpressionType.Add:
                 case ExpressionType.AddAssign:
                 case ExpressionType.AddAssignChecked:
@@ -65,33 +65,33 @@ namespace Serialize.Linq.Tests.Internals
                 case ExpressionType.RightShift:
                 case ExpressionType.LeftShift:
                 case ExpressionType.ExclusiveOr:
-                    return this.AreEqualBinary((BinaryExpression)x, (BinaryExpression)y);
+                    return AreEqualBinary((BinaryExpression)x, (BinaryExpression)y);
                 case ExpressionType.TypeIs:
                 case ExpressionType.TypeEqual:
-                    return this.AreEqualTypeBinary((TypeBinaryExpression)x, (TypeBinaryExpression)y);
+                    return AreEqualTypeBinary((TypeBinaryExpression)x, (TypeBinaryExpression)y);
                 case ExpressionType.Conditional:
-                    return this.AreEqualConditional((ConditionalExpression)x, (ConditionalExpression)y);
+                    return AreEqualConditional((ConditionalExpression)x, (ConditionalExpression)y);
                 case ExpressionType.Constant:
-                    return this.AreEqualConstant((ConstantExpression)x, (ConstantExpression)y);
+                    return AreEqualConstant((ConstantExpression)x, (ConstantExpression)y);
                 case ExpressionType.Parameter:
-                    return this.AreEqualParameter((ParameterExpression)x, (ParameterExpression)y);
+                    return AreEqualParameter((ParameterExpression)x, (ParameterExpression)y);
                 case ExpressionType.MemberAccess:
-                    return this.AreEqualMemberAccess((MemberExpression)x, (MemberExpression)y);
+                    return AreEqualMemberAccess((MemberExpression)x, (MemberExpression)y);
                 case ExpressionType.Call:
-                    return this.AreEqualMethodCall((MethodCallExpression)x, (MethodCallExpression)y);
+                    return AreEqualMethodCall((MethodCallExpression)x, (MethodCallExpression)y);
                 case ExpressionType.Lambda:
-                    return this.AreEqualLambda((LambdaExpression)x, (LambdaExpression)y);
+                    return AreEqualLambda((LambdaExpression)x, (LambdaExpression)y);
                 case ExpressionType.New:
-                    return this.AreEqualNew((NewExpression)x, (NewExpression)y);
+                    return AreEqualNew((NewExpression)x, (NewExpression)y);
                 case ExpressionType.NewArrayInit:
                 case ExpressionType.NewArrayBounds:
-                    return this.AreEqualNewArray((NewArrayExpression)x, (NewArrayExpression)y);
+                    return AreEqualNewArray((NewArrayExpression)x, (NewArrayExpression)y);
                 case ExpressionType.Invoke:
-                    return this.AreEqualInvocation((InvocationExpression)x, (InvocationExpression)y);
+                    return AreEqualInvocation((InvocationExpression)x, (InvocationExpression)y);
                 case ExpressionType.MemberInit:
-                    return this.AreEqualMemberInit((MemberInitExpression)x, (MemberInitExpression)y);
+                    return AreEqualMemberInit((MemberInitExpression)x, (MemberInitExpression)y);
                 case ExpressionType.ListInit:
-                    return this.AreEqualListInit((ListInitExpression)x, (ListInitExpression)y);
+                    return AreEqualListInit((ListInitExpression)x, (ListInitExpression)y);
                 default:
                     throw new Exception(string.Format("Unhandled expression type: '{0}'", x.NodeType));
             }
@@ -105,11 +105,11 @@ namespace Serialize.Linq.Tests.Internals
             switch (x.BindingType)
             {
                 case MemberBindingType.Assignment:
-                    return this.AreEqualMemberAssignment((MemberAssignment)x, (MemberAssignment)y);
+                    return AreEqualMemberAssignment((MemberAssignment)x, (MemberAssignment)y);
                 case MemberBindingType.MemberBinding:
-                    return this.AreEqualMemberMemberBinding((MemberMemberBinding)x, (MemberMemberBinding)y);
+                    return AreEqualMemberMemberBinding((MemberMemberBinding)x, (MemberMemberBinding)y);
                 case MemberBindingType.ListBinding:
-                    return this.AreEqualMemberListBinding((MemberListBinding)x, (MemberListBinding)y);
+                    return AreEqualMemberListBinding((MemberListBinding)x, (MemberListBinding)y);
                 default:
                     throw new Exception(string.Format("Unhandled binding type '{0}'", y.BindingType));
             }
@@ -117,56 +117,56 @@ namespace Serialize.Linq.Tests.Internals
 
         protected virtual bool AreEqualElementInitializer(ElementInit x, ElementInit y)
         {
-            return this.AreEqualExpressionList(x.Arguments, y.Arguments);
+            return AreEqualExpressionList(x.Arguments, y.Arguments);
         }
 
         protected virtual bool AreEqualUnary(UnaryExpression x, UnaryExpression y)
         {
-            return this.AreEqual(x.Operand, y.Operand);
+            return AreEqual(x.Operand, y.Operand);
         }
 
         protected virtual bool AreEqualBinary(BinaryExpression x, BinaryExpression y)
         {
-            return this.AreEqual(x.Left, y.Left)
-                && this.AreEqual(x.Right, y.Right)
-                && this.AreEqual(x.Conversion, y.Conversion);
+            return AreEqual(x.Left, y.Left)
+                && AreEqual(x.Right, y.Right)
+                && AreEqual(x.Conversion, y.Conversion);
         }
 
         protected virtual bool AreEqualTypeBinary(TypeBinaryExpression x, TypeBinaryExpression y)
         {
             return x.NodeType == y.NodeType 
                 && x.TypeOperand == y.TypeOperand
-                && this.AreEqual(x.Expression, y.Expression);
+                && AreEqual(x.Expression, y.Expression);
         }
 
         protected virtual bool AreEqualConstant(ConstantExpression x, ConstantExpression y)
         {
             return x.Type == y.Type
-                && (object.ReferenceEquals(x.Value, y.Value) || x.Value.Equals(y.Value));
+                && (ReferenceEquals(x.Value, y.Value) || x.Value.Equals(y.Value));
         }
 
         protected virtual bool AreEqualConditional(ConditionalExpression x, ConditionalExpression y)
         {
-            return this.AreEqual(x.Test, y.Test)
-                && this.AreEqual(x.IfTrue, y.IfTrue)
-                && this.AreEqual(x.IfFalse, y.IfFalse);
+            return AreEqual(x.Test, y.Test)
+                && AreEqual(x.IfTrue, y.IfTrue)
+                && AreEqual(x.IfFalse, y.IfFalse);
         }
 
         protected virtual bool AreEqualParameter(ParameterExpression x, ParameterExpression y)
         {
             return x.Type == y.Type
-                && (object.ReferenceEquals(x.Name, y.Name) || x.Name.Equals(y.Name));
+                && (ReferenceEquals(x.Name, y.Name) || x.Name.Equals(y.Name));
         }
 
         protected virtual bool AreEqualMemberAccess(MemberExpression x, MemberExpression y)
         {
-            return this.AreEqual(x.Expression, y.Expression);
+            return AreEqual(x.Expression, y.Expression);
         }
 
         protected virtual bool AreEqualMethodCall(MethodCallExpression x, MethodCallExpression y)
         {
-            var isEqual = this.AreEqual(x.Object, y.Object);
-            if (isEqual) isEqual = this.AreEqualExpressionList(x.Arguments, y.Arguments);
+            var isEqual = AreEqual(x.Object, y.Object);
+            if (isEqual) isEqual = AreEqualExpressionList(x.Arguments, y.Arguments);
             return isEqual;
         }
 
@@ -174,30 +174,30 @@ namespace Serialize.Linq.Tests.Internals
         {
             var isEqual = x.Count.Equals(y.Count);
             for (var i = 0; isEqual && i < x.Count; ++i)
-                isEqual = this.AreEqual(x[i], y[i]);
+                isEqual = AreEqual(x[i], y[i]);
             return isEqual;
         }
 
         protected virtual bool AreEqualMemberAssignment(MemberAssignment x, MemberAssignment y)
         {
-            return this.AreEqual(x.Expression, y.Expression);
+            return AreEqual(x.Expression, y.Expression);
         }
 
         protected virtual bool AreEqualMemberMemberBinding(MemberMemberBinding x, MemberMemberBinding y)
         {
-            return this.AreEqualBindingList(x.Bindings, y.Bindings);
+            return AreEqualBindingList(x.Bindings, y.Bindings);
         }
 
         protected virtual bool AreEqualMemberListBinding(MemberListBinding x, MemberListBinding y)
         {
-            return this.AreEqualElementInitializerList(x.Initializers, y.Initializers);
+            return AreEqualElementInitializerList(x.Initializers, y.Initializers);
         }
 
         protected virtual bool AreEqualBindingList(ReadOnlyCollection<MemberBinding> x, ReadOnlyCollection<MemberBinding> y)
         {
             var isEqual = x.Count.Equals(y.Count);
             for (var i = 0; isEqual && i < x.Count; ++i)
-                isEqual = this.AreEqualBinding(x[i], y[i]);
+                isEqual = AreEqualBinding(x[i], y[i]);
             return isEqual;
         }
 
@@ -205,41 +205,41 @@ namespace Serialize.Linq.Tests.Internals
         {
             var isEqual = x.Count.Equals(y.Count);
             for (var i = 0; isEqual && i < x.Count; ++i)
-                isEqual = this.AreEqualElementInitializer(x[i], y[i]);
+                isEqual = AreEqualElementInitializer(x[i], y[i]);
             return isEqual;
         }
 
         protected virtual bool AreEqualLambda(LambdaExpression x, LambdaExpression y)
         {
-            return this.AreEqual(x.Body, y.Body);
+            return AreEqual(x.Body, y.Body);
         }
 
         protected virtual bool AreEqualNew(NewExpression x, NewExpression y)
         {
-            return this.AreEqualExpressionList(x.Arguments, y.Arguments);
+            return AreEqualExpressionList(x.Arguments, y.Arguments);
         }
 
         protected virtual bool AreEqualMemberInit(MemberInitExpression x, MemberInitExpression y)
         {
-            return this.AreEqualNew(x.NewExpression, y.NewExpression)
-                && this.AreEqualBindingList(x.Bindings, y.Bindings);
+            return AreEqualNew(x.NewExpression, y.NewExpression)
+                && AreEqualBindingList(x.Bindings, y.Bindings);
         }
 
         protected virtual bool AreEqualListInit(ListInitExpression x, ListInitExpression y)
         {
-            return this.AreEqualNew(x.NewExpression, y.NewExpression)
-                && this.AreEqualElementInitializerList(x.Initializers, y.Initializers);
+            return AreEqualNew(x.NewExpression, y.NewExpression)
+                && AreEqualElementInitializerList(x.Initializers, y.Initializers);
         }
 
         protected virtual bool AreEqualNewArray(NewArrayExpression x, NewArrayExpression y)
         {
-            return this.AreEqualExpressionList(x.Expressions, y.Expressions);
+            return AreEqualExpressionList(x.Expressions, y.Expressions);
         }
 
         protected virtual bool AreEqualInvocation(InvocationExpression x, InvocationExpression y)
         {
-            return this.AreEqualExpressionList(x.Arguments, y.Arguments)
-                && this.AreEqual(x.Expression, y.Expression);
+            return AreEqualExpressionList(x.Arguments, y.Arguments)
+                && AreEqual(x.Expression, y.Expression);
         }        
     }
 }

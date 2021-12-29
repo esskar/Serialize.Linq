@@ -46,7 +46,7 @@ namespace Serialize.Linq.Factories
             if(_types.Any(t => t == null))
                 throw new ArgumentException("All types must be non-null.", nameof(types));
             Settings = factorySettings ?? new FactorySettings();
-            _innerFactory = this.CreateFactory();
+            _innerFactory = CreateFactory();
         }
 
         public FactorySettings Settings { get; }
@@ -88,7 +88,7 @@ namespace Serialize.Linq.Factories
             var expectedTypes = new HashSet<Type>();
             foreach (var type in _types)
                 expectedTypes.UnionWith(GetComplexMemberTypes(type));
-            return new TypeResolverNodeFactory(expectedTypes, this.Settings);
+            return new TypeResolverNodeFactory(expectedTypes, Settings);
         }
 
         /// <summary>

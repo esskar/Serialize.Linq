@@ -25,7 +25,7 @@ namespace Serialize.Linq.Examples.AspNetCore.Controllers
             _todayFunc = todayFunc ?? throw new ArgumentNullException(nameof(todayFunc));
 
             _persons = new List<Person>();
-            this.Initialize();
+            Initialize();
         }
 
         // GET api/values
@@ -70,7 +70,7 @@ namespace Serialize.Linq.Examples.AspNetCore.Controllers
                     var birthdate = DateTime.Parse(line[3], culture);
                     var deathdate = line[4].Equals("Living", StringComparison.OrdinalIgnoreCase) ? null : (DateTime?)DateTime.Parse(line[4], culture);
 
-                    _persons.Add(this.CreatePerson(_persons.Count + 1, line[1], line[2], birthdate, deathdate, line[6]));
+                    _persons.Add(CreatePerson(_persons.Count + 1, line[1], line[2], birthdate, deathdate, line[6]));
                 }
                 catch (Exception ex)
                 {
@@ -82,7 +82,7 @@ namespace Serialize.Linq.Examples.AspNetCore.Controllers
         private Person CreatePerson(int id, string name, string gender, DateTime birthDate, DateTime? deathDate, string residence)
         {
             var names = name.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
-            var age = this.CalculateAge(birthDate, deathDate);
+            var age = CalculateAge(birthDate, deathDate);
 
             return new Person
             {

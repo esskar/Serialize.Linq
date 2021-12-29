@@ -78,7 +78,7 @@ namespace Serialize.Linq.Factories
         /// </summary>
         public BindingFlags? GetBindingFlags()
         {
-            if (!this.Settings.AllowPrivateFieldAccess)
+            if (!Settings.AllowPrivateFieldAccess)
                 return null;
 
             return BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;

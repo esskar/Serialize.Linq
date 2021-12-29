@@ -21,7 +21,7 @@ namespace Serialize.Linq.Serializers
         {
             expression = _expressionCompressor.Compress(expression);
 
-            var factory = this.CreateFactory(expression, factorySettings);
+            var factory = CreateFactory(expression, factorySettings);
             return factory.Create(expression);
         }
 

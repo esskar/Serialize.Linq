@@ -34,7 +34,7 @@ namespace Serialize.Linq.Nodes
             if (factory == null)
                 throw new ArgumentNullException("factory");
             if(items != null)
-                this.AddRange(items.Select(m => new MemberInfoNode(factory, m)));
+                AddRange(items.Select(m => new MemberInfoNode(factory, m)));
         }
 
         public IEnumerable<MemberInfo> GetMembers(IExpressionContext context)
