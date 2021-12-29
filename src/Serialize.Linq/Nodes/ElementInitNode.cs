@@ -38,7 +38,7 @@ namespace Serialize.Linq.Nodes
         public ElementInitNode(INodeFactory factory, ElementInit elementInit)
             : base(factory)
         {
-            this.Initialize(elementInit);
+            Initialize(elementInit);
         }
 
         /// <summary>
@@ -51,8 +51,8 @@ namespace Serialize.Linq.Nodes
             if (elementInit == null)
                 throw new ArgumentNullException("elementInit");
 
-            this.AddMethod = new MethodInfoNode(this.Factory, elementInit.AddMethod);
-            this.Arguments = new ExpressionNodeList(this.Factory, elementInit.Arguments);
+            AddMethod = new MethodInfoNode(Factory, elementInit.AddMethod);
+            Arguments = new ExpressionNodeList(Factory, elementInit.Arguments);
         }
 
         #region DataMember
@@ -87,7 +87,7 @@ namespace Serialize.Linq.Nodes
 
         internal ElementInit ToElementInit(IExpressionContext context)
         {
-            return Expression.ElementInit(this.AddMethod.ToMemberInfo(context), this.Arguments.GetExpressions(context));
+            return Expression.ElementInit(AddMethod.ToMemberInfo(context), Arguments.GetExpressions(context));
         }
     }
 }

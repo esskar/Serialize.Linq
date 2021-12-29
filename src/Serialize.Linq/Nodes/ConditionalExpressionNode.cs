@@ -63,9 +63,9 @@ namespace Serialize.Linq.Nodes
         /// <param name="expression">The expression.</param>
         protected override void Initialize(ConditionalExpression expression)
         {
-            this.Test = this.Factory.Create(expression.Test);
-            this.IfTrue = this.Factory.Create(expression.IfTrue);
-            this.IfFalse = this.Factory.Create(expression.IfFalse);
+            Test = Factory.Create(expression.Test);
+            IfTrue = Factory.Create(expression.IfTrue);
+            IfFalse = Factory.Create(expression.IfFalse);
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace Serialize.Linq.Nodes
         /// <returns></returns>
         public override Expression ToExpression(IExpressionContext context)
         {
-            return Expression.Condition(this.Test.ToExpression(context), this.IfTrue.ToExpression(context), this.IfFalse.ToExpression(context));
+            return Expression.Condition(Test.ToExpression(context), IfTrue.ToExpression(context), IfFalse.ToExpression(context));
         }
     }
 }

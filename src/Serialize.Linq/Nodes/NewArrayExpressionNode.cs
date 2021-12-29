@@ -41,21 +41,21 @@ namespace Serialize.Linq.Nodes
 
         protected override void Initialize(NewArrayExpression expression)
         {
-            this.Expressions = new ExpressionNodeList(this.Factory, expression.Expressions);
+            Expressions = new ExpressionNodeList(Factory, expression.Expressions);
         }
 
         public override Expression ToExpression(IExpressionContext context)
         {
-            switch (this.NodeType)
+            switch (NodeType)
             {
                 case ExpressionType.NewArrayBounds:
-                    return Expression.NewArrayBounds(this.Type.ToType(context).GetElementType(), this.Expressions.GetExpressions(context));
+                    return Expression.NewArrayBounds(Type.ToType(context).GetElementType(), Expressions.GetExpressions(context));
 
                 case ExpressionType.NewArrayInit:
-                    return Expression.NewArrayInit(this.Type.ToType(context).GetElementType(), this.Expressions.GetExpressions(context));
+                    return Expression.NewArrayInit(Type.ToType(context).GetElementType(), Expressions.GetExpressions(context));
 
                 default:
-                    throw new InvalidOperationException("Unhandeled nody type: " + this.NodeType);
+                    throw new InvalidOperationException("Unhandeled nody type: " + NodeType);
             }
         }
     }

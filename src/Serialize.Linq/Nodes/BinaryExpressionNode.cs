@@ -119,11 +119,11 @@ namespace Serialize.Linq.Nodes
         /// <param name="expression">The expression.</param>
         protected override void Initialize(BinaryExpression expression)
         {
-            this.Left = this.Factory.Create(expression.Left);
-            this.Right = this.Factory.Create(expression.Right);
-            this.Conversion = this.Factory.Create(expression.Conversion);
-            this.Method = new MethodInfoNode(this.Factory, expression.Method);
-            this.IsLiftedToNull = expression.IsLiftedToNull;
+            Left = Factory.Create(expression.Left);
+            Right = Factory.Create(expression.Right);
+            Conversion = Factory.Create(expression.Conversion);
+            Method = new MethodInfoNode(Factory, expression.Method);
+            IsLiftedToNull = expression.IsLiftedToNull;
         }
 
         /// <summary>
@@ -133,22 +133,22 @@ namespace Serialize.Linq.Nodes
         /// <returns></returns>
         public override Expression ToExpression(IExpressionContext context)
         {
-            var conversion = this.Conversion != null ? this.Conversion.ToExpression() as LambdaExpression : null;
-            if (this.Method != null && conversion != null)
+            var conversion = Conversion != null ? Conversion.ToExpression() as LambdaExpression : null;
+            if (Method != null && conversion != null)
                 return Expression.MakeBinary(
-                    this.NodeType,
-                    this.Left.ToExpression(context), this.Right.ToExpression(context),
-                    this.IsLiftedToNull,
-                    this.Method.ToMemberInfo(context),
+                    NodeType,
+                    Left.ToExpression(context), Right.ToExpression(context),
+                    IsLiftedToNull,
+                    Method.ToMemberInfo(context),
                     conversion);
-            if (this.Method != null)
+            if (Method != null)
                 return Expression.MakeBinary(
-                    this.NodeType,
-                    this.Left.ToExpression(context), this.Right.ToExpression(context),
-                    this.IsLiftedToNull,
-                    this.Method.ToMemberInfo(context));
-            return Expression.MakeBinary(this.NodeType,
-                    this.Left.ToExpression(context), this.Right.ToExpression(context));
+                    NodeType,
+                    Left.ToExpression(context), Right.ToExpression(context),
+                    IsLiftedToNull,
+                    Method.ToMemberInfo(context));
+            return Expression.MakeBinary(NodeType,
+                    Left.ToExpression(context), Right.ToExpression(context));
         }
     }
 }

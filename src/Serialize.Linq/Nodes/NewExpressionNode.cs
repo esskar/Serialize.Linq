@@ -60,22 +60,22 @@ namespace Serialize.Linq.Nodes
 
         protected override void Initialize(NewExpression expression)
         {
-            this.Arguments = new ExpressionNodeList(this.Factory, expression.Arguments);
-            this.Constructor = new ConstructorInfoNode(this.Factory, expression.Constructor);
-            this.Members = new MemberInfoNodeList(this.Factory, expression.Members);
+            Arguments = new ExpressionNodeList(Factory, expression.Arguments);
+            Constructor = new ConstructorInfoNode(Factory, expression.Constructor);
+            Members = new MemberInfoNodeList(Factory, expression.Members);
         }
 
         public override Expression ToExpression(IExpressionContext context)
         {
-            if (this.Constructor == null)
-                return Expression.New(this.Type.ToType(context));
+            if (Constructor == null)
+                return Expression.New(Type.ToType(context));
 
-            var constructor = this.Constructor.ToMemberInfo(context);
+            var constructor = Constructor.ToMemberInfo(context);
             if (constructor == null)
-                return Expression.New(this.Type.ToType(context));
+                return Expression.New(Type.ToType(context));
 
-            var arguments = this.Arguments.GetExpressions(context).ToArray();
-            var members = this.Members != null ? this.Members.GetMembers(context).ToArray() : null;
+            var arguments = Arguments.GetExpressions(context).ToArray();
+            var members = Members != null ? Members.GetMembers(context).ToArray() : null;
             return members != null && members.Length > 0 ? Expression.New(constructor, arguments, members) : Expression.New(constructor, arguments);
         }
     }

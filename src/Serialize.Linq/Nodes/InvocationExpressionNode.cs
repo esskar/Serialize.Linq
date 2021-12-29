@@ -50,13 +50,13 @@ namespace Serialize.Linq.Nodes
 
         protected override void Initialize(InvocationExpression expression)
         {
-            this.Arguments = new ExpressionNodeList(this.Factory, expression.Arguments);
-            this.Expression = this.Factory.Create(expression.Expression);
+            Arguments = new ExpressionNodeList(Factory, expression.Arguments);
+            Expression = Factory.Create(expression.Expression);
         }
 
         public override Expression ToExpression(IExpressionContext context)
         {
-            return System.Linq.Expressions.Expression.Invoke(this.Expression.ToExpression(context), this.Arguments.GetExpressions(context));
+            return System.Linq.Expressions.Expression.Invoke(Expression.ToExpression(context), Arguments.GetExpressions(context));
         }
     }
 }

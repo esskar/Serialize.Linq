@@ -7,8 +7,8 @@ namespace Serialize.Linq.Exceptions
         public MemberNotFoundException(string message, Type declaringType, string memberSignature)
             : base(message)
         {
-            this.DeclaringType = declaringType;
-            this.MemberSignature = memberSignature;
+            DeclaringType = declaringType;
+            MemberSignature = memberSignature;
         }
 
         public Type DeclaringType { get; }
@@ -19,7 +19,7 @@ namespace Serialize.Linq.Exceptions
         {
             return string.Format("{1}.{0}Declaring Type: '{2}'{0}Member Signature: '{3}'",
                 Environment.NewLine,
-                this.Message, this.DeclaringType, this.MemberSignature);
+                Message, DeclaringType, MemberSignature);
         }
     }
 }

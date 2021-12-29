@@ -30,7 +30,7 @@ namespace Serialize.Linq.Nodes
         public MemberAssignmentNode(INodeFactory factory, MemberAssignment memberAssignment)
             : base(factory, memberAssignment.BindingType, memberAssignment.Member)
         {
-            this.Expression = this.Factory.Create(memberAssignment.Expression);
+            Expression = Factory.Create(memberAssignment.Expression);
         }
 
         #region DataMember
@@ -44,7 +44,7 @@ namespace Serialize.Linq.Nodes
 
         internal override MemberBinding ToMemberBinding(IExpressionContext context)
         {
-            return System.Linq.Expressions.Expression.Bind(this.Member.ToMemberInfo(context), this.Expression.ToExpression(context));
+            return System.Linq.Expressions.Expression.Bind(Member.ToMemberInfo(context), Expression.ToExpression(context));
         }
     }
 }

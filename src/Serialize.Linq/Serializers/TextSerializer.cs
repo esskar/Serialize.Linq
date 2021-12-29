@@ -23,7 +23,7 @@ namespace Serialize.Linq.Serializers
             {
                 using (var ms = new MemoryStream())
                 {
-                    this.Serialize(ms, obj);
+                    Serialize(ms, obj);
 
                     ms.Position = 0;
                     using (var reader = new StreamReader(ms, Encoding.UTF8))
@@ -46,7 +46,7 @@ namespace Serialize.Linq.Serializers
                     writer.Flush();
 
                     ms.Position = 0;
-                    return this.Deserialize<T>(ms);
+                    return Deserialize<T>(ms);
                 }
             }
         }

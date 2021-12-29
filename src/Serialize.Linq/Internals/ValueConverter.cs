@@ -65,7 +65,7 @@ namespace Serialize.Linq.Internals
         /// or
         /// converter
         /// </exception>
-        /// <exception cref="System.ApplicationException">Failed to add converter.</exception>
+        /// <exception cref="System.Exception">Failed to add converter.</exception>
         public static void AddCustomConverter(Type convertTo, Func<object, Type, object> converter)
         {
             if (convertTo == null)

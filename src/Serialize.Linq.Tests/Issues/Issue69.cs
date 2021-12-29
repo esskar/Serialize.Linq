@@ -24,37 +24,37 @@ namespace Serialize.Linq.Tests.Issues
         [TestMethod]
         public void JsonSerialzeAndDeserialize1969Utc()
         {
-            this.SerialzeAndDeserializeDateTimeJson(new DateTime(1969, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+            SerialzeAndDeserializeDateTimeJson(new DateTime(1969, 1, 1, 0, 0, 0, DateTimeKind.Utc));
         }
 
         [TestMethod]
         public void JsonSerialzeAndDeserialize1969Local()
         {
-            this.SerialzeAndDeserializeDateTimeJson(new DateTime(1969, 1, 1, 0, 0, 0, DateTimeKind.Local));
+            SerialzeAndDeserializeDateTimeJson(new DateTime(1969, 1, 1, 0, 0, 0, DateTimeKind.Local));
         }
 
         [TestMethod]
         public void JsonSerialzeAndDeserialize1970Utc()
         {
-            this.SerialzeAndDeserializeDateTimeJson(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc));            
+            SerialzeAndDeserializeDateTimeJson(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc));            
         }
 
         [TestMethod]
         public void JsonSerialzeAndDeserialize1970Local()
         {
-            this.SerialzeAndDeserializeDateTimeJson(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local));
+            SerialzeAndDeserializeDateTimeJson(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Local));
         }
 
         [TestMethod]
         public void JsonSerialzeAndDeserialize1971Utc()
         {
-            this.SerialzeAndDeserializeDateTimeJson(new DateTime(1971, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+            SerialzeAndDeserializeDateTimeJson(new DateTime(1971, 1, 1, 0, 0, 0, DateTimeKind.Utc));
         }
 
         [TestMethod]
         public void JsonSerialzeAndDeserialize1971Local()
         {
-            this.SerialzeAndDeserializeDateTimeJson(new DateTime(1971, 1, 1, 0, 0, 0, DateTimeKind.Local));
+            SerialzeAndDeserializeDateTimeJson(new DateTime(1971, 1, 1, 0, 0, 0, DateTimeKind.Local));
         }
         
         private void SerialzeAndDeserializeDateTimeJson(DateTime dt)

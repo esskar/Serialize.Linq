@@ -27,7 +27,7 @@ namespace Serialize.Linq.Tests.Internals
         {
             using (var ms = new MemoryStream())
             {
-                this.Serialize(ms, obj);
+                Serialize(ms, obj);
                 return ms.ToArray();
             }
         }
@@ -35,7 +35,7 @@ namespace Serialize.Linq.Tests.Internals
         public T Deserialize<T>(byte[] bytes) where T : Node
         {
             using (var ms = new MemoryStream(bytes))
-                return this.Deserialize<T>(ms);
+                return Deserialize<T>(ms);
         }
 
         public void Serialize<T>(Stream stream, T obj) where T : Node

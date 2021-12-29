@@ -52,20 +52,20 @@ namespace Serialize.Linq.Nodes
 
         protected override void Initialize(TypeBinaryExpression expression)
         {
-            this.Expression = this.Factory.Create(expression.Expression);
-            this.TypeOperand = this.Factory.Create(expression.TypeOperand);
+            Expression = Factory.Create(expression.Expression);
+            TypeOperand = Factory.Create(expression.TypeOperand);
         }
 
         public override Expression ToExpression(IExpressionContext context)
         {
-            switch (this.NodeType)
+            switch (NodeType)
             {
                 case ExpressionType.TypeIs:
-                    return System.Linq.Expressions.Expression.TypeIs(this.Expression.ToExpression(context), this.TypeOperand.ToType(context));
+                    return System.Linq.Expressions.Expression.TypeIs(Expression.ToExpression(context), TypeOperand.ToType(context));
                 case ExpressionType.TypeEqual:
-                    return System.Linq.Expressions.Expression.TypeEqual(this.Expression.ToExpression(context), this.TypeOperand.ToType(context));                   
+                    return System.Linq.Expressions.Expression.TypeEqual(Expression.ToExpression(context), TypeOperand.ToType(context));                   
                 default:
-                    throw new NotSupportedException("unrecognised TypeBinaryExpression.NodeType " + Enum.GetName(typeof(ExpressionType), this.NodeType));
+                    throw new NotSupportedException("unrecognised TypeBinaryExpression.NodeType " + Enum.GetName(typeof(ExpressionType), NodeType));
             }
         }
     }

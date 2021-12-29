@@ -35,7 +35,7 @@ namespace Serialize.Linq
 
         public virtual BindingFlags? GetBindingFlags()
         {
-            if (!this.AllowPrivateFieldAccess)
+            if (!AllowPrivateFieldAccess)
                 return null;
 
             return BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic;
@@ -62,7 +62,7 @@ namespace Serialize.Linq
                 var type = Type.GetType(n);
                 if (type == null)
                 {
-                    foreach (var assembly in this.GetAssemblies())
+                    foreach (var assembly in GetAssemblies())
                     {
                         type = assembly.GetType(n);
                         if (type != null)

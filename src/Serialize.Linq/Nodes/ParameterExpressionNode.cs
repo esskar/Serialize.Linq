@@ -54,11 +54,11 @@ namespace Serialize.Linq.Nodes
         protected override void Initialize(ParameterExpression expression)
         {
 #if !WINDOWS_PHONE7
-            this.IsByRef = expression.IsByRef;
+            IsByRef = expression.IsByRef;
 #else
             this.IsByRef = false;
 #endif
-            this.Name = expression.Name;
+            Name = expression.Name;
         }
 
         public override Expression ToExpression(IExpressionContext context)

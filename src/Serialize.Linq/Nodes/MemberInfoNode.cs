@@ -36,8 +36,8 @@ namespace Serialize.Linq.Nodes
             BindingFlags? flags = null;
             if (context != null)
                 flags = context.GetBindingFlags();
-            else if (this.Factory != null)
-                flags = this.Factory.GetBindingFlags();
+            else if (Factory != null)
+                flags = Factory.GetBindingFlags();
             return flags == null ? type.GetMembers() : type.GetMembers(flags.Value);
         }
     }

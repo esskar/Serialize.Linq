@@ -46,7 +46,7 @@ namespace Serialize.Linq.Nodes
             : base(factory)
         {
             if (memberInfo != null)
-                this.Initialize(memberInfo);
+                Initialize(memberInfo);
         }
 
         #region DataMember
@@ -85,8 +85,8 @@ namespace Serialize.Linq.Nodes
         /// <param name="memberInfo">The member info.</param>
         protected virtual void Initialize(TMemberInfo memberInfo)
         {
-            this.DeclaringType = this.Factory.Create(memberInfo.DeclaringType);
-            this.Signature = memberInfo.ToString();
+            DeclaringType = Factory.Create(memberInfo.DeclaringType);
+            Signature = memberInfo.ToString();
         }
 
         /// <summary>
@@ -98,12 +98,12 @@ namespace Serialize.Linq.Nodes
         /// <exception cref="System.TypeLoadException">Failed to load DeclaringType:  + this.DeclaringType</exception>
         protected Type GetDeclaringType(IExpressionContext context)
         {
-            if (this.DeclaringType == null)
+            if (DeclaringType == null)
                 throw new InvalidOperationException("DeclaringType is not set.");
 
-            var declaringType = this.DeclaringType.ToType(context);
+            var declaringType = DeclaringType.ToType(context);
             if (declaringType == null)
-                throw new TypeLoadException("Failed to load DeclaringType: " + this.DeclaringType);
+                throw new TypeLoadException("Failed to load DeclaringType: " + DeclaringType);
 
             return declaringType;
         }
@@ -123,16 +123,16 @@ namespace Serialize.Linq.Nodes
         /// <returns></returns>
         public virtual TMemberInfo ToMemberInfo(IExpressionContext context)
         {
-            if (string.IsNullOrWhiteSpace(this.Signature))
+            if (string.IsNullOrWhiteSpace(Signature))
                 return null;
 
-            var declaringType = this.GetDeclaringType(context);
-            var members = this.GetMemberInfosForType(context, declaringType);
+            var declaringType = GetDeclaringType(context);
+            var members = GetMemberInfosForType(context, declaringType);
 
-            var member = members.FirstOrDefault(m => m.ToString() == this.Signature);
+            var member = members.FirstOrDefault(m => m.ToString() == Signature);
             if (member == null)
                 throw new MemberNotFoundException("MemberInfo not found. See DeclaringType and MemberSignature properties for more details.", 
-                    declaringType, this.Signature);
+                    declaringType, Signature);
             return member;
         }
     }

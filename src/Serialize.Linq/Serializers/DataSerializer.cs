@@ -24,7 +24,7 @@ namespace Serialize.Linq.Serializers
             if (stream == null)
                 throw new ArgumentNullException("stream");
 
-            var serializer = this.CreateXmlObjectSerializer(typeof(T));
+            var serializer = CreateXmlObjectSerializer(typeof(T));
             serializer.WriteObject(stream, obj);
         }
 
@@ -33,7 +33,7 @@ namespace Serialize.Linq.Serializers
             if (stream == null)
                 throw new ArgumentNullException("stream");
 
-            var serializer = this.CreateXmlObjectSerializer(typeof(T));
+            var serializer = CreateXmlObjectSerializer(typeof(T));
             return (T)serializer.ReadObject(stream);
         }
 
