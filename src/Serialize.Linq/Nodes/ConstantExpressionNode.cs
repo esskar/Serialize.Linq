@@ -69,7 +69,7 @@ namespace Serialize.Linq.Nodes
         /// <exception cref="InvalidTypeException"></exception>
         public override TypeNode Type
         {
-            get { return base.Type; }
+            get => base.Type;
             set
             {
                 if (Value != null)
@@ -83,8 +83,7 @@ namespace Serialize.Linq.Nodes
                         var context = new ExpressionContext();
                         if (!value.ToType(context).IsInstanceOfType(Value))
                             throw new InvalidTypeException(
-                                string.Format("Type '{0}' is not an instance of the current value type '{1}'.",
-                                    value.ToType(context), Value.GetType()));
+                                $"Type '{value.ToType(context)}' is not an instance of the current value type '{Value.GetType()}'.");
                     }
                 }
                 base.Type = value;
@@ -113,8 +112,7 @@ namespace Serialize.Linq.Nodes
                 if (value is Expression)
                     throw new ArgumentException("Expression not allowed.", "value");
 
-                var valueType = value as Type;
-                _value = valueType != null ? Factory.Create(valueType) : value;
+                _value = value is Type valueType ? Factory.Create(valueType) : value;
 
                 if (_value == null || _value is TypeNode) 
                     return;
@@ -146,9 +144,9 @@ namespace Serialize.Linq.Nodes
         /// <returns></returns>
         public override Expression ToExpression(IExpressionContext context)
         {
-            var typeNode = Value as TypeNode;
-            if (typeNode != null)
+            if (Value is TypeNode typeNode)
                 return Expression.Constant(typeNode.ToType(context), Type.ToType(context));
+
             return Type != null 
                 ? Expression.Constant(Value, Type.ToType(context)) 
                 : Expression.Constant(Value);

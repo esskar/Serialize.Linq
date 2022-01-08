@@ -84,8 +84,10 @@ namespace Serialize.Linq.Tests.Internals
                     return AreEqualMemberInit((MemberInitExpression)x, (MemberInitExpression)y);
                 case ExpressionType.ListInit:
                     return AreEqualListInit((ListInitExpression)x, (ListInitExpression)y);
+                case ExpressionType.Default:
+                    return AreEqualDefault((DefaultExpression)x, (DefaultExpression)y);
                 default:
-                    throw new Exception(string.Format("Unhandled expression type: '{0}'", x.NodeType));
+                    throw new Exception($"Unhandled expression type: '{x.NodeType}'");
             }
         }
 
@@ -103,7 +105,7 @@ namespace Serialize.Linq.Tests.Internals
                 case MemberBindingType.ListBinding:
                     return AreEqualMemberListBinding((MemberListBinding)x, (MemberListBinding)y);
                 default:
-                    throw new Exception(string.Format("Unhandled binding type '{0}'", y.BindingType));
+                    throw new Exception($"Unhandled binding type '{y.BindingType}'");
             }
         }
 
@@ -142,6 +144,11 @@ namespace Serialize.Linq.Tests.Internals
             return AreEqual(x.Test, y.Test)
                 && AreEqual(x.IfTrue, y.IfTrue)
                 && AreEqual(x.IfFalse, y.IfFalse);
+        }
+
+        protected virtual bool AreEqualDefault(DefaultExpression x, DefaultExpression y)
+        {
+            return x.Type == y.Type;
         }
 
         protected virtual bool AreEqualParameter(ParameterExpression x, ParameterExpression y)

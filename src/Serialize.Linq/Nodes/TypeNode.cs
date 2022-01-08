@@ -83,7 +83,7 @@ namespace Serialize.Linq.Nodes
             {
                 if (string.IsNullOrWhiteSpace(Name))
                     return null;
-                throw new SerializationException(string.Format("Failed to serialize '{0}' to a type object.", Name));
+                throw new SerializationException($"Failed to serialize '{Name}' to a type object.");
             }
 
             if (GenericArguments != null)            
