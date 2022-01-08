@@ -1,12 +1,4 @@
-﻿#region Copyright
-//  Copyright, Sascha Kiefer (esskar)
-//  Released under LGPL License.
-//  
-//  License: https://raw.github.com/esskar/Serialize.Linq/master/LICENSE
-//  Contributing: https://github.com/esskar/Serialize.Linq
-#endregion
-
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Serialize.Linq.Extensions;
 using Serialize.Linq.Tests.Internals;
 
