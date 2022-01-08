@@ -237,8 +237,7 @@ namespace Serialize.Linq.Examples.RestApi.Areas.HelpPage
 
         private static void LogInvalidSampleAsError(HelpPageApiModel apiModel, object sample)
         {
-            InvalidSample invalidSample = sample as InvalidSample;
-            if (invalidSample != null)
+            if (sample is InvalidSample invalidSample)
             {
                 apiModel.ErrorMessages.Add(invalidSample.ErrorMessage);
             }

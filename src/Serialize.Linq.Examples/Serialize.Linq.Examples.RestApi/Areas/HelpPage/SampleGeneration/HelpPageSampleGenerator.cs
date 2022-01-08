@@ -360,8 +360,7 @@ namespace Serialize.Linq.Examples.RestApi.Areas.HelpPage
 
         private static object WrapSampleIfString(object sample)
         {
-            string stringSample = sample as string;
-            if (stringSample != null)
+            if (sample is string stringSample)
             {
                 return new TextSample(stringSample);
             }

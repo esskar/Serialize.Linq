@@ -138,8 +138,7 @@ namespace Serialize.Linq.Examples.RestApi.Areas.HelpPage
 
         public override bool Equals(object obj)
         {
-            HelpPageSampleKey otherKey = obj as HelpPageSampleKey;
-            if (otherKey == null)
+            if (!(obj is HelpPageSampleKey otherKey))
             {
                 return false;
             }
