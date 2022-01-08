@@ -17,6 +17,7 @@ namespace Serialize.Linq.Nodes
     [KnownType(typeof(ConditionalExpressionNode))]
     [KnownType(typeof(ConstantExpressionNode))]
     [KnownType(typeof(ConstructorInfoNode))]
+    [KnownType(typeof(DefaultExpressionNode))]
     [KnownType(typeof(ElementInitNode))]
     [KnownType(typeof(ElementInitNodeList))]
     [KnownType(typeof(ExpressionNode))]

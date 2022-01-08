@@ -40,6 +40,7 @@ namespace Serialize.Linq.Factories
             if (expression is BinaryExpression binaryExpression) return new BinaryExpressionNode(this, binaryExpression);
             if (expression is ConditionalExpression conditionalExpression) return new ConditionalExpressionNode(this, conditionalExpression);
             if (expression is ConstantExpression constantExpression) return new ConstantExpressionNode(this, constantExpression);
+            if (expression is DefaultExpression defaultExpression) return new DefaultExpressionNode(this, defaultExpression);
             if (expression is InvocationExpression invocationExpression) return new InvocationExpressionNode(this, invocationExpression);
             if (expression is IndexExpression indexExpression) return new IndexExpressionNode(this, indexExpression); 
             if (expression is LambdaExpression lambdaExpression) return new LambdaExpressionNode(this, lambdaExpression);

@@ -18,7 +18,7 @@ namespace Serialize.Linq.Tests.Internals
                 return;
 
             var failMessage = !string.IsNullOrWhiteSpace(message) ? message : string.Empty;
-            failMessage += string.Format("Expected was <{0}>, Actual was <{1}>", expected, actual);
+            failMessage += $"Expected was <{expected}>, Actual was <{actual}>";
             Assert.Fail(failMessage);
         }
     }
