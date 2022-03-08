@@ -102,7 +102,7 @@ namespace Serialize.Linq.Factories
                                             : constantValueType.GetFields(flags.Value);
                                         var memberField = fields.Length > 1
                                             ? fields.SingleOrDefault(n => field.Name.Equals(n.Name))
-                                            : fields.FirstOrDefault();
+                                            : fields.FirstOrDefault(n => field.Name.Equals(n.Name));
                                         if (memberField == null && parentField != null)
                                         {
                                             memberField = fields.Length > 1
