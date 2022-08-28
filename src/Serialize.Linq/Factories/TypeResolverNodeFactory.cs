@@ -100,9 +100,9 @@ namespace Serialize.Linq.Factories
                                         var fields = flags == null
                                             ? constantValueType.GetFields()
                                             : constantValueType.GetFields(flags.Value);
-                                        var memberField = fields.Length > 1
+                                        var memberField = fields.Length > 0
                                             ? fields.SingleOrDefault(n => field.Name.Equals(n.Name))
-                                            : fields.FirstOrDefault();
+                                            : null;
                                         if (memberField == null && parentField != null)
                                         {
                                             memberField = fields.Length > 1
