@@ -6,11 +6,11 @@ using Serialize.Linq.Serializers;
 
 namespace Serialize.Linq.Tests.Internals
 {
-    internal class BinarayFormatterSerializer : SerializerBase, IBinarySerializer
+    internal class BinaryFormatterSerializer : SerializerBase, IBinarySerializer
     {
         private readonly BinaryFormatter _formatter;
 
-        public BinarayFormatterSerializer()
+        public BinaryFormatterSerializer()
         {
             _formatter = new BinaryFormatter();
         }

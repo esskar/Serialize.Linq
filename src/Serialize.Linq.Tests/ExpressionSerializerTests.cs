@@ -275,7 +275,7 @@ namespace Serialize.Linq.Tests
 #if WINDOWS_UWP 
             return new IBinarySerializer[] { new BinarySerializer() };
 #else
-            return new IBinarySerializer[] { new BinarySerializer(), new BinarayFormatterSerializer() };
+            return new IBinarySerializer[] { new BinarySerializer(), new BinaryFormatterSerializer() };
 #endif
         }
     }
