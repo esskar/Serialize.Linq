@@ -13,9 +13,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "MIN")]
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public class MethodInfoNode : MemberNode<MethodInfo>
     {

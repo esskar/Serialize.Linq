@@ -3,7 +3,6 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using Serialize.Linq.Extensions;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Internals;
 
@@ -15,9 +14,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "T")]
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public class TypeNode : Node
     {        

@@ -11,9 +11,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "MMB")]
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public class MemberMemberBindingNode : MemberBindingNode
     {

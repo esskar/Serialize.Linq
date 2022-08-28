@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -14,11 +13,7 @@ namespace Serialize.Linq.Internals
         /// <param name="type">The type.</param>
         /// <param name="bindingFlags">The binding flags.</param>
         public PropertyMemberTypeEnumerator(HashSet<Type> seenTypes, Type type, BindingFlags bindingFlags)
-            : base(seenTypes, type, bindingFlags
-#if  !WINDOWS_UWP && !NETSTANDARD
-                  | BindingFlags.SetProperty | BindingFlags.GetProperty
-#endif
-                  ) { }
+            : base(seenTypes, type, bindingFlags | BindingFlags.SetProperty | BindingFlags.GetProperty) { }
 
         /// <summary>
         /// Determines whether the specified member is to be considered.

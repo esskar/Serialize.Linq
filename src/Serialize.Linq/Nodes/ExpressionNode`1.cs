@@ -16,10 +16,8 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "tE")]    
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
-    #endregion
+#endregion
     [DebuggerDisplay("ExpressionNode")]
     public abstract class ExpressionNode<TExpression> : ExpressionNode where TExpression : Expression
     {

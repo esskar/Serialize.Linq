@@ -20,9 +20,7 @@ namespace Serialize.Linq.Nodes
         [DataContract(Name = "PI")]
 #endif
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public class PropertyInfoNode : MemberNode<PropertyInfo>
     {

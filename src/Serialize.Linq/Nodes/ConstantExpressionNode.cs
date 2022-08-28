@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
-#if NETSTANDARD || WINDOWS_UWP
-using System.Reflection;
-#endif
 using Serialize.Linq.Exceptions;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Internals;
@@ -16,9 +13,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "C")]   
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public class ConstantExpressionNode : ExpressionNode<ConstantExpression>
     {

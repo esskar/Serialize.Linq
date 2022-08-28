@@ -11,9 +11,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "IF")]   
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public class ConditionalExpressionNode : ExpressionNode<ConditionalExpression>
     {

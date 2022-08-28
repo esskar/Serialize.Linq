@@ -13,9 +13,7 @@ namespace Serialize.Linq.Nodes
 #else
     [CollectionDataContract(Name = "MIL")]
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public class MemberInfoNodeList : List<MemberInfoNode>
     {

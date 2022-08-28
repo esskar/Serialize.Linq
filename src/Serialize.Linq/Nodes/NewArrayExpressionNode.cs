@@ -11,9 +11,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "NA")]   
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public class NewArrayExpressionNode : ExpressionNode<NewArrayExpression>
     {

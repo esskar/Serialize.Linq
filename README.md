@@ -13,8 +13,10 @@ Simple install via [NuGet][1]:
     git clone https://github.com/esskar/Serialize.Linq.git
 
 
-## Examples
-There is an working WCF and REST API example included in the [examples folder][5].
+## Getting started
+
+
+
 
 ## Help and Support
 If you have a feature request, a bug or any other question, just create an [issue][4].
@@ -25,11 +27,7 @@ You can always [buy me a coffee :coffee:][6].
 ## Supported Platforms (or known to work with)
 * .NET 6.0
 * .NET 5.0
-* .NET 4.5
-* .NET 4.0
-* .Net Standard 2.0
-* .Net Standard 1.3
-* UAP 10.0
+* .NET 4.8
 
 [1]: http://nuget.org/packages/Serialize.Linq
 [2]: https://github.com/esskar

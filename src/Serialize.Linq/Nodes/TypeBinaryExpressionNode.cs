@@ -11,10 +11,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "TB")]   
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
-
     #endregion
     public class TypeBinaryExpressionNode : ExpressionNode<TypeBinaryExpression>
     {

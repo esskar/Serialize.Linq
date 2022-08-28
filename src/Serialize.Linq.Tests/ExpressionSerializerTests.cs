@@ -272,11 +272,7 @@ namespace Serialize.Linq.Tests
 
         private static IEnumerable<IBinarySerializer> CreateBinarySerializers()
         {
-#if WINDOWS_UWP 
-            return new IBinarySerializer[] { new BinarySerializer() };
-#else
             return new IBinarySerializer[] { new BinarySerializer(), new BinaryFormatterSerializer() };
-#endif
         }
     }
 }

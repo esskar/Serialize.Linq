@@ -14,9 +14,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "E")]
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public abstract class ExpressionNode : Node
     {

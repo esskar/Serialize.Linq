@@ -13,9 +13,7 @@ namespace Serialize.Linq.Nodes
 #else
     [CollectionDataContract(Name = "MBL")]    
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public class MemberBindingNodeList : List<MemberBindingNode>
     {

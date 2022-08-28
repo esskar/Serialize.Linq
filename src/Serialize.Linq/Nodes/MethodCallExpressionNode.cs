@@ -12,9 +12,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "MC")]   
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public class MethodCallExpressionNode : ExpressionNode<MethodCallExpression>
     {

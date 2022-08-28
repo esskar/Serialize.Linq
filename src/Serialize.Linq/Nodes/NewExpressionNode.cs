@@ -12,9 +12,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "N")]
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public class NewExpressionNode : ExpressionNode<NewExpression>
     {

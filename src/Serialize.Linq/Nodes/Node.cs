@@ -9,9 +9,7 @@ namespace Serialize.Linq.Nodes
     /// </summary>
     #region DataContract
     [DataContract]
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #region KnownTypes
     [KnownType(typeof(BinaryExpressionNode))]
     [KnownType(typeof(ConditionalExpressionNode))]
@@ -70,9 +68,7 @@ namespace Serialize.Linq.Nodes
         /// The factory.
         /// </value>
         [IgnoreDataMember]
-#if !WINDOWS_UWP
         [NonSerialized]
-#endif
         public readonly INodeFactory Factory;        
     }
 }

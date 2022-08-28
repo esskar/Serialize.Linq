@@ -3,9 +3,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Concurrent;
-#if NETSTANDARD || WINDOWS_UWP
-using System.Reflection;
-#endif
 using System.Text.RegularExpressions;
 
 namespace Serialize.Linq.Internals
@@ -13,11 +10,7 @@ namespace Serialize.Linq.Internals
     public static class ValueConverter
     {
         private static readonly ConcurrentDictionary<Type, Func<object, Type, object>> _userDefinedConverters;
-        private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>-?\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/"
-#if !NETSTANDARD
-            , RegexOptions.Compiled
-#endif
-            );
+        private static readonly Regex _dateRegex = new Regex(@"/Date\((?<date>-?\d+)((?<offsign>[-+])((?<offhours>\d{2})(?<offminutes>\d{2})))?\)/", RegexOptions.Compiled);
 
         /// <summary>
         /// Initializes the <see cref="ValueConverter"/> class.
@@ -102,7 +95,7 @@ namespace Serialize.Linq.Internals
             {
                 var elementType = convertTo.GetElementType();
                 if (elementType == null)
-                    throw new InvalidOperationException("Cannot build array with an unkown element type.");
+                    throw new InvalidOperationException("Cannot build array with an unknown element type.");
 
                 var valArray = (Array)value;
                 var result = Array.CreateInstance(elementType, valArray.Length);
@@ -131,16 +124,16 @@ namespace Serialize.Linq.Internals
                 }
             }
 
-            if (value is IConvertible)
+            if (!(value is IConvertible)) 
+                return Activator.CreateInstance(convertTo, value);
+
+            try
             {
-                try
-                {
-                    return System.Convert.ChangeType(value, convertTo);
-                }
-                catch (Exception)
-                {
-                    // empty on purpose, we fallback later
-                }
+                return System.Convert.ChangeType(value, convertTo);
+            }
+            catch (Exception)
+            {
+                // empty on purpose, we fallback later
             }
 
             // fallback

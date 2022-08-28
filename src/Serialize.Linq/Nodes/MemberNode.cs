@@ -18,9 +18,7 @@ namespace Serialize.Linq.Nodes
 #else
     [DataContract(Name = "MN")]
 #endif
-#if !WINDOWS_UWP
     [Serializable]
-#endif
     #endregion
     public abstract class MemberNode<TMemberInfo> : Node where TMemberInfo : MemberInfo
     {

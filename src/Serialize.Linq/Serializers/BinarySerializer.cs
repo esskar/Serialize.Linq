@@ -47,20 +47,9 @@ namespace Serialize.Linq.Serializers
                 return (T)serializer.ReadObject(reader);
         }
 
-#if !NETSTANDARD && !WINDOWS_UWP
-
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {
             return new DataContractSerializer(type, GetKnownTypes());
         }        
-
-#else
-
-        private XmlObjectSerializer CreateXmlObjectSerializer(Type type)
-        {
-            return new DataContractSerializer(type, GetKnownTypes());
-        }
-
-#endif
     }
 }
