@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30804.86
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32819.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9C6C9508-B1D6-43E0-A96B-17581AC83631}"
 EndProject
@@ -17,22 +17,6 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serialize.Linq.Tests", "Serialize.Linq.Tests\Serialize.Linq.Tests.csproj", "{9854CEA9-3EBA-414F-AFE9-A92CA24A52D1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serialize.Linq.Tests.Container", "Serialize.Linq.Tests.Container\Serialize.Linq.Tests.Container.csproj", "{439F88AF-F18C-4D27-B8D6-01D249BE647D}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "examples", "examples", "{7F113D5D-A188-4D3F-89F4-6736E9577543}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serialize.Linq.Examples.NetStandardLibrary", "Serialize.Linq.Examples\Serialize.Linq.Examples.NetStandardLibrary\Serialize.Linq.Examples.NetStandardLibrary.csproj", "{66A35337-3DFC-4A16-84C9-4DCCE30DA04D}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq.Examples.RestApi", "Serialize.Linq.Examples\Serialize.Linq.Examples.RestApi\Serialize.Linq.Examples.RestApi.csproj", "{2649AA62-707B-456E-ABAC-73A1330EEFDD}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq.Examples.RestClient", "Serialize.Linq.Examples\Serialize.Linq.Examples.RestClient\Serialize.Linq.Examples.RestClient.csproj", "{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "restapi", "restapi", "{41CC3212-8F3B-4527-B5DD-B0B87F0FE240}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serialize.Linq.Examples.AspNetCore", "Serialize.Linq.Examples\Serialize.Linq.Examples.AspNetCore\Serialize.Linq.Examples.AspNetCore.csproj", "{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serialize.Linq.Examples.RestContracts", "Serialize.Linq.Examples\Serialize.Linq.Examples.RestContracts\Serialize.Linq.Examples.RestContracts.csproj", "{C3E824F7-FBA9-45F0-A6BE-EAF61C5BECC9}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialize.Linq.Examples.RestClientNet50", "Serialize.Linq.Examples\Serialize.Linq.Examples.RestClientNet50\Serialize.Linq.Examples.RestClientNet50.csproj", "{391CDCC9-F757-4854-B508-4AFFAF51C812}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,54 +50,6 @@ Global
 		{439F88AF-F18C-4D27-B8D6-01D249BE647D}.Release Optimize Size|Any CPU.Build.0 = Release|Any CPU
 		{439F88AF-F18C-4D27-B8D6-01D249BE647D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{439F88AF-F18C-4D27-B8D6-01D249BE647D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{66A35337-3DFC-4A16-84C9-4DCCE30DA04D}.Debug Optimize Size|Any CPU.ActiveCfg = Debug|Any CPU
-		{66A35337-3DFC-4A16-84C9-4DCCE30DA04D}.Debug Optimize Size|Any CPU.Build.0 = Debug|Any CPU
-		{66A35337-3DFC-4A16-84C9-4DCCE30DA04D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{66A35337-3DFC-4A16-84C9-4DCCE30DA04D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{66A35337-3DFC-4A16-84C9-4DCCE30DA04D}.Release Optimize Size|Any CPU.ActiveCfg = Release|Any CPU
-		{66A35337-3DFC-4A16-84C9-4DCCE30DA04D}.Release Optimize Size|Any CPU.Build.0 = Release|Any CPU
-		{66A35337-3DFC-4A16-84C9-4DCCE30DA04D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{66A35337-3DFC-4A16-84C9-4DCCE30DA04D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2649AA62-707B-456E-ABAC-73A1330EEFDD}.Debug Optimize Size|Any CPU.ActiveCfg = Debug|Any CPU
-		{2649AA62-707B-456E-ABAC-73A1330EEFDD}.Debug Optimize Size|Any CPU.Build.0 = Debug|Any CPU
-		{2649AA62-707B-456E-ABAC-73A1330EEFDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2649AA62-707B-456E-ABAC-73A1330EEFDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2649AA62-707B-456E-ABAC-73A1330EEFDD}.Release Optimize Size|Any CPU.ActiveCfg = Release|Any CPU
-		{2649AA62-707B-456E-ABAC-73A1330EEFDD}.Release Optimize Size|Any CPU.Build.0 = Release|Any CPU
-		{2649AA62-707B-456E-ABAC-73A1330EEFDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2649AA62-707B-456E-ABAC-73A1330EEFDD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Debug Optimize Size|Any CPU.ActiveCfg = Debug|Any CPU
-		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Debug Optimize Size|Any CPU.Build.0 = Debug|Any CPU
-		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Release Optimize Size|Any CPU.ActiveCfg = Release|Any CPU
-		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Release Optimize Size|Any CPU.Build.0 = Release|Any CPU
-		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Debug Optimize Size|Any CPU.ActiveCfg = Debug|Any CPU
-		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Debug Optimize Size|Any CPU.Build.0 = Debug|Any CPU
-		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Release Optimize Size|Any CPU.ActiveCfg = Release|Any CPU
-		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Release Optimize Size|Any CPU.Build.0 = Release|Any CPU
-		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C3E824F7-FBA9-45F0-A6BE-EAF61C5BECC9}.Debug Optimize Size|Any CPU.ActiveCfg = Debug|Any CPU
-		{C3E824F7-FBA9-45F0-A6BE-EAF61C5BECC9}.Debug Optimize Size|Any CPU.Build.0 = Debug|Any CPU
-		{C3E824F7-FBA9-45F0-A6BE-EAF61C5BECC9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C3E824F7-FBA9-45F0-A6BE-EAF61C5BECC9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C3E824F7-FBA9-45F0-A6BE-EAF61C5BECC9}.Release Optimize Size|Any CPU.ActiveCfg = Release|Any CPU
-		{C3E824F7-FBA9-45F0-A6BE-EAF61C5BECC9}.Release Optimize Size|Any CPU.Build.0 = Release|Any CPU
-		{C3E824F7-FBA9-45F0-A6BE-EAF61C5BECC9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C3E824F7-FBA9-45F0-A6BE-EAF61C5BECC9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{391CDCC9-F757-4854-B508-4AFFAF51C812}.Debug Optimize Size|Any CPU.ActiveCfg = Debug|Any CPU
-		{391CDCC9-F757-4854-B508-4AFFAF51C812}.Debug Optimize Size|Any CPU.Build.0 = Debug|Any CPU
-		{391CDCC9-F757-4854-B508-4AFFAF51C812}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{391CDCC9-F757-4854-B508-4AFFAF51C812}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{391CDCC9-F757-4854-B508-4AFFAF51C812}.Release Optimize Size|Any CPU.ActiveCfg = Release|Any CPU
-		{391CDCC9-F757-4854-B508-4AFFAF51C812}.Release Optimize Size|Any CPU.Build.0 = Release|Any CPU
-		{391CDCC9-F757-4854-B508-4AFFAF51C812}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{391CDCC9-F757-4854-B508-4AFFAF51C812}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -122,13 +58,6 @@ Global
 		{0004924B-C805-4D58-B448-9C71F45A62FA} = {9C6C9508-B1D6-43E0-A96B-17581AC83631}
 		{9854CEA9-3EBA-414F-AFE9-A92CA24A52D1} = {0BFCB3B7-D3CB-4BF4-9CB5-F422DE129CDC}
 		{439F88AF-F18C-4D27-B8D6-01D249BE647D} = {0BFCB3B7-D3CB-4BF4-9CB5-F422DE129CDC}
-		{66A35337-3DFC-4A16-84C9-4DCCE30DA04D} = {7F113D5D-A188-4D3F-89F4-6736E9577543}
-		{2649AA62-707B-456E-ABAC-73A1330EEFDD} = {41CC3212-8F3B-4527-B5DD-B0B87F0FE240}
-		{425F184C-4ACF-4A60-A085-CBA4F78EB0D2} = {41CC3212-8F3B-4527-B5DD-B0B87F0FE240}
-		{41CC3212-8F3B-4527-B5DD-B0B87F0FE240} = {7F113D5D-A188-4D3F-89F4-6736E9577543}
-		{D03DA36C-01C1-45BE-9DAB-74A24D8E390B} = {41CC3212-8F3B-4527-B5DD-B0B87F0FE240}
-		{C3E824F7-FBA9-45F0-A6BE-EAF61C5BECC9} = {41CC3212-8F3B-4527-B5DD-B0B87F0FE240}
-		{391CDCC9-F757-4854-B508-4AFFAF51C812} = {41CC3212-8F3B-4527-B5DD-B0B87F0FE240}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A6E63BC7-9C53-43E1-9122-0C097407B5C8}
