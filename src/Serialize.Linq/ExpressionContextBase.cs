@@ -2,11 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-#if !WINDOWS_PHONE
 using System.Collections.Concurrent;
-#else
-using Serialize.Linq.Internals;
-#endif
 using System.Linq.Expressions;
 using Serialize.Linq.Interfaces;
 using Serialize.Linq.Nodes;

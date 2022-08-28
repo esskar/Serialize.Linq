@@ -24,7 +24,7 @@ namespace Serialize.Linq.Nodes
         public MemberInfoNodeList(INodeFactory factory, IEnumerable<MemberInfo> items = null)
         {
             if (factory == null)
-                throw new ArgumentNullException("factory");
+                throw new ArgumentNullException(nameof(factory));
             if(items != null)
                 AddRange(items.Select(m => new MemberInfoNode(factory, m)));
         }

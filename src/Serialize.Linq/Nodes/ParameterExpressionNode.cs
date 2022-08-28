@@ -1,6 +1,4 @@
-﻿#if !WINDOWS_PHONE7
-using System;
-#endif
+﻿using System;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using Serialize.Linq.Interfaces;
@@ -45,11 +43,7 @@ namespace Serialize.Linq.Nodes
 
         protected override void Initialize(ParameterExpression expression)
         {
-#if !WINDOWS_PHONE7
             IsByRef = expression.IsByRef;
-#else
-            this.IsByRef = false;
-#endif
             Name = expression.Name;
         }
 

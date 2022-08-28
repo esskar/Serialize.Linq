@@ -24,9 +24,9 @@ namespace Serialize.Linq.Nodes
         public MemberBindingNodeList(INodeFactory factory, IEnumerable<MemberBinding> items)
         {
             if (factory == null)
-                throw new ArgumentNullException("factory");
+                throw new ArgumentNullException(nameof(factory));
             if (items == null)
-                throw new ArgumentNullException("items");
+                throw new ArgumentNullException(nameof(items));
             AddRange(items.Select(m => MemberBindingNode.Create(factory, m)));
         }
 

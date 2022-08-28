@@ -1,6 +1,4 @@
-﻿#if !WINDOWS_PHONE7
-using System;
-#endif
+﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.Serialization;
@@ -46,11 +44,7 @@ namespace Serialize.Linq.Nodes
 
         protected override void Initialize(LambdaExpression expression)
         {
-#if !WINDOWS_PHONE7
             Parameters = new ExpressionNodeList(Factory, expression.Parameters);
-#else
-            this.Parameters = new ExpressionNodeList(this.Factory, expression.Parameters.Select(p => (Expression)p));
-#endif
             Body = Factory.Create(expression.Body);
         }
 

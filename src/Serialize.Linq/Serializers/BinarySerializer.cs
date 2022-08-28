@@ -47,7 +47,7 @@ namespace Serialize.Linq.Serializers
                 return (T)serializer.ReadObject(reader);
         }
 
-#if !WINDOWS_PHONE && !NETSTANDARD && !WINDOWS_UWP
+#if !NETSTANDARD && !WINDOWS_UWP
 
         protected override XmlObjectSerializer CreateXmlObjectSerializer(Type type)
         {

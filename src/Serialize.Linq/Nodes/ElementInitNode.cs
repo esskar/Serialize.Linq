@@ -41,7 +41,7 @@ namespace Serialize.Linq.Nodes
         private void Initialize(ElementInit elementInit)
         {
             if (elementInit == null)
-                throw new ArgumentNullException("elementInit");
+                throw new ArgumentNullException(nameof(elementInit));
 
             AddMethod = new MethodInfoNode(Factory, elementInit.AddMethod);
             Arguments = new ExpressionNodeList(Factory, elementInit.Arguments);

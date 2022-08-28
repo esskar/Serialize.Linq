@@ -1,8 +1,6 @@
 ﻿
 using System;
-#if !WINDOWS_PHONE7
 using System.Collections.Generic;
-#endif
 using System.Linq;
 using System.Reflection;
 

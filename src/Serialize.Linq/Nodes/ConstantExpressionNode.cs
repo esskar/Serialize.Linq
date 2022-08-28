@@ -110,7 +110,7 @@ namespace Serialize.Linq.Nodes
             set
             {
                 if (value is Expression)
-                    throw new ArgumentException("Expression not allowed.", "value");
+                    throw new ArgumentException("Expression not allowed.", nameof(value));
 
                 _value = value is Type valueType ? Factory.Create(valueType) : value;
 
