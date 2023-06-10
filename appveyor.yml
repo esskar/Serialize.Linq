@@ -1,4 +1,4 @@
-version: 2.1.{build}
+version: 3.0.{build}
 configuration:
   - Release
 image: Visual Studio 2022
@@ -6,3 +6,11 @@ before_build:
   - nuget restore src\Serialize.Linq.sln
 build:
   project: src\Serialize.Linq.sln
+deploy:
+  provider: NuGet
+  on:
+    branch: main
+  api_key:
+    secure: vJ/dCjDaMcX6hUlmQBlz5fDgxo/oFr9BsUhHy/6LUXQNjp3LIv3n4lMwQuiyOjDD
+  skip_symbols: false
+  artifact: /.*(\.|\.s)nupkg/
