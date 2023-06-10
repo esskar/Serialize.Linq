@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Serialize.Linq.Internals
 {
@@ -39,7 +36,7 @@ namespace Serialize.Linq.Internals
                 if (includeListTypes)
                     yield return typeof(List<>).MakeGenericType(type);
 
-                if (type.IsClass())
+                if (type.IsClass || type.IsInterface)
                     continue;
 
                 var nullableType = typeof(Nullable<>).MakeGenericType(type);
