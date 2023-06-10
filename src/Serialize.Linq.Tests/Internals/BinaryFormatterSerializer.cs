@@ -33,14 +33,18 @@ namespace Serialize.Linq.Tests.Internals
         public void Serialize<T>(Stream stream, T obj) where T : Node
         {
             if(!ReferenceEquals(obj, null))
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
                 _formatter.Serialize(stream, obj);
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
         }
 
         public T Deserialize<T>(Stream stream) where T : Node
         {
             if (stream.Length == 0)
                 return default(T);
+#pragma warning disable SYSLIB0011 // Type or member is obsolete
             return (T)_formatter.Deserialize(stream);
-        }        
+#pragma warning restore SYSLIB0011 // Type or member is obsolete
+        }
     }
 }
