@@ -25,6 +25,7 @@ For bugs: make sure you create a unit test, so it is easier for me to reproduce 
 You can always [buy me a coffee :coffee:][6].
 
 ## Supported Platforms (or known to work with)
+* .NET 7.0
 * .NET 6.0
 * .NET 5.0
 * .NET 4.8
