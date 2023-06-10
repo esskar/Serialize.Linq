@@ -25,7 +25,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFrameworks>net48;net5.0;net6.0</TargetFrameworks>
+    <TargetFrameworks>net48;net5.0;net6.0;net7.0</TargetFrameworks>
     <Version>2.0.0</Version>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
@@ -83,11 +83,30 @@
   <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release Optimize Size|net6.0|AnyCPU'">
     <WarningLevel>7</WarningLevel>
   </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net7.0|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug Optimize Size|net7.0|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release Optimize Size|net7.0|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net5.0' ">
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
+  </ItemGroup>
+  
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net7.0' ">
   </ItemGroup>
   
   <ItemGroup>
