@@ -23,6 +23,7 @@
 	<EmbedUntrackedSources>true</EmbedUntrackedSources>
 	<IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -111,10 +112,8 @@
   </ItemGroup>
   
   <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+	<None Include="..\..\README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 
 </Project>
