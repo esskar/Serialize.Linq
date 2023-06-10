@@ -2,10 +2,20 @@ version: 3.0.{build}
 configuration:
   - Release
 image: Visual Studio 2022
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
 before_build:
   - nuget restore src\Serialize.Linq.sln
 build:
   project: src\Serialize.Linq.sln
+artifacts:  
+  - path: '**\*.nupkg'
 deploy:
   provider: NuGet
   on:
