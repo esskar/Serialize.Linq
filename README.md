@@ -53,10 +53,11 @@ Serialize.Linq has a comprehensive test suite. You can run the tests using your 
 
 ## Supported Platforms (or known to work with)
 
+- .NET 8.0
 - .NET 7.0
 - .NET 6.0
-- .NET 5.0
 - .NET 4.8
+- .NET 4.8.1
 
 ## License
 
