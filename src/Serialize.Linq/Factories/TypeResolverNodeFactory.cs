@@ -236,8 +236,16 @@ namespace Serialize.Linq.Factories
             }
             else if (methodCallExpression.Method.Name == "ToString" && methodCallExpression.Method.ReturnType == typeof(string))
             {
-                var constantValue = Expression.Lambda(methodCallExpression).Compile().DynamicInvoke();
-                return new ConstantExpressionNode(this, constantValue);
+                try
+                {
+                    var compilation = Expression.Lambda(methodCallExpression).Compile();
+                    var constantValue = compilation.DynamicInvoke();
+                    return new ConstantExpressionNode(this, constantValue);
+                }
+                catch (Exception)
+                {
+                    // ignore
+                }
             }
             return base.Create(methodCallExpression);
         }

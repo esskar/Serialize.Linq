@@ -12,7 +12,8 @@
     <PackageTags>linq;serialize</PackageTags>
     <PackageReleaseNotes>- support for .NET 8.0
       - support for .NET 4.8.1
-      - unsupport for .NET 5.0 </PackageReleaseNotes>
+      - drop support for .NET 5.0 </PackageReleaseNotes>
+    </PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/esskar/Serialize.Linq</PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
@@ -29,9 +30,9 @@
 
   <PropertyGroup>
     <TargetFrameworks>net48;net481;net6.0;net7.0;net8.0;netstandard2.0;netstandard2.1</TargetFrameworks>
-    <Version>3.0.0</Version>
-    <AssemblyVersion>3.0.0.0</AssemblyVersion>
-    <FileVersion>3.0.0.0</FileVersion>
+    <Version>3.1.0</Version>
+    <AssemblyVersion>3.1.0.0</AssemblyVersion>
+    <FileVersion>3.1.0.0</FileVersion>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
 
@@ -59,23 +60,22 @@
     <WarningLevel>7</WarningLevel>
   </PropertyGroup>
 
-  <PropertyGroup
-    Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net5.0|AnyCPU'">
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net481|AnyCPU'">
     <WarningLevel>7</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup
-    Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net5.0|AnyCPU'">
+    Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net481|AnyCPU'">
     <WarningLevel>7</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup
-    Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug Optimize Size|net5.0|AnyCPU'">
+    Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug Optimize Size|net481|AnyCPU'">
     <WarningLevel>7</WarningLevel>
   </PropertyGroup>
 
   <PropertyGroup
-    Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release Optimize Size|net5.0|AnyCPU'">
+    Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release Optimize Size|net481|AnyCPU'">
     <WarningLevel>7</WarningLevel>
   </PropertyGroup>
 
@@ -116,6 +116,26 @@
 
   <PropertyGroup
     Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release Optimize Size|net7.0|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup
+    Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup
+    Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net8.0|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup
+    Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug Optimize Size|net8.0|AnyCPU'">
+    <WarningLevel>7</WarningLevel>
+  </PropertyGroup>
+
+  <PropertyGroup
+    Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release Optimize Size|net8.0|AnyCPU'">
     <WarningLevel>7</WarningLevel>
   </PropertyGroup>
 

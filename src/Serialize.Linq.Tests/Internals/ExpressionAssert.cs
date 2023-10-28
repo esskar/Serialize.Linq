@@ -3,7 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Serialize.Linq.Tests.Internals
 {
-    internal class ExpressionAssert
+    internal static class ExpressionAssert
     {
         public static void AreEqual<TDelegate>(Expression<TDelegate> expected, Expression<TDelegate> actual, string message = null)
         {

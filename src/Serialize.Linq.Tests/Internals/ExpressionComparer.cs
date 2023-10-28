@@ -4,9 +4,9 @@ using System.Linq.Expressions;
 
 namespace Serialize.Linq.Tests.Internals
 {
-    internal class ExpressionComparer
+    internal sealed class ExpressionComparer
     {
-        public virtual bool AreEqual(Expression x, Expression y)
+        public bool AreEqual(Expression x, Expression y)
         {
             if (ReferenceEquals(x, y))
                 return true;
@@ -91,7 +91,7 @@ namespace Serialize.Linq.Tests.Internals
             }
         }
 
-        protected virtual bool AreEqualBinding(MemberBinding x, MemberBinding y)
+        private bool AreEqualBinding(MemberBinding x, MemberBinding y)
         {
             if (x.BindingType != y.BindingType)
                 return false;
@@ -109,67 +109,67 @@ namespace Serialize.Linq.Tests.Internals
             }
         }
 
-        protected virtual bool AreEqualElementInitializer(ElementInit x, ElementInit y)
+        private bool AreEqualElementInitializer(ElementInit x, ElementInit y)
         {
             return AreEqualExpressionList(x.Arguments, y.Arguments);
         }
 
-        protected virtual bool AreEqualUnary(UnaryExpression x, UnaryExpression y)
+        private bool AreEqualUnary(UnaryExpression x, UnaryExpression y)
         {
             return AreEqual(x.Operand, y.Operand);
         }
 
-        protected virtual bool AreEqualBinary(BinaryExpression x, BinaryExpression y)
+        private bool AreEqualBinary(BinaryExpression x, BinaryExpression y)
         {
             return AreEqual(x.Left, y.Left)
                 && AreEqual(x.Right, y.Right)
                 && AreEqual(x.Conversion, y.Conversion);
         }
 
-        protected virtual bool AreEqualTypeBinary(TypeBinaryExpression x, TypeBinaryExpression y)
+        private bool AreEqualTypeBinary(TypeBinaryExpression x, TypeBinaryExpression y)
         {
             return x.NodeType == y.NodeType 
                 && x.TypeOperand == y.TypeOperand
                 && AreEqual(x.Expression, y.Expression);
         }
 
-        protected virtual bool AreEqualConstant(ConstantExpression x, ConstantExpression y)
+        private bool AreEqualConstant(ConstantExpression x, ConstantExpression y)
         {
             return x.Type == y.Type
                 && (ReferenceEquals(x.Value, y.Value) || x.Value.Equals(y.Value));
         }
 
-        protected virtual bool AreEqualConditional(ConditionalExpression x, ConditionalExpression y)
+        private bool AreEqualConditional(ConditionalExpression x, ConditionalExpression y)
         {
             return AreEqual(x.Test, y.Test)
                 && AreEqual(x.IfTrue, y.IfTrue)
                 && AreEqual(x.IfFalse, y.IfFalse);
         }
 
-        protected virtual bool AreEqualDefault(DefaultExpression x, DefaultExpression y)
+        private bool AreEqualDefault(DefaultExpression x, DefaultExpression y)
         {
             return x.Type == y.Type;
         }
 
-        protected virtual bool AreEqualParameter(ParameterExpression x, ParameterExpression y)
+        private bool AreEqualParameter(ParameterExpression x, ParameterExpression y)
         {
             return x.Type == y.Type
                 && (ReferenceEquals(x.Name, y.Name) || x.Name.Equals(y.Name));
         }
 
-        protected virtual bool AreEqualMemberAccess(MemberExpression x, MemberExpression y)
+        private bool AreEqualMemberAccess(MemberExpression x, MemberExpression y)
         {
             return AreEqual(x.Expression, y.Expression);
         }
 
-        protected virtual bool AreEqualMethodCall(MethodCallExpression x, MethodCallExpression y)
+        private bool AreEqualMethodCall(MethodCallExpression x, MethodCallExpression y)
         {
             var isEqual = AreEqual(x.Object, y.Object);
             if (isEqual) isEqual = AreEqualExpressionList(x.Arguments, y.Arguments);
             return isEqual;
         }
 
-        protected virtual bool AreEqualExpressionList(ReadOnlyCollection<Expression> x, ReadOnlyCollection<Expression> y)
+        private bool AreEqualExpressionList(ReadOnlyCollection<Expression> x, ReadOnlyCollection<Expression> y)
         {
             var isEqual = x.Count.Equals(y.Count);
             for (var i = 0; isEqual && i < x.Count; ++i)
@@ -177,22 +177,22 @@ namespace Serialize.Linq.Tests.Internals
             return isEqual;
         }
 
-        protected virtual bool AreEqualMemberAssignment(MemberAssignment x, MemberAssignment y)
+        private bool AreEqualMemberAssignment(MemberAssignment x, MemberAssignment y)
         {
             return AreEqual(x.Expression, y.Expression);
         }
 
-        protected virtual bool AreEqualMemberMemberBinding(MemberMemberBinding x, MemberMemberBinding y)
+        private bool AreEqualMemberMemberBinding(MemberMemberBinding x, MemberMemberBinding y)
         {
             return AreEqualBindingList(x.Bindings, y.Bindings);
         }
 
-        protected virtual bool AreEqualMemberListBinding(MemberListBinding x, MemberListBinding y)
+        private bool AreEqualMemberListBinding(MemberListBinding x, MemberListBinding y)
         {
             return AreEqualElementInitializerList(x.Initializers, y.Initializers);
         }
 
-        protected virtual bool AreEqualBindingList(ReadOnlyCollection<MemberBinding> x, ReadOnlyCollection<MemberBinding> y)
+        private bool AreEqualBindingList(ReadOnlyCollection<MemberBinding> x, ReadOnlyCollection<MemberBinding> y)
         {
             var isEqual = x.Count.Equals(y.Count);
             for (var i = 0; isEqual && i < x.Count; ++i)
@@ -200,7 +200,7 @@ namespace Serialize.Linq.Tests.Internals
             return isEqual;
         }
 
-        protected virtual bool AreEqualElementInitializerList(ReadOnlyCollection<ElementInit> x, ReadOnlyCollection<ElementInit> y)
+        private bool AreEqualElementInitializerList(ReadOnlyCollection<ElementInit> x, ReadOnlyCollection<ElementInit> y)
         {
             var isEqual = x.Count.Equals(y.Count);
             for (var i = 0; isEqual && i < x.Count; ++i)
@@ -208,34 +208,34 @@ namespace Serialize.Linq.Tests.Internals
             return isEqual;
         }
 
-        protected virtual bool AreEqualLambda(LambdaExpression x, LambdaExpression y)
+        private bool AreEqualLambda(LambdaExpression x, LambdaExpression y)
         {
             return AreEqual(x.Body, y.Body);
         }
 
-        protected virtual bool AreEqualNew(NewExpression x, NewExpression y)
+        private bool AreEqualNew(NewExpression x, NewExpression y)
         {
             return AreEqualExpressionList(x.Arguments, y.Arguments);
         }
 
-        protected virtual bool AreEqualMemberInit(MemberInitExpression x, MemberInitExpression y)
+        private bool AreEqualMemberInit(MemberInitExpression x, MemberInitExpression y)
         {
             return AreEqualNew(x.NewExpression, y.NewExpression)
                 && AreEqualBindingList(x.Bindings, y.Bindings);
         }
 
-        protected virtual bool AreEqualListInit(ListInitExpression x, ListInitExpression y)
+        private bool AreEqualListInit(ListInitExpression x, ListInitExpression y)
         {
             return AreEqualNew(x.NewExpression, y.NewExpression)
                 && AreEqualElementInitializerList(x.Initializers, y.Initializers);
         }
 
-        protected virtual bool AreEqualNewArray(NewArrayExpression x, NewArrayExpression y)
+        private bool AreEqualNewArray(NewArrayExpression x, NewArrayExpression y)
         {
             return AreEqualExpressionList(x.Expressions, y.Expressions);
         }
 
-        protected virtual bool AreEqualInvocation(InvocationExpression x, InvocationExpression y)
+        private bool AreEqualInvocation(InvocationExpression x, InvocationExpression y)
         {
             return AreEqualExpressionList(x.Arguments, y.Arguments)
                 && AreEqual(x.Expression, y.Expression);
