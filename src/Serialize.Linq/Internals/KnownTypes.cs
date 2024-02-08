@@ -18,7 +18,10 @@ namespace Serialize.Linq.Internals
             typeof(DateTime), typeof(DateTimeOffset),
             typeof(TimeSpan), typeof(Guid),
             typeof(DayOfWeek), typeof(DateTimeKind),
-            typeof(Enum)
+            typeof(Enum),
+            #if NET6_0_OR_GREATER
+            typeof(DateOnly), typeof(TimeOnly),
+            #endif
         };
 
         private static readonly HashSet<Type> _allExploded = new HashSet<Type>(Explode(All, true, true));
