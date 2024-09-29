@@ -10,10 +10,11 @@
     <SignAssembly>true</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <PackageTags>linq;serialize</PackageTags>
-    <PackageReleaseNotes>- support for .NET 8.0
+    <PackageReleaseNotes>
+	  - support for .NET 8.0
       - support for .NET 4.8.1
-      - drop support for .NET 5.0 </PackageReleaseNotes>
-    </PackageReleaseNotes>
+      - drop support for .NET 5.0 
+	</PackageReleaseNotes>
     <PackageProjectUrl>https://github.com/esskar/Serialize.Linq</PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryType>git</RepositoryType>
