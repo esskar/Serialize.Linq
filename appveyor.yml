@@ -21,6 +21,6 @@ deploy:
   on:
     branch: main
   api_key:
-    secure: vJ/dCjDaMcX6hUlmQBlz5fDgxo/oFr9BsUhHy/6LUXQNjp3LIv3n4lMwQuiyOjDD
+    secure: NcjamdhIHPUUXl96laNhPbB8NaTWmYyzlExM0XyWepZTdN1T+YZoGukuQcXCvGmP
   skip_symbols: false
   artifact: /.*(\.|\.s)nupkg/
