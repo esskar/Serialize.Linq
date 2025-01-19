@@ -9,6 +9,13 @@ This library is useful in scenarios where you need to send LINQ expressions over
 - Supports various types of expressions, including binary, unary, member access, lambda, and more.
 - Extensible design that allows you to add support for custom expressions.
 
+## Breaking Changes
+
+### Version 4.0
+
+- **BinaryFormatSerializer** has been removed due to security concerns with `BinaryFormatter`. For more details, see the [BinaryFormatter Security Guide](https://aka.ms/binaryformatter).
+
+
 ## Getting Started
 
 ### Installation
@@ -53,6 +60,7 @@ Serialize.Linq has a comprehensive test suite. You can run the tests using your 
 
 ## Supported Platforms (or known to work with)
 
+- .NET 9.0
 - .NET 8.0
 - .NET 7.0
 - .NET 6.0
