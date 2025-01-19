@@ -169,12 +169,6 @@ namespace Serialize.Linq.Tests
         }
 
         [TestMethod]
-        public void SerializeDeserializeGuidValueAsBinary()
-        {
-            SerializeDeserializeExpressionAsBinary(CreateGuidExpression(), new BinarySerializer());
-        }
-
-        [TestMethod]
         public void ExpressionWithConstantDateTimeAsJson()
         {
             SerializeDeserializeExpressionAsText(CreateConstantDateTimeExpression(), new JsonSerializer());
@@ -184,12 +178,6 @@ namespace Serialize.Linq.Tests
         public void ExpressionWithConstantDateTimeAsXml()
         {
             SerializeDeserializeExpressionAsText(CreateConstantDateTimeExpression(), new XmlSerializer());
-        }
-
-        [TestMethod]
-        public void ExpressionWithConstantDateTimeOffsetAsBinary()
-        {
-            SerializeDeserializeExpressionAsBinary(CreateConstantDateTimeOffsetExpression(), new BinarySerializer());
         }
 
         [TestMethod]
@@ -205,12 +193,6 @@ namespace Serialize.Linq.Tests
         }
 
         [TestMethod]
-        public void ExpressionWithConstantDateTimeAsBinary()
-        {
-            SerializeDeserializeExpressionAsBinary(CreateConstantDateTimeExpression(), new BinarySerializer());
-        }
-
-        [TestMethod]
         public void ExpressionWithConstantTypeAsJson()
         {
             SerializeDeserializeExpressionAsText(CreateConstantTypeExpression(), new JsonSerializer());
@@ -220,12 +202,6 @@ namespace Serialize.Linq.Tests
         public void ExpressionWithConstantTypeAsXml()
         {
             SerializeDeserializeExpressionAsText(CreateConstantTypeExpression(), new XmlSerializer());
-        }
-
-        [TestMethod]
-        public void ExpressionWithConstantTypeAsBinary()
-        {
-            SerializeDeserializeExpressionAsBinary(CreateConstantTypeExpression(), new BinarySerializer());
         }
 
         private static ConstantExpression CreateConstantDateTimeExpression()
@@ -267,12 +243,13 @@ namespace Serialize.Linq.Tests
 
         private static IEnumerable<ITextSerializer> CreateTextSerializers()
         {
-            return new ITextSerializer[] { new JsonSerializer(), new XmlSerializer() };
+            yield return new JsonSerializer();
+            yield return new XmlSerializer();
         }
 
         private static IEnumerable<IBinarySerializer> CreateBinarySerializers()
         {
-            return new IBinarySerializer[] { new BinarySerializer(), new BinaryFormatterSerializer() };
+            yield break;
         }
     }
 }

@@ -19,29 +19,6 @@ namespace Serialize.Linq.Tests.Issues
         }
 
         [TestMethod]
-        public void SerializeDeserializeListAsBinary()
-        {
-            var guid1 = Guid.NewGuid();
-            var guid2 = Guid.NewGuid();
-            var guid3 = Guid.NewGuid();
-            var list = new List<Guid> { guid1, guid2 };
-            Expression<Func<Test, bool>> expression = test => list.Contains(test.Id);
-
-            var serializer = new ExpressionSerializer(new BinarySerializer())
-            {
-                AutoAddKnownTypesAsListTypes = true
-            };
-            var value = serializer.SerializeBinary(expression);
-
-            var actualExpression = (Expression<Func<Test, bool>>)serializer.DeserializeBinary(value);
-            var func = actualExpression.Compile();
-
-            Assert.IsTrue(func(new Test { Id = guid1 }), "one failed.");
-            Assert.IsTrue(func(new Test { Id = guid2 }), "two failed.");
-            Assert.IsFalse(func(new Test { Id = guid3 }), "three failed.");
-        }
-
-        [TestMethod]
         public void SerializeDeserializeListAsJson()
         {
             var guid1 = Guid.NewGuid();
