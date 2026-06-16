@@ -60,8 +60,14 @@ jobs:
       - name: Publish to NuGet
         # Deploy only on pushes to main (mirrors the previous AppVeyor behaviour).
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-        run: >
-          dotnet nuget push "artifacts/*.nupkg"
-          --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }}
-          --source https://api.nuget.org/v3/index.json
-          --skip-duplicate
+        shell: pwsh
+        # Expand the glob explicitly: neither dotnet nuget push nor PowerShell
+        # expands a wildcard argument, so pass each resolved file path. The
+        # matching .snupkg is pushed automatically alongside its .nupkg.
+        run: |
+          Get-ChildItem artifacts -Filter *.nupkg | ForEach-Object {
+            dotnet nuget push $_.FullName `
+              --api-key ${{ steps.nuget-login.outputs.NUGET_API_KEY }} `
+              --source https://api.nuget.org/v3/index.json `
+              --skip-duplicate
+          }
