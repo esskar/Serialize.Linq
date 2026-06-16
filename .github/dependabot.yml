@@ -1,0 +1,24 @@
+version: 2
+updates:
+  # NuGet packages (test projects only — the library itself has no PackageReferences)
+  - package-ecosystem: nuget
+    directory: "/src"
+    schedule:
+      interval: monthly
+    # Keep PR noise low: roll every NuGet bump into a single grouped PR
+    open-pull-requests-limit: 5
+    groups:
+      nuget-dependencies:
+        patterns:
+          - "*"
+        update-types:
+          - minor
+          - patch
+    # Major bumps stay out of the group and only open if the limit allows;
+    # handle them deliberately rather than on every release.
+    ignore:
+      - dependency-name: "*"
+        update-types:
+          - version-update:semver-major
+    commit-message:
+      prefix: "chore(deps)"
