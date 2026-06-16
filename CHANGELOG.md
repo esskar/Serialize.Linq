@@ -8,6 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This changelog was reconstructed from the project's commit history and published
 NuGet releases; entries for older versions are a best-effort summary.
 
+## [4.4.1] - 2026-06-16
+
+### Changed
+- Enabled NuGet lock files (`packages.lock.json`) across the solution for reproducible, pinned
+  dependency restores. CI restores in locked mode so a missing or out-of-date lock file fails the
+  build. No runtime or API changes.
+
 ## [4.4.0] - 2026-06-16
 
 ### Added
