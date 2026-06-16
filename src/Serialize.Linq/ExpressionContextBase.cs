@@ -22,6 +22,15 @@ namespace Serialize.Linq
 
         public bool AllowPrivateFieldAccess { get; set; }
 
+        /// <summary>
+        /// Optional allow-list applied to every type resolved during deserialization.
+        /// When set, any resolved type rejected by the filter causes a
+        /// <see cref="TypeNotAllowedException"/> to be thrown. This is the equivalent of
+        /// <c>BinaryFormatter</c>'s <c>SerializationBinder</c> for guarding which types
+        /// may be reconstructed from untrusted payloads. <c>null</c> (the default) allows all types.
+        /// </summary>
+        public ITypeFilter TypeFilter { get; set; }
+
         public virtual BindingFlags? GetBindingFlags()
         {
             if (!AllowPrivateFieldAccess)
@@ -46,21 +55,28 @@ namespace Serialize.Linq
             if (string.IsNullOrWhiteSpace(node.Name))
                 return null;
 
-            return _typeCache.GetOrAdd(node.Name, n =>
+            var type = _typeCache.GetOrAdd(node.Name, n =>
             {
-                var type = Type.GetType(n);
-                if (type == null)
+                var resolved = Type.GetType(n);
+                if (resolved == null)
                 {
                     foreach (var assembly in GetAssemblies())
                     {
-                        type = assembly.GetType(n);
-                        if (type != null)
+                        resolved = assembly.GetType(n);
+                        if (resolved != null)
                             break;
                     }
 
                 }
-                return type;
+                return resolved;
             });
+
+            // Apply the allow-list on every resolution (including cache hits) so that
+            // restricted contexts cannot be bypassed once a type has been cached.
+            if (type != null && TypeFilter != null && !TypeFilter.IsAllowed(type))
+                throw new TypeNotAllowedException(type);
+
+            return type;
         }
 
         protected abstract IEnumerable<Assembly> GetAssemblies();

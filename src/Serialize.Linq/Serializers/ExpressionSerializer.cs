@@ -61,6 +61,17 @@ namespace Serialize.Linq.Serializers
             return node?.ToExpression();
         }
 
+        public Expression Deserialize(Stream stream, IExpressionContext context)
+        {
+            if (stream == null)
+                throw new ArgumentNullException(nameof(stream));
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
+            var node = _serializer.Deserialize<ExpressionNode>(stream);
+            return node?.ToExpression(context);
+        }
+
         public string SerializeText(Expression expression, FactorySettings factorySettings = null)
         {
             return TextSerializer.Serialize(Convert(expression, factorySettings ?? _factorySettings));

@@ -8,6 +8,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This changelog was reconstructed from the project's commit history and published
 NuGet releases; entries for older versions are a best-effort summary.
 
+## [4.3.0] - 2026-06-16
+
+### Added
+- `ITypeFilter` extension point on `ExpressionContext` to restrict which types may be
+  resolved while deserializing an expression tree — the equivalent of `BinaryFormatter`'s
+  `SerializationBinder` for guarding against untrusted payloads. A rejected type throws
+  `TypeNotAllowedException`. Built-in implementations `AllowedTypesFilter` (allow-list by
+  type/open-generic/namespace) and `DelegateTypeFilter` (predicate) are provided, plus new
+  `ExpressionContext` constructor overloads accepting an `ITypeFilter` and a
+  `Deserialize(Stream, IExpressionContext)` overload ([#151]).
+
+### Notes
+- The filter is consulted for every resolved type, including the open generic definition
+  and each generic argument of a closed generic (e.g. `List<Customer>` is checked as
+  `List<>` and `Customer`). It is applied on cache hits too, so a restricted context cannot
+  be bypassed. With no filter set (the default), behavior is unchanged and all types resolve.
+
 ## [4.2.0] - 2026-06-16
 
 ### Added
@@ -115,6 +132,7 @@ NuGet releases; entries for older versions are a best-effort summary.
 
 [Unreleased]: https://github.com/esskar/Serialize.Linq/compare/main...HEAD
 [#178]: https://github.com/esskar/Serialize.Linq/issues/178
+[#151]: https://github.com/esskar/Serialize.Linq/issues/151
 [#169]: https://github.com/esskar/Serialize.Linq/issues/169
 [#163]: https://github.com/esskar/Serialize.Linq/pull/163
 [#146]: https://github.com/esskar/Serialize.Linq/issues/146
