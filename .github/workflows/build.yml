@@ -28,6 +28,7 @@ jobs:
           dotnet-version: |
             8.0.x
             9.0.x
+            10.0.x
 
       - name: Restore
         run: dotnet restore src/Serialize.Linq.sln
@@ -61,6 +62,11 @@ jobs:
         # Deploy only on pushes to main (mirrors the previous AppVeyor behaviour).
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         shell: pwsh
+        # Publishes the package version from the csproj <Version> as-is; the
+        # version is never overridden. --skip-duplicate means an already-published
+        # version is skipped rather than overwritten, so only a bumped <Version>
+        # results in a new release.
+        #
         # Expand the glob explicitly: neither dotnet nuget push nor PowerShell
         # expands a wildcard argument, so pass each resolved file path. The
         # matching .snupkg is pushed automatically alongside its .nupkg.

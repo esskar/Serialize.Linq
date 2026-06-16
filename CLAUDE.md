@@ -25,7 +25,7 @@ dotnet test src/Serialize.Linq.Tests/Serialize.Linq.Tests.csproj --filter "Fully
 dotnet test src/Serialize.Linq.Tests/Serialize.Linq.Tests.csproj --filter "Name=YourTestMethodName"
 ```
 
-- The main library multi-targets `net48;net481;net6.0;net7.0;net8.0;net9.0;netstandard2.0;netstandard2.1` (see `src/Serialize.Linq/Serialize.Linq.csproj`). Building all targets requires the full set of .NET SDKs / targeting packs installed; restrict with `-f <tfm>` when iterating locally.
+- The main library multi-targets `net48;net481;net6.0;net7.0;net8.0;net9.0;net10.0;netstandard2.0;netstandard2.1` (see `src/Serialize.Linq/Serialize.Linq.csproj`). Building all targets requires the full set of .NET SDKs / targeting packs installed; restrict with `-f <tfm>` when iterating locally.
 - `GeneratePackageOnBuild` is true, so building the library produces a `.nupkg`. The assembly is strong-name signed with `Serialize.Linq Signing Key.snk`.
 - Custom configurations `Debug Optimize Size` / `Release Optimize Size` define the `SERIALIZE_LINQ_OPTIMIZE_SIZE` constant, which shortens serialized XML/JSON property names. When editing `Node`/`ExpressionNode` classes, check for `#if SERIALIZE_LINQ_OPTIMIZE_SIZE` blocks — serialization member names differ between the two builds.
 
