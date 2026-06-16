@@ -168,6 +168,19 @@
 	<WarningLevel>7</WarningLevel>
   </PropertyGroup>
 
+  <!--
+    Reference the .NET Framework reference assemblies explicitly for the
+    net48/net481 targets. On non-Windows build hosts the SDK pulls this package
+    in implicitly (the reference assemblies aren't installed), but on Windows
+    they come from the OS and no package is added. Declaring it explicitly keeps
+    packages.lock.json identical across build operating systems so locked-mode
+    restores don't fail in CI. PrivateAssets="all" keeps it build-only and out
+    of the published package's dependencies.
+  -->
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' or '$(TargetFramework)' == 'net481' ">
+    <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3" PrivateAssets="all" />
+  </ItemGroup>
+
   <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
   </ItemGroup>
 
