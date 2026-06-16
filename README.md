@@ -44,6 +44,30 @@ string serializedExpression = serializer.SerializeText(expression);
 var deserializedExpression = serializer.DeserializeText(serializedExpression);
 ```
 
+### Restricting types during deserialization
+
+Deserializing an expression reconstructs `Type`s by name from the payload. When the payload is
+untrusted, supply an `ITypeFilter` on an `ExpressionContext` to allow-list the permitted types —
+the equivalent of `BinaryFormatter`'s `SerializationBinder`. Any type the filter rejects throws a
+`TypeNotAllowedException`.
+
+```csharp
+using Serialize.Linq;
+using Serialize.Linq.TypeFilters;
+
+// Only allow the types your expressions actually use.
+var filter = new AllowedTypesFilter(typeof(int), typeof(bool), typeof(object), typeof(Func<,>))
+    .AllowNamespace("MyApp.Models");
+
+var context = new ExpressionContext(filter);
+var deserializedExpression = serializer.DeserializeText(serializedExpression, context);
+```
+
+`AllowedTypesFilter` matches explicit types (use the open definition for generics, e.g.
+`typeof(List<>)`) and whole namespaces; `DelegateTypeFilter` wraps an arbitrary
+`Func<Type, bool>` predicate. The filter is checked for every resolved type, including each
+generic argument. With no context/filter, all types resolve as before.
+
 ## Contributing
 
 We welcome contributions to Serialize.Linq!
