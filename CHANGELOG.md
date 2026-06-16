@@ -8,6 +8,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 This changelog was reconstructed from the project's commit history and published
 NuGet releases; entries for older versions are a best-effort summary.
 
+## [4.4.0] - 2026-06-16
+
+### Added
+- `AutoDiscoverKnownTypes` option on the serializers (and `ExpressionSerializer`). When enabled, the
+  runtime types of constant values found in an expression are walked and registered as known types
+  automatically during serialization, so expressions that capture custom types or enum values no longer
+  require a manual `AddKnownType` call for each such type ([#158]).
+
+### Notes
+- The option is opt-in and off by default, so existing behavior is unchanged. Discovery inspects constant
+  value types (and their array element / generic argument types) statically — the constant values are never
+  enumerated, so lazy sequences such as `IQueryable` are not executed.
+- Discovery runs on the serialization side; the discovered types are added to the serializer instance, so a
+  serialize/deserialize round-trip on the same instance works without extra registration. When deserializing
+  on a different instance, register the types there as usual.
+
 ## [4.3.0] - 2026-06-16
 
 ### Added
@@ -131,6 +147,7 @@ NuGet releases; entries for older versions are a best-effort summary.
 - Baseline release.
 
 [Unreleased]: https://github.com/esskar/Serialize.Linq/compare/main...HEAD
+[#158]: https://github.com/esskar/Serialize.Linq/issues/158
 [#178]: https://github.com/esskar/Serialize.Linq/issues/178
 [#151]: https://github.com/esskar/Serialize.Linq/issues/151
 [#169]: https://github.com/esskar/Serialize.Linq/issues/169

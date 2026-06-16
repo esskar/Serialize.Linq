@@ -30,6 +30,9 @@ namespace Serialize.Linq.Serializers
             if (stream == null)
                 throw new ArgumentNullException(nameof(stream));
 
+            if (AutoDiscoverKnownTypes && obj != null)
+                AddKnownTypes(Internals.KnownTypeDiscoverer.Discover(obj));
+
             var serializer = CreateSerializer(typeof(T));
             serializer.WriteObject(stream, obj);
         }

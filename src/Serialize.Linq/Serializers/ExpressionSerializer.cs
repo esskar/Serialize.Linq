@@ -31,6 +31,12 @@ namespace Serialize.Linq.Serializers
             set => _serializer.AutoAddKnownTypesAsListTypes = value;
         }
 
+        public bool AutoDiscoverKnownTypes
+        {
+            get => _serializer.AutoDiscoverKnownTypes;
+            set => _serializer.AutoDiscoverKnownTypes = value;
+        }
+
         public bool CanSerializeText => _serializer is ITextSerializer;
 
         public bool CanSerializeBinary => _serializer is IBinarySerializer;
