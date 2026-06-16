@@ -31,7 +31,9 @@ jobs:
             10.0.x
 
       - name: Restore
-        run: dotnet restore src/Serialize.Linq.sln
+        # --locked-mode fails the build if a packages.lock.json is missing or
+        # out of date, guaranteeing reproducible, pinned dependency restores.
+        run: dotnet restore src/Serialize.Linq.sln --locked-mode
 
       - name: Build
         run: dotnet build src/Serialize.Linq.sln -c Release --no-restore

@@ -1,0 +1,17 @@
+<Project>
+
+  <!--
+    Enable NuGet lock files (packages.lock.json) for every project in the
+    solution. Lock files pin the full transitive dependency graph so that
+    restores are reproducible across machines and CI. Commit the generated
+    packages.lock.json files alongside each project.
+
+    CI restores in locked mode (see .github/workflows/build.yml), which fails
+    the build if a lock file is missing or out of date instead of silently
+    resolving new versions.
+  -->
+  <PropertyGroup>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+  </PropertyGroup>
+
+</Project>
