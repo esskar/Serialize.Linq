@@ -10,6 +10,7 @@ namespace Serialize.Linq.Serializers
         private readonly HashSet<Type> _customKnownTypes;
         private bool _autoAddKnownTypesAsArrayTypes;
         private bool _autoAddKnownTypesAsListTypes;
+        private bool _autoDiscoverKnownTypes;
         private IEnumerable<Type> _knownTypesExploded;
 
         protected SerializerBase()
@@ -42,13 +43,24 @@ namespace Serialize.Linq.Serializers
             }
         }
 
+        /// <summary>
+        /// If set to true, the runtime types of constant values encountered while serializing an
+        /// expression are automatically registered as known types. This removes the need to call
+        /// <see cref="AddKnownType"/> manually for custom types or enum values used inside an expression.
+        /// </summary>
+        public bool AutoDiscoverKnownTypes
+        {
+            get => _autoDiscoverKnownTypes;
+            set => _autoDiscoverKnownTypes = value;
+        }
+
         public void AddKnownType(Type type)
         {
             if (type == null)
                 throw new ArgumentNullException(nameof(type));
 
-            _customKnownTypes.Add(type);
-            _knownTypesExploded = null;
+            if (_customKnownTypes.Add(type))
+                _knownTypesExploded = null;
         }
 
         public void AddKnownTypes(IEnumerable<Type> types)

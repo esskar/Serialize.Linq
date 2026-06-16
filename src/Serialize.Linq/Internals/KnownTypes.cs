@@ -26,8 +26,15 @@ namespace Serialize.Linq.Internals
 
         private static readonly HashSet<Type> _allExploded = new HashSet<Type>(Explode(All, true, true));
 
-        public static bool Match(Type type) => 
+        public static bool Match(Type type) =>
             type != null && (_allExploded.Contains(type) || _allExploded.Any(t => t.IsAssignableFrom(type)));
+
+        /// <summary>
+        /// Determines whether the type is one of the built-in known types (or one of their exploded
+        /// array/list/nullable variants). Unlike <see cref="Match"/> this uses exact set membership, so a
+        /// concrete enum type does not count as built-in just because <see cref="Enum"/> is registered.
+        /// </summary>
+        public static bool IsBuiltIn(Type type) => type != null && _allExploded.Contains(type);
 
         public static IEnumerable<Type> Explode(IEnumerable<Type> types, bool includeArrayTypes, bool includeListTypes)
         {

@@ -27,6 +27,13 @@ namespace Serialize.Linq.Interfaces
         bool AutoAddKnownTypesAsListTypes { get; set; }
 
         /// <summary>
+        /// If set to true, the runtime types of constant values found in an expression are automatically
+        /// registered as known types during serialization, removing the need to call
+        /// <see cref="AddKnownType"/> manually for custom types or enum values used inside an expression.
+        /// </summary>
+        bool AutoDiscoverKnownTypes { get; set; }
+
+        /// <summary>
         /// Adds a new type to the list of known types.
         /// </summary>
         /// <param name="type">The type.</param>
